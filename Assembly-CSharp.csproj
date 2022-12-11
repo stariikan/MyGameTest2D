@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\C#Scripts\CircleMove.cs" />
+    <Compile Include="Assets\C#Scripts\CameraFolow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

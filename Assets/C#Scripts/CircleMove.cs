@@ -31,7 +31,7 @@ public class CircleMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             isGrounded = false;
-            GetComponent<Rigidbody2D>().AddForce(new Vector3(0, 500, 0));
+            GetComponent<Rigidbody2D>().AddForce(new Vector3(0, 1300, 0));
         }
         }
 }
