@@ -29,8 +29,16 @@ public class Hero : MonoBehaviour
     {
         hp -= 10;
         Debug.Log(hp);
+        if (hp < 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
+    public void Hero_hp()
+    {
+        Debug.Log(hp);
+    }
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();

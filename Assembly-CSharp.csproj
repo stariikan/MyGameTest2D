@@ -57,11 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\C#Scripts\CameraFolow.cs" />
-    <Compile Include="Assets\C#Scripts\Spike.cs" />
-    <Compile Include="Assets\C#Scripts\Hero.cs" />
-    <Compile Include="Assets\C#Scripts\hp.cs" />
     <Compile Include="Assets\C#Scripts\Entity.cs" />
+    <Compile Include="Assets\C#Scripts\Spike.cs" />
     <Compile Include="Assets\C#Scripts\Enemy_Skelet.cs" />
+    <Compile Include="Assets\C#Scripts\Hero.cs" />
+    <Compile Include="Assets\C#Scripts\hp_counter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
