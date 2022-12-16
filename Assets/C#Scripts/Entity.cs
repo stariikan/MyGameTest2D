@@ -11,8 +11,8 @@ public class Entity : MonoBehaviour
     }
 
     // Update is called once per frame
-    public virtual void Die()
+    public virtual void Die() //Обьявляем публичный метод Die
     {
-        Destroy(this.gameObject);
+        Destroy(this.gameObject);//уничтожить этот игровой обьект
     }
 }

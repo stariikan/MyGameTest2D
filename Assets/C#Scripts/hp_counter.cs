@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class hp_counter : MonoBehaviour
 {
-    int val;
-    void Update()
+    int val; //тут сделали переменную чтобы она потом собирала значение переменной hp из скрипта Hero
+    void Update() //Обновление значения происходит при обновлении каждого кадра
     {
-        val = FindObjectOfType<Hero>().hp;
-        GetComponent<Text>().text = $"{val}"; 
+        val = FindObjectOfType<Hero>().hp;//тут переменная val начинает быть равной тому обьекту
+                                          //который надейт медот FindObjectOfType в скрипте hero в переменной hp
+        GetComponent<Text>().text = $"{val}"; //тут мы значение компонента text в game.Object к которому у нас принадлежит этот скрипт
+                                              //и меняем текст на переменную val которая преобразуется в string
     }
 }
