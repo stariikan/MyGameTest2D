@@ -12,7 +12,6 @@ public class Hero : MonoBehaviour
     public float fallingGravityScale = 40; //Сила притяжение при падении чем выше тем сильнее игровой обьекс тянет вниз
     [SerializeField] public int hp = 100; //Количество жизней
     private Rigidbody2D rb; //Тело с физической переменной к которому принадлежит скрипт, переменная = rb
-    private SpriteRenderer sprite; //Спрайт к которому принадлежит скрипт, переменная = sprite
     private Animator anim; //Переменная благодаря которой анимирован обьект, переменная = anim
     private States State //Создание стейтмашины, переменная = State. Значение состояния может быть передано или изминено извне благодаря get и set
     {
@@ -47,8 +46,6 @@ public class Hero : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>(); //Переменная rb получает компонент Rigidbody2D (Физика game.Object)
                                           //к которому привязан скрипт
-        sprite = GetComponentInChildren<SpriteRenderer>(); //Переменная sprite получает компонент SpriteRenderer (Про текстуру и материал game.Object)
-                                                           //к которому привязан скрипт
         anim = GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
                                          //к которому привязан скрипт
         Instance = this; //'this' - это ключевое слово, обозначающее класс, в котором выполняется код.

@@ -30,7 +30,7 @@ public class CameraFolow : MonoBehaviour
             Vector3 target = new Vector3()
             {
                 x = this._playerTransform.position.x,
-                y = this._playerTransform.position.y + 3.2f,
+                y = this._playerTransform.position.y + 1.2f,
                 z = this._playerTransform.position.z + 10,
             };
             Vector3 pos = Vector3.Lerp(this.transform.position, target, this._movingSpeed * Time.deltaTime);
