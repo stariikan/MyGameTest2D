@@ -56,12 +56,14 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\C#Scripts\CameraFolow.cs" />
-    <Compile Include="Assets\C#Scripts\Entity.cs" />
-    <Compile Include="Assets\C#Scripts\Spike.cs" />
-    <Compile Include="Assets\C#Scripts\hp_counter.cs" />
-    <Compile Include="Assets\C#Scripts\Enemy_Skelet.cs" />
-    <Compile Include="Assets\C#Scripts\Hero.cs" />
+    <Compile Include="Assets\C#Scripts\Camera\CameraFolow.cs" />
+    <Compile Include="Assets\C#Scripts\Enemy\Entity.cs" />
+    <Compile Include="Assets\C#Scripts\Magic\Projectile.cs" />
+    <Compile Include="Assets\C#Scripts\Hero\HeroAttack.cs" />
+    <Compile Include="Assets\C#Scripts\Traps\Spike.cs" />
+    <Compile Include="Assets\C#Scripts\UI\hp_counter.cs" />
+    <Compile Include="Assets\C#Scripts\Enemy\Enemy_Skelet.cs" />
+    <Compile Include="Assets\C#Scripts\Hero\Hero.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
