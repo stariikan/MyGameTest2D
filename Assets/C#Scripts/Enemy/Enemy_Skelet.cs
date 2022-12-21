@@ -29,30 +29,32 @@ public class Enemy_Skelet : Entity //наследование класса сущности (то есть метод
     }
     public void PlayerFollow() //Метод в котором описываем логику следования за игроком
     {
+        if (player)
+        {
+            float direction = player.transform.position.x - transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
 
-        float direction = player.transform.position.x - transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
-
-        if (Mathf.Abs(direction) < 4) //если меньше разница меньше 4 метров
-        {
-            Vector3 pos = transform.position; //то происходит изминение позиции
-            pos.x += Mathf.Sign(direction) * speed * Time.deltaTime;// тут высчитывается направление и скорость в секунду скелета
-                                                                    // (PS: MathF. Sign(Single) - это метод класса MathF, который возвращает целое число, определяющее знак числа)
-            transform.position = pos;//тут меняется позиция на ту что посчиталась в прошлой строке в формуле
-            isMoving = true;//Если этот метод выполняется переменная isMoving становиться правдой
+            if (Mathf.Abs(direction) < 4) //если меньше разница меньше 4 метров
+            {
+                Vector3 pos = transform.position; //то происходит изминение позиции
+                pos.x += Mathf.Sign(direction) * speed * Time.deltaTime;// тут высчитывается направление и скорость в секунду скелета
+                                                                        // (PS: MathF. Sign(Single) - это метод класса MathF, который возвращает целое число, определяющее знак числа)
+                transform.position = pos;//тут меняется позиция на ту что посчиталась в прошлой строке в формуле
+                isMoving = true;//Если этот метод выполняется переменная isMoving становиться правдой
+            }
+            else
+            {
+                isMoving = false;//Если этот метод перестает выполняется переменная isMoving становиться не правдой
+            }
+            if (direction > 0 && !flipRight) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+            {
+                Flip();
+            }
+            else if (direction < 0 && flipRight) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+            {
+                Flip();
+            }
         }
-        else
-        {
-            isMoving = false;//Если этот метод перестает выполняется переменная isMoving становиться не правдой
-        }
-        if (direction > 0 && !flipRight) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
-        {
-            Flip();
-        }
-        else if (direction < 0 && flipRight) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
-        {
-            Flip();
-        }
-        
+                       
     }
     private void Start()
     {
@@ -93,6 +95,11 @@ public class Enemy_Skelet : Entity //наследование класса сущности (то есть метод
         {
             Hero.Instance.GetDamage(); //Из скрипта Hero вызывается публичный метод который меняет переменную hp -= 10.         
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)//если снаряд с тригером поподает по врагу то ему наноситься урон
+    {
+        Damaged();
     }
     void Update() //тут складывать буду основные действия методы (который должен использовать враг)
     {

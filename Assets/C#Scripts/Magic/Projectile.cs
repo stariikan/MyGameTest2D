@@ -11,7 +11,7 @@ public class Projectile : MonoBehaviour
     
     private BoxCollider2D boxCollider; //Коллайдер магии
     private Animator anim; //переменная для аниматора
-
+   
     private void Awake() //Действие выполняется до старта игры и 1 раз
     {
         anim = GetComponent<Animator>(); // вытаскиваем информацию из компанента аниматор
@@ -24,21 +24,16 @@ public class Projectile : MonoBehaviour
         float movementSpeed = Speed * Time.deltaTime * direction; // вычисление скорости перемещения в секунду и в каком направлении полетит снаряд
         transform.Translate(movementSpeed, 0, 0);//ось х = movementspeed, y = 0, z=0 - все это перемещение по оси x
 
-        lifetime += Time.deltaTime;
-        if (lifetime > 5) gameObject.SetActive(false);
+        lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
+        if (lifetime > 5) gameObject.SetActive(false);//когда переменная достигает 5, снаряд исчезает
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         hit = true; //тут указываем что произошло столкновение
         boxCollider.enabled = false; //отключаем коллайдер
         anim.SetTrigger("explode");//для воспроизведения анимации атаки снарядом при выполнения тригера magicAttack
-        if (collision.gameObject == Enemy_Skelet.Instance.gameObject) //Если скелет соприкасается именно с героем 
-                                                                        //(тут получается ссылка на скрипт Hero и оттуда берется gameObject)
-        {
-            Enemy_Skelet.Instance.Damaged(); //Из скрипта Hero вызывается публичный метод который меняет переменную hp -= 10.         
-        }
     }
+
     public void SetDirection(float _direction)// выбор направления полета 
     {
 

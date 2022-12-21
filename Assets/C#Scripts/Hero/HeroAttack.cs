@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeroAttack : MonoBehaviour
+public class HeroAttack : Hero
 {
     [SerializeField] private float attackCooldown;//кулдаун запуска снар€да (магии)
     [SerializeField] private Transform firePoint; //ѕозици€ из которых будет выпущены снар€ди
