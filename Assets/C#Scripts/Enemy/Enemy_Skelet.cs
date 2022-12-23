@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Skelet : Entity //наследование класса сущности (то есть методы которые используются в Entity будут применены и к этому обьекту)
+public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то есть методы которые используются в Entity будут применены и к этому обьекту)
 {
     // Start is called before the first frame update
-    [SerializeField] public int hp = 30; //жизни скелета
     [SerializeField] private float speed = 2f;//параметр скорости скелета
     [SerializeField] private float speed2 = 2f;//параметр скорости скелета 2 параметр нужен для восстановление скорости по умолчанию (после остановки перед пропастью и наверное после замедлений которых я еще не придумал))
+    
     GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
     public Rigidbody2D rb; //Физическое тело
     public LayerMask groundLayers;//это будут слои которые будут проверятся
     public Transform groundcheck;// проверка соприкасается ли метка (которую мы создали с землей)
 
-    public static Enemy_Skelet Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     private bool isMoving = false;
-    private Animator skelet_anim; //Переменная благодаря которой анимирован обьект, переменная = skelet_anim
+    private Animator anim; //Переменная благодаря которой анимирован обьект, переменная = skelet_anim
 
     private bool flipRight = true; //Поворот спрайта на право, состояние = правда, нужно для поворота спрайта во время смены движения
     RaycastHit2D hit; //тут будем получать информацию с чем сталкивается обьект
@@ -77,17 +76,7 @@ public class Enemy_Skelet : Entity //наследование класса сущности (то есть метод
             speed = speed2;//если обьект ground check вновь сталкивается с полом (видит землю), то возвращаем показатель скорости.
         }
     }
-    public void Damaged() //Метод для получения урона скелетом                             
-    {
 
-        hp -= 10;//Отнимает int 10 из переменной hp (жизни).
-        skelet_anim.SetTrigger("damage");
-        Debug.Log("Skelet hp =" + hp);//написание в логах количества жизней у скелета
-        if (hp <= 0) //Если жизней меньше 0,
-        {
-            Destroy(this.gameObject);//то смерть и уничтожение gameObject, это публичный метод из скрипта Entity 
-        }
-    }
     private void OnCollisionEnter2D(Collision2D collision) //тут будет описан как и по кому будет наносить урон скелет
     {
         if (collision.gameObject == Hero.Instance.gameObject) //Если скелет соприкасается именно с героем 
@@ -97,17 +86,10 @@ public class Enemy_Skelet : Entity //наследование класса сущности (то есть метод
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)//если снаряд с тригером поподает по врагу то ему наноситься урон
-    {
-        Damaged();
-    }
     void Update() //тут складывать буду основные действия методы (который должен использовать враг)
     {
        
         PlayerFollow();
-
-        if (hp < 0)//если hp меньше или равно 0
-            Die();//то смерть и уничтожение gameObject, это публичный метод из скрипта Entity
 
         //Стейты анимации
         if (isMoving == false) State = States.idle;//если не двигается значит анимации ожидания
@@ -124,8 +106,8 @@ public class Enemy_Skelet : Entity //наследование класса сущности (то есть метод
     }
     private States State //Создание стейтмашины, переменная = State. Значение состояния может быть передано или изминено извне благодаря get и set
     {
-        get { return (States)skelet_anim.GetInteger("State"); }
-        set { skelet_anim.SetInteger("State", (int)value); }
+        get { return (States)anim.GetInteger("State"); }
+        set { anim.SetInteger("State", (int)value); }
     }
     void Awake() //Awake используется для инициализации любых переменных или игрового состояния перед началом игры.
                  //Awake вызывается только один раз за все время существования экземпляра сценария.
@@ -134,10 +116,8 @@ public class Enemy_Skelet : Entity //наследование класса сущности (то есть метод
     {
         rb = GetComponent<Rigidbody2D>(); //Переменная rb получает компонент Rigidbody2D (Физика game.Object)
                                           //к которому привязан скрипт
-        skelet_anim = GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
+        anim = GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
                                          //к которому привязан скрипт
-        Instance = this; //'this' - это ключевое слово, обозначающее класс, в котором выполняется код.
-                         //Насколько мне известно, оно никогда не требуется, но делает код более читабельным this. transform. position and transform.
     }
 
 }
