@@ -19,10 +19,10 @@ public class HeroAttack : Hero
     public Transform magicAttackPoint; //“ут мы ссылаемс€ на точку котора€ €вл€етс€ дочерним обьектом магии (нужна дл€ реализации маг атаки)
 
     private float cooldownTimer = Mathf.Infinity; //≈сли мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown. ѕоэтому мы поставим тут бесконечность или можно поставить любое большое число
-    public float attackRange = 0.5f; //ƒальность физ атаки
+    public float attackRange = 0.4f; //ƒальность физ атаки
     public int attackDamage = 20; // ”рон от физ атаки
 
-    public LayerMask enemyLayers; //ћаска сло€ к которому принадлежат игроки
+    public LayerMask enemyLayers; //ћаска сло€ к которому принадлежат враги
 
     private void Attack()
     {
@@ -77,11 +77,11 @@ public class HeroAttack : Hero
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) && cooldownTimer > AttackCooldown) //если нажать на правую кнопку мыши и кулдаун таймер > чем значение AttackCooldown, то можно производить физ атаку
-            Attack(); // выполнени€ анимации маг атаки
+        Attack(); // выполнени€ атаки
         cooldownTimer += Time.deltaTime; //прибавление по 1 секунде к cooldownTimer после его обнулени€ при выполенении метода Attack.
         
         if (Input.GetMouseButtonDown(1) && MagicCooldownTimer > magicAttackCooldown) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
-        magicAttack(); // выполнени€ анимации маг атаки
+        magicAttack(); // выполнени€ маг атаки
         MagicCooldownTimer += Time.deltaTime; //прибавление по 1 секунде к MagicCooldownTimer после его обнулени€ при выполенении метода magicAttack.
     }
 

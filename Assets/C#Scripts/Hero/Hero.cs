@@ -25,23 +25,35 @@ public class Hero : MonoBehaviour
         run,
         jump
     }
-    public void GetDamage() //Мы создаем новый метод GetDamage() 
-                            //Пишет изменившееся значение в лог и 
-    {
-       
-       hp -= 10;//Отнимает int 10 из переменной hp (жизни).
-        anim.SetTrigger("damage");
-        if (hp <= 0) //Если жизней меньше 0,
-       {
-            Destroy(this.gameObject);//то смерть и уничтожение gameObject, это публичный метод из скрипта Entity 
-        }
-    }
     private void OnCollisionEnter2D(Collision2D collision) //OnCollisionEnter вызывается, когда этот колайдер/тело начинает касаться другого тела/коллайдера.
                                                            //В отличие от OnTriggerEnter, OnCollisionEnter передается класс Collision, а не Collider.
                                                            //Класс Collision содержит информацию, например, о точках контакта и скорости удара.
     {
         isGrounded = true; //Если персонаж касается другого тела, считается что он на земле
     }
+    public void Push() //Метод для отталкивания тела во время получения урона
+    {
+        if (transform.localScale.x < 0) //Условия чтобы определить в куда оттолкнется враг
+        {
+            GetComponent<Rigidbody2D>().AddForce(new Vector3(-50, 0, 0));
+        }
+        else
+        {
+            GetComponent<Rigidbody2D>().AddForce(new Vector3(50, 0, 0));
+        }
+    }
+    public void GetDamage(int dmg) //Мы создаем новый метод GetDamage() 
+                            //Пишет изменившееся значение в лог и 
+    {
+        hp -= dmg;//Отнимает int 10 из переменной hp (жизни).
+        anim.SetTrigger("damage");
+        Push();
+        if (hp <= 0) //Если жизней меньше 0
+        {
+            Destroy(this.gameObject);//то смерть и уничтожение gameObject, это публичный метод из скрипта Entity 
+        }
+    }
+
     public void Hero_hp() //Метод который просто вызывает значение переменной HP, нужен мне был для передачи этого числа в скрипт с каунтером жизней
     {
         Debug.Log(hp);
@@ -53,7 +65,13 @@ public class Hero : MonoBehaviour
         theScale.x *= -1;//тут происходит переворот изображения например 140 меняется на -140 тем самым полностью измени направление спрайта (картинка отзеркаливается)
         transform.localScale = theScale; //Масштаб преобразования относительно родительского объекта GameObjects
     }
-
+    private void DieByFall() //Метод который наносит урон при падении с платформы
+    {
+        if (rb.transform.position.y < -10)//если координаты игрока по оси y меньше 10, то происходит вызов метода GetDamage
+        {
+            GetDamage(100);
+        }
+    }
     public void AnimState()
     {
         if (isGrounded) State = States.idle;//если мы на земле State = idle
@@ -97,7 +115,6 @@ public class Hero : MonoBehaviour
                                                    //от числа который мы ввели в переменной fallingGravityScale
         }
     } //Метод для поворота спрайта персонажа
-
     void Awake() //Awake используется для инициализации любых переменных или игрового состояния перед началом игры.
                  //Awake вызывается только один раз за все время существования экземпляра сценария.
                  //Вызов Awake происходит после инициализации всех объектов, поэтому можно безопасно обращаться к другим объектам
@@ -110,15 +127,11 @@ public class Hero : MonoBehaviour
         Instance = this; //'this' - это ключевое слово, обозначающее класс, в котором выполняется код.
                          //Насколько мне известно, оно никогда не требуется, но делает код более читабельным this. transform. position and transform.
     }
-
     void Update() //Update = выполнение функции каждый каждый кадр.
     {
         PlayerMovement();//Метод для движения и поворота спрайта персонажа
         AnimState();//Метод для передачи состояния в аниматор
-        //Debug.Log(State);
-
-
-
+        DieByFall();//Метод для смерти от падения
     }
 
 }
