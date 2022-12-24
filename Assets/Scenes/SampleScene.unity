@@ -278,7 +278,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &58280616
 BoxCollider2D:
@@ -514,7 +514,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156711576}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -57.11, y: 0.73, z: -1.0353305}
+  m_LocalPosition: {x: -57.64, y: 0.73, z: -1.0353305}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 875842560}
@@ -551,7 +551,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 164038719}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -49.146, y: 0.261, z: -0.49251086}
+  m_LocalPosition: {x: -49.146, y: 3.15, z: -0.49251086}
   m_LocalScale: {x: 0.775, y: 0.6875, z: 1}
   m_Children:
   - {fileID: 264195365}
@@ -851,7 +851,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 241636411}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -50.73, y: -0.03, z: -61.34656}
+  m_LocalPosition: {x: -54.09, y: 1.27, z: -61.34656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1040680878}
@@ -960,8 +960,8 @@ MonoBehaviour:
   gravityScale: 10
   fallingGravityScale: 40
   hp: 100
-  magicAttackCooldown: 0
-  AttackCooldown: 0
+  magicAttackCooldown: 2
+  AttackCooldown: 1
   firePoint: {fileID: 2008598727}
   magicProjectile:
   - {fileID: 58280612}
@@ -974,12 +974,12 @@ MonoBehaviour:
   - {fileID: 461595119}
   - {fileID: 1073245329}
   - {fileID: 1688770002}
-  magicAttackDamage: 30
-  magicAttackRange: 0.4
+  magicAttackDamage: 20
+  magicAttackRange: 0.2
   attackPoint: {fileID: 1849766869}
   magicAttackPoint: {fileID: 58280613}
-  attackRange: 0.6
-  attackDamage: 20
+  attackRange: 0.5
+  attackDamage: 15
   enemyLayers:
     serializedVersion: 2
     m_Bits: 128
@@ -1312,7 +1312,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &340922638
 BoxCollider2D:
@@ -1479,7 +1479,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &461595123
 BoxCollider2D:
@@ -1646,7 +1646,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &517270869
 BoxCollider2D:
@@ -2075,8 +2075,8 @@ GameObject:
   - component: {fileID: 766312951}
   - component: {fileID: 766312952}
   - component: {fileID: 766312953}
-  - component: {fileID: 766312950}
   - component: {fileID: 766312949}
+  - component: {fileID: 766312950}
   - component: {fileID: 766312955}
   m_Layer: 7
   m_Name: EnemySkelet
@@ -2097,17 +2097,17 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.58439404
+  m_Mass: 0.3787275
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
---- !u!70 &766312950
-CapsuleCollider2D:
+  m_CollisionDetection: 0
+  m_Constraints: 5
+--- !u!61 &766312950
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2119,9 +2119,19 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.13613294, y: 0.0648287}
-  m_Size: {x: 0.5233366, y: 1.1296574}
-  m_Direction: 0
+  m_Offset: {x: -0.07906857, y: -0.05120659}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 1.1738582}
+  m_EdgeRadius: 0
 --- !u!4 &766312951
 Transform:
   m_ObjectHideFlags: 0
@@ -2152,7 +2162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  speed2: 2
+  speedRecovery: 1
   attackDamage: 7
   rb: {fileID: 766312949}
   groundLayers:
@@ -2171,14 +2181,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e4179395e579f94ca80888256941541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 10000
-  AttackCooldown: 0
+  maxHP: 100
+  AttackCooldown: 1
   enemyAttackRange: 0.4
   enemyAttackDamage: 7
-  enemyAttackPoint: {fileID: 0}
+  enemyAttackPoint: {fileID: 113079286}
   playerLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
 --- !u!95 &766312955
 Animator:
   serializedVersion: 3
@@ -2537,7 +2547,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &1073245333
 BoxCollider2D:
@@ -3042,7 +3052,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &1308362157
 BoxCollider2D:
@@ -3209,7 +3219,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &1484090153
 BoxCollider2D:
@@ -3376,7 +3386,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &1511177404
 BoxCollider2D:
@@ -3707,7 +3717,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &1657240927
 BoxCollider2D:
@@ -3874,7 +3884,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &1688770006
 BoxCollider2D:
@@ -4120,7 +4130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1819064537}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -44.61, y: 1.98, z: -1.0353305}
+  m_LocalPosition: {x: -46.93, y: 2.27, z: -1.0353305}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1642161898}

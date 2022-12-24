@@ -13,7 +13,6 @@ public class Hero : MonoBehaviour
     [SerializeField] public int hp = 100; // оличество жизней
     private Rigidbody2D rb; //“ело с физической переменной к которому принадлежит скрипт, переменна€ = rb
     private Animator anim; //ѕеременна€ благодар€ которой анимирован обьект, переменна€ = anim
-
     private States State //—оздание стейтмашины, переменна€ = State. «начение состо€ни€ может быть передано или изминено извне благодар€ get и set
     {
         get { return (States)anim.GetInteger("State"); }
@@ -35,11 +34,11 @@ public class Hero : MonoBehaviour
     {
         if (transform.localScale.x < 0) //”слови€ чтобы определить в куда оттолкнетс€ враг
         {
-            GetComponent<Rigidbody2D>().AddForce(new Vector3(-50, 0, 0));
+            GetComponent<Rigidbody2D>().AddForce(new Vector3(50, 0, 0));
         }
         else
         {
-            GetComponent<Rigidbody2D>().AddForce(new Vector3(50, 0, 0));
+            GetComponent<Rigidbody2D>().AddForce(new Vector3(-50, 0, 0));
         }
     }
     public void GetDamage(int dmg) //ћы создаем новый метод GetDamage() 
@@ -50,10 +49,14 @@ public class Hero : MonoBehaviour
         Push();
         if (hp <= 0) //≈сли жизней меньше 0
         {
-            Destroy(this.gameObject);//то смерть и уничтожение gameObject, это публичный метод из скрипта Entity 
+            anim.SetTrigger("death");
+            maxSpeed = 0;
         }
     }
-
+    private void Deactivate() //деактиваци€ игрока после завершени€ анимации смерти (благодор€ метки в аниматоре выполн€етс€ этот метод
+    {
+        gameObject.SetActive(false);
+    }
     public void Hero_hp() //ћетод который просто вызывает значение переменной HP, нужен мне был дл€ передачи этого числа в скрипт с каунтером жизней
     {
         Debug.Log(hp);

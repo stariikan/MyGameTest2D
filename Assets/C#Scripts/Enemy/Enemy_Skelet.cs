@@ -5,8 +5,8 @@ using UnityEngine;
 public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то есть методы которые используются в Entity будут применены и к этому обьекту)
 {
     // Start is called before the first frame update
-    [SerializeField] private float speed = 2f;//параметр скорости скелета
-    [SerializeField] private float speed2 = 2f;//параметр скорости скелета 2 параметр нужен для восстановление скорости по умолчанию (после остановки перед пропастью и наверное после замедлений которых я еще не придумал))
+    [SerializeField] private float speed = 1f;//параметр скорости скелета
+    [SerializeField] private float speedRecovery = 1f;//параметр скорости скелета 2 параметр нужен для восстановление скорости по умолчанию (после остановки перед пропастью и наверное после замедлений которых я еще не придумал))
     public int attackDamage = 7;
 
     GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
@@ -23,8 +23,7 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
     public enum States //Определения какие бывают состояния, указал названия как в Аниматоре Unity
     {
         idle,
-        run,
-        jump
+        run
     }
     private States State //Создание стейтмашины, переменная = State. Значение состояния может быть передано или изминено извне благодаря get и set
     {
@@ -78,7 +77,6 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
     {
         if (isMoving == false) State = States.idle;//если не двигается значит анимации ожидания
         if (isMoving) State = States.run;//если координаты скелета поменялись, то State = run
-        if (!hit.collider) State = States.jump; //и если мы не на земле State = jump. Это все нужно чтобы менялась анимация
     }
     private void Start() //События которые должны произойти при старте игры
     {
@@ -100,22 +98,11 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
         }
         else
         {
-            speed = speed2;//если обьект ground check вновь сталкивается с полом (видит землю), то возвращаем показатель скорости.
+            speed = speedRecovery;//если обьект ground check вновь сталкивается с полом (видит землю), то возвращаем показатель скорости.
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D collision) //тут будет описан как и по кому будет наносить урон скелет
-    {
-        if (collision.gameObject == Hero.Instance.gameObject) //Если скелет соприкасается именно с героем 
-                                                              //(тут получается ссылка на скрипт Hero и оттуда берется gameObject)
-        {
-            Hero.Instance.GetDamage(attackDamage); //Из скрипта Hero вызывается публичный метод который меняет переменную hp -= 10.         
-        }
-    }
-
     void Update() //тут складывать буду основные действия методы (который должен использовать враг)
     {
-       
         PlayerFollow();
         DieByFall();
         AnimState();

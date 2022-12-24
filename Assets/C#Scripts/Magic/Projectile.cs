@@ -32,6 +32,7 @@ public class Projectile : MonoBehaviour
         hit = true; //тут указываем что произошло столкновение
         boxCollider.enabled = false; //отключаем коллайдер
         anim.SetTrigger("explode");//для воспроизведения анимации атаки снарядом при выполнения тригера magicAttack
+        //Deactivate();
     }
 
     public void SetDirection(float _direction)// выбор направления полета 

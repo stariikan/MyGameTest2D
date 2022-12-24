@@ -13,7 +13,6 @@ public class Entity : MonoBehaviour
     public Transform enemyAttackPoint; //Тут мы ссылаемся на точку которая является дочерним обьектом игрока (нужна для реализации физ атаки)
     public LayerMask playerLayers;
     public static Entity Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    
     private Animator anim;
     private void Start()
     {
@@ -24,13 +23,16 @@ public class Entity : MonoBehaviour
     }
     private void Attack()
     {
-        //Anim.SetTrigger("Attack");//для воспроизведения анимации атаки при выполнения тригера Attack
-        cooldownTimer = 0;
-        Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(enemyAttackPoint.position, enemyAttackRange, playerLayers); //Создает круг из точки attackPoint c радиусом который мы указываем
-        foreach (Collider2D enemy in hitEnemys)
+        if (cooldownTimer > AttackCooldown)
         {
-            enemy.GetComponent<Entity>().TakeDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту врага Entity и активируем оттуда функцию TakeDamage и
-                                                                  //урон прописан у нас в attackDamage
+            //Anim.SetTrigger("Attack");//для воспроизведения анимации атаки при выполнения тригера Attack
+            cooldownTimer = 0;
+            Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(enemyAttackPoint.position, enemyAttackRange, playerLayers); //Создает круг из точки attackPoint c радиусом который мы указываем
+            foreach (Collider2D enemy in hitEnemys)
+            {
+                enemy.GetComponent<Hero>().GetDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту врага Entity и активируем оттуда функцию TakeDamage и
+                                                                        //урон прописан у нас в attackDamage
+            }
         }
     }
     public void Push() //Метод для отталкивания тела во время получения урона
@@ -49,15 +51,22 @@ public class Entity : MonoBehaviour
         currentHP -= dmg;
         anim.SetTrigger("damage");//анимация получения демейджа
         Push();
+        Debug.Log(currentHP);
         if (currentHP <= 0)
         {
-            Die();
+            anim.SetTrigger("death");//анимация смерти
+            Debug.Log("Enemy Defeat");
         }
     }
-    public virtual void Die() //Обьявляем публичный метод Die
+    public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти
     {
-        //anim.SetTrigger("death");//анимация смерти
-        Debug.Log("Enemy Defeat");
         Destroy(this.gameObject);//уничтожить этот игровой обьект
+    }
+    private void Update()
+    {
+        cooldownTimer += Time.deltaTime; // прибавление времени к кулдаун таймеру
+        Attack();
+        
+            
     }
 }
