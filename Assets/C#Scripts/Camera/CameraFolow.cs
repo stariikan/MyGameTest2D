@@ -9,11 +9,10 @@ public class CameraFolow : MonoBehaviour
 
     private void Awake()
     {
-        this.transform.position = new Vector3()
+        this.transform.position = new Vector2()
         {
             x = this._playerTransform.position.x,
-            y = this._playerTransform.position.y + 3.2f,
-            z = this._playerTransform.position.z + 10,
+            y = this._playerTransform.position.y + 3.2f
         };
     }
     // Start is called before the first frame update
@@ -27,13 +26,12 @@ public class CameraFolow : MonoBehaviour
     {
         if(this._playerTransform)
         {
-            Vector3 target = new Vector3()
+            Vector3 target = new Vector2()
             {
                 x = this._playerTransform.position.x,
-                y = this._playerTransform.position.y + 1.2f,
-                z = this._playerTransform.position.z + 10,
+                y = this._playerTransform.position.y + 1.2f
             };
-            Vector3 pos = Vector3.Lerp(this.transform.position, target, this._movingSpeed * Time.deltaTime);
+            Vector3 pos = Vector2.Lerp(this.transform.position, target, this._movingSpeed * Time.deltaTime);
             this.transform.position = pos;
         }
     }
