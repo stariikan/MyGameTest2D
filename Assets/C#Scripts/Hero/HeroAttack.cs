@@ -9,21 +9,16 @@ public class HeroAttack : Hero
     [SerializeField] private Transform firePoint; //Позиция из которых будет выпущены снаряди
     [SerializeField] private GameObject[] magicProjectile; //Массив наших снарядов
 
-    
-    private float MagicCooldownTimer = Mathf.Infinity; //Если мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown. Поэтому мы поставим тут бесконечность или можно поставить любое большое число
-    public int magicAttackDamage = 30;
-    public float magicAttackRange = 1f;
-
-    private Animator Anim; //Переменная для работы с Анимацией
+    public Animator Anim; //Переменная для работы с Анимацией
     public Transform attackPoint; //Тут мы ссылаемся на точку которая является дочерним обьектом игрока (нужна для реализации физ атаки)
-    public Transform magicAttackPoint; //Тут мы ссылаемся на точку которая является дочерним обьектом магии (нужна для реализации маг атаки)
 
     private float cooldownTimer = Mathf.Infinity; //Если мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown. Поэтому мы поставим тут бесконечность или можно поставить любое большое число
-    public float attackRange = 0.4f; //Дальность физ атаки
+    private float MagicCooldownTimer = Mathf.Infinity; //Если мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown. Поэтому мы поставим тут бесконечность или можно поставить любое большое число
+
     public int attackDamage = 20; // Урон от физ атаки
-    private bool magicHit = true; //есть ли попадание маг снарядом
-    private bool swordHit = true; //есть ли попадание мечем по цели
-    public LayerMask enemyLayers; //Маска слоя к которому принадлежат враги
+    public float attackRange = 0.4f; //Дальность физ атаки
+    private bool swordHit = false; //есть ли попадание мечем по цели
+
 
     private void OnDrawGizmosSelected() //позволяет отобразить круг который появляется в методе Attack
     {
@@ -44,38 +39,8 @@ public class HeroAttack : Hero
         magicProjectile[FindMagicBall()].transform.position = firePoint.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
         magicProjectile[FindMagicBall()].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
     }
-    private void checkMagicball() //проверка попадания маг снарядом
-    {
-        Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(magicAttackPoint.position, attackRange, enemyLayers); //Создает круг из точки attackPoint c радиусом который мы указываем
-        foreach (Collider2D enemy in hitEnemys)
-        {
-            magicHit = true;// Есть попадание по цели
-            //Debug.Log(enemy.name);//использовал для проверки того понимает ли шар в кого он попапл
-        }
-    }
-    private void checkSword() //проверка попадания мечем
-    {
-        Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(attackPoint.position, magicAttackRange, enemyLayers); //Создает круг из точки attackPoint c радиусом который мы указываем
-        foreach (Collider2D enemy in hitEnemys)
-        {
-            swordHit = true;
-            //Debug.Log(enemy.name);
-        }
-    }
-    private void magicDamage() // нанесения урона магией
-    {
-        if (magicHit == true )
-        {
-            Entity.Instance.TakeDamage(magicAttackDamage);//тут мы получаем доступ к скрипту врага Entity и активируем оттуда функцию TakeDamage и урон прописан у нас в attackDamage
-            magicHit = false;
-        }
-    }
     private void swordDamage() // нанесения урона мечем
     {
-        if (swordHit == true)
-        {
-            Entity.Instance.TakeDamage(magicAttackDamage);//тут мы получаем доступ к скрипту врага Entity и активируем оттуда функцию TakeDamage и урон прописан у нас в attackDamage
-        }
     }
     private void attackControl()
     {
@@ -88,7 +53,6 @@ public class HeroAttack : Hero
         if (Input.GetMouseButtonDown(1) && MagicCooldownTimer > magicAttackCooldown) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
         {
             magicAttack(); // выполнения маг атаки
-            magicDamage(); // на ненесение урона от магии
         }
     }
     private int FindMagicBall()// метод для перебора огненных шаров от 0 до +1 пока не дойдет до неактивного снаряда
@@ -108,8 +72,6 @@ public class HeroAttack : Hero
     {
         cooldownTimer += Time.deltaTime; //прибавление по 1 секунде к cooldownTimer после его обнуления при выполенении метода Attack.
         MagicCooldownTimer += Time.deltaTime; //прибавление по 1 секунде к MagicCooldownTimer после его обнуления при выполенении метода magicAttack.
-        checkMagicball();//проверка попадания маг снарядом по цели
-        checkSword();//проверка попадания мечем по цели
         attackControl();//атака с помощью мышки
     }
 

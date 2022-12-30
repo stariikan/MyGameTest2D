@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public static Projectile Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     public float direction;//переменная направления
     [SerializeField] private float Speed; //Скорость снаряда
     [SerializeField] private float lifetime; //длительность жизни снаряда
@@ -11,33 +12,47 @@ public class Projectile : MonoBehaviour
     
     private BoxCollider2D boxCollider; //Коллайдер магии
     private Animator anim; //переменная для аниматора
-   
+
+    public int magicAttackDamage = 30;
+    public string magicTargetName;
+    public GameObject target;
+
+
     private void Awake() //Действие выполняется до старта игры и 1 раз
     {
         anim = GetComponent<Animator>(); // вытаскиваем информацию из компанента аниматор
         boxCollider = GetComponent<BoxCollider2D>(); // вытаскиваем информацию из компанента бокс колайдер
+        Instance = this;
     }
 
     private void Update()
     {
+        
         if (hit) return; //проверка попадания огненого шара во что-нибудь
         float movementSpeed = Speed * Time.deltaTime * direction; // вычисление скорости перемещения в секунду и в каком направлении полетит снаряд
         transform.Translate(movementSpeed, 0, 0);//ось х = movementspeed, y = 0, z=0 - все это перемещение по оси x
-
         lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
         if (lifetime > 5) gameObject.SetActive(false);//когда переменная достигает 5, снаряд исчезает
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        magicTargetName = collision.gameObject.name;
         hit = true; //тут указываем что произошло столкновение
         boxCollider.enabled = false; //отключаем коллайдер
         anim.SetTrigger("explode");//для воспроизведения анимации атаки снарядом при выполнения тригера magicAttack
+        DamageObject();
+        magicTargetName = string.Empty;
         //Deactivate();
     }
+    public void DamageObject()
+    {
+        Debug.Log(magicTargetName);
+        target = GameObject.Find(magicTargetName);
+        target.GetComponent<Entity>().TakeDamage(magicAttackDamage);
 
+    }
     public void SetDirection(float _direction)// выбор направления полета 
     {
-
         lifetime = 0;
         gameObject.SetActive(true); //активация игрового обьекта
         direction = _direction;

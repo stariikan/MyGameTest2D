@@ -60,11 +60,11 @@
     <Compile Include="Assets\C#Scripts\Enemy\Entity.cs" />
     <Compile Include="Assets\C#Scripts\Magic\Projectile.cs" />
     <Compile Include="Assets\C#Scripts\Hero\HeroAttack.cs" />
+    <Compile Include="Assets\C#Scripts\LevelGeneration\LvLGeneration.cs" />
     <Compile Include="Assets\C#Scripts\Traps\Spike.cs" />
     <Compile Include="Assets\C#Scripts\UI\hp_counter.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Enemy_Skelet.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Hero.cs" />
-    <Compile Include="Assets\C#Scripts\LevelGeneration\LvLGeneration.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

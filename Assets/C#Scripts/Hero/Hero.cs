@@ -49,8 +49,8 @@ public class Hero : MonoBehaviour
         Push();
         if (hp <= 0) //Если жизней меньше 0
         {
-            anim.SetTrigger("death");
             maxSpeed = 0;
+            anim.SetTrigger("death");
         }
     }
     private void Deactivate() //деактивация игрока после завершения анимации смерти (благодоря метки в аниматоре выполняется этот метод
@@ -70,7 +70,7 @@ public class Hero : MonoBehaviour
     }
     private void DieByFall() //Метод который наносит урон при падении с платформы
     {
-        if (rb.transform.position.y < -10)//если координаты игрока по оси y меньше 10, то происходит вызов метода GetDamage
+        if (rb.transform.position.y < -100)//если координаты игрока по оси y меньше 10, то происходит вызов метода GetDamage
         {
             GetDamage(100);
         }

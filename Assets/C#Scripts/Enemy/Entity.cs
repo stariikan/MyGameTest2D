@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public int maxHP = 100; //Максимальные жизни скелета
+    private int maxHP = 100; //Максимальные жизни скелета
     int currentHP;
     [SerializeField] private float AttackCooldown;//кулдаун Атаки (физ)
     public float enemyAttackRange = 0.4f; //Дальность физ атаки
@@ -48,19 +48,19 @@ public class Entity : MonoBehaviour
     }
     public void TakeDamage(int dmg) //Метод для получения дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
     {
-        currentHP -= dmg;
         anim.SetTrigger("damage");//анимация получения демейджа
+        currentHP -= dmg;
         Push();
-        Debug.Log(currentHP);
+        Debug.Log(currentHP + " " + gameObject.name);
         if (currentHP <= 0)
         {
             anim.SetTrigger("death");//анимация смерти
-            Debug.Log("Enemy Defeat");
+            Debug.Log("Enemy Defeat -> " + gameObject.name);
         }
     }
     public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти
     {
-        Destroy(this.gameObject);//уничтожить этот игровой обьект
+        gameObject.SetActive(false);//уничтожить этот игровой обьект
     }
     private void Update()
     {
