@@ -46,12 +46,12 @@ public class LvLGeneration : MonoBehaviour
 
             newBlock.transform.localScale = size; //задаем размер обьекта
             position.x += size.x; //позиция по X, чтобы всегда была чуть дальше чем прошлый
-            position.y += size.y * Random.Range(-1, 1); //позиция по Y, рандомная
+            position.y += size.y * Random.Range(-2, 2); //позиция по Y, рандомная
             newBlock.transform.position = position; // присваиваем позицию новомоу обьекту
 
             GameObject enemy = Instantiate(enemyForGeneration, new Vector2(position.x + Random.Range(-2, -1), position.y + 4), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
             enemy.name = "Enemy" + Random.Range(1, 100);
-            //Instantiate(trapsForGeneration, new Vector2(position.x + Random.Range(0, 1), position.y + 0.8f), Quaternion.identity);// Клонирования обьекта(ловушка) и его координаты)
+            Instantiate(trapsForGeneration, new Vector2(position.x + Random.Range(0, 1), position.y + 0.8f), Quaternion.identity);// Клонирования обьекта(ловушка) и его координаты)
 
             yield return new WaitForEndOfFrame(); //ожидания установки блоков
         }

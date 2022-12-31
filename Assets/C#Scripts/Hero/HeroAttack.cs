@@ -8,6 +8,7 @@ public class HeroAttack : Hero
     [SerializeField] private float AttackCooldown;//кулдаун јтаки (физ)
     [SerializeField] private Transform firePoint; //ѕозици€ из которых будет выпущены снар€ди
     [SerializeField] private GameObject[] magicProjectile; //ћассив наших снар€дов
+    [SerializeField] private GameObject meleeAttackArea; // ‘из оружее
 
     public Animator Anim; //ѕеременна€ дл€ работы с јнимацией
     public Transform attackPoint; //“ут мы ссылаемс€ на точку котора€ €вл€етс€ дочерним обьектом игрока (нужна дл€ реализации физ атаки)
@@ -30,7 +31,9 @@ public class HeroAttack : Hero
     {
        Anim.SetTrigger("Attack");//дл€ воспроизведени€ анимации атаки при выполнени€ тригера Attack
        cooldownTimer = 0;
-       
+       meleeAttackArea.transform.position = firePoint.position; //ѕри каждой атаки мы будем мен€ть положени€ снар€да и задавать ей положение огневой точки получить компонент из снар€да и отправить его в направление в котором находитьс€ игрок
+       meleeAttackArea.GetComponent<MeleeWeapon>().meleeDirection(Mathf.Sign(transform.localScale.x));
+
     }
     private void magicAttack()
     {
@@ -39,15 +42,11 @@ public class HeroAttack : Hero
         magicProjectile[FindMagicBall()].transform.position = firePoint.position; //ѕри каждой атаки мы будем мен€ть положени€ снар€да и задавать ей положение огневой точки получить компонент из снар€да и отправить его в направление в котором находитьс€ игрок
         magicProjectile[FindMagicBall()].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
     }
-    private void swordDamage() // нанесени€ урона мечем
-    {
-    }
     private void attackControl()
     {
         if (Input.GetMouseButtonDown(0) && cooldownTimer > AttackCooldown)// если нажать на правую кнопку мыши и кулдаун таймер > чем значение AttackCooldown, то можно производить физ атаку
         {
             Attack(); // выполнени€ атаки
-            swordDamage();// на несение урона от меча
         }
 
         if (Input.GetMouseButtonDown(1) && MagicCooldownTimer > magicAttackCooldown) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
