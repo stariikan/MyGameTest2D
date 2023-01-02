@@ -13,14 +13,10 @@ public class CameraFolow : MonoBehaviour
         {
             x = this._playerTransform.position.x,
             y = this._playerTransform.position.y + 3.2f,
-            z = this._playerTransform.position.z + 10,
+            z = this._playerTransform.position.z - 5f
         };
     }
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -31,7 +27,8 @@ public class CameraFolow : MonoBehaviour
             {
                 x = this._playerTransform.position.x,
                 y = this._playerTransform.position.y + 1.2f,
-                z = this._playerTransform.position.z + 10,
+                z = this._playerTransform.position.z - 5f
+
             };
             Vector3 pos = Vector3.Lerp(this.transform.position, target, this._movingSpeed * Time.deltaTime);
             this.transform.position = pos;
