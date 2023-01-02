@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeroAttack : Hero
+public class HeroAttack : MonoBehaviour
 {
     [SerializeField] private float magicAttackCooldown;//кулдаун запуска снаряда (магии)
     [SerializeField] private float AttackCooldown;//кулдаун Атаки (физ)
@@ -10,23 +10,26 @@ public class HeroAttack : Hero
     [SerializeField] private GameObject[] magicProjectile; //Массив наших снарядов
     [SerializeField] private GameObject meleeAttackArea; // Физ оружее
 
+    public static HeroAttack Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+
     public Animator Anim; //Переменная для работы с Анимацией
     public Transform attackPoint; //Тут мы ссылаемся на точку которая является дочерним обьектом игрока (нужна для реализации физ атаки)
 
     private float cooldownTimer = Mathf.Infinity; //Если мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown. Поэтому мы поставим тут бесконечность или можно поставить любое большое число
     private float MagicCooldownTimer = Mathf.Infinity; //Если мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown. Поэтому мы поставим тут бесконечность или можно поставить любое большое число
-
-    public int attackDamage = 20; // Урон от физ атаки
-    public float attackRange = 0.4f; //Дальность физ атаки
-    private bool swordHit = false; //есть ли попадание мечем по цели
-
-
-    private void OnDrawGizmosSelected() //позволяет отобразить круг который появляется в методе Attack
+    public int maxMP = 100;
+    public int currentMP;
+    
+    private void Start()
     {
-        if (attackPoint == null)
-            return;
-        Gizmos.DrawSphere(attackPoint.position, attackRange); //нарисовать круг (центр круга у нас Attack point, размер круга attackRange)
+        maxMP = SaveSerial.Instance.playerMP;
+        if (maxMP == 0)
+        {
+            maxMP = 100;
+        }
+        currentMP = maxMP;
     }
+
     private void Attack()
     {
        Anim.SetTrigger("Attack");//для воспроизведения анимации атаки при выполнения тригера Attack
@@ -49,8 +52,9 @@ public class HeroAttack : Hero
             Attack(); // выполнения атаки
         }
 
-        if (Input.GetMouseButtonDown(1) && MagicCooldownTimer > magicAttackCooldown) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
+        if (Input.GetMouseButtonDown(1) && MagicCooldownTimer > magicAttackCooldown && currentMP >= 10) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
         {
+            currentMP -= 10;
             magicAttack(); // выполнения маг атаки
         }
     }
@@ -66,6 +70,7 @@ public class HeroAttack : Hero
     private void Awake()
     {
         Anim = GetComponent<Animator>(); //доступ к аниматору
+        Instance = this;
     }
     private void Update()
     {

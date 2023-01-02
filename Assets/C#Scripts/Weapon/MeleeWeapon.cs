@@ -7,7 +7,7 @@ public class MeleeWeapon : MonoBehaviour
     public static MeleeWeapon Instance { get; set; } //ƒл€ сбора и отправки данных из этого скрипта
     public float direction;//переменна€ направлени€
     [SerializeField] private float lifetime; //длительность жизни снар€да
-    private bool hit; //переменна€ метки попал ли во что-то снар€д
+    private bool hit = false; //переменна€ метки попал ли во что-то снар€д
 
     private BoxCollider2D boxCollider; // оллайдер удара
     //private Animator anim; //переменна€ дл€ аниматора
@@ -44,8 +44,14 @@ public class MeleeWeapon : MonoBehaviour
     {
         Debug.Log(TargetName);
         target = GameObject.Find(TargetName);
-        target.GetComponent<Entity>().TakeDamage(AttackDamage);
-
+        if (target.CompareTag("Enemy"))
+        {
+            target.GetComponent<Entity>().TakeDamage(AttackDamage);
+        }
+        if (target.CompareTag("Chest"))
+        {
+            target.GetComponent<Chest>().TakeDamage(AttackDamage);
+        }
     }
     public void meleeDirection(float _direction)// выбор направлени€ полета 
     {

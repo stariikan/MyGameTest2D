@@ -5,8 +5,8 @@ using UnityEngine;
 public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то есть методы которые используются в Entity будут применены и к этому обьекту)
 {
     // Start is called before the first frame update
-    [SerializeField] private float speed = 1f;//параметр скорости скелета
-    [SerializeField] private float speedRecovery = 1f;//параметр скорости скелета 2 параметр нужен для восстановление скорости по умолчанию (после остановки перед пропастью и наверное после замедлений которых я еще не придумал))
+    [SerializeField] public float speed = 1f;//параметр скорости скелета
+    [SerializeField] private float speedRecovery;//параметр скорости скелета 2 параметр нужен для восстановление скорости по умолчанию (после остановки перед пропастью и наверное после замедлений которых я еще не придумал))
     public int attackDamage = 7;
 
     GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
@@ -17,7 +17,7 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
     private bool isMoving = false;
     private Animator anim; //Переменная благодаря которой анимирован обьект, переменная = skelet_anim
 
-    private bool flipRight = true; //Поворот спрайта на право, состояние = правда, нужно для поворота спрайта во время смены движения
+    private bool flipRight; //Поворот спрайта на право, состояние = правда, нужно для поворота спрайта во время смены движения
     RaycastHit2D hit; //тут будем получать информацию с чем сталкивается обьект
 
     public enum States //Определения какие бывают состояния, указал названия как в Аниматоре Unity
@@ -36,6 +36,10 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
         Vector3 theScale = transform.localScale; //получение масштаб объекта
         theScale.x *= -1;//тут происходит переворот изображения например 140 меняется на -140 тем самым полностью измени направление спрайта (картинка отзеркаливается)
         transform.localScale = theScale; //Масштаб преобразования относительно родительского объекта GameObjects
+    }
+    public void BoostSpeed()
+    {
+        speed += 0.1f;
     }
     public void PlayerFollow() //Метод в котором описываем логику следования за игроком
     {
@@ -69,7 +73,7 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
     }
     private void DieByFall() //Метод который наносит урон при падении с платформы
     {
-        if (rb.transform.position.y < -100)//если координаты игрока по оси y меньше 10, то происходит вызов метода GetDamage
+        if (rb.transform.position.y < -100 && this.gameObject.GetComponent<Entity>().enemyDead == false)//если координаты игрока по оси y меньше 10 и враг не мертв, то происходит вызов метода GetDamage
         {
             Entity.Instance.TakeDamage(10);
         }
@@ -81,7 +85,7 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
     }
     public void groundCheckPosition()//проверка на пропость, чтобы скелет туда не упал
     {
-        hit = Physics2D.Raycast(groundcheck.position, -transform.up, 1f, Physics.DefaultRaycastLayers);//мы стреляем Raycast вниз с позиции обьекта groundcheck, на 1 еденицу
+        hit = Physics2D.Raycast(groundcheck.position, -transform.up, 2f, Physics.DefaultRaycastLayers);//мы стреляем Raycast вниз с позиции обьекта groundcheck, на 1 еденицу
                                                                                        //и проверяем столкнулся ли обьект с землей (groundLayers)
                                                                                        //PlayerFollow();
 
@@ -101,13 +105,30 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
                                           //к которому привязан скрипт
         anim = GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
                                          //к которому привязан скрипт
+        flipRight = true;
+    }
+    private void Start()
+    {
+        speed = SaveSerial.Instance.enemySpeed;
+        if (speed == 0f)
+        {
+            speed = 1f;
+        }
+        speedRecovery = speed;
     }
     void Update() //тут складывать буду основные действия методы (который должен использовать враг)
     {
-        PlayerFollow();
-        DieByFall();
-        AnimState();
-        groundCheckPosition();
+        if (this.gameObject.GetComponent<Entity>().currentHP > 0)
+        {
+            PlayerFollow();
+            DieByFall();
+            AnimState();
+            groundCheckPosition();
+        }
+        else
+        {
+            return;
+        }
     }
     
 

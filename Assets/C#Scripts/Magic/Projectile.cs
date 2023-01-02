@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     public float direction;//переменная направления
     [SerializeField] private float Speed; //Скорость снаряда
     [SerializeField] private float lifetime; //длительность жизни снаряда
-    private bool hit; //переменная метки попал ли во что-то снаряд
+    private bool hit = false; //переменная метки попал ли во что-то снаряд
     
     private BoxCollider2D boxCollider; //Коллайдер магии
     private Animator anim; //переменная для аниматора
@@ -48,8 +48,14 @@ public class Projectile : MonoBehaviour
     {
         Debug.Log(magicTargetName);
         target = GameObject.Find(magicTargetName);
-        target.GetComponent<Entity>().TakeDamage(magicAttackDamage);
-
+        if (target.CompareTag("Enemy"))
+            {
+            target.GetComponent<Entity>().TakeDamage(magicAttackDamage);
+            }
+        else 
+            {
+            return;
+            }
     }
     public void SetDirection(float _direction)// выбор направления полета 
     {

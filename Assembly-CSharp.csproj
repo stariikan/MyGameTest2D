@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\C#Scripts\Camera\CameraFolow.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Entity.cs" />
+    <Compile Include="Assets\C#Scripts\Weapon\MeleeWeapon.cs" />
     <Compile Include="Assets\C#Scripts\Magic\Projectile.cs" />
     <Compile Include="Assets\C#Scripts\Hero\HeroAttack.cs" />
     <Compile Include="Assets\C#Scripts\LevelGeneration\LvLGeneration.cs" />
@@ -65,7 +66,16 @@
     <Compile Include="Assets\C#Scripts\UI\hp_counter.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Enemy_Skelet.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Hero.cs" />
-    <Compile Include="Assets\C#Scripts\Weapon\MeleeWeapon.cs" />
+    <Compile Include="Assets\C#Scripts\UI\mp_counter.cs" />
+    <Compile Include="Assets\C#Scripts\UI\coin_counter.cs" />
+    <Compile Include="Assets\C#Scripts\SaveProgress\SaveSerial.cs" />
+    <Compile Include="Assets\C#Scripts\UI\Level_counter.cs" />
+    <Compile Include="Assets\C#Scripts\Chest\Chest.cs" />
+    <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\HP.cs" />
+    <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Coin.cs" />
+    <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\LvL.cs" />
+    <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Mana.cs" />
+    <Compile Include="Assets\C#Scripts\Shop\Shop.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Hero : MonoBehaviour
 {
     public static Hero Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     public float maxSpeed = 10f; //Максимальная скорость
-    private bool flipRight = true; //Поворот спрайта на право, состояние = правда, нужно для поворота спрайта во время смены движения
-    public bool isGrounded = true; //Находиться ли обьект на земле, а точнее соприкосается ли он с другим обьектом имеющим Collision2D 
+    private bool flipRight; //Поворот спрайта на право, состояние = правда, нужно для поворота спрайта во время смены движения
+    public bool isGrounded = false; //Находиться ли обьект на земле, а точнее соприкосается ли он с другим обьектом имеющим Collision2D 
     public float gravityScale = 10; //Сила притяжения или чем ниже тем выше прыжок
     public float fallingGravityScale = 40; //Сила притяжение при падении чем выше тем сильнее игровой обьекс тянет вниз
-    [SerializeField] public int hp = 100; //Количество жизней
+    public int maxHP = 100;
+    public int hp = 100; //Количество жизней
+    public bool playerDead = false; //мертв игрок или нет, пока нужно для того чтобы при смерти игрока делать рестарт
     private Rigidbody2D rb; //Тело с физической переменной к которому принадлежит скрипт, переменная = rb
     private Animator anim; //Переменная благодаря которой анимирован обьект, переменная = anim
     private States State //Создание стейтмашины, переменная = State. Значение состояния может быть передано или изминено извне благодаря get и set
@@ -51,6 +54,7 @@ public class Hero : MonoBehaviour
         {
             maxSpeed = 0;
             anim.SetTrigger("death");
+            playerDead = true;
         }
     }
     private void Deactivate() //деактивация игрока после завершения анимации смерти (благодоря метки в аниматоре выполняется этот метод
@@ -82,7 +86,7 @@ public class Hero : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded) State = States.jump; //если мы нажимаем Space и мы на земле то State = jump
         if (!isGrounded) State = States.jump; //и если мы не на земле State = jump. Это все нужно чтобы менялась анимация
     }//Метод для поворота спрайта персонажа
-    private void PlayerMovement()
+    public void PlayerMovement()
     {
         float move = Input.GetAxis("Horizontal");//Используем Float потому-что значение 0.111..., тут берется ввод по Горизонтали (стрелки и A D)
         GetComponent<Rigidbody2D>().velocity = new Vector2(move * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);//Тут указно что берется компонент Rigidbody2D
@@ -118,6 +122,7 @@ public class Hero : MonoBehaviour
                                                    //от числа который мы ввели в переменной fallingGravityScale
         }
     } //Метод для поворота спрайта персонажа
+
     void Awake() //Awake используется для инициализации любых переменных или игрового состояния перед началом игры.
                  //Awake вызывается только один раз за все время существования экземпляра сценария.
                  //Вызов Awake происходит после инициализации всех объектов, поэтому можно безопасно обращаться к другим объектам
@@ -129,12 +134,30 @@ public class Hero : MonoBehaviour
                                          //к которому привязан скрипт
         Instance = this; //'this' - это ключевое слово, обозначающее класс, в котором выполняется код.
                          //Насколько мне известно, оно никогда не требуется, но делает код более читабельным this. transform. position and transform.
+        flipRight = true;
+    }
+    private void Start()
+    {
+        SaveSerial.Instance.LoadGame();
+        maxHP = SaveSerial.Instance.playerHP;
+        if (maxHP == 0)
+        {
+            maxHP = 100;
+        }
+        hp = maxHP;
     }
     void Update() //Update = выполнение функции каждый каждый кадр.
     {
-        PlayerMovement();//Метод для движения и поворота спрайта персонажа
-        AnimState();//Метод для передачи состояния в аниматор
-        DieByFall();//Метод для смерти от падения
+        if (hp > 0)
+        {
+            PlayerMovement();//Метод для движения и поворота спрайта персонажа
+            AnimState();//Метод для передачи состояния в аниматор
+            DieByFall();//Метод для смерти от падения
+        }
+        else
+        {
+            return;
+        }
     }
 
 }
