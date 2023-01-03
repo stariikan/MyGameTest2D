@@ -113,7 +113,7 @@ public class LvLGeneration : MonoBehaviour
         GameObject.Find("EnemySkelet").GetComponent<Entity>().BoostAttackDamage();
         GameObject.Find("EnemySkelet").GetComponent<Enemy_Skelet>().BoostSpeed();
         SaveSerial.Instance.SaveGame();
-        SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
+        SceneManager.LoadScene("LevelComplete", LoadSceneMode.Single);
         //StartCoroutine(OnGeneratingRoutine());
     }
     private void Update()

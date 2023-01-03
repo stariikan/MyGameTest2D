@@ -14,6 +14,8 @@ public class Hero : MonoBehaviour
     public int maxHP = 100;
     public int hp = 100; // оличество жизней
     public bool playerDead = false; //мертв игрок или нет, пока нужно дл€ того чтобы при смерти игрока делать рестарт
+    public int mageAttackDamage = 30;
+
     private Rigidbody2D rb; //“ело с физической переменной к которому принадлежит скрипт, переменна€ = rb
     private Animator anim; //ѕеременна€ благодар€ которой анимирован обьект, переменна€ = anim
     private States State //—оздание стейтмашины, переменна€ = State. «начение состо€ни€ может быть передано или изминено извне благодар€ get и set
@@ -140,11 +142,16 @@ public class Hero : MonoBehaviour
     {
         SaveSerial.Instance.LoadGame();
         maxHP = SaveSerial.Instance.playerHP;
+        mageAttackDamage = SaveSerial.Instance.playerMageDamage;
         if (maxHP == 0)
         {
             maxHP = 100;
         }
         hp = maxHP;
+        if (mageAttackDamage == 0)
+        {
+            mageAttackDamage = 30;
+        }
     }
     void Update() //Update = выполнение функции каждый каждый кадр.
     {

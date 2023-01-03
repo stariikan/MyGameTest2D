@@ -16,6 +16,7 @@ public class HP : MonoBehaviour
     }
     private void Update()
     {
+        hp_ui = SaveSerial.Instance.playerHP;
         GetComponent<Text>().text = $"{hp_ui}";
     }
 }

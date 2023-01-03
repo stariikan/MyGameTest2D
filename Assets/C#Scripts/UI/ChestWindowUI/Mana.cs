@@ -16,6 +16,7 @@ public class Mana : MonoBehaviour
     }
     private void Update()
     {
+        mana_ui = SaveSerial.Instance.playerMP;
         GetComponent<Text>().text = $"{mana_ui}";
     }
 }
