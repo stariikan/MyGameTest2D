@@ -36,6 +36,8 @@ ScriptsOnlyBuild:
     - UnityEditor.Tilemaps.TilemapPrefabStageHelper
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
+    Unity.Timeline.Editor.dll:
+    - TimelineProjectSettings
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
@@ -627,7 +629,7 @@ ScriptsOnlyBuild:
     className: EventTrigger
   - hash:
       serializedVersion: 2
-      Hash: 3be26015bdada074dd76e40c1dc9abaf
+      Hash: 11d949ce4a195ae0997c9a183a19a9be
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Hero

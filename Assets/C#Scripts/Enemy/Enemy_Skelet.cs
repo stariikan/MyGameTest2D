@@ -48,7 +48,7 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
             float directionX = player.transform.position.x - transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
             float directionY = player.transform.position.y - transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
 
-            if (Mathf.Abs(directionX) < 4 && Mathf.Abs(directionX) > 0.4f && Mathf.Abs(directionY) < 2) //если меньше разница меньше 4 метров по х и 2 метров по y
+            if (Mathf.Abs(directionX) < 4 && Mathf.Abs(directionX) > 0.5f && Mathf.Abs(directionY) < 2) //если меньше разница меньше 4 метров по х и 2 метров по y
             {
                 Vector3 pos = transform.position; //то происходит изминение позиции
                 pos.x += Mathf.Sign(directionX) * speed * Time.deltaTime;// тут высчитывается направление и скорость в секунду скелета
