@@ -4,6 +4,7 @@ ScriptsOnlyBuild:
     - CameraFolow
     - Chest
     - Coin
+    - DisableProgressBar
     - Enemy_Skelet
     - Entity
     - HP
@@ -19,6 +20,7 @@ ScriptsOnlyBuild:
     - Shop
     - Spike
     - coin_counter
+    - enemyProgressBar
     - hp_counter
     - mp_counter
     Unity.2D.Animation.Editor.dll:
@@ -34,13 +36,6 @@ ScriptsOnlyBuild:
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
     - UnityEditor.Tilemaps.TilemapPrefabStageHelper
-    Unity.AdaptivePerformance.Editor.dll:
-    - UnityEditor.AdaptivePerformance.Editor.AdaptivePerformanceGeneralSettingsPerBuildTarget
-    Unity.AdaptivePerformance.Simulator.Editor.dll:
-    - UnityEditor.AdaptivePerformance.Simulator.Editor.SimulatorProviderSettings
-    Unity.AdaptivePerformance.dll:
-    - UnityEngine.AdaptivePerformance.AdaptivePerformanceGeneralSettings
-    - UnityEngine.AdaptivePerformance.AdaptivePerformanceManagerSettings
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.XR.Management.Editor.dll:
@@ -51,14 +46,18 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
     UnityEngine.UI.dll:
+    - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
@@ -102,11 +101,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3270}
     - Class: 114
-      Script: {instanceID: 3826}
+      Script: {instanceID: 3828}
     - Class: 114
-      Script: {instanceID: 5508}
+      Script: {instanceID: 5510}
     - Class: 114
-      Script: {instanceID: 6168}
+      Script: {instanceID: 6170}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -167,29 +166,37 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2994}
     - Class: 114
+      Script: {instanceID: 3012}
+    - Class: 114
       Script: {instanceID: 3270}
     - Class: 114
       Script: {instanceID: 3284}
     - Class: 114
+      Script: {instanceID: 3548}
+    - Class: 114
       Script: {instanceID: 3748}
     - Class: 114
-      Script: {instanceID: 3900}
+      Script: {instanceID: 3776}
     - Class: 114
-      Script: {instanceID: 3974}
+      Script: {instanceID: 3902}
     - Class: 114
-      Script: {instanceID: 4324}
+      Script: {instanceID: 3976}
     - Class: 114
-      Script: {instanceID: 4554}
+      Script: {instanceID: 4326}
     - Class: 114
-      Script: {instanceID: 5078}
+      Script: {instanceID: 4556}
     - Class: 114
-      Script: {instanceID: 5082}
+      Script: {instanceID: 5080}
     - Class: 114
-      Script: {instanceID: 5508}
+      Script: {instanceID: 5084}
     - Class: 114
-      Script: {instanceID: 5598}
+      Script: {instanceID: 5510}
     - Class: 114
-      Script: {instanceID: 5680}
+      Script: {instanceID: 5600}
+    - Class: 114
+      Script: {instanceID: 5682}
+    - Class: 114
+      Script: {instanceID: 65170}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -215,12 +222,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.SpatialTracking.dll
     namespaceName: UnityEngine.SpatialTracking
     className: TrackedPoseDriver
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptiveLut
   - hash:
       serializedVersion: 2
       Hash: 24c74cc0d527a06113f2b967042769f0
@@ -319,40 +320,22 @@ ScriptsOnlyBuild:
     className: Shadow
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptiveShadowmapResolution
-  - hash:
-      serializedVersion: 2
       Hash: 300fd99066f8c288e85f5e81ce65fe34
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_FontAsset
   - hash:
       serializedVersion: 2
-      Hash: 04ad7aed1e78762e478e5955f2058294
+      Hash: 2e0696b7a250a25b55ddf4f94137df21
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Entity
-  - hash:
-      serializedVersion: 2
-      Hash: a0bfd04b77824c07d9435ef76eafb204
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptivePerformanceGeneralSettings
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LvL
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptiveShadowCascade
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -470,12 +453,6 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptiveSorting
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestRunner.Utils
     className: TestRunCallbackListener
@@ -485,12 +462,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: GraphicRaycaster
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptiveResolution
   - hash:
       serializedVersion: 2
       Hash: bfdba06cd7e692d2dbd4c31744a20921
@@ -503,12 +474,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SelectionCaret
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptiveShadowDistance
   - hash:
       serializedVersion: 2
       Hash: a306e12d896ddcca949923c805691027
@@ -533,12 +498,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: TestResultRendererCallback
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptiveBatching
   - hash:
       serializedVersion: 2
       Hash: 748dd2a2a28da4e618912da5ac45684b
@@ -571,12 +530,6 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptiveFramerate
-  - hash:
-      serializedVersion: 2
       Hash: 0fd6822f6177297bd0eb4d83cc7a9030
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -601,6 +554,12 @@ ScriptsOnlyBuild:
     className: LvLGeneration
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: enemyProgressBar
+  - hash:
+      serializedVersion: 2
       Hash: 4fd8bf02e3089425d3502e26c44ba31a
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -617,12 +576,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Spike
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptiveShadowQuality
   - hash:
       serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
@@ -722,12 +675,6 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptivePerformanceManager
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: RemoteTestResultSender
@@ -773,12 +720,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: SignalTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptiveViewDistance
   - hash:
       serializedVersion: 2
       Hash: aba7b2852ef61d175dd9602e7723d5e5
@@ -847,40 +788,16 @@ ScriptsOnlyBuild:
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: 75031d5182dabfe0b66124eac716b177
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: IAdaptivePerformanceSettings
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptiveLOD
-  - hash:
-      serializedVersion: 2
       Hash: ef5c43f921427d03730f6ea4c848f07d
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: RectMask2D
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptiveMSAA
-  - hash:
-      serializedVersion: 2
       Hash: 87ad3705a58f19c47136728d4a6e9c47
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Settings
-  - hash:
-      serializedVersion: 2
-      Hash: 023e1c84ff33489e45cfcca9e19c242b
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptivePerformanceManagerSettings
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -944,12 +861,6 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Unity.AdaptivePerformance.dll
-    namespaceName: UnityEngine.AdaptivePerformance
-    className: AdaptiveTransparency
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.2D.Animation.Runtime.dll
     namespaceName: UnityEngine.U2D.Animation
     className: BufferManager
@@ -989,6 +900,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.2D.IK.Runtime.dll
     namespaceName: UnityEngine.U2D.IK
     className: FabrikSolver2D
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DisableProgressBar
   platform: 19
   scenePathNames:
   - Assets/Scenes/startLevel.unity

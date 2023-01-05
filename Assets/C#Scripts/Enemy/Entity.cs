@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public int maxHP = 100; //Максимальные жизни скелета
+    public int maxHP = 50; //Максимальные жизни скелета
     public int currentHP;
+    public float takedDamage; //разница между макс хп и полученным уроном
     [SerializeField] private float AttackCooldown;//кулдаун Атаки (физ)
     public float enemyAttackRange = 0.3f; //Дальность физ атаки
     public int enemyAttackDamage = 7; // Урон от физ атаки
@@ -21,7 +22,7 @@ public class Entity : MonoBehaviour
         maxHP = SaveSerial.Instance.enemyHP;
         if (maxHP == 0)
         {
-            maxHP = 100;
+            maxHP = 50;
         }
         currentHP = maxHP;
         enemyAttackDamage = SaveSerial.Instance.enemyDamage;
@@ -76,7 +77,10 @@ public class Entity : MonoBehaviour
         {
             anim.SetTrigger("damage");//анимация получения демейджа
             currentHP -= dmg;
+            takedDamage = (float)dmg / (float)maxHP; //на сколько надо уменьшаить прогресс бар
+            Debug.Log(takedDamage);
             Push();
+            this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
             Debug.Log(currentHP + " " + gameObject.name);
         }
         else
