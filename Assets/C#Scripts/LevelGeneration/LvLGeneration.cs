@@ -31,7 +31,7 @@ public class LvLGeneration : MonoBehaviour
         {
             Level = 1;
         }
-        StartCoroutine(OnGeneratingRoutine());
+        StartCoroutine(OnGeneratingRoutine()); //процесс генерации уровн€
     }
     private IEnumerator OnGeneratingRoutine() //¬ методе OnGeneratingRoutine, будем выполн€ть сам процесс генерации уровн€. “ак как уровни у нас могут быть как большими, так и маленькими и генерироватьс€ разное количество времени, процесс генерации мы поместим в корутину, чтобы игра не УзависалаФ во врем€ работы УгенератораФ
     {
@@ -43,7 +43,9 @@ public class LvLGeneration : MonoBehaviour
         newBlock.transform.localScale = size;// присваиваем разамер в соответсвие со спрайтом
         SpriteRenderer renderer = newBlock.AddComponent<SpriteRenderer>(); //добавл€ем компонент SpriteRenderer
         BoxCollider2D boxCollider2D = newBlock.AddComponent<BoxCollider2D>();//добавл€ем компонент BoxCollider2D
-        boxCollider2D.size = new Vector2(1.274357f, 0.1442559f);//задаем размер BoxCollider2D 
+        boxCollider2D.size = new Vector2(1.274357f, 0.1442559f);//задаем размер BoxCollider2D
+        newBlock.layer = LayerMask.NameToLayer("Ground"); //ƒобавление сло€ «емл€ к созданному блоку
+
         renderer.sprite = this.startBlock;//используем спрайт который мы засунули в startBlock
 
         int count = this.Level + 3; // „ислова€ переменна€ count будет указывать какое кол - во промежуточных блоков необходимо построить, это число будет зависеть от количества пройденных уровней и, чтобы их изначально не было слишком мало на первых уровн€х, еще п€ти(5) дополнительных блоков.
@@ -56,18 +58,22 @@ public class LvLGeneration : MonoBehaviour
             newBlock = new GameObject("Middle block");// создаем новый обьект
             renderer = newBlock.AddComponent<SpriteRenderer>();//добавл€ем компонент SpriteRenderer
             BoxCollider2D collider2D = newBlock.AddComponent<BoxCollider2D>();//добавл€ем компонент BoxCollider2D
-            collider2D.size = new Vector2 (1.274357f, 0.1842308f);//задаем размер BoxCollider2D 
+            collider2D.size = new Vector2 (1.274357f, 0.1842308f);//задаем размер BoxCollider2D
             renderer.sprite = this.midBlock;//используем спрайт который мы засунули в midBlock
 
             newBlock.transform.localScale = size; //задаем размер обьекта
             position.x += size.x +0.5f; //позици€ по X, чтобы всегда была чуть дальше чем прошлый
             position.y += size.y * Random.Range(-0.5f, 0.5f); //позици€ по Y, рандомна€
             newBlock.transform.position = position; // присваиваем позицию новомоу обьекту
+            newBlock.layer = LayerMask.NameToLayer("Ground");//ƒобавление сло€ «емл€ к созданному блоку
 
             GameObject enemy = Instantiate(enemyForGeneration, new Vector2(position.x + Random.Range(-1, 2), position.y + 4), Quaternion.identity); // лонировани€ обьекта (враг) и его координаты)
             enemy.name = "Enemy" + Random.Range(1, 100);
-            //Instantiate(trapsForGeneration, new Vector2(position.x + Random.Range(0, 1), position.y + 0.8f), Quaternion.identity);//  лонировани€ обьекта(ловушка) и его координаты)
-
+            if (i >= 4) //≈сли уровень 4 и выше начинают спавн€тс€ ловушки
+            {
+                Instantiate(trapsForGeneration, new Vector2(position.x + Random.Range(-2, 2), position.y + 0.7f), Quaternion.identity);//  лонировани€ обьекта(ловушка) и его координаты)
+            }
+            
             yield return new WaitForEndOfFrame(); //ожидани€ установки блоков
         }
 
@@ -82,6 +88,7 @@ public class LvLGeneration : MonoBehaviour
         position.y += size.y * Random.Range(-1, 1); //позици€ по Y, рандомна€
         newBlock.transform.position = position; // присваиваем позицию новомоу обьекту
         newBlock.transform.localScale = size; //задаем размер обьекта
+        newBlock.layer = LayerMask.NameToLayer("Ground");//ƒобавление сло€ «емл€ к созданному блоку
 
         yield return new WaitForEndOfFrame(); //ожидани€ установки блоков
     }

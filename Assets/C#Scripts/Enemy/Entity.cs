@@ -11,7 +11,7 @@ public class Entity : MonoBehaviour
     public float enemyAttackRange = 0.3f; //Дальность физ атаки
     public int enemyAttackDamage = 7; // Урон от физ атаки
     private float cooldownTimer = Mathf.Infinity; //Если мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown.
-    public Transform enemyAttackPoint; //Тут мы ссылаемся на точку которая является дочерним обьектом игрока (нужна для реализации физ атаки)
+    public Transform enemyAttackPoint; //Тут мы ссылаемся на точку которая является дочерним (нужна для реализации физ атаки)
     public LayerMask playerLayers;
     public Vector3 lossyScale;
     public static Entity Instance { get; set; } //Для сбора и отправки данных из этого скрипта
@@ -44,7 +44,7 @@ public class Entity : MonoBehaviour
             Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(enemyAttackPoint.position, enemyAttackRange, playerLayers); //Создает круг из точки attackPoint c радиусом который мы указываем
             foreach (Collider2D enemy in hitEnemys)
             {
-                enemy.GetComponent<Hero>().GetDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту врага Entity и активируем оттуда функцию TakeDamage и
+                enemy.GetComponent<Hero>().GetDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage и
                                                                         //урон прописан у нас в attackDamage
             }
         }
