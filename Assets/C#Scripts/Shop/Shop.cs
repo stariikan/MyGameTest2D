@@ -2,38 +2,77 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement; //для управления сценами
+
 
 
 public class Shop : MonoBehaviour
 {
-    int intToSave;
-    float floatToSave;
-    string stringToSave = "";
     void OnGUI()
     {
-        if (GUI.Button(new Rect(275, 50, 125, 50), "Raise Integer"))
-            intToSave++;
-        if (GUI.Button(new Rect(275, 150, 125, 50), "Raise Float"))
-            floatToSave += 0.1f;
-        if (GUI.Button(new Rect(275, 250, 125, 50), "Raise Float"))
-            floatToSave += 0.1f;
-        if (GUI.Button(new Rect(275, 350, 125, 50), "Raise Float"))
-            floatToSave += 0.1f;
-        if (GUI.Button(new Rect(275, 450, 125, 50), "Raise Float"))
-            floatToSave += 0.1f;
+        if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 5f, Screen.width / 2.5f, Screen.height / 11.5f), "plus 20 HP (Price = 20 coins)"))
+        {
+            if (SaveSerial.Instance.playerCoin >= 20)
+            {
+                SaveSerial.Instance.IncreaseMaxHP();
+            }
+            else
+            {
+                return;
+            }
+        }
+            
+        if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 3.33f, Screen.width / 2.5f, Screen.height / 11.5f), "plus 20 MP(Price = 20 coins)"))
+        {
+            if (SaveSerial.Instance.playerCoin >= 20)
+            {
+                SaveSerial.Instance.IncreaseMaxMP();
+            }
+            else
+            {
+                return;
+            }
+        }
+        if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 2.5f, Screen.width / 2.5f, Screen.height / 11.5f), "plus 10 Melee DMG (Price = 20 coins)"))
+        {
+            
+            if (SaveSerial.Instance.playerCoin >= 20)
+            {
+                SaveSerial.Instance.IncreaseAttackDamage();
+            }
+            else
+            {
+                return;
+            }
+        }
 
-        GUI.Label(new Rect(425, 65, 125, 50), "Integer value is "
-          + intToSave);
-        GUI.Label(new Rect(425, 165, 125, 50), "Float value is "
-          + floatToSave.ToString("F1"));
-        GUI.Label(new Rect(425, 265, 125, 50), "String value is "
-          + stringToSave);
-        GUI.Label(new Rect(425, 365, 125, 50), "String value is "
-  + stringToSave);
-        GUI.Label(new Rect(425, 465, 125, 50), "String value is "
-  + stringToSave);
+
+        if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 2f, Screen.width / 2.5f, Screen.height / 11.5f), "plus 10 Mage DMG (Price = 20 coins)"))
+        {
+            
+            if (SaveSerial.Instance.playerCoin >= 20)
+            {
+                SaveSerial.Instance.IncreaseMageDamage();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 1.66f, Screen.width / 2.5f, Screen.height / 11.5f), "Save and Go to the next level"))
+        {
+            SaveSerial.Instance.SaveGame();
+            SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
+        }
+
+
+        //GUI.Label(new Rect(425, 65, 125, 50), "plus 20 HP (Price = 20 coins)");
+        //GUI.Label(new Rect(425, 165, 125, 50), "plus 20 MP(Price = 20 coins)");
+        //GUI.Label(new Rect(425, 265, 125, 50), "plus 10 Melee DMG (Price = 20 coins)");
+        //GUI.Label(new Rect(425, 365, 125, 50), "plus 10 Mage DMG (Price = 20 coins)");
+        //GUI.Label(new Rect(425, 465, 125, 50), "Save and Go to the next lvl");
 
     }
-
 }
 

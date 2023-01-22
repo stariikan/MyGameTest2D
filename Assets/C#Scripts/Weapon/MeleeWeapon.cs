@@ -23,6 +23,15 @@ public class MeleeWeapon : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>(); // вытаскиваем информацию из компанента бокс колайдер
         Instance = this;
     }
+    private void Start()
+    {
+        SaveSerial.Instance.LoadGame();
+        AttackDamage = SaveSerial.Instance.playerAttackDamage;
+        if (AttackDamage == 0)
+        {
+            AttackDamage = 20;
+        }
+    }
 
     private void Update()
     {

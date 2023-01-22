@@ -16,6 +16,7 @@ public class Coin : MonoBehaviour
     }
     private void Update()
     {
+        coin_ui = SaveSerial.Instance.playerCoin;
         GetComponent<Text>().text = $"{coin_ui}";
     }
 }

@@ -47,12 +47,12 @@ public class HeroAttack : MonoBehaviour
     }
     private void attackControl()
     {
-        if (Input.GetMouseButtonDown(0) && cooldownTimer > AttackCooldown)// если нажать на правую кнопку мыши и кулдаун таймер > чем значение AttackCooldown, то можно производить физ атаку
+        if ((Input.GetKey(KeyCode.LeftControl) || Input.GetMouseButtonDown(0)) && cooldownTimer > AttackCooldown)// если нажать на правую кнопку мыши и кулдаун таймер > чем значение AttackCooldown, то можно производить физ атаку
         {
             Attack(); // выполнения атаки
         }
 
-        if (Input.GetMouseButtonDown(1) && MagicCooldownTimer > magicAttackCooldown && currentMP >= 10) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
+        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetMouseButtonDown(1)) && MagicCooldownTimer > magicAttackCooldown && currentMP >= 10) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
         {
             currentMP -= 10;
             magicAttack(); // выполнения маг атаки

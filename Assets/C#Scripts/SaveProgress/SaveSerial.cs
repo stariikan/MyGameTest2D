@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using UnityEngine.SceneManagement; //для управления сценами
 
 public class SaveSerial : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class SaveSerial : MonoBehaviour
         public int playerHP;
         public int playerMP;
         public int playerAttackDamage;
-        public int playerMageDamage;
+        public int playerMageDamage = 30;
 
         public int passedLvl;
 
@@ -57,24 +58,26 @@ public class SaveSerial : MonoBehaviour
         SaveData data = new SaveData(); //В методе SaveGame создается новый экземпляр класса SaveData. В него записываются текущие данные из SaveSerial, которые нужно сохранить.
                                         //BinaryFormatter сериализует эти данные и записывает их в файл, созданный FileStream. Затем файл закрывается, в консоль выводится сообщение об успешном сохранении.
         
-        playerCoin = LvLGeneration.Instance.coin;
-        playerHP = Hero.Instance.maxHP;
-        playerMP = HeroAttack.Instance.maxMP;
-        playerAttackDamage = Projectile.Instance.magicAttackDamage;
-        playerMageDamage = MeleeWeapon.Instance.AttackDamage;
+        if (SceneManager.GetActiveScene().name == "startLevel")
+        {
+            playerCoin = LvLGeneration.Instance.coin;
+            playerHP = Hero.Instance.maxHP;
+            playerMP = HeroAttack.Instance.maxMP;
+            playerAttackDamage = MeleeWeapon.Instance.AttackDamage;
+            playerMageDamage = Hero.Instance.mageAttackDamage;
+            passedLvl = LvLGeneration.Instance.Level;
 
-        passedLvl = LvLGeneration.Instance.Level;
-
-        enemyHP = GameObject.Find("EnemySkelet").GetComponent<Entity>().maxHP;
-        enemyDamage = GameObject.Find("EnemySkelet").GetComponent<Entity>().enemyAttackDamage;
-        enemySpeed = GameObject.Find("EnemySkelet").GetComponent<Enemy_Skelet>().speed;
-
+            enemyHP = GameObject.Find("EnemySkelet").GetComponent<Entity>().maxHP;
+            enemyDamage = GameObject.Find("EnemySkelet").GetComponent<Entity>().enemyAttackDamage;
+            enemySpeed = GameObject.Find("EnemySkelet").GetComponent<Enemy_Skelet>().speed;
+        }
+        
         data.playerCoin = playerCoin;
         data.playerHP = playerHP;
         data.playerMP = playerMP;
         data.playerAttackDamage = playerAttackDamage;
         data.playerMageDamage = playerMageDamage;
-
+        
         data.passedLvl = passedLvl;
                 
         data.enemyHP = enemyHP;
@@ -126,17 +129,29 @@ public class SaveSerial : MonoBehaviour
         {
             File.Delete(Application.persistentDataPath
               + "/MySaveData.dat");
-            //playerCoin = 0;
-            //playerHP = 100;
-            //passedLvl = 1;
-            //enemyHP = 100;
-            //enemyDamage = 7;
-            //enemySpeed = 1f;
-            //boolToSave = false; //После его удаления обнуляем значения переменных класса SaveSerial до дефолтных и выводим сообщение в консоль.
             Debug.Log("Data reset complete!");
         }
         else
             Debug.LogError("No save data to delete.");//Если файла нет, выводим сообщение об ошибке.
     }
-
+    public void IncreaseMaxHP()
+    {
+        playerHP += 20;
+        playerCoin -= 20;
+    }
+    public void IncreaseMaxMP()
+    {
+        playerMP += 20;
+        playerCoin -= 20;
+    }
+    public void IncreaseAttackDamage()
+    {
+        playerAttackDamage += 10;
+        playerCoin -= 20;
+    }
+    public void IncreaseMageDamage()
+    {
+        playerMageDamage += 10;
+        playerCoin -= 20;
+    }
 }

@@ -17,7 +17,6 @@ public class Projectile : MonoBehaviour
     public string magicTargetName;
     public GameObject target;
 
-
     private void Awake() //Действие выполняется до старта игры и 1 раз
     {
         anim = GetComponent<Animator>(); // вытаскиваем информацию из компанента аниматор
@@ -25,6 +24,15 @@ public class Projectile : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        SaveSerial.Instance.LoadGame();
+        magicAttackDamage = SaveSerial.Instance.playerMageDamage;
+        if (magicAttackDamage == 0)
+        {
+            magicAttackDamage = 30;
+        }
+    }
     private void Update()
     {
         

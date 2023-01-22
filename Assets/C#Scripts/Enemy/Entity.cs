@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public int maxHP = 100; //Максимальные жизни скелета
+    public int maxHP = 50; //Максимальные жизни скелета
     public int currentHP;
+    public float takedDamage; //разница между макс хп и полученным уроном
     [SerializeField] private float AttackCooldown;//кулдаун Атаки (физ)
     public float enemyAttackRange = 0.3f; //Дальность физ атаки
     public int enemyAttackDamage = 7; // Урон от физ атаки
     private float cooldownTimer = Mathf.Infinity; //Если мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown.
     public Transform enemyAttackPoint; //Тут мы ссылаемся на точку которая является дочерним обьектом игрока (нужна для реализации физ атаки)
     public LayerMask playerLayers;
+    public Vector3 lossyScale;
     public static Entity Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     private Animator anim;
     public bool enemyDead = false;
@@ -21,7 +23,7 @@ public class Entity : MonoBehaviour
         maxHP = SaveSerial.Instance.enemyHP;
         if (maxHP == 0)
         {
-            maxHP = 100;
+            maxHP = 50;
         }
         currentHP = maxHP;
         enemyAttackDamage = SaveSerial.Instance.enemyDamage;
@@ -61,13 +63,13 @@ public class Entity : MonoBehaviour
     }
     public void Push() //Метод для отталкивания тела во время получения урона
     {
-        if (transform.localScale.x < 0) //Условия чтобы определить в куда оттолкнется враг
+        if (transform.lossyScale.x < 0) //смотрим в трансформе в какую сторону повернут по х обьект
         {
-            GetComponent<Rigidbody2D>().AddForce(new Vector3(-100, 0, 0));
+            this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(-7f, 5f), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
         }
         else
         {
-            GetComponent<Rigidbody2D>().AddForce(new Vector3(100, 0, 0));
+            this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(7f, 5f), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
         }
     }
     public void TakeDamage(int dmg) //Метод для получения дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
@@ -76,7 +78,10 @@ public class Entity : MonoBehaviour
         {
             anim.SetTrigger("damage");//анимация получения демейджа
             currentHP -= dmg;
+            takedDamage = (float)dmg / (float)maxHP; //на сколько надо уменьшаить прогресс бар
+            Debug.Log(takedDamage);
             Push();
+            this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
             Debug.Log(currentHP + " " + gameObject.name);
         }
         else

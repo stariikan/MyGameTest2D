@@ -6,14 +6,18 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     public static Hero Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    public float maxSpeed = 10f; //Максимальная скорость
+    public int movement_scalar = 60; //нужно для движение 
+    public float maxSpeed = 3f; //Максимальная скорость
     private bool flipRight; //Поворот спрайта на право, состояние = правда, нужно для поворота спрайта во время смены движения
+    public Vector3 lossyScale; //переменная позиции обьекта
     public bool isGrounded = false; //Находиться ли обьект на земле, а точнее соприкосается ли он с другим обьектом имеющим Collision2D 
     public float gravityScale = 10; //Сила притяжения или чем ниже тем выше прыжок
     public float fallingGravityScale = 40; //Сила притяжение при падении чем выше тем сильнее игровой обьекс тянет вниз
     public int maxHP = 100;
     public int hp = 100; //Количество жизней
     public bool playerDead = false; //мертв игрок или нет, пока нужно для того чтобы при смерти игрока делать рестарт
+    public int mageAttackDamage = 30;
+
     private Rigidbody2D rb; //Тело с физической переменной к которому принадлежит скрипт, переменная = rb
     private Animator anim; //Переменная благодаря которой анимирован обьект, переменная = anim
     private States State //Создание стейтмашины, переменная = State. Значение состояния может быть передано или изминено извне благодаря get и set
@@ -35,13 +39,13 @@ public class Hero : MonoBehaviour
     }
     public void Push() //Метод для отталкивания тела во время получения урона
     {
-        if (transform.localScale.x < 0) //Условия чтобы определить в куда оттолкнется враг
+        if (transform.lossyScale.x < 0) //смотрим в трансформе в какую сторону повернут по х обьект 
         {
-            GetComponent<Rigidbody2D>().AddForce(new Vector3(50, 0, 0));
+            rb.AddForce(new Vector2(5f, 5f), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
         }
         else
         {
-            GetComponent<Rigidbody2D>().AddForce(new Vector3(-50, 0, 0));
+            rb.AddForce(new Vector2(-5f, 5f), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
         }
     }
     public void GetDamage(int dmg) //Мы создаем новый метод GetDamage() 
@@ -81,15 +85,19 @@ public class Hero : MonoBehaviour
     }
     public void AnimState()
     {
-        if (isGrounded) State = States.idle;//если мы на земле State = idle
+        if (!Input.GetButton("Horizontal")) State = States.idle;//если мы на земле State = idle
         if (Input.GetButton("Horizontal")) State = States.run;//если мы нажимаем на кнопки (стрелки или A D) то State = run
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded) State = States.jump; //если мы нажимаем Space и мы на земле то State = jump
-        if (!isGrounded) State = States.jump; //и если мы не на земле State = jump. Это все нужно чтобы менялась анимация
+        if (Input.GetKeyDown(KeyCode.Space)) State = States.jump; //если мы нажимаем Space и мы на земле то State = jump
     }//Метод для поворота спрайта персонажа
     public void PlayerMovement()
     {
         float move = Input.GetAxis("Horizontal");//Используем Float потому-что значение 0.111..., тут берется ввод по Горизонтали (стрелки и A D)
-        GetComponent<Rigidbody2D>().velocity = new Vector2(move * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);//Тут указно что берется компонент Rigidbody2D
+        if (rb.velocity.magnitude < maxSpeed)
+        {
+            Vector2 movement = new Vector2(move, 0);
+            rb.AddForce(new Vector2 (movement_scalar * move, 0), ForceMode2D.Force);//Тут указно что берется компонент Rigidbody2D
+        }
+        
                                                                                                                     //у нашего game.Object и благодоря new Vector2
                                                                                                                     //изминяетя позиция game.Object помноженая (*)
                                                                                                                     //максимальную скорость которую мы указали в переменной
@@ -105,12 +113,13 @@ public class Hero : MonoBehaviour
             Flip();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey)
+        if (Input.GetKey(KeyCode.Space) && isGrounded)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey)
                                                           // кнопки Space и если isGrounded = true 
         {
-            isGrounded = false; // то isGrounded меняется на false 
-            GetComponent<Rigidbody2D>().AddForce(new Vector3(0, 1000, 0)); //берется компонент Rigidbody2D у game.Object
-                                                                           //и добавляется усилие по (new Vetor3) в направлении вверх Y
+            isGrounded = false;
+            rb.velocity = Vector2.zero;
+            rb.AddForce(new Vector2(0, 20f), ForceMode2D.Impulse); //ForceMode2D.Impulse  It may seem like your object is pushed once in Y axis and it will fall down automatically due to gravity.
+
         }
         if (rb.velocity.y >= 0) //Если скорость тела по оси Y больше или равно 0, то
         {
@@ -140,13 +149,18 @@ public class Hero : MonoBehaviour
     {
         SaveSerial.Instance.LoadGame();
         maxHP = SaveSerial.Instance.playerHP;
+        mageAttackDamage = SaveSerial.Instance.playerMageDamage;
         if (maxHP == 0)
         {
             maxHP = 100;
         }
         hp = maxHP;
+        if (mageAttackDamage == 0)
+        {
+            mageAttackDamage = 30;
+        }
     }
-    void Update() //Update = выполнение функции каждый каждый кадр.
+    private void FixedUpdate()
     {
         if (hp > 0)
         {
@@ -159,6 +173,5 @@ public class Hero : MonoBehaviour
             return;
         }
     }
-
 }
 

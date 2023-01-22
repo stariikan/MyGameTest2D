@@ -56,11 +56,11 @@ public class LvLGeneration : MonoBehaviour
             newBlock = new GameObject("Middle block");// создаем новый обьект
             renderer = newBlock.AddComponent<SpriteRenderer>();//добавляем компонент SpriteRenderer
             BoxCollider2D collider2D = newBlock.AddComponent<BoxCollider2D>();//добавляем компонент BoxCollider2D
-            collider2D.size = new Vector2 (1.274357f, 0.1442559f);//задаем размер BoxCollider2D 
+            collider2D.size = new Vector2 (1.274357f, 0.1842308f);//задаем размер BoxCollider2D 
             renderer.sprite = this.midBlock;//используем спрайт который мы засунули в midBlock
 
             newBlock.transform.localScale = size; //задаем размер обьекта
-            position.x += size.x; //позиция по X, чтобы всегда была чуть дальше чем прошлый
+            position.x += size.x +0.5f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
             position.y += size.y * Random.Range(-0.5f, 0.5f); //позиция по Y, рандомная
             newBlock.transform.position = position; // присваиваем позицию новомоу обьекту
 
@@ -113,7 +113,7 @@ public class LvLGeneration : MonoBehaviour
         GameObject.Find("EnemySkelet").GetComponent<Entity>().BoostAttackDamage();
         GameObject.Find("EnemySkelet").GetComponent<Enemy_Skelet>().BoostSpeed();
         SaveSerial.Instance.SaveGame();
-        SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
+        SceneManager.LoadScene("LevelComplete", LoadSceneMode.Single);
         //StartCoroutine(OnGeneratingRoutine());
     }
     private void Update()
