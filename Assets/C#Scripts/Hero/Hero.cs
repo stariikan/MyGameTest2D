@@ -6,9 +6,10 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     public static Hero Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    public int movement_scalar = 100; //нужно для движение 
-    public float maxSpeed = 4f; //Максимальная скорость
+    public int movement_scalar = 60; //нужно для движение 
+    public float maxSpeed = 3f; //Максимальная скорость
     private bool flipRight; //Поворот спрайта на право, состояние = правда, нужно для поворота спрайта во время смены движения
+    public Vector3 lossyScale; //переменная позиции обьекта
     public bool isGrounded = false; //Находиться ли обьект на земле, а точнее соприкосается ли он с другим обьектом имеющим Collision2D 
     public float gravityScale = 10; //Сила притяжения или чем ниже тем выше прыжок
     public float fallingGravityScale = 40; //Сила притяжение при падении чем выше тем сильнее игровой обьекс тянет вниз
@@ -38,13 +39,13 @@ public class Hero : MonoBehaviour
     }
     public void Push() //Метод для отталкивания тела во время получения урона
     {
-        if (transform.localScale.x < 0) //Условия чтобы определить в куда оттолкнется враг
+        if (transform.lossyScale.x < 0) //смотрим в трансформе в какую сторону повернут по х обьект 
         {
-            GetComponent<Rigidbody2D>().AddForce(new Vector3(50, 0, 0));
+            rb.AddForce(new Vector2(5f, 5f), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
         }
         else
         {
-            rb.AddForce(new Vector2(-50, 0));
+            rb.AddForce(new Vector2(-5f, 5f), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
         }
     }
     public void GetDamage(int dmg) //Мы создаем новый метод GetDamage() 

@@ -13,6 +13,7 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
     public Rigidbody2D rb; //Физическое тело
     //public LayerMask groundLayers;//это будут слои которые будут проверятся
     public Transform groundcheck;// проверка соприкасается ли метка (которую мы создали с землей)
+    float startPositionX;
 
     private bool isMoving = false;
     private Animator anim; //Переменная благодаря которой анимирован обьект, переменная = skelet_anim
@@ -46,7 +47,8 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
         if (player)
         {
             float directionX = player.transform.position.x - transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
-            float directionY = player.transform.position.y - transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
+            float directionY = player.transform.position.y - transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
+            float directionRangeX = transform.localPosition.x - startPositionX;
 
             if (Mathf.Abs(directionX) < 4 && Mathf.Abs(directionX) > 0.5f && Mathf.Abs(directionY) < 2) //если меньше разница меньше 4 метров по х и 2 метров по y
             {
@@ -58,8 +60,9 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
             }
             else
             {
-                isMoving = false;//Если этот метод перестает выполняется переменная isMoving становиться не правдой
+                isMoving = false;
             }
+
             if (directionX < 0 && flipRight) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
             {
                 Flip();
@@ -115,6 +118,7 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
             speed = 1f;
         }
         speedRecovery = speed;
+        startPositionX = transform.localPosition.x;
     }
     void Update() //тут складывать буду основные действия методы (который должен использовать враг)
     {

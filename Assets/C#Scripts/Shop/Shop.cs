@@ -10,7 +10,7 @@ public class Shop : MonoBehaviour
 {
     void OnGUI()
     {
-        if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 5, Screen.width / 2.5f, Screen.height / 11.5f), "plus 20 HP (Price = 20 coins)"))
+        if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 5f, Screen.width / 2.5f, Screen.height / 11.5f), "plus 20 HP (Price = 20 coins)"))
         {
             if (SaveSerial.Instance.playerCoin >= 20)
             {
@@ -47,7 +47,7 @@ public class Shop : MonoBehaviour
         }
 
 
-        if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 2, Screen.width / 2.5f, Screen.height / 11.5f), "plus 10 Mage DMG (Price = 20 coins)"))
+        if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 2f, Screen.width / 2.5f, Screen.height / 11.5f), "plus 10 Mage DMG (Price = 20 coins)"))
         {
             
             if (SaveSerial.Instance.playerCoin >= 20)
