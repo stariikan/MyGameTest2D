@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 58280616}
   - component: {fileID: 58280615}
   - component: {fileID: 58280614}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Razor_ball_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -490,7 +490,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 113079286}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyAttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 164038721}
   - component: {fileID: 164038723}
   - component: {fileID: 164038722}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Traps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -629,8 +629,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 164038719}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -56.91, y: 1.94, z: 0}
-  m_LocalScale: {x: 0.775, y: 0.6875, z: 1}
+  m_LocalPosition: {x: -56.91, y: 2.04, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.34375, z: 1}
   m_Children:
   - {fileID: 264195365}
   m_Father: {fileID: 0}
@@ -648,7 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a5d9db211025d44a8540e9103f5e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trapDmg: 30
+  trapDmg: 15
 --- !u!61 &164038722
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -683,19 +683,19 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 164038719}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 10
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 5
 --- !u!1 &170033018
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,7 +787,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 199875830}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Razor_ball_Holder
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
@@ -1076,7 +1076,7 @@ GameObject:
   m_Component:
   - component: {fileID: 264195365}
   - component: {fileID: 264195368}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1192,7 +1192,7 @@ GameObject:
   - component: {fileID: 340922638}
   - component: {fileID: 340922637}
   - component: {fileID: 340922636}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Razor_ball_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1361,7 +1361,7 @@ GameObject:
   - component: {fileID: 349874030}
   - component: {fileID: 349874029}
   - component: {fileID: 349874028}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: attackArea
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
@@ -1562,7 +1562,7 @@ GameObject:
   - component: {fileID: 461595123}
   - component: {fileID: 461595122}
   - component: {fileID: 461595121}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Razor_ball_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1763,7 +1763,7 @@ GameObject:
   - component: {fileID: 517270869}
   - component: {fileID: 517270868}
   - component: {fileID: 517270867}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Razor_ball_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2379,7 +2379,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.032041833, y: -0.24485219}
+  m_Offset: {x: 0.07297405, y: -0.24485219}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2388,9 +2388,9 @@ BoxCollider2D:
     adaptiveTilingThreshold: 0
     drawMode: 0
     adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_AutoTiling: 1
   serializedVersion: 2
-  m_Size: {x: 0.2470853, y: 1.0877929}
+  m_Size: {x: 0.32894975, y: 1.0877929}
   m_EdgeRadius: 0
 --- !u!4 &766312951
 Transform:
@@ -2427,6 +2427,7 @@ MonoBehaviour:
   attackDamage: 7
   rb: {fileID: 766312949}
   groundcheck: {fileID: 702997720}
+  wallChekPoint: {fileID: 113079286}
 --- !u!114 &766312953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2987,7 +2988,7 @@ GameObject:
   - component: {fileID: 1073245333}
   - component: {fileID: 1073245332}
   - component: {fileID: 1073245331}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Razor_ball_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3153,7 +3154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1076342420}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3397,7 +3398,7 @@ GameObject:
   - component: {fileID: 1308362157}
   - component: {fileID: 1308362156}
   - component: {fileID: 1308362155}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Razor_ball_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3701,7 +3702,7 @@ GameObject:
   - component: {fileID: 1484090153}
   - component: {fileID: 1484090152}
   - component: {fileID: 1484090151}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Razor_ball_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3902,7 +3903,7 @@ GameObject:
   - component: {fileID: 1511177404}
   - component: {fileID: 1511177403}
   - component: {fileID: 1511177402}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Razor_ball_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4270,7 +4271,7 @@ GameObject:
   - component: {fileID: 1657240927}
   - component: {fileID: 1657240926}
   - component: {fileID: 1657240925}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Razor_ball_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4441,7 +4442,7 @@ GameObject:
   - component: {fileID: 1688770006}
   - component: {fileID: 1688770005}
   - component: {fileID: 1688770004}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Razor_ball_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4724,7 +4725,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1793183993}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8254, y: 0.76, z: 4.7519174}
+  m_LocalPosition: {x: 0.8254, y: 0.76, z: 10}
   m_LocalScale: {x: -0.215925, y: 0.20999998, z: 0.99725765}
   m_Children: []
   m_Father: {fileID: 1471759546}

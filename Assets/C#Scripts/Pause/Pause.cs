@@ -23,7 +23,7 @@ public class Pause : MonoBehaviour
     private int infoEnemyDamage;
     private float infoEnemySpeed;
 
-    void Update()
+    private void GameInfo()
     {
         infoPlayerAttackDamage = SaveSerial.Instance.playerAttackDamage;
         infoPlayerMageDamage = SaveSerial.Instance.playerMageDamage;
@@ -31,13 +31,16 @@ public class Pause : MonoBehaviour
         infoEnemyHP = SaveSerial.Instance.enemyHP;
         infoEnemyDamage = SaveSerial.Instance.enemyDamage;
         infoEnemySpeed = SaveSerial.Instance.enemySpeed;
-
         contentPlayerAttackDamage = new GUIContent("Player Attack Damage = " + $"{infoPlayerAttackDamage}", BoxTexture, "This is a tooltip");
         contentPlayerMageDamage = new GUIContent("Player Mage Damage = " + $"{infoPlayerMageDamage}", BoxTexture, "This is a tooltip");
         contentPassedLvl = new GUIContent("Passed LvL = " + $"{infoPassedLvl}", BoxTexture, "This is a tooltip");
         contentEnemyHP = new GUIContent("Enemy HP = " + $"{infoEnemyHP}", BoxTexture, "This is a tooltip");
         contentEnemyDamage = new GUIContent("Enemy Attack Damage = " + $"{infoEnemyDamage}", BoxTexture, "This is a tooltip");
         contentEnemySpeed = new GUIContent("Enemy Movement Speed = " + $"{infoEnemySpeed}", BoxTexture, "This is a tooltip");
+    }
+    void Update()
+    {
+        GameInfo();
 
         Time.timeScale = timer; 
         if (Input.GetKeyDown(KeyCode.Escape) && ispause == false) 

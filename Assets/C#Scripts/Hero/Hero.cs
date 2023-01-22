@@ -41,11 +41,11 @@ public class Hero : MonoBehaviour
     {
         if (transform.lossyScale.x < 0) //смотрим в трансформе в какую сторону повернут по х обьект 
         {
-            rb.AddForce(new Vector2(5f, 5f), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
+            rb.AddForce(new Vector2(2.5f, 2.5f), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
         }
         else
         {
-            rb.AddForce(new Vector2(-5f, 5f), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
+            rb.AddForce(new Vector2(-2.5f, 2.5f), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
         }
     }
     public void GetDamage(int dmg) //Мы создаем новый метод GetDamage() 

@@ -11,15 +11,28 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
 
     GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
     public Rigidbody2D rb; //Физическое тело
-    //public LayerMask groundLayers;//это будут слои которые будут проверятся
     public Transform groundcheck;// проверка соприкасается ли метка (которую мы создали с землей)
-    float startPositionX;
 
     private bool isMoving = false;
     private Animator anim; //Переменная благодаря которой анимирован обьект, переменная = skelet_anim
 
+    public Transform wallChekPoint; //Тут мы ссылаемся на точку которая является дочерним обьектом 
+
+    private bool isGround; // находиться ли обьект на земле
+
+    private bool playerFollow = false; //моб не приследует игрока
+    private float patrolCouldown = 0; //кулдаун направления потрулирования
     private bool flipRight; //Поворот спрайта на право, состояние = правда, нужно для поворота спрайта во время смены движения
     RaycastHit2D hit; //тут будем получать информацию с чем сталкивается обьект
+
+    private void OnCollisionEnter2D(Collision2D collision) //срабатывает тогда, когда наш объект соприкасается с другим объектом:
+    {
+            isGround = true;
+    }
+    private void OnCollisionExit2D(Collision2D collision) //срабатывает тогда, когда соприкосновение двух объектов разрушается.
+    {
+            isGround = false;
+    }
 
     public enum States //Определения какие бывают состояния, указал названия как в Аниматоре Unity
     {
@@ -38,17 +51,46 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
         theScale.x *= -1;//тут происходит переворот изображения например 140 меняется на -140 тем самым полностью измени направление спрайта (картинка отзеркаливается)
         transform.localScale = theScale; //Масштаб преобразования относительно родительского объекта GameObjects
     }
-    public void BoostSpeed()
+    public void BoostSpeed() //метод для усиления скорости
     {
         speed += 0.1f;
     }
+
+    public void Patrol() //потрулирование врага
+    {
+        isMoving = true;
+        float patroldirectionX = player.transform.position.x - transform.localPosition.x;
+        if (patrolCouldown >= 6f)
+        {
+            patrolCouldown = 0;
+        }
+
+        if ((patrolCouldown <= 3f) && playerFollow == false)
+        {
+            Vector3 patrolPos = transform.position;
+            patrolPos.x += Mathf.Sign(patroldirectionX) * speed * Time.deltaTime;
+            transform.position = patrolPos;
+        }
+        if ((patrolCouldown > 3f) && (patrolCouldown <= 6f) && playerFollow == false)
+        {
+            Vector3 patrolPos = transform.position;
+            patrolPos.x -= Mathf.Sign(patroldirectionX) * speed * Time.deltaTime;
+            transform.position = patrolPos;
+        }
+        
+        if (patroldirectionX < 0 && flipRight) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+        {
+            Flip();
+        }
+        else if (patroldirectionX > 0 && !flipRight) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+        {
+            Flip();
+        }
+    }
     public void PlayerFollow() //Метод в котором описываем логику следования за игроком
     {
-        if (player)
-        {
             float directionX = player.transform.position.x - transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
             float directionY = player.transform.position.y - transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
-            float directionRangeX = transform.localPosition.x - startPositionX;
 
             if (Mathf.Abs(directionX) < 4 && Mathf.Abs(directionX) > 0.5f && Mathf.Abs(directionY) < 2) //если меньше разница меньше 4 метров по х и 2 метров по y
             {
@@ -57,9 +99,11 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
                                                                         // (PS: MathF. Sign(Single) - это метод класса MathF, который возвращает целое число, определяющее знак числа)
                 transform.position = pos;//тут меняется позиция на ту что посчиталась в прошлой строке в формуле
                 isMoving = true;//Если этот метод выполняется переменная isMoving становиться правдой
+                playerFollow = true;
             }
             else
             {
+                playerFollow = false;
                 isMoving = false;
             }
 
@@ -71,8 +115,16 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
             {
                 Flip();
             }
-        }
                        
+    }
+    public void EnemyJump() //Прыжок если противник видит препятствие
+    {
+        RaycastHit2D wall = Physics2D.Raycast(wallChekPoint.position, transform.localPosition, 0.04f, LayerMask.GetMask("Ground")); //проверка что точка выставленная перед врагом точка видит в радиусе 0,04f перед собой обьект с слоем Земля 
+        if (wall != false && isGround != false)
+        {
+            rb.velocity = Vector2.zero;
+            rb.AddForce(new Vector2(0, 20f), ForceMode2D.Impulse); // прикладывание силы по Y для пржыка
+        }
     }
     private void DieByFall() //Метод который наносит урон при падении с платформы
     {
@@ -83,12 +135,12 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
     }
     public void AnimState()//Метод для определения стейта анимации
     {
-        if (isMoving == false) State = States.idle;//если не двигается значит анимации ожидания
-        if (isMoving) State = States.run;//если координаты скелета поменялись, то State = run
+        if (isMoving != true) State = States.idle;//если не двигается значит анимации ожидания
+        if (isMoving == true) State = States.run;//если координаты скелета поменялись, то State = run
     }
     public void groundCheckPosition()//проверка на пропость, чтобы скелет туда не упал
     {
-        hit = Physics2D.Raycast(groundcheck.position, -transform.up, 2f, Physics.DefaultRaycastLayers);//мы стреляем Raycast вниз с позиции обьекта groundcheck, на 1 еденицу
+        hit = Physics2D.Raycast(groundcheck.position, -transform.up, 2f, LayerMask.GetMask("Ground"));//мы стреляем Raycast вниз с позиции обьекта groundcheck, на 2 еденицы
                                                                                        //и проверяем столкнулся ли обьект с землей (groundLayers)
                                                                                        //PlayerFollow();
 
@@ -118,16 +170,18 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
             speed = 1f;
         }
         speedRecovery = speed;
-        startPositionX = transform.localPosition.x;
     }
     void Update() //тут складывать буду основные действия методы (который должен использовать враг)
     {
+        patrolCouldown += Time.deltaTime;
         if (this.gameObject.GetComponent<Entity>().currentHP > 0)
         {
-            PlayerFollow();
-            DieByFall();
-            AnimState();
-            groundCheckPosition();
+            PlayerFollow(); //движение за игроком
+            DieByFall(); // Смерть при падении
+            AnimState(); //Стейтмашина Анимации
+            groundCheckPosition(); //проверка пропасти
+            EnemyJump(); //прыжок перед препятсвием
+            Patrol();//патрулирование
         }
         else
         {
