@@ -165,7 +165,7 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
     private void Start()
     {
         speed = SaveSerial.Instance.enemySpeed;
-        if (speed == 0f)
+        if (speed < 1f)
         {
             speed = 1f;
         }

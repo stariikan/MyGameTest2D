@@ -69,7 +69,7 @@ public class LvLGeneration : MonoBehaviour
 
             GameObject enemy = Instantiate(enemyForGeneration, new Vector2(position.x + Random.Range(-1, 2), position.y + 4), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
             enemy.name = "Enemy" + Random.Range(1, 100);
-            if (i >= 4) //Если уровень 4 и выше начинают спавнятся ловушки
+            if ( count >= 4) //Если уровень 4 и выше начинают спавнятся ловушки
             {
                 Instantiate(trapsForGeneration, new Vector2(position.x + Random.Range(-2, 2), position.y + 0.7f), Quaternion.identity);// Клонирования обьекта(ловушка) и его координаты)
             }
