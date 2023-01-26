@@ -1,1 +1,0 @@
-All sprite sheet is in block 128x64.

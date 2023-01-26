@@ -16,6 +16,7 @@ public class LvLGeneration : MonoBehaviour
     public GameObject enemyForGeneration;
     public GameObject trapsForGeneration;
     public GameObject chestForGeneration;
+    public GameObject powerUpForGeneration;
 
     public static LvLGeneration Instance { get; set; } //Для сбора и отправки данных из этого скрипта
 
@@ -40,7 +41,7 @@ public class LvLGeneration : MonoBehaviour
 
         GameObject newBlock = new GameObject("Start block");// создаем новый обьект
         newBlock.transform.position = position;// присваиваем позицию новомоу обьекту
-        newBlock.transform.localScale = size;// присваиваем разамер в соответсвие со спрайтом
+        newBlock.transform.localScale = new Vector2(size.x, size.y / 2);// присваиваем разамер в соответсвие со спрайтом
         SpriteRenderer renderer = newBlock.AddComponent<SpriteRenderer>(); //добавляем компонент SpriteRenderer
         BoxCollider2D boxCollider2D = newBlock.AddComponent<BoxCollider2D>();//добавляем компонент BoxCollider2D
         boxCollider2D.size = new Vector2(1.274357f, 0.1442559f);//задаем размер BoxCollider2D
@@ -61,7 +62,7 @@ public class LvLGeneration : MonoBehaviour
             collider2D.size = new Vector2 (1.274357f, 0.1842308f);//задаем размер BoxCollider2D
             renderer.sprite = this.midBlock;//используем спрайт который мы засунули в midBlock
 
-            newBlock.transform.localScale = size; //задаем размер обьекта
+            newBlock.transform.localScale = new Vector2(size.x, size.y / 2); //задаем размер обьекта
             position.x += size.x +0.5f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
             position.y += size.y * Random.Range(-0.5f, 0.5f); //позиция по Y, рандомная
             newBlock.transform.position = position; // присваиваем позицию новомоу обьекту
@@ -69,7 +70,7 @@ public class LvLGeneration : MonoBehaviour
 
             GameObject enemy = Instantiate(enemyForGeneration, new Vector2(position.x + Random.Range(-1, 2), position.y + 4), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
             enemy.name = "Enemy" + Random.Range(1, 100);
-            if ( count >= 4) //Если уровень 4 и выше начинают спавнятся ловушки
+            if ( Level >= 4) //Если уровень 4 и выше начинают спавнятся ловушки
             {
                 Instantiate(trapsForGeneration, new Vector2(position.x + Random.Range(-2, 2), position.y + 0.7f), Quaternion.identity);// Клонирования обьекта(ловушка) и его координаты)
             }
@@ -87,7 +88,7 @@ public class LvLGeneration : MonoBehaviour
         position.x += size.x; //позиция по X, чтобы всегда была чуть дальше чем прошлый
         position.y += size.y * Random.Range(-1, 1); //позиция по Y, рандомная
         newBlock.transform.position = position; // присваиваем позицию новомоу обьекту
-        newBlock.transform.localScale = size; //задаем размер обьекта
+        newBlock.transform.localScale = new Vector2(size.x, size.y / 2); //задаем размер обьекта
         newBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
 
         yield return new WaitForEndOfFrame(); //ожидания установки блоков
