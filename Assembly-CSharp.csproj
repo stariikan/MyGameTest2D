@@ -59,6 +59,7 @@
     <Compile Include="Assets\C#Scripts\Camera\CameraFolow.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Entity.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\LvL.cs" />
+    <Compile Include="Assets\C#Scripts\LevelGeneration\levelGen2.cs" />
     <Compile Include="Assets\C#Scripts\UI\EnemyProgressBar\DisableProgressBar.cs" />
     <Compile Include="Assets\C#Scripts\Weapon\MeleeWeapon.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Mana.cs" />
@@ -78,14 +79,8 @@
     <Compile Include="Assets\C#Scripts\SaveProgress\SaveSerial.cs" />
     <Compile Include="Assets\C#Scripts\UI\Level_counter.cs" />
     <Compile Include="Assets\C#Scripts\Chest\Chest.cs" />
-    <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\HP.cs" />
     <Compile Include="Assets\ChatGPLvLGeneration.cs" />
-    <Compile Include="Assets\C#Scripts\LevelGeneration\ChatGPLeveL.cs" />
-    <Compile Include="Assets\C#Scripts\LevelGeneration\levelGen2.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\Warrior free set\License.txt" />
-    <None Include="Assets\Warrior free set\Contact.txt" />
+    <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\HP.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

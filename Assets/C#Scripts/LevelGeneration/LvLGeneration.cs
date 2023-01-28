@@ -9,14 +9,17 @@ using UnityEngine.SceneManagement;
 public class LvLGeneration : MonoBehaviour
 {
     // В эти три переменные занесем каждый спрайт блока по отдельности: стартовый, промежуточный, промежуточный2 и конечный.
-    public Sprite startBlock;
-    public Sprite midBlock;
-    public Sprite midBlock2;
-    public Sprite endBlock;
-    public GameObject enemyForGeneration;
-    public GameObject trapsForGeneration;
-    public GameObject chestForGeneration;
-    public GameObject powerUpForGeneration;
+    public GameObject[] startBlock; //стартовая картина
+    public GameObject[] fogStart; //стартовая рамка картини
+    public GameObject[] midBlock; //мидл картины где генерятся враги
+    public GameObject[] fogMid; //мидл рамка картины где генерятся враги
+    public GameObject[] midBlock2; //пустое место между картинами
+    public GameObject[] endBlock; //картина с сундуков
+    public GameObject[] fogEnd; // рамка картины с сундуком
+    public GameObject[] enemyForGeneration;
+    public GameObject[]  trapsForGeneration;
+    public GameObject[] chestForGeneration;
+    public GameObject[] powerUpForGeneration;
 
     public static LvLGeneration Instance { get; set; } //Для сбора и отправки данных из этого скрипта
 
@@ -36,61 +39,67 @@ public class LvLGeneration : MonoBehaviour
     }
     private IEnumerator OnGeneratingRoutine() //В методе OnGeneratingRoutine, будем выполнять сам процесс генерации уровня. Так как уровни у нас могут быть как большими, так и маленькими и генерироваться разное количество времени, процесс генерации мы поместим в корутину, чтобы игра не “зависала” во время работы “генератора”
     {
-        Vector2 size = new Vector2(4, 4); //Для начала в методе OnGeneratingRoutine объявим две векторные переменные: size, где укажем размер блоков по длине и высоте и position, где укажем точку, откуда будет начинать строится уровень. Теперь можно построить стартовый блок.
-        Vector2 position = new Vector2(0, 0);
+        //Vector2 size = new Vector3(4, 4); //Для начала в методе OnGeneratingRoutine объявим две векторные переменные: size, где укажем размер блоков по длине и высоте и position, где укажем точку, откуда будет начинать строится уровень. Теперь можно построить стартовый блок.
+        Vector3 position = new Vector3(0, 2, 110);
+        position.x = 0; //позиция по X, чтобы всегда была чуть дальше чем прошлый
+        position.y = 2; //позиция по Y, рандомная
+        position.z = 110;
 
-        GameObject newBlock = new GameObject("Start block");// создаем новый обьект
-        newBlock.transform.position = position;// присваиваем позицию новомоу обьекту
-        newBlock.transform.localScale = new Vector2(size.x, size.y / 2);// присваиваем разамер в соответсвие со спрайтом
-        SpriteRenderer renderer = newBlock.AddComponent<SpriteRenderer>(); //добавляем компонент SpriteRenderer
-        BoxCollider2D boxCollider2D = newBlock.AddComponent<BoxCollider2D>();//добавляем компонент BoxCollider2D
-        boxCollider2D.size = new Vector2(1.274357f, 0.1442559f);//задаем размер BoxCollider2D
-        newBlock.layer = LayerMask.NameToLayer("Ground"); //Добавление слоя Земля к созданному блоку
+        GameObject newstartBlock = Instantiate(startBlock[Random.Range(0, startBlock.Length)]); //герация перовой картины
+        newstartBlock.name = "Start block";// создаем новый обьект
+        newstartBlock.transform.position = new Vector3(position.x, position.y, position.z);// присваиваем позицию новомоу обьекту
+        newstartBlock.layer = LayerMask.NameToLayer("Ground"); //Добавление слоя Земля к созданному блоку
+        GameObject newFogStart = Instantiate(fogStart[Random.Range(0, fogStart.Length)], new Vector3(position.x, position.y, position.z - 5), Quaternion.identity);
 
-        renderer.sprite = this.startBlock;//используем спрайт который мы засунули в startBlock
+       
+        
+        GameObject newFoggy = Instantiate(midBlock2[Random.Range(0, midBlock2.Length)], new Vector3(position.x + 8.1f, position.y, 108), Quaternion.identity);
+        newFoggy.name = "Start fog";// создаем новый обьект
+        newFoggy.layer = LayerMask.NameToLayer("Ground"); //Добавление слоя Земля к созданному блоку
 
-        int count = this.Level + 3; // Числовая переменная count будет указывать какое кол - во промежуточных блоков необходимо построить, это число будет зависеть от количества пройденных уровней и, чтобы их изначально не было слишком мало на первых уровнях, еще пяти(5) дополнительных блоков.
 
-        // Также как мы строили стартовый блок, также строим и промежуточные: создаем новый GameObject, добавляем ему компонент SpriteRenderer, указываем спрайт для отображения на сцене и задаем размер и позицию.
-        // Так как промежуточные блоки строятся по горизонтали, значит и позицию необходимо с каждым новым блоком сдвигать немного вправо.Для того чтобы узнать на сколько ее необходимо сдвинуть, воспользуемся переменной size, где указаны размеры блоков.
-        // Высота блока по Y в переменной position также смещается вверх, либо вниз, в зависимости от размера блока, умноженного на случайное число от -1 до 1. Метод Random.Range генерирует ЦЕЛЫЕ числа от минимального до максимально (ИСКЛЮЧИТЕЛЬНО), это значит, что максимальное указанное число никогда достигнуто не будет. Завершаем цикл постройки промежуточных блоков новым WaitForEndOfFrame.
+        int count = this.Level; // Числовая переменная count будет указывать какое кол - во промежуточных блоков необходимо построить, это число будет зависеть от количества пройденных уровней и, чтобы их изначально не было слишком мало на первых уровнях, еще пяти(5) дополнительных блоков.
+
         for (int i = 0; i < count; i++)
         {
-            newBlock = new GameObject("Middle block");// создаем новый обьект
-            renderer = newBlock.AddComponent<SpriteRenderer>();//добавляем компонент SpriteRenderer
-            BoxCollider2D collider2D = newBlock.AddComponent<BoxCollider2D>();//добавляем компонент BoxCollider2D
-            collider2D.size = new Vector2 (1.274357f, 0.1842308f);//задаем размер BoxCollider2D
-            renderer.sprite = this.midBlock;//используем спрайт который мы засунули в midBlock
 
-            newBlock.transform.localScale = new Vector2(size.x, size.y / 2); //задаем размер обьекта
-            position.x += size.x +0.5f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
-            position.y += size.y * Random.Range(-0.5f, 0.5f); //позиция по Y, рандомная
-            newBlock.transform.position = position; // присваиваем позицию новомоу обьекту
-            newBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
 
-            GameObject enemy = Instantiate(enemyForGeneration, new Vector2(position.x + Random.Range(-1, 2), position.y + 4), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            position.x += 16.2f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
+            position.y = 2; //позиция по Y, рандомная
+            position.z = 110;
+            GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, position.z), Quaternion.identity); // создаем новый обьект
+            newMidBlock.name = "Middle block";
+            newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+            GameObject newFogMid = Instantiate(fogMid[Random.Range(0, fogMid.Length)], new Vector3(position.x, position.y, position.z - 5), Quaternion.identity);
+
+            GameObject newMidBlock2 = Instantiate(midBlock2[Random.Range(0, midBlock2.Length)], new Vector3(position.x + 8.1f, position.y - 0.01f, 108), Quaternion.identity);// создаем новый обьект
+            newMidBlock2.name = "Mid block2";
+            newMidBlock2.layer = LayerMask.NameToLayer("Ground"); //Добавление слоя Земля к созданному блоку
+
+            GameObject enemy = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z -4), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
             enemy.name = "Enemy" + Random.Range(1, 100);
-            if ( Level >= 4) //Если уровень 4 и выше начинают спавнятся ловушки
+            if ( Level >= 3) //Если уровень 3 и выше начинают спавнятятся больше врагов
             {
-                Instantiate(trapsForGeneration, new Vector2(position.x + Random.Range(-2, 2), position.y + 0.7f), Quaternion.identity);// Клонирования обьекта(ловушка) и его координаты)
+                GameObject enemy2 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 4), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                enemy2.name = "Enemy" + Random.Range(1, 100);
             }
-            
+            if (Level >= 7) //Если уровень 7 и выше начинают спавнятятся больше врагов
+            {
+                GameObject enemy3 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 4), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                enemy3.name = "Enemy" + Random.Range(1, 100);
+            }
+
             yield return new WaitForEndOfFrame(); //ожидания установки блоков
         }
 
-        newBlock = new GameObject("End block");// создаем новый обьект
-        renderer = newBlock.AddComponent<SpriteRenderer>();//добавляем компонент SpriteRenderer
-        BoxCollider2D boxCollider = newBlock.AddComponent<BoxCollider2D>();//добавляем компонент BoxCollider2D
-        boxCollider.size = new Vector2(1.274357f, 0.1442559f);//задаем размер BoxCollider2D 
-        renderer.sprite = this.endBlock;//используем спрайт который мы засунули в endBlock
-        Instantiate(chestForGeneration, new Vector2(position.x + Random.Range(0, 1), position.y + 0.8f), Quaternion.identity);
+        GameObject newEndBlock = Instantiate(endBlock[Random.Range(0, endBlock.Length)], new Vector3(position.x + 16.2f, position.y, position.z), Quaternion.identity);
+        newEndBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+        newEndBlock.name = "End block";// создаем новый обьект
+        GameObject newFogEnd = Instantiate(fogEnd[Random.Range(0, fogEnd.Length)], new Vector3(position.x + 16.2f, position.y, 108), Quaternion.identity);
+        GameObject newFoggyEnd = Instantiate(fogMid[Random.Range(0, fogMid.Length)], new Vector3(position.x + 16.2f, position.y, position.z - 5), Quaternion.identity);
 
-        position.x += size.x; //позиция по X, чтобы всегда была чуть дальше чем прошлый
-        position.y += size.y * Random.Range(-1, 1); //позиция по Y, рандомная
-        newBlock.transform.position = position; // присваиваем позицию новомоу обьекту
-        newBlock.transform.localScale = new Vector2(size.x, size.y / 2); //задаем размер обьекта
-        newBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
 
+        GameObject newChest = Instantiate(chestForGeneration[Random.Range(0, chestForGeneration.Length)], new Vector3(position.x + 16.2f, position.y, position.z - 4), Quaternion.identity);
         yield return new WaitForEndOfFrame(); //ожидания установки блоков
     }
     public void PlusCoin(int count) //сколько будем плюсовать монеток
@@ -115,14 +124,12 @@ public class LvLGeneration : MonoBehaviour
     }
     public void CompleteLevel() // Добавим метод CompleteLevel, который будет увеличивать переменную completeLevels на одну единицу каждый раз, когда игрок пройдет очередной уровень.
     {
-        this.Level += 1;
-        //Debug.Log("Level: " + Level);
+        this.Level += 1;;
         GameObject.Find("EnemySkelet").GetComponent<Entity>().BoostHP();
         GameObject.Find("EnemySkelet").GetComponent<Entity>().BoostAttackDamage();
         GameObject.Find("EnemySkelet").GetComponent<Enemy_Skelet>().BoostSpeed();
         SaveSerial.Instance.SaveGame();
         SceneManager.LoadScene("LevelComplete", LoadSceneMode.Single);
-        //StartCoroutine(OnGeneratingRoutine());
     }
     private void Update()
     {
