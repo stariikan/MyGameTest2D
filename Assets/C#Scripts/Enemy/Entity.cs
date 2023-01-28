@@ -91,7 +91,8 @@ public class Entity : MonoBehaviour
 
         if (currentHP <= 0)
         {
-            LvLGeneration.Instance.PlusCoin(rewardForKillEnemy); //вызов метода для увелечения очков
+            LvLGeneration.Instance.PlusCoin(rewardForKillEnemy);//вызов метода для увелечения очков
+            LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
             anim.SetTrigger("death");//анимация смерти
             enemyDead = true;
             Debug.Log("Enemy Defeat -> " + gameObject.name);

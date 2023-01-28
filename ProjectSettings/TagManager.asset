@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - PlayerSkin
   - Chest
+  - Door
   layers:
   - Default
   - TransparentFX

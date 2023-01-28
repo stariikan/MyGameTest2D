@@ -53,7 +53,6 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
     {
         speed += 0.1f;
     }
-
     public void Patrol() //потрулирование врага
     {
         isMoving = true;
@@ -90,8 +89,6 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
                 Flip();
             }
         }
-
-
     }
     public void PlayerFollow() //Метод в котором описываем логику следования за игроком
     {
@@ -121,11 +118,7 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
         else
         {
             playerFollow = false;
-        }
-
-        
-        
-                       
+        }                       
     }
     public void EnemyJump() //Прыжок если противник видит препятствие
     {

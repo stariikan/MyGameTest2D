@@ -44,10 +44,8 @@ public class MeleeWeapon : MonoBehaviour
         TargetName = collision.gameObject.name;
         hit = true; //тут указываем что произошло столкновение
         boxCollider.enabled = false; //отключаем коллайдер
-        //anim.SetTrigger("explode");//для воспроизведения анимации атаки снарядом при выполнения тригера magicAttack
         meleeDamageObject();
         TargetName = string.Empty;
-        //Deactivate();
     }
     public void meleeDamageObject()
     {
@@ -60,6 +58,10 @@ public class MeleeWeapon : MonoBehaviour
         if (target.CompareTag("Chest"))
         {
             target.GetComponent<Chest>().TakeDamage(AttackDamage);
+        }
+        if (target.CompareTag("Door"))
+        {
+            target.GetComponent<door>().TryToOpen();
         }
     }
     public void meleeDirection(float _direction)// выбор направления полета 

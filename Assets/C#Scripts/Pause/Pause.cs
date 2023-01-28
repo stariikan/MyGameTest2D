@@ -79,12 +79,12 @@ public class Pause : MonoBehaviour
             if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 2.5f, Screen.width / 2.5f, Screen.height / 11.5f), "Β Μενώ"))
             { 
             }
-            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 2f, Screen.width / 2.5f, Screen.height / 25f), contentPlayerAttackDamage);
-            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.81f, Screen.width / 2.5f, Screen.height / 25f), contentPlayerMageDamage);
-            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.66f, Screen.width / 2.5f, Screen.height / 25f), contentPassedLvl);
-            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.538f, Screen.width / 2.5f, Screen.height / 25f), contentEnemyHP);
-            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.428f, Screen.width / 2.5f, Screen.height / 25f), contentEnemyDamage);
-            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.33f, Screen.width / 2.5f, Screen.height / 25f), contentEnemySpeed);
+            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 2f, Screen.width / 2.5f, Screen.height / 19f), contentPlayerAttackDamage);
+            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.81f, Screen.width / 2.5f, Screen.height / 19f), contentPlayerMageDamage);
+            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.66f, Screen.width / 2.5f, Screen.height / 19f), contentPassedLvl);
+            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.538f, Screen.width / 2.5f, Screen.height / 19f), contentEnemyHP);
+            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.428f, Screen.width / 2.5f, Screen.height / 19f), contentEnemyDamage);
+            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.33f, Screen.width / 2.5f, Screen.height / 19f), contentEnemySpeed);
         } 
     } 
 }

@@ -25,6 +25,7 @@ public class LvLGeneration : MonoBehaviour
 
     public int Level = 1; // ƒобавим одну числовую переменную completeLevels, с помощью которой будем указывать количество пройденных уровней.
     public int coin; // кол-во очков
+    public bool key = false;
 
     private void Start() // ¬ методе Start мы будем запускать генерацию уровн€ во врем€ старта игры.
     {
@@ -77,16 +78,16 @@ public class LvLGeneration : MonoBehaviour
             newMidBlock2.layer = LayerMask.NameToLayer("Ground"); //ƒобавление сло€ «емл€ к созданному блоку
 
             GameObject enemy = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z -4), Quaternion.identity); // лонировани€ обьекта (враг) и его координаты)
-            enemy.name = "Enemy" + Random.Range(1, 100);
+            enemy.name = "Enemy" + Random.Range(1, 999);
             if ( Level >= 3) //≈сли уровень 3 и выше начинают спавн€т€тс€ больше врагов
             {
                 GameObject enemy2 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 4), Quaternion.identity); // лонировани€ обьекта (враг) и его координаты)
-                enemy2.name = "Enemy" + Random.Range(1, 100);
+                enemy2.name = "Enemy" + Random.Range(1, 999);
             }
             if (Level >= 7) //≈сли уровень 7 и выше начинают спавн€т€тс€ больше врагов
             {
                 GameObject enemy3 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 4), Quaternion.identity); // лонировани€ обьекта (враг) и его координаты)
-                enemy3.name = "Enemy" + Random.Range(1, 100);
+                enemy3.name = "Enemy" + Random.Range(1, 999);
             }
 
             yield return new WaitForEndOfFrame(); //ожидани€ установки блоков
@@ -110,7 +111,18 @@ public class LvLGeneration : MonoBehaviour
     {
         Debug.Log(coin);
     }
-
+    public void FindKey() //сколько будем плюсовать ключей
+    {
+        key = true;
+    }
+    public void UseKey() 
+    {
+        key = false;        
+    }
+    public void key_Counter() //ћетод который просто вызывает значение переменной Coin, нужен мне был дл€ передачи этого числа в скрипт с каунтером жизней
+    {
+        Debug.Log(key);
+    }
     private void Awake()
     {
         Instance = this;
