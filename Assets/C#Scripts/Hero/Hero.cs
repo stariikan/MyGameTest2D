@@ -147,6 +147,7 @@ public class Hero : MonoBehaviour
     }
     private void Start()
     {
+        
         SaveSerial.Instance.LoadGame();
         maxHP = SaveSerial.Instance.playerHP;
         mageAttackDamage = SaveSerial.Instance.playerMageDamage;
