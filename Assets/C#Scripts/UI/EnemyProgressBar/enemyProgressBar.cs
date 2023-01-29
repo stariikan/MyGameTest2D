@@ -21,8 +21,6 @@ public class enemyProgressBar : MonoBehaviour
         if (hpBar.transform.localScale.x > 0.01f)
         {
             hpBar.transform.localScale -= new Vector3(dmg2, 0.0f, 0.0f);
-            //transform.localPosition -= new Vector3(dmg2, 0.0f, 0.0f);
-            //Debug.Log("1");
         }
         else
         {

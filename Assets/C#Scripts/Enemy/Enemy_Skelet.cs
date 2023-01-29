@@ -53,7 +53,6 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
     {
         speed += 0.1f;
     }
-
     public void Patrol() //потрулирование врага
     {
         isMoving = true;
@@ -90,15 +89,13 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
                 Flip();
             }
         }
-
-
     }
     public void PlayerFollow() //ћетод в котором описываем логику следовани€ за игроком
     {
             float directionX = player.transform.position.x - transform.localPosition.x; //вычисление направление движени€ это ѕозици€ игрока по оси х - позици€ скелета по оси х
             float directionY = player.transform.position.y - transform.localPosition.y; //вычисление направление движени€ это ѕозици€ игрока по оси y - позици€ скелета по оси y
 
-        if (Mathf.Abs(directionX) < 4 && Mathf.Abs(directionX) > 0.5f && Mathf.Abs(directionY) < 2)
+        if (Mathf.Abs(directionX) < 6 && Mathf.Abs(directionX) > 0.5f && Mathf.Abs(directionY) < 2)
         {
                 Vector3 pos = transform.position;
                 Vector3 theScale = transform.localScale;
@@ -121,11 +118,7 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
         else
         {
             playerFollow = false;
-        }
-
-        
-        
-                       
+        }                       
     }
     public void EnemyJump() //ѕрыжок если противник видит преп€тствие
     {

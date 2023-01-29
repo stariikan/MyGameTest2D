@@ -5,12 +5,30 @@ using UnityEngine.UI;//для UI
 
 public class hp_counter : MonoBehaviour
 {
-    int hp_ui; //тут сделали переменную чтобы она потом собирала значение переменной hp из скрипта Hero
+    public Image progressBarHP; //картинка прогресс бара
+    public float maxProgress = 100f; //100% заполнености прогресс бара
+    private float currentProgress; //хп в реальном времени
+
+    void Start()
+    {
+        currentProgress = maxProgress; // вначале игры приравниваем кол-во хп к максимальному значению
+    }
+
+    public void UpdateProgressBar()
+    {
+        currentProgress = Hero.Instance.hp; //смотрим какое сейчас кол-во хп
+        if (progressBarHP == null) // проверка на то, выбрана картинка прогресс бара или нет
+        {
+            Debug.LogError("progressBarMP is not set!");
+            return;
+        }
+        else
+        {
+            progressBarHP.fillAmount = currentProgress / maxProgress; //уменьшаем погрессбар (не забываем в юнити выставить настройки у изображения fillAmount (пример 90 хп/100 хп =0,9 полоска уменьшиться на 10%
+        }
+    }
     void Update() //Обновление значения происходит при обновлении каждого кадра
     {
-        hp_ui = Hero.Instance.hp;//тут переменная hp_ui начинает быть равной тому обьекту
-                                          //который надейт медот FindObjectOfType в скрипте hero в переменной hp
-        GetComponent<Text>().text = $"{hp_ui}"; //тут мы значение компонента text в game.Object к которому у нас принадлежит этот скрипт
-                                              //и меняем текст на переменную которая преобразуется в string
+        UpdateProgressBar();
     }
 }

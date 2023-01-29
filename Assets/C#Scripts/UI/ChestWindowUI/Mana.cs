@@ -5,7 +5,7 @@ using UnityEngine.UI;//для UI
 
 public class Mana : MonoBehaviour
 {
-    int mana_ui; //тут сделали переменную чтобы она потом собирала значение переменной hp из скрипта Hero
+    float mana_ui; //тут сделали переменную чтобы она потом собирала значение переменной hp из скрипта Hero
 
     // Start is called before the first frame update
     void Start()

@@ -13,10 +13,12 @@ public class Hero : MonoBehaviour
     public bool isGrounded = false; //Находиться ли обьект на земле, а точнее соприкосается ли он с другим обьектом имеющим Collision2D 
     public float gravityScale = 10; //Сила притяжения или чем ниже тем выше прыжок
     public float fallingGravityScale = 40; //Сила притяжение при падении чем выше тем сильнее игровой обьекс тянет вниз
-    public int maxHP = 100;
-    public int hp = 100; //Количество жизней
+    public float maxHP = 100;
+    public float hp = 100; //Количество жизней
     public bool playerDead = false; //мертв игрок или нет, пока нужно для того чтобы при смерти игрока делать рестарт
     public int mageAttackDamage = 30;
+
+    public bool block = false;
 
     private Rigidbody2D rb; //Тело с физической переменной к которому принадлежит скрипт, переменная = rb
     private Animator anim; //Переменная благодаря которой анимирован обьект, переменная = anim
@@ -48,12 +50,35 @@ public class Hero : MonoBehaviour
             rb.AddForce(new Vector2(-2.5f, 2.5f), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
         }
     }
-    public void GetDamage(int dmg) //Мы создаем новый метод GetDamage() 
-                            //Пишет изменившееся значение в лог и 
+    public void CheckBlock()
     {
-        hp -= dmg;//Отнимает int 10 из переменной hp (жизни).
-        anim.SetTrigger("damage");
-        Push();
+        block = HeroAttack.Instance.block;
+        if (block == true)
+        {
+            movement_scalar = 47;
+            maxSpeed = 2f;
+        }
+        else
+        {
+            movement_scalar = 60;
+            maxSpeed = 3f;
+        }
+    }
+    public void GetDamage(int dmg) //Мы создаем новый метод GetDamage() 
+    {
+        if (block == false)
+        {
+            hp -= dmg;//Отнимает int 10 из переменной hp (жизни).
+            anim.SetTrigger("damage");
+            Push();
+        }
+        if (block == true)
+        {
+            hp -= dmg /3;//Отнимает int из переменной hp (жизни) и при активном блоке уменьшает урон в 3 раза
+            HeroAttack.Instance.DecreaseStamina(20);
+            anim.SetTrigger("damage");
+            Push();
+        }
         if (hp <= 0) //Если жизней меньше 0
         {
             maxSpeed = 0;
@@ -168,6 +193,7 @@ public class Hero : MonoBehaviour
             PlayerMovement();//Метод для движения и поворота спрайта персонажа
             AnimState();//Метод для передачи состояния в аниматор
             DieByFall();//Метод для смерти от падения
+            CheckBlock(); //Проверка блока
         }
         else
         {
