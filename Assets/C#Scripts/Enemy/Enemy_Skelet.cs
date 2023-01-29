@@ -95,7 +95,7 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
             float directionX = player.transform.position.x - transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
             float directionY = player.transform.position.y - transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
 
-        if (Mathf.Abs(directionX) < 4 && Mathf.Abs(directionX) > 0.5f && Mathf.Abs(directionY) < 2)
+        if (Mathf.Abs(directionX) < 6 && Mathf.Abs(directionX) > 0.5f && Mathf.Abs(directionY) < 2)
         {
                 Vector3 pos = transform.position;
                 Vector3 theScale = transform.localScale;

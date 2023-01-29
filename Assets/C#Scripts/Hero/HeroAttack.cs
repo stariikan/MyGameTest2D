@@ -17,8 +17,13 @@ public class HeroAttack : MonoBehaviour
 
     private float cooldownTimer = Mathf.Infinity; //≈сли мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown. ѕоэтому мы поставим тут бесконечность или можно поставить любое большое число
     private float MagicCooldownTimer = Mathf.Infinity; //≈сли мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown. ѕоэтому мы поставим тут бесконечность или можно поставить любое большое число
-    public int maxMP = 100;
-    public int currentMP;
+    public float maxMP = 100;
+    public float currentMP;
+    public float stamina = 100;
+    public float currentStamina;
+    public float staminaSpeedRecovery = 5f;
+
+    public bool block = false;
     
     private void Start()
     {
@@ -28,15 +33,35 @@ public class HeroAttack : MonoBehaviour
             maxMP = 100;
         }
         currentMP = maxMP;
-    }
 
+        stamina = SaveSerial.Instance.playerStamina;
+        if (stamina == 0)
+        {
+            stamina = 100;
+        }
+        currentStamina = stamina;
+    }
+    private void staminaRecovery()
+    {
+        if (currentStamina < stamina)
+        {
+            currentStamina += Time.deltaTime * staminaSpeedRecovery;
+        }
+    }
+    private void Block()
+    {
+        block = true;
+    }
+    public void DecreaseStamina(float cost) //ћетод дл€ уменьшени€ стамины за различные действи€
+    {
+        currentStamina -= cost;
+    }
     private void Attack()
     {
        Anim.SetTrigger("Attack");//дл€ воспроизведени€ анимации атаки при выполнени€ тригера Attack
        cooldownTimer = 0;
        meleeAttackArea.transform.position = firePoint.position; //ѕри каждой атаки мы будем мен€ть положени€ снар€да и задавать ей положение огневой точки получить компонент из снар€да и отправить его в направление в котором находитьс€ игрок
        meleeAttackArea.GetComponent<MeleeWeapon>().meleeDirection(Mathf.Sign(transform.localScale.x));
-
     }
     private void magicAttack()
     {
@@ -47,12 +72,21 @@ public class HeroAttack : MonoBehaviour
     }
     private void attackControl()
     {
-        if ((Input.GetKey(KeyCode.LeftControl) || Input.GetMouseButtonDown(0)) && cooldownTimer > AttackCooldown)// если нажать на правую кнопку мыши и кулдаун таймер > чем значение AttackCooldown, то можно производить физ атаку
+        if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 20f)
         {
+            Block();
+        }
+        else
+        {
+            block = false;
+        }
+        if (Input.GetMouseButtonDown(0) && cooldownTimer > AttackCooldown && currentStamina > 15f)// если нажать на правую кнопку мыши и кулдаун таймер > чем значение AttackCooldown, то можно производить физ атаку
+        {
+            currentStamina -= 15f;
             Attack(); // выполнени€ атаки
         }
 
-        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetMouseButtonDown(1)) && MagicCooldownTimer > magicAttackCooldown && currentMP >= 10) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
+        if ( Input.GetMouseButtonDown(1) && MagicCooldownTimer > magicAttackCooldown && currentMP >= 15) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
         {
             currentMP -= 10;
             magicAttack(); // выполнени€ маг атаки
@@ -77,6 +111,7 @@ public class HeroAttack : MonoBehaviour
         cooldownTimer += Time.deltaTime; //прибавление по 1 секунде к cooldownTimer после его обнулени€ при выполенении метода Attack.
         MagicCooldownTimer += Time.deltaTime; //прибавление по 1 секунде к MagicCooldownTimer после его обнулени€ при выполенении метода magicAttack.
         attackControl();//атака с помощью мышки
+        staminaRecovery();
     }
 
 

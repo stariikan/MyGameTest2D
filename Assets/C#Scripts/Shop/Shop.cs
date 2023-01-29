@@ -59,8 +59,11 @@ public class Shop : MonoBehaviour
                 return;
             }
         }
-
-        if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 1.66f, Screen.width / 2.5f, Screen.height / 11.5f), "Save and Go to the next level"))
+        if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 1.66f, Screen.width / 2.5f, Screen.height / 11.5f), "plus 20 Stamina (Price = 20 coins)"))
+        {
+            SaveSerial.Instance.IncreaseStamina();
+        }
+        if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 1.428f, Screen.width / 2.5f, Screen.height / 11.5f), "Save and Go to the next level"))
         {
             SaveSerial.Instance.SaveGame();
             SceneManager.LoadScene("startLevel", LoadSceneMode.Single);

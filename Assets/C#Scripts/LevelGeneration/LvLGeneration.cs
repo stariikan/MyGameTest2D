@@ -71,22 +71,22 @@ public class LvLGeneration : MonoBehaviour
             GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, position.z), Quaternion.identity); // создаем новый обьект
             newMidBlock.name = "Middle block";
             newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
-            GameObject newFogMid = Instantiate(fogMid[Random.Range(0, fogMid.Length)], new Vector3(position.x, position.y, position.z - 5), Quaternion.identity);
+            GameObject newFogMid = Instantiate(fogMid[Random.Range(0, fogMid.Length)], new Vector3(position.x, position.y, position.z - 4), Quaternion.identity);
 
-            GameObject newMidBlock2 = Instantiate(midBlock2[Random.Range(0, midBlock2.Length)], new Vector3(position.x + 8.1f, position.y - 0.01f, 108), Quaternion.identity);// создаем новый обьект
+            GameObject newMidBlock2 = Instantiate(midBlock2[Random.Range(0, midBlock2.Length)], new Vector3(position.x + 8.1f, position.y - 0.01f, position.z - 2), Quaternion.identity);// создаем новый обьект
             newMidBlock2.name = "Mid block2";
             newMidBlock2.layer = LayerMask.NameToLayer("Ground"); //Добавление слоя Земля к созданному блоку
 
-            GameObject enemy = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z -4), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            GameObject enemy = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
             enemy.name = "Enemy" + Random.Range(1, 999);
             if ( Level >= 3) //Если уровень 3 и выше начинают спавнятятся больше врагов
             {
-                GameObject enemy2 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 4), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                GameObject enemy2 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
                 enemy2.name = "Enemy" + Random.Range(1, 999);
             }
             if (Level >= 7) //Если уровень 7 и выше начинают спавнятятся больше врагов
             {
-                GameObject enemy3 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 4), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                GameObject enemy3 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
                 enemy3.name = "Enemy" + Random.Range(1, 999);
             }
 
@@ -97,10 +97,10 @@ public class LvLGeneration : MonoBehaviour
         newEndBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
         newEndBlock.name = "End block";// создаем новый обьект
         GameObject newFogEnd = Instantiate(fogEnd[Random.Range(0, fogEnd.Length)], new Vector3(position.x + 16.2f, position.y, 108), Quaternion.identity);
-        GameObject newFoggyEnd = Instantiate(fogMid[Random.Range(0, fogMid.Length)], new Vector3(position.x + 16.2f, position.y, position.z - 5), Quaternion.identity);
+        GameObject newFoggyEnd = Instantiate(fogMid[Random.Range(0, fogMid.Length)], new Vector3(position.x + 16.2f, position.y, position.z - 4), Quaternion.identity);
 
 
-        GameObject newChest = Instantiate(chestForGeneration[Random.Range(0, chestForGeneration.Length)], new Vector3(position.x + 16.2f, position.y, position.z - 4), Quaternion.identity);
+        GameObject newChest = Instantiate(chestForGeneration[Random.Range(0, chestForGeneration.Length)], new Vector3(position.x + 16.2f, position.y, position.z - 2), Quaternion.identity);
         yield return new WaitForEndOfFrame(); //ожидания установки блоков
     }
     public void PlusCoin(int count) //сколько будем плюсовать монеток

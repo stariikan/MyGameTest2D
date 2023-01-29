@@ -9,8 +9,9 @@ using UnityEngine.SceneManagement; //для управления сценами
 public class SaveSerial : MonoBehaviour
 {
     public int playerCoin;
-    public int playerHP;
-    public int playerMP;
+    public float playerHP;
+    public float playerMP;
+    public float playerStamina;
     public int playerAttackDamage;
     public int playerMageDamage;
 
@@ -30,8 +31,9 @@ public class SaveSerial : MonoBehaviour
     class SaveData
     {
         public int playerCoin;
-        public int playerHP;
-        public int playerMP;
+        public float playerHP;
+        public float playerMP;
+        public float playerStamina;
         public int playerAttackDamage;
         public int playerMageDamage = 30;
 
@@ -63,6 +65,7 @@ public class SaveSerial : MonoBehaviour
             playerCoin = LvLGeneration.Instance.coin;
             playerHP = Hero.Instance.maxHP;
             playerMP = HeroAttack.Instance.maxMP;
+            playerStamina = HeroAttack.Instance.stamina;
             playerAttackDamage = MeleeWeapon.Instance.AttackDamage;
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
@@ -75,6 +78,7 @@ public class SaveSerial : MonoBehaviour
         data.playerCoin = playerCoin;
         data.playerHP = playerHP;
         data.playerMP = playerMP;
+        data.playerStamina = playerStamina;
         data.playerAttackDamage = playerAttackDamage;
         data.playerMageDamage = playerMageDamage;
         
@@ -106,6 +110,7 @@ public class SaveSerial : MonoBehaviour
             playerCoin = data.playerCoin;
             playerHP = data.playerHP;
             playerMP = data.playerMP;
+            playerStamina = data.playerStamina;
             playerAttackDamage = data.playerAttackDamage;
             playerMageDamage = data.playerMageDamage;
 
@@ -152,6 +157,11 @@ public class SaveSerial : MonoBehaviour
     public void IncreaseMageDamage()
     {
         playerMageDamage += 10;
+        playerCoin -= 20;
+    }
+    public void IncreaseStamina()
+    {
+        playerStamina += 20;
         playerCoin -= 20;
     }
 }
