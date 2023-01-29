@@ -8,7 +8,7 @@ public class Hero : MonoBehaviour
     public static Hero Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     public float speed = 4f; //Скорость
     public float jumpForce = 10f; //Сила прыжка
-    public float rollForce = 30f;
+    public float rollForce = 40f;
 
     public bool isGrounded = false; //Находиться ли обьект на земле, а точнее соприкосается ли он с другим обьектом имеющим Collision2D 
     public bool isRoll = true; // персонаж стоит
@@ -147,8 +147,17 @@ public class Hero : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftControl) && isGrounded && isRoll && stamina > 15) //кувырок
         {
             HeroAttack.Instance.DecreaseStamina(15);
-            rb.AddForce(new Vector2(rollForce, 0), ForceMode2D.Impulse);
-            isRoll = false;
+            if(!flipRight)
+            {
+                rb.AddForce(new Vector2(rollForce, 0), ForceMode2D.Impulse);
+                isRoll = false;
+            }
+            if(flipRight)
+            {
+                rb.AddForce(new Vector2(rollForce * -1, 0), ForceMode2D.Impulse);
+                isRoll = false;
+            }
+            
         }
         else
         {

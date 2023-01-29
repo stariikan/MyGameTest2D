@@ -100,7 +100,7 @@ public class Entity : MonoBehaviour
     }
     public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти
     {
-        Destroy(this.gameObject); ;//уничтожить этот игровой обьект
+        Destroy(this.gameObject);//уничтожить этот игровой обьект
     }
     private void Update()
     {
