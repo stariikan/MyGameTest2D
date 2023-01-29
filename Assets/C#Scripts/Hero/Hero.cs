@@ -7,7 +7,7 @@ public class Hero : MonoBehaviour
 {
     public static Hero Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     public float speed = 4f; //Скорость
-    public float jumpForce = 10f; //Сила прыжка
+    public float jumpForce = 90f; //Сила прыжка
     public float rollForce = 40f;
 
     public bool isGrounded = false; //Находиться ли обьект на земле, а точнее соприкосается ли он с другим обьектом имеющим Collision2D 
@@ -141,7 +141,8 @@ public class Hero : MonoBehaviour
                                                           // кнопки Space и если isGrounded = true 
         {
             HeroAttack.Instance.DecreaseStamina(20);
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            Vector2 jump = new Vector2(0, 1f);
+            rb.velocity = jump * jumpForce;
             isGrounded = false;
         }
         if (Input.GetKeyDown(KeyCode.LeftControl) && isGrounded && isRoll && stamina > 15) //кувырок

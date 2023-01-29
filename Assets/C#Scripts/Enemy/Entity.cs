@@ -17,6 +17,7 @@ public class Entity : MonoBehaviour
     public static Entity Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     private Animator anim;
     public bool enemyDead = false;
+    public bool enemyTakeDamage = false;
     public int rewardForKillEnemy = 2;//награда за победу над врагом
     private void Start()
     {
@@ -78,6 +79,7 @@ public class Entity : MonoBehaviour
         {
             anim.SetTrigger("damage");//анимация получения демейджа
             currentHP -= dmg;
+            enemyTakeDamage = true;
             takedDamage = (float)dmg / (float)maxHP; //на сколько надо уменьшаить прогресс бар
             Debug.Log(takedDamage);
             Push();
