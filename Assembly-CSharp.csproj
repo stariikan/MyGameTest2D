@@ -76,7 +76,9 @@
     <Compile Include="Assets\C#Scripts\UI\hp_counter.cs" />
     <Compile Include="Assets\C#Scripts\Pause\Pause.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Enemy_Skelet.cs" />
+    <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Stamina.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Hero.cs" />
+    <Compile Include="Assets\C#Scripts\UI\Stamina_counter.cs" />
     <Compile Include="Assets\C#Scripts\UI\mp_counter.cs" />
     <Compile Include="Assets\C#Scripts\UI\coin_counter.cs" />
     <Compile Include="Assets\C#Scripts\SaveProgress\SaveSerial.cs" />
@@ -84,8 +86,6 @@
     <Compile Include="Assets\C#Scripts\Chest\Chest.cs" />
     <Compile Include="Assets\ChatGPLvLGeneration.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\HP.cs" />
-    <Compile Include="Assets\C#Scripts\UI\Stamina_counter.cs" />
-    <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Stamina.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

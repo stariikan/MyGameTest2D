@@ -1464,14 +1464,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0b2ff3a06107948a2f05a92352fc43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement_scalar: 60
-  maxSpeed: 3
-  lossyScale: {x: 0, y: 0, z: 0}
+  speed: 4
+  jumpForce: 90
+  rollForce: 30
   isGrounded: 1
-  gravityScale: 12
-  fallingGravityScale: 2
+  isRoll: 1
+  lossyScale: {x: 0, y: 0, z: 0}
   maxHP: 100
   hp: 100
+  stamina: 0
   playerDead: 0
   mageAttackDamage: 30
   block: 0
@@ -1490,7 +1491,7 @@ Rigidbody2D:
   m_Mass: 0.9831246
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 15
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -1660,7 +1661,7 @@ GameObject:
   - component: {fileID: 245265549}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2244,7 +2245,7 @@ GameObject:
   - component: {fileID: 298018618}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2924,7 +2925,7 @@ GameObject:
   - component: {fileID: 431461258}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2981,7 +2982,7 @@ GameObject:
   - component: {fileID: 443422235}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3209,7 +3210,7 @@ GameObject:
   - component: {fileID: 472485169}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4325,7 +4326,7 @@ GameObject:
   - component: {fileID: 671667876}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6172,7 +6173,7 @@ GameObject:
   - component: {fileID: 1122998066}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7060,7 +7061,7 @@ GameObject:
   - component: {fileID: 1369380449}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8922,7 +8923,7 @@ GameObject:
   - component: {fileID: 1671745574}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
