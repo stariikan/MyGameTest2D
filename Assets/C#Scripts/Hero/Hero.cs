@@ -60,14 +60,7 @@ public class Hero : MonoBehaviour
     public void CheckBlock()
     {
         block = HeroAttack.Instance.block;
-        if (block == true)
-        {
-            speed = speed * 0.6f;
-        }
-        else
-        {
-            speed = 4f;
-        }
+
     }
     public void GetDamage(int dmg) //Мы создаем новый метод GetDamage() 
     {
@@ -79,7 +72,7 @@ public class Hero : MonoBehaviour
         }
         if (block == true)
         {
-            hp -= dmg /3;//Отнимает int из переменной hp (жизни) и при активном блоке уменьшает урон в 3 раза
+            hp -= dmg * 0.15f;//Отнимает int из переменной hp (жизни) и при активном блоке уменьшает урон в 3 раза
             HeroAttack.Instance.DecreaseStamina(20);
             anim.SetTrigger("damage");
             Push();

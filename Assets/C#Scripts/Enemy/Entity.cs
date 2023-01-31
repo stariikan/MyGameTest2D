@@ -94,7 +94,6 @@ public class Entity : MonoBehaviour
         if (currentHP <= 0)
         {
             LvLGeneration.Instance.PlusCoin(rewardForKillEnemy);//вызов метода для увелечения очков
-            LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
             anim.SetTrigger("death");//анимация смерти
             enemyDead = true;
             Debug.Log("Enemy Defeat -> " + gameObject.name);
@@ -103,6 +102,7 @@ public class Entity : MonoBehaviour
     public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти
     {
         Destroy(this.gameObject);//уничтожить этот игровой обьект
+        LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
     }
     private void Update()
     {
