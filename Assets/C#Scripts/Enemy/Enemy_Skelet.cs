@@ -21,8 +21,10 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
     private bool isGround; // находитьс€ ли обьект на земле
 
     private bool playerFollow = false; //моб не приследует игрока
-    private float patrolCouldown = 0; //кулдаун направлени€ потрулировани€
+
     RaycastHit2D hit; //тут будем получать информацию с чем сталкиваетс€ обьект
+
+    private float patrolCouldown = 0; //кулдаун направлени€ потрулировани€
 
     private void OnCollisionEnter2D(Collision2D collision) //срабатывает тогда, когда наш объект соприкасаетс€ с другим объектом:
     {
@@ -95,7 +97,7 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
             float directionX = player.transform.position.x - transform.localPosition.x; //вычисление направление движени€ это ѕозици€ игрока по оси х - позици€ скелета по оси х
             float directionY = player.transform.position.y - transform.localPosition.y; //вычисление направление движени€ это ѕозици€ игрока по оси y - позици€ скелета по оси y
 
-        if (Mathf.Abs(directionX) < 6 && Mathf.Abs(directionX) > 0.5f && Mathf.Abs(directionY) < 2)
+        if ((Mathf.Abs(directionX) < 6 && Mathf.Abs(directionX) > 0.5f && Mathf.Abs(directionY) < 2) || this.gameObject.GetComponent<Entity>().enemyTakeDamage == true) //следует за игроком если маленькое расто€ние или получил урон
         {
                 Vector3 pos = transform.position;
                 Vector3 theScale = transform.localScale;
@@ -176,6 +178,7 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
     void Update() //тут складывать буду основные действи€ методы (который должен использовать враг)
     {
         patrolCouldown += Time.deltaTime;
+
         if (this.gameObject.GetComponent<Entity>().currentHP > 0)
         {
             PlayerFollow(); //движение за игроком
@@ -183,8 +186,10 @@ public class Enemy_Skelet : MonoBehaviour //наследование класса сущности (то ест
             AnimState(); //—тейтмашина јнимации
             groundCheckPosition(); //проверка пропасти
             EnemyJump(); //прыжок перед преп€тсвием
-          //  Patrol();//патрулирование
+            //Patrol();//патрулирование
+            
         }
+
         else
         {
             return;

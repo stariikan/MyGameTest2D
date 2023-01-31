@@ -9,13 +9,18 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float Speed; //Скорость снаряда
     [SerializeField] private float lifetime; //длительность жизни снаряда
     private bool hit = false; //переменная метки попал ли во что-то снаряд
-    
+
+    public Rigidbody2D rb; //Физическое тело
+
     private BoxCollider2D boxCollider; //Коллайдер магии
     private Animator anim; //переменная для аниматора
 
+    public int lifeTimeOfprojectile = 10; //время после которого снаряд уничтожается
     public int magicAttackDamage = 30;
-    public string magicTargetName;
-    public GameObject target;
+    public string magicTargetName; //имя цели по которому попал снаряд
+    public GameObject target; //обьект по которому попал снаряд
+
+    private float shootingForce = 0.005f; //скорость снаряда
 
     private void Awake() //Действие выполняется до старта игры и 1 раз
     {
@@ -32,6 +37,7 @@ public class Projectile : MonoBehaviour
         {
             magicAttackDamage = 30;
         }
+        rb = GetComponent<Rigidbody2D>();
     }
     private void Update()
     {
@@ -40,17 +46,26 @@ public class Projectile : MonoBehaviour
         float movementSpeed = Speed * Time.deltaTime * direction; // вычисление скорости перемещения в секунду и в каком направлении полетит снаряд
         transform.Translate(movementSpeed, 0, 0);//ось х = movementspeed, y = 0, z=0 - все это перемещение по оси x
         lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
-        if (lifetime > 5) gameObject.SetActive(false);//когда переменная достигает 5, снаряд исчезает
+        if (lifetime > lifeTimeOfprojectile) gameObject.SetActive(false);//когда переменная достигает 5, снаряд исчезает
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        magicTargetName = collision.gameObject.name;
-        hit = true; //тут указываем что произошло столкновение
-        boxCollider.enabled = false; //отключаем коллайдер
-        anim.SetTrigger("explode");//для воспроизведения анимации атаки снарядом при выполнения тригера magicAttack
-        DamageObject();
-        magicTargetName = string.Empty;
-        //Deactivate();
+        if (collision.gameObject.tag == "Player") 
+        {
+            
+            return;
+        }
+        else
+        {
+            magicTargetName = collision.gameObject.name;
+            hit = true; //тут указываем что произошло столкновение
+            boxCollider.enabled = false; //отключаем коллайдер
+            anim.SetTrigger("explode");//для воспроизведения анимации атаки снарядом при выполнения тригера magicAttack
+            DamageObject();
+            magicTargetName = string.Empty;
+            rb.constraints = RigidbodyConstraints2D.FreezePosition;
+
+        }
     }
     public void DamageObject()
     {
@@ -65,18 +80,17 @@ public class Projectile : MonoBehaviour
             return;
             }
     }
-    public void SetDirection(float _direction)// выбор направления полета 
+    public void SetDirection(Vector3 shootingDirection)// выбор направления полета 
     {
-        lifetime = 0;
-        gameObject.SetActive(true); //активация игрового обьекта
-        direction = _direction;
-        boxCollider.enabled = true; //активация коллайдера 
-        hit = false; //обьект коснулся другого обьекта = false
-       
-        float localScaleX = transform.localScale.x; //этот весь код про то чтобы менялся x на -x в зависимости в какую сторону мы стреляем, тоесть был переворот спрайта 
-        if (Mathf.Sign(localScaleX) != _direction)
-            localScaleX = -localScaleX;
-        transform.localScale = new Vector3(localScaleX, transform.localScale.y, transform.localScale.z);//смена направления снаряда
+            lifetime = 0;
+            
+            gameObject.SetActive(true); //активация игрового обьекта
+            boxCollider.enabled = true; //активация коллайдера 
+            hit = false; //обьект коснулся другого обьекта = false
+
+            Rigidbody2D rb = this.gameObject.GetComponent<Rigidbody2D>(); //получения компонента RigidBody2D
+            rb.constraints = RigidbodyConstraints2D.None;
+            rb.AddForce(shootingDirection * shootingForce); //приложение силы к обьекту = направления умноження на скорость снаряда
     }
     private void Deactivate() //деактивация снаряда после завершения анимации взрывал
     {

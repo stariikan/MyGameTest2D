@@ -26,11 +26,35 @@ public class Pause : MonoBehaviour
     private void GameInfo()
     {
         infoPlayerAttackDamage = SaveSerial.Instance.playerAttackDamage;
+        if (infoPlayerAttackDamage == 0)
+        {
+            infoPlayerAttackDamage = 20;
+        }
         infoPlayerMageDamage = SaveSerial.Instance.playerMageDamage;
+        if (infoPlayerMageDamage == 0)
+        {
+            infoPlayerMageDamage = 30;
+        }
         infoPassedLvl = SaveSerial.Instance.passedLvl;
+        if (infoPassedLvl == 0)
+        {
+            infoPassedLvl = 1;
+        }
         infoEnemyHP = SaveSerial.Instance.enemyHP;
+        if (infoEnemyHP == 0)
+        {
+            infoEnemyHP = 50;
+        }
         infoEnemyDamage = SaveSerial.Instance.enemyDamage;
+        if (infoEnemyDamage == 0)
+        {
+            infoEnemyDamage = 7;
+        }
         infoEnemySpeed = SaveSerial.Instance.enemySpeed;
+        if (infoEnemySpeed == 0)
+        {
+            infoEnemySpeed = 1f;
+        }
         contentPlayerAttackDamage = new GUIContent("Player Attack Damage = " + $"{infoPlayerAttackDamage}", BoxTexture, "This is a tooltip");
         contentPlayerMageDamage = new GUIContent("Player Mage Damage = " + $"{infoPlayerMageDamage}", BoxTexture, "This is a tooltip");
         contentPassedLvl = new GUIContent("Passed LvL = " + $"{infoPassedLvl}", BoxTexture, "This is a tooltip");

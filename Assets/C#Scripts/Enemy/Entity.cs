@@ -17,6 +17,7 @@ public class Entity : MonoBehaviour
     public static Entity Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     private Animator anim;
     public bool enemyDead = false;
+    public bool enemyTakeDamage = false;
     public int rewardForKillEnemy = 2;//награда за победу над врагом
     private void Start()
     {
@@ -78,6 +79,7 @@ public class Entity : MonoBehaviour
         {
             anim.SetTrigger("damage");//анимация получения демейджа
             currentHP -= dmg;
+            enemyTakeDamage = true;
             takedDamage = (float)dmg / (float)maxHP; //на сколько надо уменьшаить прогресс бар
             Debug.Log(takedDamage);
             Push();
@@ -92,7 +94,6 @@ public class Entity : MonoBehaviour
         if (currentHP <= 0)
         {
             LvLGeneration.Instance.PlusCoin(rewardForKillEnemy);//вызов метода для увелечения очков
-            LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
             anim.SetTrigger("death");//анимация смерти
             enemyDead = true;
             Debug.Log("Enemy Defeat -> " + gameObject.name);
@@ -100,7 +101,8 @@ public class Entity : MonoBehaviour
     }
     public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти
     {
-        Destroy(this.gameObject); ;//уничтожить этот игровой обьект
+        Destroy(this.gameObject);//уничтожить этот игровой обьект
+        LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
     }
     private void Update()
     {

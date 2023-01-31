@@ -6,17 +6,22 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     public static Hero Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    public int movement_scalar = 60; //нужно для движение 
-    public float maxSpeed = 3f; //Максимальная скорость
+    public float speed = 4f; //Скорость
+    public float jumpForce = 90f; //Сила прыжка
+    public float rollForce = 40f;
+
+    public bool isGrounded = false; //Находиться ли обьект на земле, а точнее соприкосается ли он с другим обьектом имеющим Collision2D 
+    public bool isRoll = true; // персонаж стоит
+
     private bool flipRight; //Поворот спрайта на право, состояние = правда, нужно для поворота спрайта во время смены движения
     public Vector3 lossyScale; //переменная позиции обьекта
-    public bool isGrounded = false; //Находиться ли обьект на земле, а точнее соприкосается ли он с другим обьектом имеющим Collision2D 
-    public float gravityScale = 10; //Сила притяжения или чем ниже тем выше прыжок
-    public float fallingGravityScale = 40; //Сила притяжение при падении чем выше тем сильнее игровой обьекс тянет вниз
-    public float maxHP = 100;
-    public float hp = 100; //Количество жизней
+
+    public float maxHP;
+    public float hp; //Количество жизней
+    public float stamina;
+
     public bool playerDead = false; //мертв игрок или нет, пока нужно для того чтобы при смерти игрока делать рестарт
-    public int mageAttackDamage = 30;
+    public int mageAttackDamage;
 
     public bool block = false;
 
@@ -33,12 +38,14 @@ public class Hero : MonoBehaviour
         run,
         jump
     }
-    private void OnCollisionEnter2D(Collision2D collision) //OnCollisionEnter вызывается, когда этот колайдер/тело начинает касаться другого тела/коллайдера.
-                                                           //В отличие от OnTriggerEnter, OnCollisionEnter передается класс Collision, а не Collider.
-                                                           //Класс Collision содержит информацию, например, о точках контакта и скорости удара.
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        isGrounded = true; //Если персонаж касается другого тела, считается что он на земле
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGrounded = true;
+        }
     }
+
     public void Push() //Метод для отталкивания тела во время получения урона
     {
         if (transform.lossyScale.x < 0) //смотрим в трансформе в какую сторону повернут по х обьект 
@@ -53,16 +60,7 @@ public class Hero : MonoBehaviour
     public void CheckBlock()
     {
         block = HeroAttack.Instance.block;
-        if (block == true)
-        {
-            movement_scalar = 47;
-            maxSpeed = 2f;
-        }
-        else
-        {
-            movement_scalar = 60;
-            maxSpeed = 3f;
-        }
+
     }
     public void GetDamage(int dmg) //Мы создаем новый метод GetDamage() 
     {
@@ -74,14 +72,14 @@ public class Hero : MonoBehaviour
         }
         if (block == true)
         {
-            hp -= dmg /3;//Отнимает int из переменной hp (жизни) и при активном блоке уменьшает урон в 3 раза
+            hp -= dmg * 0.15f;//Отнимает int из переменной hp (жизни) и при активном блоке уменьшает урон в 3 раза
             HeroAttack.Instance.DecreaseStamina(20);
             anim.SetTrigger("damage");
             Push();
         }
         if (hp <= 0) //Если жизней меньше 0
         {
-            maxSpeed = 0;
+            speed = 0;
             anim.SetTrigger("death");
             playerDead = true;
         }
@@ -112,23 +110,17 @@ public class Hero : MonoBehaviour
     {
         if (!Input.GetButton("Horizontal")) State = States.idle;//если мы на земле State = idle
         if (Input.GetButton("Horizontal")) State = States.run;//если мы нажимаем на кнопки (стрелки или A D) то State = run
-        if (Input.GetKeyDown(KeyCode.Space)) State = States.jump; //если мы нажимаем Space и мы на земле то State = jump
+        if (Input.GetKey(KeyCode.Space)) State = States.jump; //если мы нажимаем Space и мы на земле то State = jump
     }//Метод для поворота спрайта персонажа
     public void PlayerMovement()
     {
         float move = Input.GetAxis("Horizontal");//Используем Float потому-что значение 0.111..., тут берется ввод по Горизонтали (стрелки и A D)
-        if (rb.velocity.magnitude < maxSpeed)
-        {
-            Vector2 movement = new Vector2(move, 0);
-            rb.AddForce(new Vector2 (movement_scalar * move, 0), ForceMode2D.Force);//Тут указно что берется компонент Rigidbody2D
-        }
-        
-                                                                                                                    //у нашего game.Object и благодоря new Vector2
-                                                                                                                    //изминяетя позиция game.Object помноженая (*)
-                                                                                                                    //максимальную скорость которую мы указали в переменной
-                                                                                                                    //по оси x
-                                                                                                                    //velocity = Единица часто считаются метрами, но могут быть миллиметрами или световыми годами.
-                                                                                                                    //Также имеет скорость в X, Y и Z, определяя направление.
+        float horizontal = Input.GetAxis("Horizontal");
+        //float vertical = Input.GetAxis("Vertical"); //потом для лестниц нужно будет
+
+        Vector2 movement = new Vector2(horizontal, 0); //, vertical//);
+        rb.velocity = movement * speed;
+
         if (move > 0 && !flipRight) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
         {
             Flip();
@@ -138,24 +130,34 @@ public class Hero : MonoBehaviour
             Flip();
         }
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey)
+        if (Input.GetKey(KeyCode.Space) && isGrounded && stamina > 20)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey)
                                                           // кнопки Space и если isGrounded = true 
         {
+            HeroAttack.Instance.DecreaseStamina(20);
+            Vector2 jump = new Vector2(0, 1f);
+            rb.velocity = jump * jumpForce;
             isGrounded = false;
-            rb.velocity = Vector2.zero;
-            rb.AddForce(new Vector2(0, 20f), ForceMode2D.Impulse); //ForceMode2D.Impulse  It may seem like your object is pushed once in Y axis and it will fall down automatically due to gravity.
-
         }
-        if (rb.velocity.y >= 0) //Если скорость тела по оси Y больше или равно 0, то
+        if (Input.GetKeyDown(KeyCode.LeftControl) && isGrounded && isRoll && stamina > 15) //кувырок
         {
-            rb.gravityScale = gravityScale; //тут как раз получается что от параметра задданного в переменной будет зависеть сила прыжка
+            HeroAttack.Instance.DecreaseStamina(15);
+            if(!flipRight)
+            {
+                rb.AddForce(new Vector2(rollForce, 0), ForceMode2D.Impulse);
+                isRoll = false;
+            }
+            if(flipRight)
+            {
+                rb.AddForce(new Vector2(rollForce * -1, 0), ForceMode2D.Impulse);
+                isRoll = false;
+            }
+            
         }
-        else if (rb.velocity.y < 0) //если скорость персонажа по оси Y меньше 0 то
+        else
         {
-            rb.gravityScale = fallingGravityScale; //гравитация начинает притягивать обьект в низ в зависимости
-                                                   //от числа который мы ввели в переменной fallingGravityScale
+            isRoll = true;
         }
-    } //Метод для поворота спрайта персонажа
+    } 
 
     void Awake() //Awake используется для инициализации любых переменных или игрового состояния перед началом игры.
                  //Awake вызывается только один раз за все время существования экземпляра сценария.
@@ -172,22 +174,31 @@ public class Hero : MonoBehaviour
     }
     private void Start()
     {
-        
         SaveSerial.Instance.LoadGame();
         maxHP = SaveSerial.Instance.playerHP;
-        mageAttackDamage = SaveSerial.Instance.playerMageDamage;
         if (maxHP == 0)
         {
             maxHP = 100;
         }
         hp = maxHP;
+        mageAttackDamage = SaveSerial.Instance.playerMageDamage;
         if (mageAttackDamage == 0)
         {
             mageAttackDamage = 30;
         }
+
+        stamina = SaveSerial.Instance.playerStamina;
+        if (stamina == 0)
+        {
+            stamina = 100;
+        }
+
+        rb = GetComponent<Rigidbody2D>();
+
     }
     private void FixedUpdate()
     {
+        stamina = HeroAttack.Instance.currentStamina; //проверка стамины
         if (hp > 0)
         {
             PlayerMovement();//Метод для движения и поворота спрайта персонажа

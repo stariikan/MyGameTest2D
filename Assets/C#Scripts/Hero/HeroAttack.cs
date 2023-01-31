@@ -13,7 +13,6 @@ public class HeroAttack : MonoBehaviour
     public static HeroAttack Instance { get; set; } //ƒл€ сбора и отправки данных из этого скрипта
 
     public Animator Anim; //ѕеременна€ дл€ работы с јнимацией
-    public Transform attackPoint; //“ут мы ссылаемс€ на точку котора€ €вл€етс€ дочерним обьектом игрока (нужна дл€ реализации физ атаки)
 
     private float cooldownTimer = Mathf.Infinity; //≈сли мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown. ѕоэтому мы поставим тут бесконечность или можно поставить любое большое число
     private float MagicCooldownTimer = Mathf.Infinity; //≈сли мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown. ѕоэтому мы поставим тут бесконечность или можно поставить любое большое число
@@ -24,7 +23,9 @@ public class HeroAttack : MonoBehaviour
     public float staminaSpeedRecovery = 5f;
 
     public bool block = false;
-    
+
+    private Camera mainCamera;
+
     private void Start()
     {
         maxMP = SaveSerial.Instance.playerMP;
@@ -40,6 +41,8 @@ public class HeroAttack : MonoBehaviour
             stamina = 100;
         }
         currentStamina = stamina;
+
+        mainCamera = Camera.main;
     }
     private void staminaRecovery()
     {
@@ -68,7 +71,19 @@ public class HeroAttack : MonoBehaviour
         Anim.SetTrigger("magicAttack");//дл€ воспроизведени€ анимации атаки магией при выполнени€ тригера magicAttack
         MagicCooldownTimer = 0; //сброс кулдауна приминени€ магии дл€ того чтобы работа формула при атаке которой она смотрит на кулдаун и если он наступил, то можно вновь атаковать
         magicProjectile[FindMagicBall()].transform.position = firePoint.position; //ѕри каждой атаки мы будем мен€ть положени€ снар€да и задавать ей положение огневой точки получить компонент из снар€да и отправить его в направление в котором находитьс€ игрок
-        magicProjectile[FindMagicBall()].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
+                                                                                  // Get the mouse position in screen space
+        Vector3 mousePosition = Input.mousePosition;
+
+        // Convert the mouse position to world space
+        Vector3 worldSpaceMousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
+
+        // Get the direction from the shooter to the mouse
+        Vector3 shootingDirection = worldSpaceMousePosition - transform.position;
+
+        // Normalize the direction
+        //shootingDirection.Normalize();
+        Debug.Log(shootingDirection);
+        magicProjectile[FindMagicBall()].GetComponent<Projectile>().SetDirection(shootingDirection);
     }
     private void attackControl()
     {
