@@ -53,7 +53,15 @@ public class HeroAttack : MonoBehaviour
     }
     private void Block()
     {
-        block = true;
+        if (block == false)
+        {
+            block = true;
+        }
+        else
+        {
+            block = false;
+        }
+        
     }
     public void DecreaseStamina(float cost) //ћетод дл€ уменьшени€ стамины за различные действи€
     {

@@ -13,7 +13,7 @@ public class Hero : MonoBehaviour
     public bool isGrounded = false; //Находиться ли обьект на земле, а точнее соприкосается ли он с другим обьектом имеющим Collision2D 
     public bool isRoll = true; // персонаж стоит
 
-    private bool flipRight; //Поворот спрайта на право, состояние = правда, нужно для поворота спрайта во время смены движения
+    public bool flipRight; //Поворот спрайта на право, состояние = правда, нужно для поворота спрайта во время смены движения
     public Vector3 lossyScale; //переменная позиции обьекта
 
     public float maxHP;
@@ -60,7 +60,14 @@ public class Hero : MonoBehaviour
     public void CheckBlock()
     {
         block = HeroAttack.Instance.block;
-
+        if (block == true)
+        {
+            speed = 2f;
+        }
+        else
+        {
+            speed = 4f;
+        }
     }
     public void GetDamage(int dmg) //Мы создаем новый метод GetDamage() 
     {
@@ -92,7 +99,7 @@ public class Hero : MonoBehaviour
     {
         Debug.Log(hp);
     }
-    private void Flip() //Тут мы создаем метод Flip при вызове которого спрайт меняет направление
+    public void Flip() //Тут мы создаем метод Flip при вызове которого спрайт меняет направление
     {
         flipRight = !flipRight; //Когда запускается метод Flip переменная flipRight меняется на false
         Vector3 theScale = transform.localScale; //получение масштаб объекта
