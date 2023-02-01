@@ -88,6 +88,12 @@
     <Compile Include="Assets\C#Scripts\Chest\Chest.cs" />
     <Compile Include="Assets\ChatGPLvLGeneration.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\HP.cs" />
+    <Compile Include="Assets\C#Scripts\MobileInput\JoystickPause.cs" />
+    <Compile Include="Assets\C#Scripts\MobileInput\JoystickAttack.cs" />
+    <Compile Include="Assets\C#Scripts\MobileInput\JoystickBlock.cs" />
+    <Compile Include="Assets\C#Scripts\MobileInput\JoystickRoll.cs" />
+    <Compile Include="Assets\C#Scripts\MobileInput\JoystickJump.cs" />
+    <Compile Include="Assets\C#Scripts\MobileInput\JoystickMagicShot.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

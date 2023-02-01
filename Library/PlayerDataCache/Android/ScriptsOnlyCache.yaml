@@ -12,6 +12,12 @@ ScriptsOnlyBuild:
     - HeroAttack
     - Info
     - Joystick
+    - JoystickAttack
+    - JoystickBlock
+    - JoystickJump
+    - JoystickMovement
+    - JoystickPause
+    - JoystickRoll
     - Level_counter
     - LvL
     - LvLGeneration
@@ -34,6 +40,7 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
+    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
@@ -217,6 +224,16 @@ ScriptsOnlyBuild:
       Script: {instanceID: 5450}
     - Class: 114
       Script: {instanceID: 5530}
+    - Class: 114
+      Script: {instanceID: 19158}
+    - Class: 114
+      Script: {instanceID: 19164}
+    - Class: 114
+      Script: {instanceID: 19170}
+    - Class: 114
+      Script: {instanceID: 19176}
+    - Class: 114
+      Script: {instanceID: 19182}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -350,6 +367,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_FontAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 10a13468ac12c9d96d2f8498e01587ca
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickMovement
   - hash:
       serializedVersion: 2
       Hash: 2403c51fb2c93132109559fcea7dc713
@@ -980,6 +1003,42 @@ ScriptsOnlyBuild:
     assemblyName: Unity.2D.IK.Runtime.dll
     namespaceName: UnityEngine.U2D.IK
     className: FabrikSolver2D
+  - hash:
+      serializedVersion: 2
+      Hash: 8a10d1fc6029b3f51d0abc87582fa9fd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickPause
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickAttack
+  - hash:
+      serializedVersion: 2
+      Hash: 8a10d1fc6029b3f51d0abc87582fa9fd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickBlock
+  - hash:
+      serializedVersion: 2
+      Hash: 8a10d1fc6029b3f51d0abc87582fa9fd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickRoll
+  - hash:
+      serializedVersion: 2
+      Hash: 8a10d1fc6029b3f51d0abc87582fa9fd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickJump
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickMagicShot
   platform: 13
   scenePathNames:
   - Assets/Scenes/startLevel.unity

@@ -225,6 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 44318337}
   - component: {fileID: 44318338}
+  - component: {fileID: 44318339}
   m_Layer: 5
   m_Name: Joystick Pause
   m_TagString: Untagged
@@ -240,7 +241,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 44318336}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.28, y: 4.44, z: 3}
+  m_LocalPosition: {x: -13.42, y: 4.95, z: 3}
   m_LocalScale: {x: 1.6060506, y: 1.2259097, z: 0.99725777}
   m_Children: []
   m_Father: {fileID: 1882010182}
@@ -286,7 +287,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 94bb76927eb999048bcb14b00eeb1ed4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a3a102e4a3251e241ad90dca49f93a4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -297,6 +298,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &44318339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44318336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6734fd10856724f4abdb79b07500dce6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
 --- !u!1 &45293027
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,8 +589,9 @@ GameObject:
   m_Component:
   - component: {fileID: 65028733}
   - component: {fileID: 65028734}
+  - component: {fileID: 65028735}
   m_Layer: 5
-  m_Name: Joystick Panel (4)
+  m_Name: Joystick Roll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -590,7 +605,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65028732}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 0.06, z: 3}
+  m_LocalPosition: {x: 0.72, y: 1.58, z: 3}
   m_LocalScale: {x: 1.6060506, y: 1.2259097, z: 0.99725777}
   m_Children: []
   m_Father: {fileID: 1882010182}
@@ -636,9 +651,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 94bb76927eb999048bcb14b00eeb1ed4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2bb921c9bfd4a0644b18984dcc002479, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 6.77, y: 1.99}
@@ -647,6 +662,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &65028735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65028732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6450e4a9a2145fe41992f3489df9baed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
 --- !u!1 &74562644
 GameObject:
   m_ObjectHideFlags: 0
@@ -4191,8 +4219,9 @@ GameObject:
   m_Component:
   - component: {fileID: 667493392}
   - component: {fileID: 667493393}
+  - component: {fileID: 667493394}
   m_Layer: 5
-  m_Name: Joystick Panel (5)
+  m_Name: Joystick Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4206,7 +4235,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667493391}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 0.06, z: 3}
+  m_LocalPosition: {x: -14.13, y: -0.14, z: 3}
   m_LocalScale: {x: 1.6060506, y: 1.2259097, z: 0.99725777}
   m_Children: []
   m_Father: {fileID: 1882010182}
@@ -4252,9 +4281,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 94bb76927eb999048bcb14b00eeb1ed4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 46d98018cdeebe04498507f47c2f2392, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 6.77, y: 1.99}
@@ -4263,6 +4292,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &667493394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667493391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a33a402ff3088724293f11ed35574910, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
 --- !u!1 &673871416
 GameObject:
   m_ObjectHideFlags: 0
@@ -4950,8 +4992,9 @@ GameObject:
   m_Component:
   - component: {fileID: 791016623}
   - component: {fileID: 791016624}
+  - component: {fileID: 791016625}
   m_Layer: 5
-  m_Name: Joystick Panel (3)
+  m_Name: Joystick Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4964,8 +5007,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 791016622}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 0.06, z: 3}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.29, y: -0.23, z: 3}
   m_LocalScale: {x: 1.6060506, y: 1.2259097, z: 0.99725777}
   m_Children: []
   m_Father: {fileID: 1882010182}
@@ -5011,9 +5054,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 94bb76927eb999048bcb14b00eeb1ed4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 54e5b1e6b6144774b8ef3fb6a702c4a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 6.77, y: 1.99}
@@ -5022,6 +5065,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &791016625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791016622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5237d85a8e46042a05035c436d0eba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
 --- !u!1 &835374979
 GameObject:
   m_ObjectHideFlags: 0
@@ -6906,8 +6962,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1369169174}
   - component: {fileID: 1369169175}
+  - component: {fileID: 1369169176}
   m_Layer: 5
-  m_Name: Joystick Panel (2)
+  m_Name: Joystick Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6921,7 +6978,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369169173}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.61, y: 0.06, z: 3}
+  m_LocalPosition: {x: -12.45, y: -0.14, z: 3}
   m_LocalScale: {x: 1.6060506, y: 1.2259097, z: 0.99725777}
   m_Children: []
   m_Father: {fileID: 1882010182}
@@ -6967,7 +7024,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a3a102e4a3251e241ad90dca49f93a4b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0f5630824013a7b4a8757511819c9452, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6978,6 +7035,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1369169176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369169173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4703da8c5ec2b5e4ea9fbe94be3e0323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1373288996
 GameObject:
   m_ObjectHideFlags: 0
