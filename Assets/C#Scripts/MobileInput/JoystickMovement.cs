@@ -9,6 +9,7 @@ public class JoystickMovement : MonoBehaviour
     private Vector2 joystickCenter; //center of the joystick
     private Vector2 touchPosition; //position of the touch input
     private float distance; //distance between touch input and joystick center
+    GameObject joystick;
 
     private void Start()
     {

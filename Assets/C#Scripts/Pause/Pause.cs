@@ -6,6 +6,7 @@ public class Pause : MonoBehaviour
 {
     public float timer;
     public bool ispause;
+
     public bool guipuse;
     public Texture BoxTexture; //текустуру устаналиваем сами в эдиторе (это для бокса с параметрами
     GUIContent contentPlayerAttackDamage;
@@ -15,6 +16,7 @@ public class Pause : MonoBehaviour
     GUIContent contentEnemyDamage;
     GUIContent contentEnemySpeed;
 
+    public static Pause Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     // Характеристики указанные в BOX
     private int infoPlayerAttackDamage;
     private int infoPlayerMageDamage;
@@ -23,6 +25,10 @@ public class Pause : MonoBehaviour
     private int infoEnemyDamage;
     private float infoEnemySpeed;
 
+    private void Start()
+    {
+        Instance = this;
+    }
     private void GameInfo()
     {
         infoPlayerAttackDamage = SaveSerial.Instance.playerAttackDamage;
@@ -62,28 +68,58 @@ public class Pause : MonoBehaviour
         contentEnemyDamage = new GUIContent("Enemy Attack Damage = " + $"{infoEnemyDamage}", BoxTexture, "This is a tooltip");
         contentEnemySpeed = new GUIContent("Enemy Movement Speed = " + $"{infoEnemySpeed}", BoxTexture, "This is a tooltip");
     }
-    void Update()
+    public void PauseON()
     {
-        GameInfo();
-
-        Time.timeScale = timer; 
-        if (Input.GetKeyDown(KeyCode.Escape) && ispause == false) 
+        Time.timeScale = timer;
+        if (ispause == false)
         {
-            ispause = true; 
-        } 
-        else if (Input.GetKeyDown(KeyCode.Escape) && ispause == true) 
-        {
-            ispause = false; 
+            ispause = true;
         }
-        if (ispause == true) 
-        { 
-            timer = 0; guipuse = true; 
+        if (ispause == true)
+        {
+            timer = 0;
+            guipuse = true;
+        }
+    }
+    public void PauseOFF()
+    {
+        Time.timeScale = timer;
+         if (ispause == true)
+        {
+            ispause = false;
+        }
+        if (ispause == false)
+        {
+            timer = 1f;
+            guipuse = false;
+        }
+    }
+    private void ClickPause()
+    {
+        Time.timeScale = timer;
+        if (Input.GetKeyDown(KeyCode.Escape) && ispause == false)
+        {
+            ispause = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && ispause == true)
+        {
+            ispause = false;
+        }
+        if (ispause == true)
+        {
+            timer = 0;
+            guipuse = true;
         }
         else if (ispause == false)
         {
             timer = 1f;
             guipuse = false;
         }
+    }
+    void Update()
+    {
+        GameInfo();
+        ClickPause();
     }
     public void OnGUI()
     {

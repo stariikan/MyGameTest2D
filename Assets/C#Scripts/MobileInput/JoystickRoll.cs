@@ -5,18 +5,16 @@ using UnityEngine.UI;
 
 public class JoystickRoll : MonoBehaviour
 {
-    public Button button;
+    public Button roll;
 
     private void Start()
     {
-        button.onClick.AddListener(EmulateKeyPress);
+        roll.onClick.AddListener(EmulateKeyPress);
     }
 
     private void EmulateKeyPress()
     {
         Input.simulateMouseWithTouches = true;
-        KeyCode keyToEmulate = KeyCode.LeftControl;
-        Input.GetKeyDown(keyToEmulate);
-        Input.GetKeyUp(keyToEmulate);
+        Hero.Instance.Roll();
     }
 }

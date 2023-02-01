@@ -59,8 +59,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -69,6 +71,7 @@ ScriptsOnlyBuild:
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
@@ -102,23 +105,23 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2080}
     - Class: 114
-      Script: {instanceID: 2322}
+      Script: {instanceID: 2324}
     - Class: 114
-      Script: {instanceID: 2776}
+      Script: {instanceID: 2778}
     - Class: 114
-      Script: {instanceID: 2784}
+      Script: {instanceID: 2786}
     - Class: 114
-      Script: {instanceID: 2892}
+      Script: {instanceID: 2894}
     - Class: 114
-      Script: {instanceID: 3208}
+      Script: {instanceID: 3212}
     - Class: 114
-      Script: {instanceID: 3734}
+      Script: {instanceID: 3738}
     - Class: 114
-      Script: {instanceID: 4378}
+      Script: {instanceID: 4384}
     - Class: 114
-      Script: {instanceID: 5362}
+      Script: {instanceID: 5370}
     - Class: 114
-      Script: {instanceID: 6006}
+      Script: {instanceID: 6016}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -177,63 +180,65 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1942}
     - Class: 114
-      Script: {instanceID: 2322}
+      Script: {instanceID: 2324}
     - Class: 114
-      Script: {instanceID: 2494}
+      Script: {instanceID: 2496}
     - Class: 114
-      Script: {instanceID: 2540}
+      Script: {instanceID: 2542}
     - Class: 114
-      Script: {instanceID: 2768}
+      Script: {instanceID: 2770}
     - Class: 114
-      Script: {instanceID: 2776}
+      Script: {instanceID: 2778}
     - Class: 114
-      Script: {instanceID: 2836}
+      Script: {instanceID: 2838}
     - Class: 114
-      Script: {instanceID: 2942}
+      Script: {instanceID: 2944}
     - Class: 114
-      Script: {instanceID: 2960}
+      Script: {instanceID: 2962}
     - Class: 114
-      Script: {instanceID: 3208}
+      Script: {instanceID: 3010}
     - Class: 114
-      Script: {instanceID: 3220}
+      Script: {instanceID: 3212}
     - Class: 114
-      Script: {instanceID: 3466}
+      Script: {instanceID: 3224}
     - Class: 114
-      Script: {instanceID: 3654}
+      Script: {instanceID: 3470}
     - Class: 114
-      Script: {instanceID: 3682}
+      Script: {instanceID: 3598}
     - Class: 114
-      Script: {instanceID: 3804}
+      Script: {instanceID: 3658}
     - Class: 114
-      Script: {instanceID: 3870}
+      Script: {instanceID: 3686}
     - Class: 114
-      Script: {instanceID: 3998}
+      Script: {instanceID: 3808}
     - Class: 114
-      Script: {instanceID: 4212}
+      Script: {instanceID: 3874}
     - Class: 114
-      Script: {instanceID: 4434}
+      Script: {instanceID: 4002}
     - Class: 114
-      Script: {instanceID: 4798}
+      Script: {instanceID: 4120}
     - Class: 114
-      Script: {instanceID: 4952}
+      Script: {instanceID: 4218}
     - Class: 114
-      Script: {instanceID: 4956}
+      Script: {instanceID: 4440}
     - Class: 114
-      Script: {instanceID: 5362}
+      Script: {instanceID: 4476}
     - Class: 114
-      Script: {instanceID: 5450}
+      Script: {instanceID: 4806}
     - Class: 114
-      Script: {instanceID: 5530}
+      Script: {instanceID: 4960}
     - Class: 114
-      Script: {instanceID: 19158}
+      Script: {instanceID: 4964}
     - Class: 114
-      Script: {instanceID: 19164}
+      Script: {instanceID: 5370}
     - Class: 114
-      Script: {instanceID: 19170}
+      Script: {instanceID: 5458}
     - Class: 114
-      Script: {instanceID: 19176}
+      Script: {instanceID: 5538}
     - Class: 114
-      Script: {instanceID: 19182}
+      Script: {instanceID: 5812}
+    - Class: 114
+      Script: {instanceID: 6070}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -393,6 +398,12 @@ ScriptsOnlyBuild:
     className: LvL
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickMagicShot
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -523,6 +534,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: TimelineAsset
+  - hash:
+      serializedVersion: 2
+      Hash: b09c9d5a4e9ba9b9c12a3827bca66e4e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickPause
   - hash:
       serializedVersion: 2
       Hash: 760787567e1b60d64a3e421ab83ee14a
@@ -705,6 +722,12 @@ ScriptsOnlyBuild:
     className: BaseInput
   - hash:
       serializedVersion: 2
+      Hash: e8f73c5315ba1acd1c903d937082f3dd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickJump
+  - hash:
+      serializedVersion: 2
       Hash: 18c222bef9ae745ce69ddde9b74337ca
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
@@ -787,6 +810,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.2D.Animation.Runtime.dll
     namespaceName: UnityEngine.Experimental.U2D.Animation
     className: SpriteLibrary
+  - hash:
+      serializedVersion: 2
+      Hash: 8a10d1fc6029b3f51d0abc87582fa9fd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickBlock
   - hash:
       serializedVersion: 2
       Hash: a81d4c2c1cf3ad164d277d927a193679
@@ -969,6 +998,12 @@ ScriptsOnlyBuild:
     className: BufferManager
   - hash:
       serializedVersion: 2
+      Hash: 3b7b7a70ae11d58b18568622f6b5d6db
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickAttack
+  - hash:
+      serializedVersion: 2
       Hash: 8220b46879dc5e37db1b940c938f5744
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -1005,40 +1040,10 @@ ScriptsOnlyBuild:
     className: FabrikSolver2D
   - hash:
       serializedVersion: 2
-      Hash: 8a10d1fc6029b3f51d0abc87582fa9fd
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: JoystickPause
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: JoystickAttack
-  - hash:
-      serializedVersion: 2
-      Hash: 8a10d1fc6029b3f51d0abc87582fa9fd
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: JoystickBlock
-  - hash:
-      serializedVersion: 2
-      Hash: 8a10d1fc6029b3f51d0abc87582fa9fd
+      Hash: dd77c8e0d6f2666df177763e0d1f09bd
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: JoystickRoll
-  - hash:
-      serializedVersion: 2
-      Hash: 8a10d1fc6029b3f51d0abc87582fa9fd
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: JoystickJump
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: JoystickMagicShot
   platform: 13
   scenePathNames:
   - Assets/Scenes/startLevel.unity

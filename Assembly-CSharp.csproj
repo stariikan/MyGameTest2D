@@ -62,6 +62,7 @@
     <Compile Include="Assets\C#Scripts\Enemy\Entity.cs" />
     <Compile Include="Assets\C#Scripts\Door\door.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\LvL.cs" />
+    <Compile Include="Assets\C#Scripts\MobileInput\JoystickMagicShot.cs" />
     <Compile Include="Assets\C#Scripts\LevelGeneration\levelGen2.cs" />
     <Compile Include="Assets\C#Scripts\UI\EnemyProgressBar\DisableProgressBar.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\Joystick.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Assets\C#Scripts\UI\Info.cs" />
     <Compile Include="Assets\C#Scripts\Shop\Shop.cs" />
     <Compile Include="Assets\C#Scripts\Magic\Projectile.cs" />
+    <Compile Include="Assets\C#Scripts\MobileInput\JoystickPause.cs" />
     <Compile Include="Assets\C#Scripts\Hero\HeroAttack.cs" />
     <Compile Include="Assets\C#Scripts\LevelGeneration\LvLGeneration.cs" />
     <Compile Include="Assets\C#Scripts\UI\EnemyProgressBar\enemyProgressBar.cs" />
@@ -77,9 +79,11 @@
     <Compile Include="Assets\C#Scripts\Traps\Spike.cs" />
     <Compile Include="Assets\C#Scripts\UI\hp_counter.cs" />
     <Compile Include="Assets\C#Scripts\Pause\Pause.cs" />
+    <Compile Include="Assets\C#Scripts\MobileInput\JoystickJump.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Enemy_Skelet.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Stamina.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Hero.cs" />
+    <Compile Include="Assets\C#Scripts\MobileInput\JoystickBlock.cs" />
     <Compile Include="Assets\C#Scripts\UI\Stamina_counter.cs" />
     <Compile Include="Assets\C#Scripts\UI\mp_counter.cs" />
     <Compile Include="Assets\C#Scripts\UI\coin_counter.cs" />
@@ -87,13 +91,9 @@
     <Compile Include="Assets\C#Scripts\UI\Level_counter.cs" />
     <Compile Include="Assets\C#Scripts\Chest\Chest.cs" />
     <Compile Include="Assets\ChatGPLvLGeneration.cs" />
-    <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\HP.cs" />
-    <Compile Include="Assets\C#Scripts\MobileInput\JoystickPause.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickAttack.cs" />
-    <Compile Include="Assets\C#Scripts\MobileInput\JoystickBlock.cs" />
+    <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\HP.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickRoll.cs" />
-    <Compile Include="Assets\C#Scripts\MobileInput\JoystickJump.cs" />
-    <Compile Include="Assets\C#Scripts\MobileInput\JoystickMagicShot.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

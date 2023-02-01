@@ -15,8 +15,6 @@ public class JoystickBlock : MonoBehaviour
     private void EmulateKeyPress()
     {
         Input.simulateMouseWithTouches = true;
-        KeyCode keyToEmulate = KeyCode.LeftShift;
-        Input.GetKeyDown(keyToEmulate);
-        Input.GetKeyUp(keyToEmulate);
+        HeroAttack.Instance.Block();
     }
 }

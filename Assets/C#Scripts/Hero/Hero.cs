@@ -117,8 +117,38 @@ public class Hero : MonoBehaviour
     {
         if (!Input.GetButton("Horizontal")) State = States.idle;//если мы на земле State = idle
         if (Input.GetButton("Horizontal")) State = States.run;//если мы нажимаем на кнопки (стрелки или A D) то State = run
-        if (Input.GetKey(KeyCode.Space)) State = States.jump; //если мы нажимаем Space и мы на земле то State = jump
+        if (!isGrounded) State = States.jump; //если мы нажимаем Space и мы на земле то State = jump
     }//ћетод дл€ поворота спрайта персонажа
+    public void Jump()
+    {
+        if (isGrounded && stamina > 20)// если происходит нажатие и отпускани€ (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
+        {
+            HeroAttack.Instance.DecreaseStamina(20);
+            Vector2 jump = new Vector2(0, 1f);
+            rb.velocity = jump * jumpForce;
+            Debug.Log("JUMP!");
+            isGrounded = false;            
+        }
+    }
+    public void Roll()
+    {
+        if (isGrounded && isRoll && stamina > 15) //кувырок
+        {
+            HeroAttack.Instance.DecreaseStamina(15);
+            if (!flipRight)
+            {
+                rb.AddForce(new Vector2(rollForce, 0), ForceMode2D.Impulse);
+                isRoll = false;
+                Debug.Log("LeftROLL");
+            }
+            if (flipRight)
+            {
+                rb.AddForce(new Vector2(rollForce * -1, 0), ForceMode2D.Impulse);
+                isRoll = false;
+                Debug.Log("RightRoll");
+            }
+        }
+    }
     public void PlayerMovement()
     {
         float move = Input.GetAxis("Horizontal");//»спользуем Float потому-что значение 0.111..., тут беретс€ ввод по √оризонтали (стрелки и A D)

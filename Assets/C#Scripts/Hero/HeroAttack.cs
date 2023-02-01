@@ -50,8 +50,12 @@ public class HeroAttack : MonoBehaviour
         {
             currentStamina += Time.deltaTime * staminaSpeedRecovery;
         }
+        if (currentStamina < 0)
+        {
+            currentStamina = 2;
+        }
     }
-    private void Block()
+    public void Block()
     {
         if (block == false)
         {
@@ -67,8 +71,9 @@ public class HeroAttack : MonoBehaviour
     {
         currentStamina -= cost;
     }
-    private void Attack()
+    public void Attack()
     {
+       currentStamina -= 15f;
        Anim.SetTrigger("Attack");//дл€ воспроизведени€ анимации атаки при выполнени€ тригера Attack
        cooldownTimer = 0;
        meleeAttackArea.transform.position = firePoint.position; //ѕри каждой атаки мы будем мен€ть положени€ снар€да и задавать ей положение огневой точки получить компонент из снар€да и отправить его в направление в котором находитьс€ игрок
@@ -105,10 +110,8 @@ public class HeroAttack : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0) && cooldownTimer > AttackCooldown && currentStamina > 15f)// если нажать на правую кнопку мыши и кулдаун таймер > чем значение AttackCooldown, то можно производить физ атаку
         {
-            currentStamina -= 15f;
             Attack(); // выполнени€ атаки
         }
-
         if ( Input.GetMouseButtonDown(1) && MagicCooldownTimer > magicAttackCooldown && currentMP >= 15) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
         {
             currentMP -= 10;
