@@ -91,6 +91,13 @@
     <Compile Include="Assets\ChatGPLvLGeneration.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickAttack.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\HP.cs" />
+    <Compile Include="Assets\Materials\Hero Knight - Pixel Art\ColorSwap\ColorSwap_HeroKnight.cs" />
+    <Compile Include="Assets\Materials\Hero Knight - Pixel Art\Demo\HeroKnight.cs" />
+    <Compile Include="Assets\Materials\Hero Knight - Pixel Art\Demo\DestroyEvent_HeroKnight.cs" />
+    <Compile Include="Assets\Materials\Hero Knight - Pixel Art\Demo\Sensor_HeroKnight.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Materials\Hero Knight - Pixel Art\ColorSwap\Sprites-ColorSwap.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

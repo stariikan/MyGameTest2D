@@ -100,7 +100,7 @@ public class HeroAttack : MonoBehaviour
     }
     private void attackControl()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 20f)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && currentStamina > 20f)
         {
             Block();
         }
