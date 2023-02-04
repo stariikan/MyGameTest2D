@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,11 @@ public class Hero : MonoBehaviour
 {
     public static Hero Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     public float speed = 4f; //Скорость
-    public float jumpForce = 90f; //Сила прыжка
-    public float rollForce = 40f;
+    public float jumpForce = 10f; //Сила прыжка
+    public float rollForce = 5f;
 
     public bool isGrounded = false; //Находиться ли обьект на земле, а точнее соприкосается ли он с другим обьектом имеющим Collision2D 
-    public bool isRoll = true; // персонаж стоит
+    public bool run = false; // Run or not run
 
     public bool flipRight; //Поворот спрайта на право, состояние = правда, нужно для поворота спрайта во время смены движения
     public Vector3 lossyScale; //переменная позиции обьекта
@@ -25,8 +26,13 @@ public class Hero : MonoBehaviour
 
     public bool block = false;
 
+    private float cooldownTimer = Mathf.Infinity;
+
+    private Vector2 currentPosition;
+
     private Rigidbody2D rb; //Тело с физической переменной к которому принадлежит скрипт, переменная = rb
     private Animator anim; //Переменная благодаря которой анимирован обьект, переменная = anim
+
     private States State //Создание стейтмашины, переменная = State. Значение состояния может быть передано или изминено извне благодаря get и set
     {
         get { return (States)anim.GetInteger("State"); }
@@ -115,84 +121,95 @@ public class Hero : MonoBehaviour
     }
     public void AnimState()
     {
-        if (!Input.GetButton("Horizontal")) State = States.idle;//если мы на земле State = idle
-        if (Input.GetButton("Horizontal")) State = States.run;//если мы нажимаем на кнопки (стрелки или A D) то State = run
+        if (!run) State = States.idle;//если мы на земле State = idle
+        if (run) State = States.run;//если мы нажимаем на кнопки (стрелки или A D) то State = run
         if (!isGrounded) State = States.jump; //если мы нажимаем Space и мы на земле то State = jump
-    }//Метод для поворота спрайта персонажа
+    }
     public void Jump()
     {
-        if (isGrounded && stamina > 20)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
+        //Jump
+        //for jump and roll
+        float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
+        float joystickMoveX = JoystickMovement.Instance.moveX; //joystick
+        float vertical = Input.GetAxis("Vertical"); //потом для лестниц нужно будет
+        Vector2 moveY = new Vector2(0, vertical); //keyboard
+        Vector2 movementJoystickY = new Vector2(0, joystickMoveY); //joystick
+
+        if (joystickMoveY > 0.4f && (joystickMoveX > 0.5f || joystickMoveX < -0.5f) && run || vertical > 0 && run)
         {
-            HeroAttack.Instance.DecreaseStamina(20);
-            Vector2 jump = new Vector2(0, 1f);
-            rb.velocity = jump * jumpForce;
-            Debug.Log("JUMP!");
-            isGrounded = false;            
+            if (isGrounded && stamina > 20)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
+            {
+                HeroAttack.Instance.DecreaseStamina(20);
+                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                //Vector2 jump = new Vector2(0, 1f);
+                //rb.velocity = jump * jumpForce;
+                isGrounded = false;
+            }
         }
     }
     public void Roll()
     {
-        if (isGrounded && isRoll && stamina > 15) //кувырок
+        float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
+        float vertical = Input.GetAxis("Vertical");
+        //Roll
+        if ((joystickMoveY < -0.4 || vertical < 0) && isGrounded && cooldownTimer > 1.5f && stamina > 15) //кувырок
         {
             HeroAttack.Instance.DecreaseStamina(15);
             if (!flipRight)
             {
                 rb.AddForce(new Vector2(rollForce, 0), ForceMode2D.Impulse);
-                isRoll = false;
-                Debug.Log("LeftROLL");
+                cooldownTimer = 0;
             }
             if (flipRight)
             {
                 rb.AddForce(new Vector2(rollForce * -1, 0), ForceMode2D.Impulse);
-                isRoll = false;
-                Debug.Log("RightRoll");
+                cooldownTimer = 0;
             }
         }
     }
     public void PlayerMovement()
     {
+        float joystickMoveX = JoystickMovement.Instance.moveX; //joystick
+        float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
+
+
         float move = Input.GetAxis("Horizontal");//Используем Float потому-что значение 0.111..., тут берется ввод по Горизонтали (стрелки и A D)
         float horizontal = Input.GetAxis("Horizontal");
-        //float vertical = Input.GetAxis("Vertical"); //потом для лестниц нужно будет
-
-        Vector2 movement = new Vector2(horizontal, 0); //, vertical//);
-        rb.velocity = movement * speed;
-
-        if (move > 0 && !flipRight) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+        float vertical = Input.GetAxis("Vertical"); //потом для лестниц нужно будет
+        
+        //Run
+        //keyboard control
+        Vector2 movementX = new Vector2(horizontal, 0); //keyboard
+        if(movementX != Vector2.zero)
         {
-            Flip();
+            rb.velocity = movementX * speed;
         }
-        else if (move < 0 && flipRight) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+        
+        //joystick controll
+        Vector2 movementJoystickX = new Vector2(joystickMoveX, 0); //tuchpad
+        if(movementJoystickX != Vector2.zero)
         {
-            Flip();
+            rb.velocity = movementJoystickX * speed;
         }
-
-        if (Input.GetKey(KeyCode.Space) && isGrounded && stamina > 20)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey)
-                                                          // кнопки Space и если isGrounded = true 
+        
+        //player state
+        if(rb.velocity != Vector2.zero)
         {
-            HeroAttack.Instance.DecreaseStamina(20);
-            Vector2 jump = new Vector2(0, 1f);
-            rb.velocity = jump * jumpForce;
-            isGrounded = false;
-        }
-        if (Input.GetKeyDown(KeyCode.LeftControl) && isGrounded && isRoll && stamina > 15) //кувырок
-        {
-            HeroAttack.Instance.DecreaseStamina(15);
-            if(!flipRight)
-            {
-                rb.AddForce(new Vector2(rollForce, 0), ForceMode2D.Impulse);
-                isRoll = false;
-            }
-            if(flipRight)
-            {
-                rb.AddForce(new Vector2(rollForce * -1, 0), ForceMode2D.Impulse);
-                isRoll = false;
-            }
-            
+            run = true;
         }
         else
         {
-            isRoll = true;
+            run = false;
+        }
+
+        //Flip
+        if ((joystickMoveX > 0 || move > 0) && !flipRight) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+        {
+            Flip();
+        } 
+        else if ((joystickMoveX < 0 || move < 0) && flipRight) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+        {
+            Flip();
         }
     } 
 
@@ -231,17 +248,22 @@ public class Hero : MonoBehaviour
         }
 
         rb = GetComponent<Rigidbody2D>();
-
     }
+
+
     private void FixedUpdate()
     {
+        cooldownTimer += Time.deltaTime; //прибавление по 1 секунде к cooldownTimer
         stamina = HeroAttack.Instance.currentStamina; //проверка стамины
+        currentPosition = transform.position;
         if (hp > 0)
         {
             PlayerMovement();//Метод для движения и поворота спрайта персонажа
             AnimState();//Метод для передачи состояния в аниматор
             DieByFall();//Метод для смерти от падения
             CheckBlock(); //Проверка блока
+            Jump();
+            Roll(); //Кувырок
         }
         else
         {

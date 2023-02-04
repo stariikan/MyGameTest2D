@@ -16,5 +16,8 @@ public class JoystickBlock : MonoBehaviour
     {
         Input.simulateMouseWithTouches = true;
         HeroAttack.Instance.Block();
+        Hero.Instance.CheckBlock();
+        bool block = Hero.Instance.block;
+        Debug.Log(block);
     }
 }

@@ -1,60 +1,61 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class JoystickMovement : MonoBehaviour
+using UnityEngine.EventSystems;
+public class JoystickMovement : MonoBehaviour, IPointerUpHandler, IDragHandler, IPointerDownHandler
 {
-    public float joystickRadius = 50.0f; //radius of the joystick
-    public float deadzone = 10.0f; //deadzone value to prevent small touch inputs from registering
-    private Vector2 joystickCenter; //center of the joystick
-    private Vector2 touchPosition; //position of the touch input
-    private float distance; //distance between touch input and joystick center
-    GameObject joystick;
+    private RectTransform joystickTransform;
+
+    [SerializeField] private float dragTreshold = 0.6f; /// Если переместиться джойстик больше чем на 0,6 в любом из направлений, то скрипт поймет что игрок хочет пойти в этом направлении
+    [SerializeField] private int dragMovementDistance = 5;
+    [SerializeField] private int dragOffsetDistance = 30;
+
+    public event Action<Vector2> onMove;
+    public Vector2 offset;
+    public float moveX;
+    public float moveY;
+    public Camera MainCamera;
+
+    public static JoystickMovement Instance { get; set; }
 
     private void Start()
     {
-        joystickCenter = transform.position;
+        Instance = this;
     }
-
-    private void Update()
+    public void OnDrag(PointerEventData eventData)
     {
-        if (Input.touchCount > 0) //check if there's a touch input
-        {
-            Touch touch = Input.GetTouch(0);
 
-            if (touch.phase == TouchPhase.Began) //check if touch phase is Began
-            {
-                touchPosition = touch.position;
-                distance = Vector2.Distance(touchPosition, joystickCenter); //calculate distance between touch and joystick center
-
-                if (distance < joystickRadius) //check if touch is within joystick radius
-                {
-                    touchPosition = Camera.main.ScreenToWorldPoint(touchPosition); //convert screen space to world space
-                }
-            }
-            else if (touch.phase == TouchPhase.Moved) //check if touch phase is Moved
-            {
-                touchPosition = touch.position;
-                distance = Vector2.Distance(touchPosition, joystickCenter); //recalculate distance
-
-                if (distance < joystickRadius && distance > deadzone) //check if touch is within joystick radius and outside of deadzone
-                {
-                    touchPosition = Camera.main.ScreenToWorldPoint(touchPosition); //convert screen space to world space
-
-                    float x = touchPosition.x - joystickCenter.x; //calculate x direction
-
-                    if (x > 0) //if touch is to the right of the joystick center
-                    {
-                        if (Input.GetKey(KeyCode.D) == false)
-                            Input.GetKeyDown(KeyCode.D); //emulate press of key D
-                    }
-                    else //if touch is to the left of the joystick center
-                    {
-                        if (Input.GetKey(KeyCode.A) == false)
-                            Input.GetKeyDown(KeyCode.A); //emulate press of key A
-                    }
-                }
-            }
-        }
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(joystickTransform, eventData.position, MainCamera, out offset);
+        offset = Vector2.ClampMagnitude(offset, dragOffsetDistance) / dragOffsetDistance; // (-1) - 1
+        Debug.Log(offset);
+        joystickTransform.anchoredPosition = offset * dragMovementDistance;
+        Vector2 inputVector = ColculateMovementInput(offset);
+        onMove?.Invoke(inputVector);
     }
-}
+
+    private Vector2 ColculateMovementInput(Vector2 offset)
+    {
+        moveX = Mathf.Abs(offset.x) > dragTreshold ? offset.x : 0;
+        moveY = Mathf.Abs(offset.y) > dragTreshold ? offset.y : 0;
+        return new Vector2(moveX, moveY);
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+
+    }
+
+    public void OnPointerUp(PointerEventData eventData) //возврат джойстика
+    {
+        joystickTransform.anchoredPosition = Vector2.zero;
+        moveX = 0;
+        moveY = 0;
+        onMove?.Invoke(Vector2.zero);
+    }
+
+    private void Awake()
+    {
+        joystickTransform = (RectTransform)transform;
+    }
+} 

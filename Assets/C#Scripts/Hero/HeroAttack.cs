@@ -65,7 +65,6 @@ public class HeroAttack : MonoBehaviour
         {
             block = false;
         }
-        
     }
     public void DecreaseStamina(float cost) //ћетод дл€ уменьшени€ стамины за различные действи€
     {
@@ -79,8 +78,9 @@ public class HeroAttack : MonoBehaviour
        meleeAttackArea.transform.position = firePoint.position; //ѕри каждой атаки мы будем мен€ть положени€ снар€да и задавать ей положение огневой точки получить компонент из снар€да и отправить его в направление в котором находитьс€ игрок
        meleeAttackArea.GetComponent<MeleeWeapon>().meleeDirection(Mathf.Sign(transform.localScale.x));
     }
-    private void magicAttack()
+    public void magicAttack()
     {
+        currentMP -= 10;
         Anim.SetTrigger("magicAttack");//дл€ воспроизведени€ анимации атаки магией при выполнени€ тригера magicAttack
         MagicCooldownTimer = 0; //сброс кулдауна приминени€ магии дл€ того чтобы работа формула при атаке которой она смотрит на кулдаун и если он наступил, то можно вновь атаковать
         magicProjectile[FindMagicBall()].transform.position = firePoint.position; //ѕри каждой атаки мы будем мен€ть положени€ снар€да и задавать ей положение огневой точки получить компонент из снар€да и отправить его в направление в котором находитьс€ игрок
@@ -104,17 +104,13 @@ public class HeroAttack : MonoBehaviour
         {
             Block();
         }
-        else
-        {
-            block = false;
-        }
-        if (Input.GetMouseButtonDown(0) && cooldownTimer > AttackCooldown && currentStamina > 15f)// если нажать на правую кнопку мыши и кулдаун таймер > чем значение AttackCooldown, то можно производить физ атаку
+        if (Input.GetKey(KeyCode.LeftControl) && cooldownTimer > AttackCooldown && currentStamina > 15f)// если нажать на правую кнопку мыши и кулдаун таймер > чем значение AttackCooldown, то можно производить физ атаку
         {
             Attack(); // выполнени€ атаки
         }
-        if ( Input.GetMouseButtonDown(1) && MagicCooldownTimer > magicAttackCooldown && currentMP >= 15) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
+        if (Input.GetKey(KeyCode.LeftAlt) && MagicCooldownTimer > magicAttackCooldown && currentMP >= 15) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
         {
-            currentMP -= 10;
+            
             magicAttack(); // выполнени€ маг атаки
         }
     }

@@ -16,18 +16,17 @@ public class Joystick : MonoBehaviour
         else if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer) // Mobile platform
         {
             Debug.Log("Mobile Platform");
-            
+            Screen.autorotateToPortrait = false;
+            Screen.autorotateToPortraitUpsideDown = false;
+            Screen.autorotateToLandscapeLeft = true;
+            Screen.autorotateToLandscapeRight = true;
+            Screen.orientation = ScreenOrientation.Landscape;
+
         }
         else //Unbity editor
         {
             Debug.Log("Unity platform");
             //this.gameObject.SetActive(false);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
