@@ -50,24 +50,37 @@ public class HeroAttack : MonoBehaviour
         {
             currentStamina += Time.deltaTime * staminaSpeedRecovery;
         }
+        if (currentStamina < 0)
+        {
+            currentStamina = 2;
+        }
     }
-    private void Block()
+    public void Block()
     {
-        block = true;
+        if (block == false)
+        {
+            block = true;
+        }
+        else
+        {
+            block = false;
+        }
     }
     public void DecreaseStamina(float cost) //Метод для уменьшения стамины за различные действия
     {
         currentStamina -= cost;
     }
-    private void Attack()
+    public void Attack()
     {
+       currentStamina -= 15f;
        Anim.SetTrigger("Attack");//для воспроизведения анимации атаки при выполнения тригера Attack
        cooldownTimer = 0;
        meleeAttackArea.transform.position = firePoint.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
        meleeAttackArea.GetComponent<MeleeWeapon>().meleeDirection(Mathf.Sign(transform.localScale.x));
     }
-    private void magicAttack()
+    public void magicAttack()
     {
+        currentMP -= 10;
         Anim.SetTrigger("magicAttack");//для воспроизведения анимации атаки магией при выполнения тригера magicAttack
         MagicCooldownTimer = 0; //сброс кулдауна приминения магии для того чтобы работа формула при атаке которой она смотрит на кулдаун и если он наступил, то можно вновь атаковать
         magicProjectile[FindMagicBall()].transform.position = firePoint.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
@@ -87,23 +100,17 @@ public class HeroAttack : MonoBehaviour
     }
     private void attackControl()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 20f)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && currentStamina > 20f)
         {
             Block();
         }
-        else
+        if (Input.GetKey(KeyCode.LeftControl) && cooldownTimer > AttackCooldown && currentStamina > 15f)// если нажать на правую кнопку мыши и кулдаун таймер > чем значение AttackCooldown, то можно производить физ атаку
         {
-            block = false;
-        }
-        if (Input.GetMouseButtonDown(0) && cooldownTimer > AttackCooldown && currentStamina > 15f)// если нажать на правую кнопку мыши и кулдаун таймер > чем значение AttackCooldown, то можно производить физ атаку
-        {
-            currentStamina -= 15f;
             Attack(); // выполнения атаки
         }
-
-        if ( Input.GetMouseButtonDown(1) && MagicCooldownTimer > magicAttackCooldown && currentMP >= 15) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
+        if (Input.GetKey(KeyCode.LeftAlt) && MagicCooldownTimer > magicAttackCooldown && currentMP >= 15) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
         {
-            currentMP -= 10;
+            
             magicAttack(); // выполнения маг атаки
         }
     }
