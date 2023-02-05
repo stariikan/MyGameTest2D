@@ -127,17 +127,19 @@ public class Pause : MonoBehaviour
         {
             Cursor.visible = true;// включаем отображение курсора
                                   
-            if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 5f, Screen.width / 2.5f, Screen.height / 11.5f), "Продолжить")) 
+            if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 5f, Screen.width / 2.5f, Screen.height / 11.5f), "Continue")) 
             {
                 ispause = false;
                 timer = 0;
                 Cursor.visible = false;
             } 
-            if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 3.33f, Screen.width / 2.5f, Screen.height / 11.5f), "Сохранить")) 
+            if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 3.33f, Screen.width / 2.5f, Screen.height / 11.5f), "Save")) 
             {
             } 
-            if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 2.5f, Screen.width / 2.5f, Screen.height / 11.5f), "В Меню"))
-            { 
+            if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 2.5f, Screen.width / 2.5f, Screen.height / 11.5f), "Restart"))
+            {
+                SaveSerial.Instance.ResetData();
+                SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
             }
             GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 2f, Screen.width / 2.5f, Screen.height / 19f), contentPlayerAttackDamage);
             GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.81f, Screen.width / 2.5f, Screen.height / 19f), contentPlayerMageDamage);

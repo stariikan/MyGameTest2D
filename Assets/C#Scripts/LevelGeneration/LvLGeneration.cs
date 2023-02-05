@@ -127,9 +127,9 @@ public class LvLGeneration : MonoBehaviour
     public void CompleteLevel() // Добавим метод CompleteLevel, который будет увеличивать переменную completeLevels на одну единицу каждый раз, когда игрок пройдет очередной уровень.
     {
         this.Level += 1;;
-        GameObject.Find("EnemySkelet").GetComponent<Entity>().BoostHP();
-        GameObject.Find("EnemySkelet").GetComponent<Entity>().BoostAttackDamage();
-        GameObject.Find("EnemySkelet").GetComponent<Enemy_Skelet>().BoostSpeed();
+        GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().BoostHP();
+        GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().BoostAttackDamage();
+        GameObject.Find("Mushroom").GetComponent<Enemy_Mushroom>().BoostSpeed();
         SaveSerial.Instance.SaveGame();
         SceneManager.LoadScene("LevelComplete", LoadSceneMode.Single);
     }

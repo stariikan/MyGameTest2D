@@ -9,6 +9,7 @@ TagManager:
   - PlayerSkin
   - Chest
   - Door
+  - Mushroom
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Ground
   - EnemyLayers
   - playerLayers
-  - 
+  - Enemy_Mushroom
   - 
   - 
   - 

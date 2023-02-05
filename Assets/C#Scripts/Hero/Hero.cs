@@ -1,233 +1,62 @@
-using System;
+п»їusing UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
+public class Hero : MonoBehaviour {
 
-public class Hero : MonoBehaviour
-{
-    public static Hero Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    public float speed = 4f; //Скорость
-    public float jumpForce = 10f; //Сила прыжка
-    public float rollForce = 5f;
+    [SerializeField] float      m_speed = 4.0f;
+    [SerializeField] float      m_jumpForce = 7.5f;
+    [SerializeField] float      m_rollForce = 6.0f;
+    [SerializeField] bool       m_noBlood = false;
+    [SerializeField] GameObject m_slideDust;
 
-    public bool isGrounded = false; //Находиться ли обьект на земле, а точнее соприкосается ли он с другим обьектом имеющим Collision2D 
-    public bool run = false; // Run or not run
+    private Animator            m_animator;
+    private Rigidbody2D         m_body2d;
+    private Sensor_HeroKnight   m_groundSensor;
+    private Sensor_HeroKnight   m_wallSensorR1;
+    private Sensor_HeroKnight   m_wallSensorR2;
+    private Sensor_HeroKnight   m_wallSensorL1;
+    private Sensor_HeroKnight   m_wallSensorL2;
+    private bool                m_isWallSliding = false;
+    private bool                m_grounded = false;
+    private bool                m_rolling = false;
+    public int                 m_facingDirection = 1;
+    private int                 m_currentAttack = 0;
+    private float               m_timeSinceAttack = 0.0f;
+    private float               m_delayToIdle = 0.0f;
+    private float               m_rollDuration = 8.0f / 14.0f;
+    private float               m_rollCurrentTime;
 
-    public bool flipRight; //Поворот спрайта на право, состояние = правда, нужно для поворота спрайта во время смены движения
-    public Vector3 lossyScale; //переменная позиции обьекта
+    public static Hero Instance { get; set; } //Р”Р»СЏ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
 
     public float maxHP;
-    public float hp; //Количество жизней
+    public float hp; //РљРѕР»РёС‡РµСЃС‚РІРѕ Р¶РёР·РЅРµР№
     public float stamina;
 
-    public bool playerDead = false; //мертв игрок или нет, пока нужно для того чтобы при смерти игрока делать рестарт
+    public bool playerDead = false; //РјРµСЂС‚РІ РёРіСЂРѕРє РёР»Рё РЅРµС‚, РїРѕРєР° РЅСѓР¶РЅРѕ РґР»СЏ С‚РѕРіРѕ С‡С‚РѕР±С‹ РїСЂРё СЃРјРµСЂС‚Рё РёРіСЂРѕРєР° РґРµР»Р°С‚СЊ СЂРµСЃС‚Р°СЂС‚
     public int mageAttackDamage;
 
     public bool block = false;
+    public bool isAttack = false;
+
+    private BoxCollider2D boxCollider;
 
     private float cooldownTimer = Mathf.Infinity;
 
-    private Vector2 currentPosition;
-
-    private Rigidbody2D rb; //Тело с физической переменной к которому принадлежит скрипт, переменная = rb
-    private Animator anim; //Переменная благодаря которой анимирован обьект, переменная = anim
-
-    private States State //Создание стейтмашины, переменная = State. Значение состояния может быть передано или изминено извне благодаря get и set
+    // Use this for initialization
+    void Awake()
     {
-        get { return (States)anim.GetInteger("State"); }
-        set { anim.SetInteger("State", (int)value); }
+        Instance = this;
     }
-    public enum States //Определения какие бывают состояния, указал названия как в Аниматоре Unity
+    void Start ()
     {
-        idle,
-        run,
-        jump
-    }
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            isGrounded = true;
-        }
-    }
-
-    public void Push() //Метод для отталкивания тела во время получения урона
-    {
-        if (transform.lossyScale.x < 0) //смотрим в трансформе в какую сторону повернут по х обьект 
-        {
-            rb.AddForce(new Vector2(2.5f, 2.5f), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
-        }
-        else
-        {
-            rb.AddForce(new Vector2(-2.5f, 2.5f), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
-        }
-    }
-    public void CheckBlock()
-    {
-        block = HeroAttack.Instance.block;
-        if (block == true)
-        {
-            speed = 2f;
-        }
-        else
-        {
-            speed = 4f;
-        }
-    }
-    public void GetDamage(int dmg) //Мы создаем новый метод GetDamage() 
-    {
-        if (block == false)
-        {
-            hp -= dmg;//Отнимает int 10 из переменной hp (жизни).
-            anim.SetTrigger("damage");
-            Push();
-        }
-        if (block == true)
-        {
-            hp -= dmg * 0.15f;//Отнимает int из переменной hp (жизни) и при активном блоке уменьшает урон в 3 раза
-            HeroAttack.Instance.DecreaseStamina(20);
-            anim.SetTrigger("damage");
-            Push();
-        }
-        if (hp <= 0) //Если жизней меньше 0
-        {
-            speed = 0;
-            anim.SetTrigger("death");
-            playerDead = true;
-        }
-    }
-    private void Deactivate() //деактивация игрока после завершения анимации смерти (благодоря метки в аниматоре выполняется этот метод
-    {
-        gameObject.SetActive(false);
-    }
-    public void Hero_hp() //Метод который просто вызывает значение переменной HP, нужен мне был для передачи этого числа в скрипт с каунтером жизней
-    {
-        Debug.Log(hp);
-    }
-    public void Flip() //Тут мы создаем метод Flip при вызове которого спрайт меняет направление
-    {
-        flipRight = !flipRight; //Когда запускается метод Flip переменная flipRight меняется на false
-        Vector3 theScale = transform.localScale; //получение масштаб объекта
-        theScale.x *= -1;//тут происходит переворот изображения например 140 меняется на -140 тем самым полностью измени направление спрайта (картинка отзеркаливается)
-        transform.localScale = theScale; //Масштаб преобразования относительно родительского объекта GameObjects
-    }
-    private void DieByFall() //Метод который наносит урон при падении с платформы
-    {
-        if (rb.transform.position.y < -100)//если координаты игрока по оси y меньше 10, то происходит вызов метода GetDamage
-        {
-            GetDamage(100);
-        }
-    }
-    public void AnimState()
-    {
-        if (!run) State = States.idle;//если мы на земле State = idle
-        if (run) State = States.run;//если мы нажимаем на кнопки (стрелки или A D) то State = run
-        if (!isGrounded) State = States.jump; //если мы нажимаем Space и мы на земле то State = jump
-    }
-    public void Jump()
-    {
-        //Jump
-        //for jump and roll
-        float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
-        float joystickMoveX = JoystickMovement.Instance.moveX; //joystick
-        float vertical = Input.GetAxis("Vertical"); //потом для лестниц нужно будет
-        Vector2 moveY = new Vector2(0, vertical); //keyboard
-        Vector2 movementJoystickY = new Vector2(0, joystickMoveY); //joystick
-
-        if (joystickMoveY > 0.4f && (joystickMoveX > 0.5f || joystickMoveX < -0.5f) && run || vertical > 0 && run)
-        {
-            if (isGrounded && stamina > 20)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
-            {
-                HeroAttack.Instance.DecreaseStamina(20);
-                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-                //Vector2 jump = new Vector2(0, 1f);
-                //rb.velocity = jump * jumpForce;
-                isGrounded = false;
-            }
-        }
-    }
-    public void Roll()
-    {
-        float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
-        float vertical = Input.GetAxis("Vertical");
-        //Roll
-        if ((joystickMoveY < -0.4 || vertical < 0) && isGrounded && cooldownTimer > 1.5f && stamina > 15) //кувырок
-        {
-            HeroAttack.Instance.DecreaseStamina(15);
-            if (!flipRight)
-            {
-                rb.AddForce(new Vector2(rollForce, 0), ForceMode2D.Impulse);
-                cooldownTimer = 0;
-            }
-            if (flipRight)
-            {
-                rb.AddForce(new Vector2(rollForce * -1, 0), ForceMode2D.Impulse);
-                cooldownTimer = 0;
-            }
-        }
-    }
-    public void PlayerMovement()
-    {
-        float joystickMoveX = JoystickMovement.Instance.moveX; //joystick
-        float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
-
-
-        float move = Input.GetAxis("Horizontal");//Используем Float потому-что значение 0.111..., тут берется ввод по Горизонтали (стрелки и A D)
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical"); //потом для лестниц нужно будет
-        
-        //Run
-        //keyboard control
-        Vector2 movementX = new Vector2(horizontal, 0); //keyboard
-        if(movementX != Vector2.zero)
-        {
-            rb.velocity = movementX * speed;
-        }
-        
-        //joystick controll
-        Vector2 movementJoystickX = new Vector2(joystickMoveX, 0); //tuchpad
-        if(movementJoystickX != Vector2.zero)
-        {
-            rb.velocity = movementJoystickX * speed;
-        }
-        
-        //player state
-        if(rb.velocity != Vector2.zero)
-        {
-            run = true;
-        }
-        else
-        {
-            run = false;
-        }
-
-        //Flip
-        if ((joystickMoveX > 0 || move > 0) && !flipRight) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
-        {
-            Flip();
-        } 
-        else if ((joystickMoveX < 0 || move < 0) && flipRight) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
-        {
-            Flip();
-        }
-    } 
-
-    void Awake() //Awake используется для инициализации любых переменных или игрового состояния перед началом игры.
-                 //Awake вызывается только один раз за все время существования экземпляра сценария.
-                 //Вызов Awake происходит после инициализации всех объектов, поэтому можно безопасно обращаться к другим объектам
-                 //или запрашивать их, используя, например, GameObject.
-    {
-        rb = GetComponent<Rigidbody2D>(); //Переменная rb получает компонент Rigidbody2D (Физика game.Object)
-                                          //к которому привязан скрипт
-        anim = GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
-                                         //к которому привязан скрипт
-        Instance = this; //'this' - это ключевое слово, обозначающее класс, в котором выполняется код.
-                         //Насколько мне известно, оно никогда не требуется, но делает код более читабельным this. transform. position and transform.
-        flipRight = true;
-    }
-    private void Start()
-    {
+        m_animator = GetComponent<Animator>();
+        m_body2d = GetComponent<Rigidbody2D>();
+        boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
+        m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
+        m_wallSensorR1 = transform.Find("WallSensor_R1").GetComponent<Sensor_HeroKnight>();
+        m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
+        m_wallSensorL1 = transform.Find("WallSensor_L1").GetComponent<Sensor_HeroKnight>();
+        m_wallSensorL2 = transform.Find("WallSensor_L2").GetComponent<Sensor_HeroKnight>();
         SaveSerial.Instance.LoadGame();
         maxHP = SaveSerial.Instance.playerHP;
         if (maxHP == 0)
@@ -246,29 +75,261 @@ public class Hero : MonoBehaviour
         {
             stamina = 100;
         }
-
-        rb = GetComponent<Rigidbody2D>();
     }
 
-
+    // Update is called once per frame
     private void FixedUpdate()
     {
-        cooldownTimer += Time.deltaTime; //прибавление по 1 секунде к cooldownTimer
-        stamina = HeroAttack.Instance.currentStamina; //проверка стамины
-        currentPosition = transform.position;
+        // Increase timer that controls attack combo
+        m_timeSinceAttack += Time.deltaTime;
+
+        // Increase timer that checks roll duration
+        if(m_rolling)
+            m_rollCurrentTime += Time.deltaTime;
+
+        // Disable rolling if timer extends duration
+        if(m_rollCurrentTime > m_rollDuration)
+            m_rolling = false;
+
+        //Check if character just landed on the ground
+        if (!m_grounded && m_groundSensor.State())
+        {
+            m_grounded = true;
+            m_animator.SetBool("Grounded", m_grounded);
+        }
+
+        //Check if character just started falling
+        if (m_grounded && !m_groundSensor.State())
+        {
+            m_grounded = false;
+            m_animator.SetBool("Grounded", m_grounded);
+        }
+
+        //Set AirSpeed in animator
+        m_animator.SetFloat("AirSpeedY", m_body2d.velocity.y);
+
+        // -- Handle Animations --
+        //Wall Slide
+        m_isWallSliding = (m_wallSensorR1.State() && m_wallSensorR2.State()) || (m_wallSensorL1.State() && m_wallSensorL2.State());
+        m_animator.SetBool("WallSlide", m_isWallSliding);
+       //old
+        cooldownTimer += Time.deltaTime; //РїСЂРёР±Р°РІР»РµРЅРёРµ РїРѕ 1 СЃРµРєСѓРЅРґРµ Рє cooldownTimer
+        stamina = HeroAttack.Instance.currentStamina; //РїСЂРѕРІРµСЂРєР° СЃС‚Р°РјРёРЅС‹
         if (hp > 0)
         {
-            PlayerMovement();//Метод для движения и поворота спрайта персонажа
-            AnimState();//Метод для передачи состояния в аниматор
-            DieByFall();//Метод для смерти от падения
-            CheckBlock(); //Проверка блока
+            PlayerMovement();//РњРµС‚РѕРґ РґР»СЏ РґРІРёР¶РµРЅРёСЏ Рё РїРѕРІРѕСЂРѕС‚Р° СЃРїСЂР°Р№С‚Р° РїРµСЂСЃРѕРЅР°Р¶Р°
+            DieByFall();//РњРµС‚РѕРґ РґР»СЏ СЃРјРµСЂС‚Рё РѕС‚ РїР°РґРµРЅРёСЏ
+            CheckBlock(); //РџСЂРѕРІРµСЂРєР° Р±Р»РѕРєР°
             Jump();
-            Roll(); //Кувырок
+            PlayerSpeedMode();
+            Roll(); //РљСѓРІС‹СЂРѕРє
+            if (Input.GetKey(KeyCode.LeftControl) && m_timeSinceAttack > 0.25f && !m_rolling && stamina > 15f)
+            {
+                MeeleAtack();
+            }
         }
         else
         {
             return;
+        }  
+    }
+    // Animation Events
+    // Called in slide animation.
+    void AE_SlideDust()
+    {
+        Vector3 spawnPosition;
+
+        if (m_facingDirection == 1)
+            spawnPosition = m_wallSensorR2.transform.position;
+        else
+            spawnPosition = m_wallSensorL2.transform.position;
+
+        if (m_slideDust != null)
+        {
+            // Set correct arrow spawn position
+            GameObject dust = Instantiate(m_slideDust, spawnPosition, gameObject.transform.localRotation) as GameObject;
+            // Turn arrow in correct direction
+            dust.transform.localScale = new Vector3(m_facingDirection, 1, 1);
         }
     }
-}
+    public void Push() //РњРµС‚РѕРґ РґР»СЏ РѕС‚С‚Р°Р»РєРёРІР°РЅРёСЏ С‚РµР»Р° РІРѕ РІСЂРµРјСЏ РїРѕР»СѓС‡РµРЅРёСЏ СѓСЂРѕРЅР°
+    {
+        if (transform.lossyScale.x < 0) //СЃРјРѕС‚СЂРёРј РІ С‚СЂР°РЅСЃС„РѕСЂРјРµ РІ РєР°РєСѓСЋ СЃС‚РѕСЂРѕРЅСѓ РїРѕРІРµСЂРЅСѓС‚ РїРѕ С… РѕР±СЊРµРєС‚ 
+        {
+            m_body2d.AddForce(new Vector2(0.5f, m_body2d.velocity.y), ForceMode2D.Impulse);//РРјРїСѓР»СЊСЃ СЌС‚Рѕ Р·РЅР°С‡РёС‚ С‡С‚Рѕ СЃРёР»Р° РїСЂРёР»РѕР¶РёС‚СЊСЃСЏ РІСЃРµРіРѕ 1 СЂР°Р·
+        }
+        else
+        {
+            m_body2d.AddForce(new Vector2(-0.5f, m_body2d.velocity.y), ForceMode2D.Impulse);//РРјРїСѓР»СЊСЃ СЌС‚Рѕ Р·РЅР°С‡РёС‚ С‡С‚Рѕ СЃРёР»Р° РїСЂРёР»РѕР¶РёС‚СЊСЃСЏ РІСЃРµРіРѕ 1 СЂР°Р·
+        }
+    }
+    private void PlayerSpeedMode()
+    {
+        if (block || isAttack)
+        {
+            m_speed = 0f;
+        }
+        else
+        {
+            m_speed = 4f;
+        }
+        if (cooldownTimer > 0.5f)
+        {
+            isAttack = false;
+        }
+    }
+    public void CheckBlock()
+    {
+        block = HeroAttack.Instance.block;
+        if (block == true && !m_rolling)
+        {
+            m_animator.SetTrigger("Block");
+            m_animator.SetBool("IdleBlock", true);
+        }
+        else
+        {
+            m_animator.SetBool("IdleBlock", false);
+        }
+    }
+    public void GetDamage(int dmg) //РњС‹ СЃРѕР·РґР°РµРј РЅРѕРІС‹Р№ РјРµС‚РѕРґ GetDamage() 
+    {
+        if (block == false && !m_rolling)
+        {
+            hp -= dmg;//РћС‚РЅРёРјР°РµС‚ int 10 РёР· РїРµСЂРµРјРµРЅРЅРѕР№ hp (Р¶РёР·РЅРё).
+            m_animator.SetTrigger("Hurt");
+            Push();
+        }
+        if (block == true && !m_rolling)
+        {
+            hp -= dmg * 0.15f;//РћС‚РЅРёРјР°РµС‚ int РёР· РїРµСЂРµРјРµРЅРЅРѕР№ hp (Р¶РёР·РЅРё) Рё РїСЂРё Р°РєС‚РёРІРЅРѕРј Р±Р»РѕРєРµ СѓРјРµРЅСЊС€Р°РµС‚ СѓСЂРѕРЅ РІ 3 СЂР°Р·Р°
+            HeroAttack.Instance.DecreaseStamina(20);
+            m_animator.SetTrigger("Hurt");
+            Push();
+        }
+        if (hp <= 0 && !m_rolling) //Р•СЃР»Рё Р¶РёР·РЅРµР№ РјРµРЅСЊС€Рµ 0
+        {
+            m_speed = 0;
+            m_body2d.gravityScale = 0;
+            m_body2d.velocity = Vector2.zero;
+            boxCollider.enabled = false;
+            m_animator.SetBool("noBlood", m_noBlood);
+            m_animator.SetTrigger("Death");
+        }
+    }
+    private void Deactivate() //РґРµР°РєС‚РёРІР°С†РёСЏ РёРіСЂРѕРєР° РїРѕСЃР»Рµ Р·Р°РІРµСЂС€РµРЅРёСЏ Р°РЅРёРјР°С†РёРё СЃРјРµСЂС‚Рё (Р±Р»Р°РіРѕРґРѕСЂСЏ РјРµС‚РєРё РІ Р°РЅРёРјР°С‚РѕСЂРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ СЌС‚РѕС‚ РјРµС‚РѕРґ
+    {
+        //gameObject.SetActive(false);
+        playerDead = true;
+    }
+    public void Hero_hp() //РњРµС‚РѕРґ РєРѕС‚РѕСЂС‹Р№ РїСЂРѕСЃС‚Рѕ РІС‹Р·С‹РІР°РµС‚ Р·РЅР°С‡РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ HP, РЅСѓР¶РµРЅ РјРЅРµ Р±С‹Р» РґР»СЏ РїРµСЂРµРґР°С‡Рё СЌС‚РѕРіРѕ С‡РёСЃР»Р° РІ СЃРєСЂРёРїС‚ СЃ РєР°СѓРЅС‚РµСЂРѕРј Р¶РёР·РЅРµР№
+    {
+        Debug.Log(hp);
+    }
+    private void DieByFall() //РњРµС‚РѕРґ РєРѕС‚РѕСЂС‹Р№ РЅР°РЅРѕСЃРёС‚ СѓСЂРѕРЅ РїСЂРё РїР°РґРµРЅРёРё СЃ РїР»Р°С‚С„РѕСЂРјС‹
+    {
+        if (m_body2d.transform.position.y < -100)//РµСЃР»Рё РєРѕРѕСЂРґРёРЅР°С‚С‹ РёРіСЂРѕРєР° РїРѕ РѕСЃРё y РјРµРЅСЊС€Рµ 10, С‚Рѕ РїСЂРѕРёСЃС…РѕРґРёС‚ РІС‹Р·РѕРІ РјРµС‚РѕРґР° GetDamage
+        {
+            GetDamage(100);
+        }
+    }
+    public void Jump()
+    {
+        //Jump
+        //for jump and roll
+        float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
+        float vertical = Input.GetAxis("Vertical"); //РїРѕС‚РѕРј РґР»СЏ Р»РµСЃС‚РЅРёС† РЅСѓР¶РЅРѕ Р±СѓРґРµС‚
 
+        if (joystickMoveY > 0.4f && m_grounded && !m_rolling || vertical > 0.4f && m_grounded && !m_rolling)
+        {
+            if (stamina > 20)// РµСЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РЅР°Р¶Р°С‚РёРµ Рё РѕС‚РїСѓСЃРєР°РЅРёСЏ (GetKeyDown, Р° РЅРµ РїСЂРѕСЃС‚Рѕ GetKey) РєРЅРѕРїРєРё Space Рё РµСЃР»Рё isGrounded = true 
+            {
+                HeroAttack.Instance.DecreaseStamina(20);
+                m_animator.SetTrigger("Jump");
+                m_grounded = false;
+                m_animator.SetBool("Grounded", m_grounded);
+                m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
+                m_groundSensor.Disable(0.2f);
+            }
+        }
+    }
+    public void Roll()
+    {
+        float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
+        float vertical = Input.GetAxis("Vertical");
+        //Roll
+        if ((joystickMoveY < -0.4 || vertical < 0) && cooldownTimer > 1.5f && stamina > 15 && !m_rolling && !m_isWallSliding) //РєСѓРІС‹СЂРѕРє
+        {
+            HeroAttack.Instance.DecreaseStamina(15);
+            m_rolling = true;
+            m_animator.SetTrigger("Roll");
+            m_body2d.velocity = new Vector2((m_facingDirection*-1) * m_rollForce, m_body2d.velocity.y);
+        }
+    }
+    public void PlayerMovement()
+    {
+        float joystickMoveX = JoystickMovement.Instance.moveX; //joystick
+        float move = Input.GetAxis("Horizontal");//РСЃРїРѕР»СЊР·СѓРµРј Float РїРѕС‚РѕРјСѓ-С‡С‚Рѕ Р·РЅР°С‡РµРЅРёРµ 0.111..., С‚СѓС‚ Р±РµСЂРµС‚СЃСЏ РІРІРѕРґ РїРѕ Р“РѕСЂРёР·РѕРЅС‚Р°Р»Рё (СЃС‚СЂРµР»РєРё Рё A D)
+
+        //Run
+        //keyboard control
+        Vector2 movementX = new Vector2(move, m_body2d.velocity.y); //keyboard
+        if (movementX != Vector2.zero && !m_rolling)
+        {
+            m_body2d.velocity = new Vector2(move * m_speed, m_body2d.velocity.y);
+        }
+
+        //joystick controll
+        Vector2 movementJoystickX = new Vector2(joystickMoveX, m_body2d.velocity.y); //tuchpad
+        if (movementJoystickX != Vector2.zero && !m_rolling)
+        {
+            m_body2d.velocity = new Vector2(joystickMoveX * m_speed, m_body2d.velocity.y);
+        }
+
+        //player state
+        if (m_body2d.velocity != Vector2.zero)
+        {
+            m_delayToIdle = 0.05f;
+            m_animator.SetInteger("AnimState", 1);
+        }
+        else
+        {
+            m_delayToIdle -= Time.deltaTime;
+            if (m_delayToIdle < 0)
+                m_animator.SetInteger("AnimState", 0);
+        }
+
+        //Flip
+        if (joystickMoveX > 0 || move > 0) //РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight =РЅРµ true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+            m_facingDirection = 1;
+        }
+        else if (joystickMoveX < 0 || move < 0) //РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight = true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            m_facingDirection = -1;
+        }
+    }
+    public void MeeleAtack()
+    {  
+        if(stamina > 20 && !m_rolling && !block) 
+        {
+            cooldownTimer = 0;
+            isAttack = true;
+            m_currentAttack++;
+            // Loop back to one after third attack
+            if (m_currentAttack > 3)
+                m_currentAttack = 1;
+
+            // Reset Attack combo if time since last attack is too large
+            if (m_timeSinceAttack > 1.0f)
+                m_currentAttack = 1;
+
+            // Call one of three attack animations "Attack1", "Attack2", "Attack3"
+            m_animator.SetTrigger("Attack" + m_currentAttack);
+            HeroAttack.Instance.Attack();
+            // Reset timer
+            m_timeSinceAttack = 0.0f;
+        }    
+    }
+}

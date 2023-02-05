@@ -28,7 +28,6 @@ public class JoystickMovement : MonoBehaviour, IPointerUpHandler, IDragHandler, 
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(joystickTransform, eventData.position, MainCamera, out offset);
         offset = Vector2.ClampMagnitude(offset, dragOffsetDistance) / dragOffsetDistance; // (-1) - 1
-        Debug.Log(offset);
         joystickTransform.anchoredPosition = offset * dragMovementDistance;
         Vector2 inputVector = ColculateMovementInput(offset);
         onMove?.Invoke(inputVector);

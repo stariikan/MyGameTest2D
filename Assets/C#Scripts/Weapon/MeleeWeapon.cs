@@ -10,7 +10,6 @@ public class MeleeWeapon : MonoBehaviour
     private bool hit = false; //переменная метки попал ли во что-то снаряд
 
     private BoxCollider2D boxCollider; //Коллайдер удара
-    //private Animator anim; //переменная для аниматора
 
     public int AttackDamage = 20;
     public string TargetName;
@@ -51,30 +50,30 @@ public class MeleeWeapon : MonoBehaviour
     {
         Debug.Log(TargetName);
         target = GameObject.Find(TargetName);
-        if (target.CompareTag("Enemy"))
+        if (target.CompareTag("Mushroom"))
         {
-            target.GetComponent<Entity>().TakeDamage(AttackDamage);
+            target.GetComponent<Entity_Mushroom>().TakeDamage(AttackDamage);
         }
-        if (target.CompareTag("Chest"))
+        else if (target.CompareTag("Chest"))
         {
             target.GetComponent<Chest>().TakeDamage(AttackDamage);
         }
-        if (target.CompareTag("Door"))
+        else if (target.CompareTag("Door"))
         {
             target.GetComponent<door>().TryToOpen();
         }
+        else
+        {
+            return;
+        }
     }
-    public void meleeDirection(float _direction)// выбор направления полета 
+    public void meleeDirection(Vector3 _direction)// выбор направления полета 
     {
         lifetime = 0;
         gameObject.SetActive(true); //активация игрового обьекта
-        direction = _direction;
+        this.gameObject.transform.position = _direction;
         boxCollider.enabled = true; //активация коллайдера 
         hit = false; //обьект коснулся другого обьекта = false
-        float localScaleX = transform.localScale.x; //этот весь код про то чтобы менялся x на -x в зависимости в какую сторону мы стреляем, тоесть был переворот спрайта 
-        if (Mathf.Sign(localScaleX) != _direction)
-            localScaleX = -localScaleX;
-        transform.localScale = new Vector3(localScaleX, transform.localScale.y, transform.localScale.z);//смена направления снаряда
     }
     private void Deactivate() //деактивация снаряда после завершения анимации взрывал
     {
