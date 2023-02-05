@@ -70,9 +70,9 @@ public class SaveSerial : MonoBehaviour
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
 
-            enemyHP = GameObject.Find("EnemySkelet").GetComponent<Entity>().maxHP;
-            enemyDamage = GameObject.Find("EnemySkelet").GetComponent<Entity>().enemyAttackDamage;
-            enemySpeed = GameObject.Find("EnemySkelet").GetComponent<Enemy_Skelet>().speed;
+            enemyHP = GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().maxHP;
+            enemyDamage = GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().enemyAttackDamage;
+            enemySpeed = GameObject.Find("Mushroom").GetComponent<Enemy_Mushroom>().speed;
         }
         
         data.playerCoin = playerCoin;
@@ -123,7 +123,7 @@ public class SaveSerial : MonoBehaviour
             Debug.Log("Game data loaded!"); //Выводим в отладочную консоль сообщение об успешной загрузке.
         }
         else
-            Debug.LogError("There is no save data!"); //Если файла с данными не окажется в папке проекта, выведем в консоль сообщение об ошибке.
+            Debug.LogWarning("There is no save data!"); //Если файла с данными не окажется в папке проекта, выведем в консоль сообщение об ошибке.
         }
     //Сброс
     //Наконец, реализуем метод для сброса сохранения.Он похож на тот ResetData, который мы написали для очистки PlayerPrefs, но включает в себя пару дополнительных шагов.
@@ -137,7 +137,7 @@ public class SaveSerial : MonoBehaviour
             Debug.Log("Data reset complete!");
         }
         else
-            Debug.LogError("No save data to delete.");//Если файла нет, выводим сообщение об ошибке.
+            Debug.LogWarning("No save data to delete.");//Если файла нет, выводим сообщение об ошибке.
     }
     public void IncreaseMaxHP()
     {

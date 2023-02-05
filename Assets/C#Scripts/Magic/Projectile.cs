@@ -71,9 +71,9 @@ public class Projectile : MonoBehaviour
     {
         Debug.Log(magicTargetName);
         target = GameObject.Find(magicTargetName);
-        if (target.CompareTag("Enemy"))
+        if (target.CompareTag("Mushroom"))
             {
-            target.GetComponent<Entity>().TakeDamage(magicAttackDamage);
+            target.GetComponent<Entity_Mushroom>().TakeDamage(magicAttackDamage);
             }
         else 
             {

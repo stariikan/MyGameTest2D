@@ -8,7 +8,7 @@ public class DisableProgressBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        enemyDead = this.gameObject.GetComponentInParent<Entity>().enemyDead;
+        enemyDead = this.gameObject.GetComponentInParent<Entity_Mushroom>().enemyDead;
         if (enemyDead == true)
         {
             this.gameObject.SetActive(false);

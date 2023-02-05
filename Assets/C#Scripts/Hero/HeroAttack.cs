@@ -5,16 +5,13 @@ using UnityEngine;
 public class HeroAttack : MonoBehaviour
 {
     [SerializeField] private float magicAttackCooldown;//кулдаун запуска снаряда (магии)
-    [SerializeField] private float AttackCooldown;//кулдаун Атаки (физ)
-    [SerializeField] private Transform firePoint; //Позиция из которых будет выпущены снаряди
+    [SerializeField] private Transform firePointRight; //Позиция из которых будет выпущены снаряди
+    [SerializeField] private Transform firePointLeft; //Позиция из которых будет выпущены снаряди
     [SerializeField] private GameObject[] magicProjectile; //Массив наших снарядов
     [SerializeField] private GameObject meleeAttackArea; // Физ оружее
 
     public static HeroAttack Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-
-    public Animator Anim; //Переменная для работы с Анимацией
-
-    private float cooldownTimer = Mathf.Infinity; //Если мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown. Поэтому мы поставим тут бесконечность или можно поставить любое большое число
+    
     private float MagicCooldownTimer = Mathf.Infinity; //Если мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown. Поэтому мы поставим тут бесконечность или можно поставить любое большое число
     public float maxMP = 100;
     public float currentMP;
@@ -24,6 +21,8 @@ public class HeroAttack : MonoBehaviour
 
     public bool block = false;
 
+    private int playerDirecction;
+    
     private Camera mainCamera;
 
     private void Start()
@@ -54,10 +53,14 @@ public class HeroAttack : MonoBehaviour
         {
             currentStamina = 2;
         }
+        if (currentStamina < 20)
+        {
+            block = false;
+        }
     }
     public void Block()
     {
-        if (block == false)
+        if (block == false && currentStamina > 20)
         {
             block = true;
         }
@@ -73,19 +76,33 @@ public class HeroAttack : MonoBehaviour
     public void Attack()
     {
        currentStamina -= 15f;
-       Anim.SetTrigger("Attack");//для воспроизведения анимации атаки при выполнения тригера Attack
-       cooldownTimer = 0;
-       meleeAttackArea.transform.position = firePoint.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
-       meleeAttackArea.GetComponent<MeleeWeapon>().meleeDirection(Mathf.Sign(transform.localScale.x));
+       if(playerDirecction > 0)
+        {
+            meleeAttackArea.transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
+            Debug.Log("right" + firePointRight.position);
+            meleeAttackArea.GetComponent<MeleeWeapon>().meleeDirection(firePointRight.position);
+        }
+       else if (playerDirecction < 0)
+        {
+            meleeAttackArea.transform.position = firePointLeft.position;
+            Debug.Log("left" + firePointLeft.position);//При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
+            meleeAttackArea.GetComponent<MeleeWeapon>().meleeDirection(firePointLeft.position);
+        }
     }
     public void magicAttack()
     {
         currentMP -= 10;
-        Anim.SetTrigger("magicAttack");//для воспроизведения анимации атаки магией при выполнения тригера magicAttack
         MagicCooldownTimer = 0; //сброс кулдауна приминения магии для того чтобы работа формула при атаке которой она смотрит на кулдаун и если он наступил, то можно вновь атаковать
-        magicProjectile[FindMagicBall()].transform.position = firePoint.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
-                                                                                  // Get the mouse position in screen space
-        Vector3 mousePosition = Input.mousePosition;
+        if (playerDirecction > 0)
+        {   
+            magicProjectile[FindMagicBall()].transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
+        }
+        if (playerDirecction < 0)
+        {
+            magicProjectile[FindMagicBall()].transform.position = firePointLeft.position;
+        }
+            // Get the mouse position in screen space
+            Vector3 mousePosition = Input.mousePosition;
 
         // Convert the mouse position to world space
         Vector3 worldSpaceMousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
@@ -104,10 +121,6 @@ public class HeroAttack : MonoBehaviour
         {
             Block();
         }
-        if (Input.GetKey(KeyCode.LeftControl) && cooldownTimer > AttackCooldown && currentStamina > 15f)// если нажать на правую кнопку мыши и кулдаун таймер > чем значение AttackCooldown, то можно производить физ атаку
-        {
-            Attack(); // выполнения атаки
-        }
         if (Input.GetKey(KeyCode.LeftAlt) && MagicCooldownTimer > magicAttackCooldown && currentMP >= 15) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
         {
             
@@ -125,15 +138,14 @@ public class HeroAttack : MonoBehaviour
     }
     private void Awake()
     {
-        Anim = GetComponent<Animator>(); //доступ к аниматору
         Instance = this;
     }
     private void Update()
     {
-        cooldownTimer += Time.deltaTime; //прибавление по 1 секунде к cooldownTimer после его обнуления при выполенении метода Attack.
         MagicCooldownTimer += Time.deltaTime; //прибавление по 1 секунде к MagicCooldownTimer после его обнуления при выполенении метода magicAttack.
         attackControl();//атака с помощью мышки
         staminaRecovery();
+        playerDirecction = Hero.Instance.m_facingDirection;
     }
 
 
