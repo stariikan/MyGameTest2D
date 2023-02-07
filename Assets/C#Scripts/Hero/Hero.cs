@@ -239,7 +239,7 @@ public class Hero : MonoBehaviour {
         float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
         float vertical = Input.GetAxis("Vertical"); //потом для лестниц нужно будет
 
-        if (joystickMoveY > 0.4f && m_grounded && !m_rolling || vertical > 0.4f && m_grounded && !m_rolling)
+        if (joystickMoveY > 0.35f && m_grounded && !m_rolling || vertical > 0.35f && m_grounded && !m_rolling)
         {
             if (stamina > 20)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
             {
@@ -257,7 +257,7 @@ public class Hero : MonoBehaviour {
         float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
         float vertical = Input.GetAxis("Vertical");
         //Roll
-        if ((joystickMoveY < -0.4 || vertical < 0) && cooldownTimer > 1.5f && stamina > 15 && !m_rolling && !m_isWallSliding) //кувырок
+        if ((joystickMoveY < -0.35f || vertical < 0) && cooldownTimer > 1.5f && stamina > 15 && !m_rolling && !m_isWallSliding) //кувырок
         {
             HeroAttack.Instance.DecreaseStamina(15);
             m_rolling = true;

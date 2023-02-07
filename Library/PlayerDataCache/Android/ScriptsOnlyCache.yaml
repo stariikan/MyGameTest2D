@@ -38,7 +38,6 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
-    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
@@ -1044,4 +1043,4 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/Scenes/startLevel.unity
   - Assets/Scenes/LevelComplete.unity
-  playerPath: C:/Games/mem/mem_0.2.1.apk
+  playerPath: C:/Games/mem/mem_0.2.2.apk

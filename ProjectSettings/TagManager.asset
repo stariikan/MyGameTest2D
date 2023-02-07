@@ -6,10 +6,10 @@ TagManager:
   tags:
   - Ground
   - Enemy
-  - PlayerSkin
   - Chest
   - Door
   - Mushroom
+  - PlayerCharacter
   layers:
   - Default
   - TransparentFX

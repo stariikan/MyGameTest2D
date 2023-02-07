@@ -1717,7 +1717,7 @@ RectTransform:
   m_GameObject: {fileID: 257175705}
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1}
   m_Children: []
   m_Father: {fileID: 1724744441}
   m_RootOrder: 0
@@ -1739,8 +1739,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddc096587fb878a4d8fc21589a3267bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragTreshold: 0.6
-  dragMovementDistance: 30
+  dragTreshold: 0.3
+  dragMovementDistance: 50
   dragOffsetDistance: 100
   offset: {x: 0, y: 0}
   moveX: 0
@@ -8857,8 +8857,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.9, y: -0.05}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0.91, y: -0.73}
+  m_SizeDelta: {x: 175, y: 175}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1724744442
 MonoBehaviour:
@@ -8873,7 +8873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5529412}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.29803923}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10449,8 +10449,8 @@ GameObject:
   - component: {fileID: 9117128348912125024}
   - component: {fileID: 1896078292}
   m_Layer: 8
-  m_Name: HeroKnight
-  m_TagString: Player
+  m_Name: Hero
+  m_TagString: PlayerCharacter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
