@@ -94,10 +94,10 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
     }
     public void PlayerFollow() //Метод в котором описываем логику следования за игроком
     {
-            directionX = player.transform.position.x - transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
-            directionY = player.transform.position.y - transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
+            directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
+            directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
 
-        if ((Mathf.Abs(directionX) < 6 && Mathf.Abs(directionX) > 1f && Mathf.Abs(directionY) < 2) || this.gameObject.GetComponent<Entity_Mushroom>().enemyTakeDamage == true && Mathf.Abs(directionX) > 0.9f) //следует за игроком если маленькое растояние или получил урон
+        if ((Mathf.Abs(directionX) < 8 && Mathf.Abs(directionX) > 1f && Mathf.Abs(directionY) < 2) || this.gameObject.GetComponent<Entity_Mushroom>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f) //следует за игроком если маленькое растояние или получил урон
         {
                 Vector3 pos = transform.position;
                 Vector3 theScale = transform.localScale;
@@ -125,9 +125,9 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
     public void Attack()
     {
         float playerHP = Hero.Instance.hp;
-        float directionX = player.transform.position.x - transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
-        float directionY = player.transform.position.y - transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
-        if (playerHP > 0 && Mathf.Abs(directionX) < 1.05f && Mathf.Abs(directionY) < 1f)
+        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
+        float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
+        if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f)
         {
             //Damage Deal
             currentAttack++;
@@ -175,12 +175,10 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
                 this.gameObject.GetComponent<Animator>().SetInteger("State", 0);
         }
     }
-    public void groundCheckPosition()//проверка на пропость, чтобы скелет туда не упал
+    //Проверка на пропость, чтобы скелет туда не упал мы стреляем Raycast вниз с позиции обьекта groundcheck, на 2 еденицы и проверяем столкнулся ли обьект с землей (groundLayers) PlayerFollow();
+    public void groundCheckPosition()
     {
-        hit = Physics2D.Raycast(groundcheck.position, -transform.up, 0.1f, LayerMask.GetMask("Ground"));//мы стреляем Raycast вниз с позиции обьекта groundcheck, на 2 еденицы
-                                                                                       //и проверяем столкнулся ли обьект с землей (groundLayers)
-                                                                                       //PlayerFollow();
-
+        hit = Physics2D.Raycast(groundcheck.position, -transform.up, 0.1f, LayerMask.GetMask("Ground"));
         if (hit.collider != true) //если обьект groundcheck не столкнулся с полом (то есть пропасть)
         {
             speed = 0f;//то уменьшаем скоро до 0
@@ -190,16 +188,11 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
             speed = speedRecovery;//если обьект ground check вновь сталкивается с полом (видит землю), то возвращаем показатель скорости.
         }
     }
-    private void Awake() //События которые должны произойти при старте игры
-    {
-        player = GameObject.FindWithTag("Player"); //тут при старте игры скелет находит игрока по тегу Player и присваивает найденную и информацию переменной player
-        rb = this.gameObject.GetComponent<Rigidbody2D>(); //Переменная rb получает компонент Rigidbody2D (Физика game.Object)
-                                          //к которому привязан скрипт
-        anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
-                                         //к которому привязан скрипт
-    }
     private void Start()
     {
+        player = GameObject.FindWithTag("PlayerCharacter"); //тут при старте игры скелет находит игрока по тегу Player и присваивает найденную и информацию переменной player
+        rb = this.gameObject.GetComponent<Rigidbody2D>(); //Переменная rb получает компонент Rigidbody2D (Физика game.Object) к которому привязан скрипт
+        anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object) к которому привязан скрипт
         speed = SaveSerial.Instance.enemySpeed;
         if (speed < 1f)
         {
@@ -221,7 +214,6 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
             EnemyJump(); //прыжок перед препятсвием
             Attack();
             //Patrol();//патрулирование
-
         }
 
         else

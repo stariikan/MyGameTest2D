@@ -46,7 +46,7 @@ public class Entity_Mushroom : MonoBehaviour
     {
         directionX = Enemy_Mushroom.Instance.directionX;
         directionY = Enemy_Mushroom.Instance.directionY;
-        if(directionX < 1f && directionY < 1f)
+        if(directionX < 1f && directionY < 0.3f)
         {
             Hero.Instance.GetDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage  
         }

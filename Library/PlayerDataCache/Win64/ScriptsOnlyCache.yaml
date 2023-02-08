@@ -4,13 +4,17 @@ ScriptsOnlyBuild:
     - CameraFolow
     - Chest
     - Coin
+    - DestroyEvent_HeroKnight
     - DisableProgressBar
-    - Enemy_Skelet
-    - Entity
+    - Enemy_Mushroom
+    - Entity_Mushroom
     - HP
     - Hero
     - HeroAttack
     - Info
+    - Joystick
+    - JoystickMovement
+    - JoystickPause
     - Level_counter
     - LvL
     - LvLGeneration
@@ -19,6 +23,7 @@ ScriptsOnlyBuild:
     - Pause
     - Projectile
     - SaveSerial
+    - Sensor_HeroKnight
     - Shop
     - Spike
     - Stamina
@@ -61,6 +66,7 @@ ScriptsOnlyBuild:
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
@@ -90,27 +96,27 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1720}
+      Script: {instanceID: 1536}
     - Class: 114
-      Script: {instanceID: 2264}
+      Script: {instanceID: 2082}
     - Class: 114
-      Script: {instanceID: 2506}
+      Script: {instanceID: 2324}
     - Class: 114
-      Script: {instanceID: 2958}
+      Script: {instanceID: 2778}
     - Class: 114
-      Script: {instanceID: 2966}
+      Script: {instanceID: 2786}
     - Class: 114
-      Script: {instanceID: 3074}
+      Script: {instanceID: 2894}
     - Class: 114
-      Script: {instanceID: 3390}
+      Script: {instanceID: 3212}
     - Class: 114
-      Script: {instanceID: 3916}
+      Script: {instanceID: 3738}
     - Class: 114
-      Script: {instanceID: 4560}
+      Script: {instanceID: 4382}
     - Class: 114
-      Script: {instanceID: 5544}
+      Script: {instanceID: 5370}
     - Class: 114
-      Script: {instanceID: 6188}
+      Script: {instanceID: 6020}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -148,6 +154,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 61
       Script: {instanceID: 0}
+    - Class: 62
+      Script: {instanceID: 0}
     - Class: 74
       Script: {instanceID: 0}
     - Class: 81
@@ -159,61 +167,73 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1720}
+      Script: {instanceID: 1536}
     - Class: 114
-      Script: {instanceID: 1928}
+      Script: {instanceID: 1744}
     - Class: 114
-      Script: {instanceID: 1976}
+      Script: {instanceID: 1792}
     - Class: 114
-      Script: {instanceID: 2122}
+      Script: {instanceID: 1884}
     - Class: 114
-      Script: {instanceID: 2126}
+      Script: {instanceID: 1940}
     - Class: 114
-      Script: {instanceID: 2506}
+      Script: {instanceID: 1944}
     - Class: 114
-      Script: {instanceID: 2678}
+      Script: {instanceID: 2324}
     - Class: 114
-      Script: {instanceID: 2950}
+      Script: {instanceID: 2494}
     - Class: 114
-      Script: {instanceID: 2958}
+      Script: {instanceID: 2540}
     - Class: 114
-      Script: {instanceID: 3018}
+      Script: {instanceID: 2676}
     - Class: 114
-      Script: {instanceID: 3124}
+      Script: {instanceID: 2770}
     - Class: 114
-      Script: {instanceID: 3142}
+      Script: {instanceID: 2778}
     - Class: 114
-      Script: {instanceID: 3390}
+      Script: {instanceID: 2838}
     - Class: 114
-      Script: {instanceID: 3402}
+      Script: {instanceID: 2944}
     - Class: 114
-      Script: {instanceID: 3648}
+      Script: {instanceID: 2962}
     - Class: 114
-      Script: {instanceID: 3836}
+      Script: {instanceID: 3010}
     - Class: 114
-      Script: {instanceID: 3864}
+      Script: {instanceID: 3212}
     - Class: 114
-      Script: {instanceID: 3986}
+      Script: {instanceID: 3224}
     - Class: 114
-      Script: {instanceID: 4052}
+      Script: {instanceID: 3470}
     - Class: 114
-      Script: {instanceID: 4180}
+      Script: {instanceID: 3598}
     - Class: 114
-      Script: {instanceID: 4394}
+      Script: {instanceID: 3658}
     - Class: 114
-      Script: {instanceID: 4616}
+      Script: {instanceID: 3686}
     - Class: 114
-      Script: {instanceID: 4980}
+      Script: {instanceID: 3808}
     - Class: 114
-      Script: {instanceID: 5134}
+      Script: {instanceID: 3810}
     - Class: 114
-      Script: {instanceID: 5138}
+      Script: {instanceID: 3876}
     - Class: 114
-      Script: {instanceID: 5544}
+      Script: {instanceID: 4004}
     - Class: 114
-      Script: {instanceID: 5632}
+      Script: {instanceID: 4754}
     - Class: 114
-      Script: {instanceID: 5712}
+      Script: {instanceID: 4806}
+    - Class: 114
+      Script: {instanceID: 4960}
+    - Class: 114
+      Script: {instanceID: 4964}
+    - Class: 114
+      Script: {instanceID: 5370}
+    - Class: 114
+      Script: {instanceID: 5458}
+    - Class: 114
+      Script: {instanceID: 5538}
+    - Class: 114
+      Script: {instanceID: 5774}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -349,10 +369,16 @@ ScriptsOnlyBuild:
     className: TMP_FontAsset
   - hash:
       serializedVersion: 2
-      Hash: 2403c51fb2c93132109559fcea7dc713
+      Hash: 0e2f06899c960889eed0e77eec866724
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: Entity
+    className: JoystickMovement
+  - hash:
+      serializedVersion: 2
+      Hash: 9a3f4f0206956d6b228a8831ab48d9dc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Entity_Mushroom
   - hash:
       serializedVersion: 2
       Hash: 16397783db84a010e708dbed28eceaf7
@@ -403,12 +429,6 @@ ScriptsOnlyBuild:
     className: CinemachinePixelPerfect
   - hash:
       serializedVersion: 2
-      Hash: 4751177834cf9922c97df7beb9f5a994
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: levelGen2
-  - hash:
-      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -421,10 +441,22 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Joystick
+  - hash:
+      serializedVersion: 2
       Hash: cfdd0010efd7b54c2b7512656dbc9119
     assemblyName: Unity.2D.IK.Runtime.dll
     namespaceName: UnityEngine.U2D.IK
     className: IKManager2D
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Sensor_HeroKnight
   - hash:
       serializedVersion: 2
       Hash: f89d468cc0fdd43e08f77e530b73e442
@@ -493,6 +525,12 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
+      Hash: b09c9d5a4e9ba9b9c12a3827bca66e4e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickPause
+  - hash:
+      serializedVersion: 2
       Hash: 760787567e1b60d64a3e421ab83ee14a
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -511,7 +549,7 @@ ScriptsOnlyBuild:
     className: GraphicRaycaster
   - hash:
       serializedVersion: 2
-      Hash: ff9062899253c7ecd165070b7ef74b5b
+      Hash: 83f71929f87f7fbb4076b5cb20a4c128
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: HeroAttack
@@ -625,6 +663,12 @@ ScriptsOnlyBuild:
     className: Spike
   - hash:
       serializedVersion: 2
+      Hash: 51bac876ffea1012c7c9c159febd0593
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Enemy_Mushroom
+  - hash:
+      serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -697,12 +741,6 @@ ScriptsOnlyBuild:
     className: PlayModeRunnerCallback
   - hash:
       serializedVersion: 2
-      Hash: b2e8c07f5b3be358fe036a89a82f38d3
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Enemy_Skelet
-  - hash:
-      serializedVersion: 2
       Hash: bd3cf68c8964d3c66d1c43f4f98508c9
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -745,16 +783,22 @@ ScriptsOnlyBuild:
     className: EventTrigger
   - hash:
       serializedVersion: 2
-      Hash: 6cfd65b3ffd27d52e8088b0882504108
+      Hash: b55f23803af2f22619f5fe534a9a253f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: Hero
+    className: Hero_old
   - hash:
       serializedVersion: 2
       Hash: 87cef3c82381dc586f6772c3e27561b6
     assemblyName: Unity.2D.Animation.Runtime.dll
     namespaceName: UnityEngine.Experimental.U2D.Animation
     className: SpriteLibrary
+  - hash:
+      serializedVersion: 2
+      Hash: 8a10d1fc6029b3f51d0abc87582fa9fd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickBlock
   - hash:
       serializedVersion: 2
       Hash: a81d4c2c1cf3ad164d277d927a193679
@@ -791,6 +835,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.2D.SpriteShape.Runtime.dll
     namespaceName: 
     className: SpriteShapeGeometryCache
+  - hash:
+      serializedVersion: 2
+      Hash: 1b7b46a8be82c66de4e2912f1e6db636
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Hero
   - hash:
       serializedVersion: 2
       Hash: fceb505c05c057ea8f0191c9c2eaafb0
@@ -931,10 +981,28 @@ ScriptsOnlyBuild:
     className: ChatGPLvLGeneration
   - hash:
       serializedVersion: 2
+      Hash: af58bd7ab084af703bc5acef7bc629a3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ColorSwap_HeroKnight
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DestroyEvent_HeroKnight
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.2D.Animation.Runtime.dll
     namespaceName: UnityEngine.U2D.Animation
     className: BufferManager
+  - hash:
+      serializedVersion: 2
+      Hash: 3b7b7a70ae11d58b18568622f6b5d6db
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickAttack
   - hash:
       serializedVersion: 2
       Hash: 8220b46879dc5e37db1b940c938f5744
@@ -975,4 +1043,4 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/Scenes/startLevel.unity
   - Assets/Scenes/LevelComplete.unity
-  playerPath: D:/GFE/Mem/MyGameTest2D.exe
+  playerPath: C:/Games/mem/PC/MyGameTest2D.exe
