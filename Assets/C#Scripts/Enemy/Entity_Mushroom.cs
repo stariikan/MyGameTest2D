@@ -84,10 +84,10 @@ public class Entity_Mushroom : MonoBehaviour
             currentHP -= dmg;
             enemyTakeDamage = true;
             takedDamage = (float)dmg / (float)maxHP; //на сколько надо уменьшаить прогресс бар
-            Debug.Log(takedDamage);
+            //Debug.Log(takedDamage);
             Push();
             this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
-            Debug.Log(currentHP + " " + gameObject.name);
+            //Debug.Log(currentHP + " " + gameObject.name);
         }
         else
         {
@@ -102,7 +102,7 @@ public class Entity_Mushroom : MonoBehaviour
             boxCollider.enabled = false;
             anim.SetTrigger("m_death");//анимация смерти
             enemyDead = true;
-            Debug.Log("Enemy Defeat -> " + gameObject.name);
+            //Debug.Log("Enemy Defeat -> " + gameObject.name);
         }
     }
     public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти

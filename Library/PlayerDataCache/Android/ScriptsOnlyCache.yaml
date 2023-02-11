@@ -15,10 +15,13 @@ ScriptsOnlyBuild:
     - Joystick
     - JoystickMovement
     - JoystickPause
+    - JoystickPosition
     - Level_counter
     - LvL
     - LvLGeneration
+    - MagicDMG_counter
     - Mana
+    - MeleeDMG_counter
     - MeleeWeapon
     - Pause
     - Projectile
@@ -38,6 +41,7 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
+    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
@@ -56,8 +60,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -98,25 +104,29 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1536}
     - Class: 114
-      Script: {instanceID: 2082}
+      Script: {instanceID: 1914}
     - Class: 114
-      Script: {instanceID: 2324}
+      Script: {instanceID: 2086}
     - Class: 114
-      Script: {instanceID: 2778}
+      Script: {instanceID: 2328}
     - Class: 114
-      Script: {instanceID: 2786}
+      Script: {instanceID: 2782}
     - Class: 114
-      Script: {instanceID: 2894}
+      Script: {instanceID: 2790}
     - Class: 114
-      Script: {instanceID: 3212}
+      Script: {instanceID: 2898}
     - Class: 114
-      Script: {instanceID: 3738}
+      Script: {instanceID: 3216}
     - Class: 114
-      Script: {instanceID: 4382}
+      Script: {instanceID: 3742}
     - Class: 114
-      Script: {instanceID: 5370}
+      Script: {instanceID: 4374}
     - Class: 114
-      Script: {instanceID: 6020}
+      Script: {instanceID: 4388}
+    - Class: 114
+      Script: {instanceID: 5376}
+    - Class: 114
+      Script: {instanceID: 6026}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -175,65 +185,67 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1884}
     - Class: 114
-      Script: {instanceID: 1940}
+      Script: {instanceID: 1902}
     - Class: 114
       Script: {instanceID: 1944}
     - Class: 114
-      Script: {instanceID: 2324}
+      Script: {instanceID: 1948}
     - Class: 114
-      Script: {instanceID: 2494}
+      Script: {instanceID: 2328}
     - Class: 114
-      Script: {instanceID: 2540}
+      Script: {instanceID: 2498}
     - Class: 114
-      Script: {instanceID: 2676}
+      Script: {instanceID: 2544}
     - Class: 114
-      Script: {instanceID: 2770}
+      Script: {instanceID: 2680}
     - Class: 114
-      Script: {instanceID: 2778}
+      Script: {instanceID: 2774}
     - Class: 114
-      Script: {instanceID: 2838}
+      Script: {instanceID: 2782}
     - Class: 114
-      Script: {instanceID: 2944}
+      Script: {instanceID: 2842}
     - Class: 114
-      Script: {instanceID: 2962}
+      Script: {instanceID: 2948}
     - Class: 114
-      Script: {instanceID: 3010}
+      Script: {instanceID: 2966}
     - Class: 114
-      Script: {instanceID: 3212}
+      Script: {instanceID: 3014}
     - Class: 114
-      Script: {instanceID: 3224}
+      Script: {instanceID: 3216}
     - Class: 114
-      Script: {instanceID: 3470}
+      Script: {instanceID: 3228}
     - Class: 114
-      Script: {instanceID: 3598}
+      Script: {instanceID: 3474}
     - Class: 114
-      Script: {instanceID: 3658}
+      Script: {instanceID: 3602}
     - Class: 114
-      Script: {instanceID: 3686}
+      Script: {instanceID: 3662}
     - Class: 114
-      Script: {instanceID: 3808}
+      Script: {instanceID: 3690}
     - Class: 114
-      Script: {instanceID: 3810}
+      Script: {instanceID: 3812}
     - Class: 114
-      Script: {instanceID: 3876}
+      Script: {instanceID: 3814}
     - Class: 114
-      Script: {instanceID: 4004}
+      Script: {instanceID: 3880}
     - Class: 114
-      Script: {instanceID: 4754}
+      Script: {instanceID: 4008}
     - Class: 114
-      Script: {instanceID: 4806}
+      Script: {instanceID: 4760}
     - Class: 114
-      Script: {instanceID: 4960}
+      Script: {instanceID: 4812}
     - Class: 114
-      Script: {instanceID: 4964}
+      Script: {instanceID: 4966}
     - Class: 114
-      Script: {instanceID: 5370}
+      Script: {instanceID: 4970}
     - Class: 114
-      Script: {instanceID: 5458}
+      Script: {instanceID: 5376}
     - Class: 114
-      Script: {instanceID: 5538}
+      Script: {instanceID: 5464}
     - Class: 114
-      Script: {instanceID: 5774}
+      Script: {instanceID: 5544}
+    - Class: 114
+      Script: {instanceID: 5780}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -373,6 +385,18 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: JoystickMovement
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickPosition
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MeleeDMG_counter
   - hash:
       serializedVersion: 2
       Hash: 9a3f4f0206956d6b228a8831ab48d9dc
@@ -768,6 +792,12 @@ ScriptsOnlyBuild:
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
+    className: MagicDMG_counter
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
     className: Stamina
   - hash:
       serializedVersion: 2
@@ -1043,4 +1073,4 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/Scenes/startLevel.unity
   - Assets/Scenes/LevelComplete.unity
-  playerPath: C:/Games/mem/mem_0.2.2.apk
+  playerPath: C:/Games/mem/mem_0.2.23.apk

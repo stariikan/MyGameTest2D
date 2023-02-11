@@ -241,9 +241,10 @@ public class Hero : MonoBehaviour {
 
         if (joystickMoveY > 0.35f && m_grounded && !m_rolling || vertical > 0.35f && m_grounded && !m_rolling)
         {
-            if (stamina > 20)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
+            if (stamina > 10 && cooldownTimer > 1)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
             {
-                HeroAttack.Instance.DecreaseStamina(20);
+                cooldownTimer = 0;
+                HeroAttack.Instance.DecreaseStamina(10);
                 m_animator.SetTrigger("Jump");
                 m_grounded = false;
                 m_animator.SetBool("Grounded", m_grounded);
@@ -257,9 +258,10 @@ public class Hero : MonoBehaviour {
         float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
         float vertical = Input.GetAxis("Vertical");
         //Roll
-        if ((joystickMoveY < -0.35f || vertical < 0) && cooldownTimer > 1.5f && stamina > 15 && !m_rolling && !m_isWallSliding) //кувырок
+        if ((joystickMoveY < -0.35f || vertical < 0) && cooldownTimer > 1.5f && stamina > 5 && !m_rolling && !m_isWallSliding && cooldownTimer > 1) //кувырок
         {
-            HeroAttack.Instance.DecreaseStamina(15);
+            cooldownTimer = 0;
+            HeroAttack.Instance.DecreaseStamina(5);
             m_rolling = true;
             m_animator.SetTrigger("Roll");
             m_body2d.velocity = new Vector2((m_facingDirection*-1) * m_rollForce, m_body2d.velocity.y);
@@ -273,14 +275,14 @@ public class Hero : MonoBehaviour {
         //Run
         //keyboard control
         Vector2 movementX = new Vector2(move, m_body2d.velocity.y); //keyboard
-        if (movementX != Vector2.zero && !m_rolling)
+        if (move != 0 && !m_rolling)
         {
             m_body2d.velocity = new Vector2(move * m_speed, m_body2d.velocity.y);
         }
 
         //joystick controll
         Vector2 movementJoystickX = new Vector2(joystickMoveX, m_body2d.velocity.y); //tuchpad
-        if (movementJoystickX != Vector2.zero && !m_rolling)
+        if (joystickMoveX != 0 && !m_rolling)
         {
             m_body2d.velocity = new Vector2(joystickMoveX * m_speed, m_body2d.velocity.y);
         }

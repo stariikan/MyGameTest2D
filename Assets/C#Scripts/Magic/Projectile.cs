@@ -69,7 +69,7 @@ public class Projectile : MonoBehaviour
     }
     public void DamageObject()
     {
-        Debug.Log(magicTargetName);
+        //Debug.Log(magicTargetName);
         target = GameObject.Find(magicTargetName);
         if (target.CompareTag("Mushroom"))
             {
