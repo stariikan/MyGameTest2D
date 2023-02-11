@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Joystick : MonoBehaviour
 {
+    private Transform joystick;
     // Start is called before the first frame update
     private void Start()
     {

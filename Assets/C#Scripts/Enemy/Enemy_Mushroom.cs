@@ -106,7 +106,7 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
                 pos.x += playerFollowSpeed;
                 transform.position = pos;
                 playerFollow = true;
-            Debug.Log(directionX);
+              //Debug.Log(directionX);
 
                 if (playerFollowSpeed < 0 && theScale.x > 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
                 {
@@ -139,7 +139,6 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
             // Reset Attack combo if time since last attack is too large
             if (timeSinceAttack > 2.0f)
             currentAttack = 1;
-            Debug.Log("ATTACK!");
             anim.SetTrigger("attack" + currentAttack);
             // Reset timer
             timeSinceAttack = 0.0f;

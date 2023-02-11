@@ -69,12 +69,12 @@ public class LvLGeneration : MonoBehaviour
             position.y = 2; //позиция по Y, рандомная
             position.z = 110;
             GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, position.z), Quaternion.identity); // создаем новый обьект
-            newMidBlock.name = "Middle block";
+            newMidBlock.name = "Middle block" + Random.Range(1, 999);
             newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
             GameObject newFogMid = Instantiate(fogMid[Random.Range(0, fogMid.Length)], new Vector3(position.x, position.y, position.z - 4), Quaternion.identity);
 
             GameObject newMidBlock2 = Instantiate(midBlock2[Random.Range(0, midBlock2.Length)], new Vector3(position.x + 6.128f, position.y, position.z - 2), Quaternion.identity);// создаем новый обьект
-            newMidBlock2.name = "Mid block2";
+            newMidBlock2.name = "Mid block" + Random.Range(1, 999);
             newMidBlock2.layer = LayerMask.NameToLayer("Ground"); //Добавление слоя Земля к созданному блоку
 
             GameObject enemy = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
@@ -124,6 +124,13 @@ public class LvLGeneration : MonoBehaviour
         SaveSerial.Instance.ResetData();
         SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
     }
+    public void RestartWithProgress()
+    {
+        Level = 1;
+        coin = 0;
+        SaveSerial.Instance.SaveGame();
+        SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
+    }
     public void CompleteLevel() // Добавим метод CompleteLevel, который будет увеличивать переменную completeLevels на одну единицу каждый раз, когда игрок пройдет очередной уровень.
     {
         this.Level += 1;;
@@ -137,7 +144,7 @@ public class LvLGeneration : MonoBehaviour
     {
         if (Hero.Instance.playerDead == true)
         {
-            Restart();
+            RestartWithProgress();
         }
         if (Chest.Instance.chestOpen == true)
         {

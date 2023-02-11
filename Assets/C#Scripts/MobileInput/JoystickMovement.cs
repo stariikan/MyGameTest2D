@@ -8,14 +8,14 @@ public class JoystickMovement : MonoBehaviour, IPointerUpHandler, IDragHandler, 
     private RectTransform joystickTransform;
 
     [SerializeField] private float dragTreshold = 0.3f; /// Если переместиться джойстик больше чем на 0,6 в любом из направлений, то скрипт поймет что игрок хочет пойти в этом направлении
-    [SerializeField] private int dragMovementDistance = 5;
-    [SerializeField] private int dragOffsetDistance = 30;
+    [SerializeField] private int dragMovementDistance = 5; 
+    [SerializeField] private int dragOffsetDistance = 30; //дистанция 
 
-    public event Action<Vector2> onMove;
-    public Vector2 offset;
+    public event Action<Vector2> onMove; //двигается или нет джойстик
+    public Vector2 offset; //вектор по х и у при передвижении 
     public float moveX;
-    public float moveY;
-    public Camera MainCamera;
+    public float moveY; 
+    public Camera MainCamera; //выбор камеры
 
     public static JoystickMovement Instance { get; set; }
 
@@ -23,15 +23,15 @@ public class JoystickMovement : MonoBehaviour, IPointerUpHandler, IDragHandler, 
     {
         Instance = this;
     }
-    public void OnDrag(PointerEventData eventData)
-    {
 
+    public void OnDrag(PointerEventData eventData) //метод при движении пальца нажатим по экрану
+    {
         RectTransformUtility.ScreenPointToLocalPointInRectangle(joystickTransform, eventData.position, MainCamera, out offset);
         offset = Vector2.ClampMagnitude(offset, dragOffsetDistance) / dragOffsetDistance; // (-1) - 1
         joystickTransform.anchoredPosition = offset * dragMovementDistance;
         Vector2 inputVector = ColculateMovementInput(offset);
         onMove?.Invoke(inputVector);
-        Debug.Log(offset);
+        //Debug.Log(offset);
     }
 
     private Vector2 ColculateMovementInput(Vector2 offset)
@@ -41,7 +41,7 @@ public class JoystickMovement : MonoBehaviour, IPointerUpHandler, IDragHandler, 
         return new Vector2(moveX, moveY);
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData) //метод при нажатии на экран
     {
 
     }
