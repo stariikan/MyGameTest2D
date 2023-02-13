@@ -11,7 +11,7 @@ public class MeleeWeapon : MonoBehaviour
 
     private BoxCollider2D boxCollider; //Коллайдер удара
 
-    public int AttackDamage = 20;
+    public int AttackDamage = 10;
     public string TargetName;
     public GameObject target;
 
@@ -28,13 +28,12 @@ public class MeleeWeapon : MonoBehaviour
         AttackDamage = SaveSerial.Instance.playerAttackDamage;
         if (AttackDamage == 0)
         {
-            AttackDamage = 20;
+            AttackDamage = 10;
         }
     }
 
     private void Update()
     {
-        if (hit) return; //проверка попадания физатакой во что-нибудь
         lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
         if (lifetime > 1) gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
     }

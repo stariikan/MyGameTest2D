@@ -79,41 +79,43 @@ public class HeroAttack : MonoBehaviour
        if(playerDirecction > 0)
         {
             meleeAttackArea.transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
-            Debug.Log("right" + firePointRight.position);
             meleeAttackArea.GetComponent<MeleeWeapon>().meleeDirection(firePointRight.position);
         }
        else if (playerDirecction < 0)
         {
             meleeAttackArea.transform.position = firePointLeft.position;
-            Debug.Log("left" + firePointLeft.position);//При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
             meleeAttackArea.GetComponent<MeleeWeapon>().meleeDirection(firePointLeft.position);
         }
     }
     public void magicAttack()
     {
-        currentMP -= 10;
-        MagicCooldownTimer = 0; //сброс кулдауна приминения магии для того чтобы работа формула при атаке которой она смотрит на кулдаун и если он наступил, то можно вновь атаковать
-        if (playerDirecction > 0)
-        {   
-            magicProjectile[FindMagicBall()].transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
-        }
-        if (playerDirecction < 0)
+        if(MagicCooldownTimer > magicAttackCooldown)
         {
-            magicProjectile[FindMagicBall()].transform.position = firePointLeft.position;
-        }
+            currentMP -= 10;
+            MagicCooldownTimer = 0; //сброс кулдауна приминения магии для того чтобы работа формула при атаке которой она смотрит на кулдаун и если он наступил, то можно вновь атаковать
+            if (playerDirecction > 0)
+            {
+                magicProjectile[FindMagicBall()].transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
+            }
+            if (playerDirecction < 0)
+            {
+                magicProjectile[FindMagicBall()].transform.position = firePointLeft.position;
+            }
             // Get the mouse position in screen space
             Vector3 mousePosition = Input.mousePosition;
 
-        // Convert the mouse position to world space
-        Vector3 worldSpaceMousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
+            // Convert the mouse position to world space
+            Vector3 worldSpaceMousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
 
-        // Get the direction from the shooter to the mouse
-        Vector3 shootingDirection = worldSpaceMousePosition - transform.position;
+            // Get the direction from the shooter to the mouse
+            Vector3 shootingDirection = worldSpaceMousePosition - transform.position;
 
-        // Normalize the direction
-        //shootingDirection.Normalize();
-        Debug.Log(shootingDirection);
-        magicProjectile[FindMagicBall()].GetComponent<Projectile>().SetDirection(shootingDirection);
+            // Normalize the direction
+            //shootingDirection.Normalize();
+            //Debug.Log(shootingDirection);
+            magicProjectile[FindMagicBall()].GetComponent<Projectile>().SetDirection(shootingDirection);
+        }
+
     }
     private void attackControl()
     {
@@ -121,7 +123,7 @@ public class HeroAttack : MonoBehaviour
         {
             Block();
         }
-        if (Input.GetKey(KeyCode.LeftAlt) && MagicCooldownTimer > magicAttackCooldown && currentMP >= 15) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
+        if (Input.GetKey(KeyCode.LeftAlt) && currentMP >= 15) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
         {
             
             magicAttack(); // выполнения маг атаки
