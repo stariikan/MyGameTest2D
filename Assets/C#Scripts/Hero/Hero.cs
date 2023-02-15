@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Hero : MonoBehaviour {
 
@@ -76,7 +75,6 @@ public class Hero : MonoBehaviour {
             stamina = 100;
         }
     }
-
     // Update is called once per frame
     private void FixedUpdate()
     {
@@ -197,14 +195,14 @@ public class Hero : MonoBehaviour {
         {
             hp -= dmg;//Отнимает int 10 из переменной hp (жизни).
             m_animator.SetTrigger("Hurt");
-            Push();
+            //Push();
         }
         if (block == true && !m_rolling)
         {
             hp -= dmg * 0.15f;//Отнимает int из переменной hp (жизни) и при активном блоке уменьшает урон в 3 раза
             HeroAttack.Instance.DecreaseStamina(20);
             m_animator.SetTrigger("Hurt");
-            Push();
+            //Push();
         }
         if (hp <= 0 && !m_rolling) //Если жизней меньше 0
         {
@@ -212,6 +210,7 @@ public class Hero : MonoBehaviour {
             m_body2d.gravityScale = 0;
             m_body2d.velocity = Vector2.zero;
             boxCollider.enabled = false;
+            m_animator.StopPlayback();
             m_animator.SetBool("noBlood", m_noBlood);
             m_animator.SetTrigger("Death");
         }

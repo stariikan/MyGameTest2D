@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -41,7 +39,6 @@ public class Projectile : MonoBehaviour
     }
     private void Update()
     {
-        
         if (hit) return; //проверка попадания огненого шара во что-нибудь
         float movementSpeed = Speed * Time.deltaTime * direction; // вычисление скорости перемещения в секунду и в каком направлении полетит снаряд
         transform.Translate(movementSpeed, 0, 0);//ось х = movementspeed, y = 0, z=0 - все это перемещение по оси x
@@ -52,7 +49,6 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player") 
         {
-            
             return;
         }
         else
@@ -64,7 +60,6 @@ public class Projectile : MonoBehaviour
             DamageObject();
             magicTargetName = string.Empty;
             rb.constraints = RigidbodyConstraints2D.FreezePosition;
-
         }
     }
     public void DamageObject()
@@ -83,11 +78,9 @@ public class Projectile : MonoBehaviour
     public void SetDirection(Vector3 shootingDirection)// выбор направления полета 
     {
             lifetime = 0;
-            
             gameObject.SetActive(true); //активация игрового обьекта
             boxCollider.enabled = true; //активация коллайдера 
             hit = false; //обьект коснулся другого обьекта = false
-
             Rigidbody2D rb = this.gameObject.GetComponent<Rigidbody2D>(); //получения компонента RigidBody2D
             rb.constraints = RigidbodyConstraints2D.None;
             rb.AddForce(shootingDirection * shootingForce); //приложение силы к обьекту = направления умноження на скорость снаряда

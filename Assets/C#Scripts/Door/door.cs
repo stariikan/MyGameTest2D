@@ -18,9 +18,13 @@ public class door : MonoBehaviour
             how_many_key_need = 1;
         }
     }
+    void Update()
+    {
+        player_key = LvLGeneration.Instance.key;
+        OpenDoor();
+    }
     public void TryToOpen() //Метод для получения дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
     {
-
         if (player_key == true)
         {
             door_open = true;
@@ -39,11 +43,5 @@ public class door : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        player_key = LvLGeneration.Instance.key;
-        OpenDoor();
     }
 }
