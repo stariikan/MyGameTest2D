@@ -7,46 +7,45 @@ public class Spore : MonoBehaviour
     public static Spore Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     public float direction;//переменная направления
     [SerializeField] private float lifetime; //длительность жизни снаряда
-    private bool hit = false; //переменная метки попал ли во что-то снаряд
+    private float playerHP; //переменная метки попал ли во что-то снаряд
 
     private BoxCollider2D boxCollider; //Коллайдер удара
 
-    private int sporeDamage = 10;
+    private int sporeDamage = 20;
     private float sporeCooldownDmg;
-    public string TargetName;
-    public GameObject target;
+    GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
 
-
-    private void Awake() //Действие выполняется до старта игры и 1 раз
+    private void Start() //Действие выполняется до старта игры и 1 раз
     {
-        //anim = GetComponent<Animator>(); // вытаскиваем информацию из компанента аниматор
+        player = GameObject.FindWithTag("PlayerCharacter");
         boxCollider = GetComponent<BoxCollider2D>(); // вытаскиваем информацию из компанента бокс колайдер
         Instance = this;
+        playerHP = Hero.Instance.hp;
     }
 
     private void Update()
     {
         lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
         sporeCooldownDmg += Time.deltaTime;//кулдаун атаки спор
-        if (lifetime > 10) this.gameObject.SetActive(false);//когда переменная достигает 5, коллайдер атаки исчезает
+        playerHP = Hero.Instance.hp;
+        SporeDmg();
+        if (lifetime > 5) this.gameObject.SetActive(false);//когда переменная достигает 5, коллайдер атаки исчезает
+        
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void SporeDmg()
     {
-        TargetName = collision.gameObject.name;
-        hit = true; //тут указываем что произошло столкновение
-        if(sporeCooldownDmg > 1)
-        {
+       float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
+       float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиции тумана по оси y
+        if ((Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 2f) && sporeCooldownDmg > 1 && playerHP > 0)
+       {
             sporeCooldownDmg = 0;
             Hero.Instance.GetDamage(sporeDamage);
-        }
-        TargetName = string.Empty;
+       }
     }
     public void sporeDirection(Vector3 _direction)// выбор направления полета 
     {
         lifetime = 0;
         this.gameObject.SetActive(true); //активация игрового обьекта
         this.gameObject.transform.position = _direction;
-        boxCollider.enabled = true; //активация коллайдера 
-        hit = false; //обьект коснулся другого обьекта = false
     }
 }

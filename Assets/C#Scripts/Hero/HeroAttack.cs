@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HeroAttack : MonoBehaviour
@@ -40,8 +38,15 @@ public class HeroAttack : MonoBehaviour
             stamina = 100;
         }
         currentStamina = stamina;
-
+        Instance = this;
         mainCamera = Camera.main;
+    }
+    private void Update()
+    {
+        MagicCooldownTimer += Time.deltaTime; //прибавление по 1 секунде к MagicCooldownTimer после его обнуления при выполенении метода magicAttack.
+        attackControl();//атака с помощью мышки
+        staminaRecovery();
+        playerDirecction = Hero.Instance.m_facingDirection;
     }
     private void staminaRecovery()
     {
@@ -115,7 +120,6 @@ public class HeroAttack : MonoBehaviour
             //Debug.Log(shootingDirection);
             magicProjectile[FindMagicBall()].GetComponent<Projectile>().SetDirection(shootingDirection);
         }
-
     }
     private void attackControl()
     {
@@ -125,7 +129,6 @@ public class HeroAttack : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.LeftAlt) && currentMP >= 15) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
         {
-            
             magicAttack(); // выполнения маг атаки
         }
     }
@@ -138,17 +141,4 @@ public class HeroAttack : MonoBehaviour
         }
         return 0;
     }
-    private void Awake()
-    {
-        Instance = this;
-    }
-    private void Update()
-    {
-        MagicCooldownTimer += Time.deltaTime; //прибавление по 1 секунде к MagicCooldownTimer после его обнуления при выполенении метода magicAttack.
-        attackControl();//атака с помощью мышки
-        staminaRecovery();
-        playerDirecction = Hero.Instance.m_facingDirection;
-    }
-
-
 }

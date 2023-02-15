@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Entity_Mushroom : MonoBehaviour
@@ -46,13 +44,11 @@ public class Entity_Mushroom : MonoBehaviour
     {
         directionX = Enemy_Mushroom.Instance.directionX;
         directionY = Enemy_Mushroom.Instance.directionY;
-        if(directionX < 1f && directionY < 0.3f)
+        if(directionX < 0.8f && directionY < 0.3f)
         {
             Hero.Instance.GetDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage  
-        }
-                                                               
+        }                                                       
     }
-
     public void BoostHP() //тут усиливыем хп
     {
         maxHP += 10;
@@ -85,7 +81,7 @@ public class Entity_Mushroom : MonoBehaviour
             enemyTakeDamage = true;
             takedDamage = (float)dmg / (float)maxHP; //на сколько надо уменьшаить прогресс бар
             //Debug.Log(takedDamage);
-            Push();
+            //Push();
             this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
             //Debug.Log(currentHP + " " + gameObject.name);
         }
@@ -109,9 +105,5 @@ public class Entity_Mushroom : MonoBehaviour
     {
         Destroy(this.gameObject);//уничтожить этот игровой обьект
         LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
-    }
-    private void Update()
-    {
-
     }
 }

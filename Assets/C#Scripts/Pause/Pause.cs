@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement; //для управления сценами
-using System.Collections;
 public class Pause : MonoBehaviour
 {
     public float timer;
@@ -28,6 +26,11 @@ public class Pause : MonoBehaviour
     private void Start()
     {
         Instance = this;
+    }
+    void Update()
+    {
+        GameInfo();
+        ClickPause();
     }
     private void GameInfo()
     {
@@ -116,11 +119,7 @@ public class Pause : MonoBehaviour
             guipuse = false;
         }
     }
-    void Update()
-    {
-        GameInfo();
-        ClickPause();
-    }
+
     public void OnGUI()
     {
         if (guipuse == true)

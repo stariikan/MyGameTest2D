@@ -47,7 +47,6 @@ public class MeleeWeapon : MonoBehaviour
     }
     public void meleeDamageObject()
     {
-        Debug.Log(TargetName);
         target = GameObject.Find(TargetName);
         if (target.CompareTag("Mushroom"))
         {
