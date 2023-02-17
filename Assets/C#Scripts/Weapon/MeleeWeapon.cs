@@ -48,6 +48,10 @@ public class MeleeWeapon : MonoBehaviour
     public void meleeDamageObject()
     {
         target = GameObject.Find(TargetName);
+        if (target.CompareTag("Skeleton"))
+        {
+            target.GetComponent<Entity_Skeleton>().TakeDamage(AttackDamage);
+        }
         if (target.CompareTag("Mushroom"))
         {
             target.GetComponent<Entity_Mushroom>().TakeDamage(AttackDamage);

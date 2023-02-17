@@ -11,8 +11,6 @@ public class enemyProgressBar : MonoBehaviour
     void Awake()
     {
         hpBar = this.gameObject;
-
-
         scaleChange = new Vector3(0.1f, 0.0f, 0.0f);
         positionChange = new Vector3(0.1f, 0.0f, 0.0f);
     }

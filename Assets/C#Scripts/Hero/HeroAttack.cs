@@ -96,7 +96,7 @@ public class HeroAttack : MonoBehaviour
     {
         if(MagicCooldownTimer > magicAttackCooldown)
         {
-            currentMP -= 10;
+            currentMP -= 20;
             MagicCooldownTimer = 0; //сброс кулдауна приминения магии для того чтобы работа формула при атаке которой она смотрит на кулдаун и если он наступил, то можно вновь атаковать
             if (playerDirecction > 0)
             {

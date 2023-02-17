@@ -10,6 +10,7 @@ TagManager:
   - Door
   - Mushroom
   - PlayerCharacter
+  - Skeleton
   layers:
   - Default
   - TransparentFX
