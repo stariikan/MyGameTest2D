@@ -5,7 +5,7 @@ using UnityEngine.UI;//для UI
 
 public class MeleeDMG_counter : MonoBehaviour
 {
-    int meleeDMG_ui;
+    float meleeDMG_ui;
 
     // Start is called before the first frame update
     void Start()

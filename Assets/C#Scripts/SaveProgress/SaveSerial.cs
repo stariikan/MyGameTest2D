@@ -10,14 +10,18 @@ public class SaveSerial : MonoBehaviour
     public float playerHP;
     public float playerMP;
     public float playerStamina;
-    public int playerAttackDamage;
-    public int playerMageDamage;
+    public float playerAttackDamage;
+    public float playerMageDamage;
 
     public int passedLvl;
 
-    public int enemyHP;
-    public int enemyDamage;
-    public float enemySpeed;
+    public float moushroomHP;
+    public float moushroomDamage;
+    public float moushroomSpeed;
+
+    public float skeletonHP;
+    public float skeletonDamage;
+    public float skeletonSpeed;
     public static SaveSerial Instance { get; set; } //Для сбора и отправки данных из этого скрипта
 
     private void Awake()
@@ -32,16 +36,18 @@ public class SaveSerial : MonoBehaviour
         public float playerHP;
         public float playerMP;
         public float playerStamina;
-        public int playerAttackDamage;
-        public int playerMageDamage = 30;
+        public float playerAttackDamage;
+        public float playerMageDamage = 30;
 
         public int passedLvl;
 
-        public int enemyHP;
-        public int enemyDamage;
-        public float enemySpeed;
-        //public float savedFloat;
-        //public bool savedBool;
+        public float moushroomHP;
+        public float moushroomDamage;
+        public float moushroomSpeed;
+
+        public float skeletonHP;
+        public float skeletonDamage;
+        public float skeletonSpeed;
     }
     //Обратите внимание, три переменные в классе SaveData соответствуют переменным из класса SaveSerial.
     //Для сохранения мы будем передавать значения из SaveSerial в SaveData, а затем сериализовать последний.
@@ -68,9 +74,13 @@ public class SaveSerial : MonoBehaviour
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
 
-            enemyHP = GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().maxHP;
-            enemyDamage = GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().enemyAttackDamage;
-            enemySpeed = GameObject.Find("Mushroom").GetComponent<Enemy_Mushroom>().speed;
+            moushroomHP = GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().maxHP;
+            moushroomDamage = GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().enemyAttackDamage;
+            moushroomSpeed = GameObject.Find("Mushroom").GetComponent<Enemy_Mushroom>().speed;
+
+            skeletonHP = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().maxHP;
+            skeletonDamage = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().enemyAttackDamage;
+            skeletonSpeed = GameObject.Find("Skeleton").GetComponent<Enemy_Skeleton>().speed;
         }
         
         data.playerCoin = playerCoin;
@@ -82,13 +92,17 @@ public class SaveSerial : MonoBehaviour
         
         data.passedLvl = passedLvl;
                 
-        data.enemyHP = enemyHP;
-        data.enemyDamage = enemyDamage;
-        data.enemySpeed = enemySpeed;
-        
+        data.moushroomHP = moushroomHP;
+        data.moushroomDamage = moushroomDamage;
+        data.moushroomSpeed = moushroomSpeed;
 
-    //data.savedBool = boolToSave;
-    bf.Serialize(file, data);
+        data.skeletonHP = skeletonHP;
+        data.skeletonDamage = skeletonDamage;
+        data.skeletonSpeed = skeletonSpeed;
+
+
+        //data.savedBool = boolToSave;
+        bf.Serialize(file, data);
         file.Close();
         Debug.Log("Game data saved!");
     }
@@ -114,10 +128,14 @@ public class SaveSerial : MonoBehaviour
 
             passedLvl = data.passedLvl;
 
-            enemyHP = data.enemyHP;
-            enemyDamage = data.enemyDamage;
-            enemySpeed = data.enemySpeed;
-            //boolToSave = data.savedBool;
+            moushroomHP = data.moushroomHP;
+            moushroomDamage = data.moushroomDamage;
+            moushroomSpeed = data.moushroomSpeed;
+
+            skeletonHP = data.skeletonHP;
+            skeletonDamage = data.skeletonDamage;
+            skeletonSpeed = data.skeletonSpeed;
+
             Debug.Log("Game data loaded!"); //Выводим в отладочную консоль сообщение об успешной загрузке.
         }
         else

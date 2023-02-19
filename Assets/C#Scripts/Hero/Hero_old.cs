@@ -22,7 +22,7 @@ public class Hero_old : MonoBehaviour
     public float stamina;
 
     public bool playerDead = false; //мертв игрок или нет, пока нужно для того чтобы при смерти игрока делать рестарт
-    public int mageAttackDamage;
+    public float mageAttackDamage;
 
     public bool block = false;
 

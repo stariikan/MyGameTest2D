@@ -5,8 +5,8 @@ using UnityEngine;
 public class Chest : MonoBehaviour
 {
 
-    private int maxHP = 1; //Максимальные жизни скелета
-    public int currentHP;
+    private float maxHP = 1; //Максимальные жизни скелета
+    public float currentHP;
     public static Chest Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     private Animator anim;
     public bool chestOpen = false;
@@ -28,7 +28,7 @@ public class Chest : MonoBehaviour
         anim = GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
                                          //к которому привязан скрипт
     }
-    public void TakeDamage(int dmg) //Метод для получения дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
+    public void TakeDamage(float dmg) //Метод для получения дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
     {
         if (currentHP > 0)
         {

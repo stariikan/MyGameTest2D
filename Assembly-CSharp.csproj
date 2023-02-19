@@ -56,12 +56,14 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\C#Scripts\Enemy\Skeleton\Entity_Skeleton.cs" />
     <Compile Include="Assets\C#Scripts\Camera\CameraFolow.cs" />
+    <Compile Include="Assets\C#Scripts\Enemy\Skeleton\DisableProgressBarSkeleton.cs" />
     <Compile Include="Assets\C#Scripts\UI\key_counter.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickMovement.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickPosition.cs" />
     <Compile Include="Assets\C#Scripts\UI\MeleeDMG_counter.cs" />
-    <Compile Include="Assets\C#Scripts\EnemyMoushroom\Entity_Mushroom.cs" />
+    <Compile Include="Assets\C#Scripts\Enemy\Moushroom\Entity_Mushroom.cs" />
     <Compile Include="Assets\C#Scripts\Door\door.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\LvL.cs" />
     <Compile Include="Assets\C#Scripts\UI\EnemyProgressBar\DisableProgressBar.cs" />
@@ -78,9 +80,10 @@
     <Compile Include="Assets\C#Scripts\UI\EnemyProgressBar\enemyProgressBar.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Coin.cs" />
     <Compile Include="Assets\C#Scripts\Traps\Spike.cs" />
-    <Compile Include="Assets\C#Scripts\EnemyMoushroom\Enemy_Mushroom.cs" />
+    <Compile Include="Assets\C#Scripts\Enemy\Moushroom\Enemy_Mushroom.cs" />
     <Compile Include="Assets\C#Scripts\UI\hp_counter.cs" />
     <Compile Include="Assets\C#Scripts\Pause\Pause.cs" />
+    <Compile Include="Assets\C#Scripts\Enemy\Skeleton\Enemy_Skeleton.cs" />
     <Compile Include="Assets\C#Scripts\UI\MagicDMG_counter.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Stamina.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Hero_old.cs" />
@@ -92,11 +95,12 @@
     <Compile Include="Assets\C#Scripts\SaveProgress\SaveSerial.cs" />
     <Compile Include="Assets\C#Scripts\UI\Level_counter.cs" />
     <Compile Include="Assets\C#Scripts\Chest\Chest.cs" />
-    <Compile Include="Assets\C#Scripts\EnemyMoushroom\Spore.cs" />
+    <Compile Include="Assets\C#Scripts\Enemy\Moushroom\Spore.cs" />
     <Compile Include="Assets\Materials\Hero Knight - Pixel Art\ColorSwap\ColorSwap_HeroKnight.cs" />
     <Compile Include="Assets\C#Scripts\Hero\DestroyEvent_HeroKnight.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickAttack.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\HP.cs" />
+    <Compile Include="Assets\C#Scripts\Enemy\Skeleton\SkeletonProgressBar.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Hero Knight - Pixel Art\ColorSwap\Sprites-ColorSwap.shader" />
