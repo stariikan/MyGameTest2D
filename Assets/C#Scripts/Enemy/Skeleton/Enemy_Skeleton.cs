@@ -20,19 +20,19 @@ public class Enemy_Skeleton : MonoBehaviour //наследование класса сущности (то е
     public float directionY; //переменная для понимания разницы между игроком и врагом
 
     private bool playerIsAttack; //Атакует ли игрок?
+    private bool isAttack; //Атакует ли обьект (враг)
     private int currentAttack = 0; //Кулдаун на атаку обьекта
     private float timeSinceAttack = 0.0f;//время с прошлой атаки нужно для комбо анимации атаки
-    private bool isRebound; //Отскакивает ли обьект
-    private float jumpCooldown; //кулдаун на отскок и прыжок
-    private float sporesCooldown = 10f; //кулдаун атаки спор
+    private float blockCooldown; //кулдаун на отскок и прыжок
     private int level; //проверка какой уровень проходит игрок, нужно для подключения способностей
+    public bool skeleton_block = false;
     public static Enemy_Skeleton Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     private void Start()
     {
         player = GameObject.FindWithTag("PlayerCharacter"); //тут при старте игры скелет находит игрока по тегу Player и присваивает найденную и информацию переменной player
         rb = this.gameObject.GetComponent<Rigidbody2D>(); //Переменная rb получает компонент Rigidbody2D (Физика game.Object) к которому привязан скрипт
         anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object) к которому привязан скрипт
-        speed = SaveSerial.Instance.enemySpeed;
+        speed = SaveSerial.Instance.skeletonSpeed;
         if (speed < 2f)
         {
             speed = 2f;
@@ -43,8 +43,8 @@ public class Enemy_Skeleton : MonoBehaviour //наследование класса сущности (то е
     }
     void Update() //тут складывать буду основные действия методы (который должен использовать враг)
     {
-        jumpCooldown += Time.deltaTime;
-        sporesCooldown += Time.deltaTime;
+        timeSinceAttack += Time.deltaTime;
+        blockCooldown += Time.deltaTime;
         if (this.gameObject.GetComponent<Entity_Skeleton>().currentHP > 0)
         {
             PlayerFollow(); //движение за игроком
@@ -53,6 +53,7 @@ public class Enemy_Skeleton : MonoBehaviour //наследование класса сущности (то е
             groundCheckPosition(); //проверка пропасти
             EnemyJump(); //прыжок перед препятсвием
             Attack(); //Атака
+            Block(); //Блок
         }
         else
         {
@@ -61,11 +62,17 @@ public class Enemy_Skeleton : MonoBehaviour //наследование класса сущности (то е
     }
     private void OnCollisionEnter2D(Collision2D collision) //срабатывает тогда, когда наш объект соприкасается с другим объектом:
     {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
             isGround = true;
+        }
     }
     private void OnCollisionExit2D(Collision2D collision) //срабатывает тогда, когда соприкосновение двух объектов разрушается.
     {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
             isGround = false;
+        }
     }
     private States State //Создание стейтмашины, переменная = State. Значение состояния может быть передано или изминено извне благодаря get и set
     {
@@ -85,37 +92,28 @@ public class Enemy_Skeleton : MonoBehaviour //наследование класса сущности (то е
     }
     public void BoostSpeed() //метод для усиления скорости
     {
-        speed += 0.1f;
+        speed *= 1.1f;
     }
-    public void JumpToPlayer() //прыжок к игроку
-    {
-        if (level >= 3) //способность активируется на 3 уровне
-        {
-            Vector3 theScale = transform.localScale;
-            transform.localScale = theScale;
-            jumpCooldown = 0;
-            float jumpToPlayer = Mathf.Sign(directionX) * 3000 * Time.deltaTime;
-            rb.AddForce(new Vector2(jumpToPlayer, 2.5f), ForceMode2D.Impulse);
-        }
-    }
-    public void ReboundFromTarget() // отскок от игрока
+    public void Block() // Использование щита
     {
         playerIsAttack = Hero.Instance.isAttack;
-        if(playerIsAttack == true && level >= 2)
+        if (playerIsAttack == true && (Mathf.Abs(directionX)) < 1.5f && Mathf.Abs(directionY) < 2 && level > 3)
         {
-            isRebound = true;
-            Vector3 theScale = transform.localScale;
-            transform.localScale = theScale;
-            jumpCooldown = 0;
-            float jumpToPlayer = Mathf.Sign(directionX) * 6;
-            rb.AddForce(new Vector2(-jumpToPlayer, 1f), ForceMode2D.Impulse);
+            blockCooldown = 0;
+            skeleton_block = true;
+            anim.SetBool("Block", true);
+        }
+        if (blockCooldown > 0.4f)
+        {
+            skeleton_block = false;
+            anim.SetBool("Block", false);
         }
     }
     public void PlayerFollow() //Метод в котором описываем логику следования за игроком
     {
         directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
         directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
-        if ((Mathf.Abs(directionX) < 3 && Mathf.Abs(directionX) > 1f && Mathf.Abs(directionY) < 2) || this.gameObject.GetComponent<Entity_Mushroom>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f) //следует за игроком если маленькое растояние или получил урон
+        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1f && Mathf.Abs(directionY) < 2) && !skeleton_block && !isAttack || this.gameObject.GetComponent<Entity_Skeleton>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !skeleton_block && !isAttack) //следует за игроком если маленькое растояние или получил урон
         {
             Vector3 pos = transform.position; //позиция обьекта
             Vector3 theScale = transform.localScale; //нужно для понимания направления
@@ -142,16 +140,9 @@ public class Enemy_Skeleton : MonoBehaviour //наследование класса сущности (то е
     public void Attack()
     {
         float playerHP = Hero.Instance.hp;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && !skeleton_block && timeSinceAttack > 1)
         {
-            JumpToPlayer();
-        }
-        if ((Mathf.Abs(directionX)) < 1.5f && jumpCooldown > 2 && Mathf.Abs(directionY) < 2)
-        {
-            ReboundFromTarget();
-        }
-        if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f)
-        {
+            isAttack = true;
             //Damage Deal
             currentAttack++;
 
@@ -161,10 +152,14 @@ public class Enemy_Skeleton : MonoBehaviour //наследование класса сущности (то е
 
             // Reset Attack combo if time since last attack is too large
             if (timeSinceAttack > 2.0f)
-            currentAttack = 1;
+                currentAttack = 1;
             anim.SetTrigger("attack" + currentAttack);
             // Reset timer
             timeSinceAttack = 0.0f;
+        }
+        else
+        {
+            isAttack = false;
         }
     }
     public void EnemyJump() //Прыжок если противник видит препятствие

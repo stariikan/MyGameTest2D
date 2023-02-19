@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Entity_Skeleton : MonoBehaviour
 {
-    public int maxHP = 50; //Максимальные жизни скелета
-    public int currentHP;
+    public float maxHP = 50; //Максимальные жизни скелета
+    public float currentHP;
     public float takedDamage; //разница между макс хп и полученным уроном
     public float enemyAttackRange = 1.2f; //Дальность физ атаки
-    public int enemyAttackDamage = 15; // Урон от физ атаки
+    public float enemyAttackDamage = 15; // Урон от физ атаки
     public Transform enemyAttackPoint; //Тут мы ссылаемся на точку которая является дочерним (нужна для реализации физ атаки)
     public LayerMask playerLayers;
     public Vector3 lossyScale;
@@ -22,15 +22,17 @@ public class Entity_Skeleton : MonoBehaviour
     private float directionY;
     private float directionX;
 
+    private bool isBlock; //проверка поставлен ли блок
+
     private void Start()
     {
-        maxHP = SaveSerial.Instance.enemyHP;
+        maxHP = SaveSerial.Instance.skeletonHP;
         if (maxHP == 0)
         {
             maxHP = 50;
         }
         currentHP = maxHP;
-        enemyAttackDamage = SaveSerial.Instance.enemyDamage;
+        enemyAttackDamage = SaveSerial.Instance.skeletonDamage;
         if (enemyAttackDamage == 0)
         {
             enemyAttackDamage = 15;
@@ -42,8 +44,8 @@ public class Entity_Skeleton : MonoBehaviour
     }
     public void DamageDeealToPlayer()
     {
-        directionX = Enemy_Skeleton.Instance.directionX;
-        directionY = Enemy_Skeleton.Instance.directionY;
+        directionX = this.gameObject.GetComponent<Enemy_Skeleton>().directionX;
+        directionY = this.gameObject.GetComponent<Enemy_Skeleton>().directionY;
         if(directionX < 0.8f && directionY < 0.3f)
         {
             Hero.Instance.GetDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage  
@@ -72,33 +74,35 @@ public class Entity_Skeleton : MonoBehaviour
             this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(0.5f, e_rb.velocity.y), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
         }
     }
-    public void TakeDamage(int dmg) //Метод для получения дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
+    public void TakeDamage(float dmg) //Метод для получения дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
     {
-        if (currentHP > 0)
+        isBlock = Enemy_Skeleton.Instance.skeleton_block;
+        if (currentHP > 0 && !isBlock)
         {
             anim.SetTrigger("damage");//анимация получения демейджа
             currentHP -= dmg;
             enemyTakeDamage = true;
             takedDamage = (float)dmg / (float)maxHP; //на сколько надо уменьшаить прогресс бар
-            //Debug.Log(takedDamage);
-            //Push();
             this.gameObject.GetComponentInChildren<SkeletonProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
-            //Debug.Log(currentHP + " " + gameObject.name);
         }
-        else
+        else if(currentHP > 0 && isBlock)
         {
-            return;
+            anim.SetTrigger("block_damage");//анимация получения демейджа
+            float blockDMG = dmg * 0.1f;
+            currentHP -= blockDMG;
+            enemyTakeDamage = true;
+            takedDamage = blockDMG / (float)maxHP; //на сколько надо уменьшаить прогресс бар
+            this.gameObject.GetComponentInChildren<SkeletonProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара
         }
-
         if (currentHP <= 0)
         {
             LvLGeneration.Instance.PlusCoin(rewardForKillEnemy);//вызов метода для увелечения очков
             e_rb.gravityScale = 0;
             e_rb.velocity = Vector2.zero;
             boxCollider.enabled = false;
+            anim.StopPlayback();
             anim.SetTrigger("m_death");//анимация смерти
             enemyDead = true;
-            //Debug.Log("Enemy Defeat -> " + gameObject.name);
         }
     }
     public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти

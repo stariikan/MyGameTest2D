@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour
     private Animator anim; //переменная для аниматора
 
     public int lifeTimeOfprojectile = 10; //время после которого снаряд уничтожается
-    public int magicAttackDamage = 30;
+    public float magicAttackDamage = 20;
     public string magicTargetName; //имя цели по которому попал снаряд
     public GameObject target; //обьект по которому попал снаряд
 

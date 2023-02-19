@@ -11,7 +11,7 @@ public class Spore : MonoBehaviour
 
     private BoxCollider2D boxCollider; // оллайдер удара
 
-    private int sporeDamage = 20;
+    private float sporeDamage = 20;
     private float sporeCooldownDmg;
     GameObject player; //геймобьект игрок и ниже будет метод как он определ€етс€ и присваиваетс€ этой переменной
 

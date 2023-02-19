@@ -2418,7 +2418,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.14706208, y: 0.29324424}
+  m_Offset: {x: 0.49426934, y: 0.29324424}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2429,7 +2429,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.142982, y: 1.4174907}
+  m_Size: {x: 1.3165853, y: 1.4174907}
   m_EdgeRadius: 0
 --- !u!50 &349874029
 Rigidbody2D:
@@ -2953,7 +2953,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -2975,7 +2975,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.041840278, y: -0.009508744}
+  m_Offset: {x: 0.0358067, y: -0.0095743835}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2986,7 +2986,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.22961934, y: 0.5148866}
+  m_Size: {x: 0.21339926, y: 0.5147553}
   m_EdgeRadius: 0
 --- !u!114 &455363766
 MonoBehaviour:
@@ -3003,10 +3003,11 @@ MonoBehaviour:
   speed: 2
   speedRecovery: 0
   rb: {fileID: 0}
-  groundcheck: {fileID: 0}
-  wallChekPoint: {fileID: 0}
+  groundcheck: {fileID: 225361262}
+  wallChekPoint: {fileID: 746619691}
   directionX: 0
   directionY: 0
+  skeleton_block: 0
 --- !u!114 &455363767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3024,7 +3025,7 @@ MonoBehaviour:
   takedDamage: 0
   enemyAttackRange: 1.2
   enemyAttackDamage: 15
-  enemyAttackPoint: {fileID: 0}
+  enemyAttackPoint: {fileID: 746619691}
   playerLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3588,9 +3589,12 @@ MonoBehaviour:
   playerAttackDamage: 0
   playerMageDamage: 0
   passedLvl: 0
-  enemyHP: 0
-  enemyDamage: 0
-  enemySpeed: 0
+  moushroomHP: 0
+  moushroomDamage: 0
+  moushroomSpeed: 0
+  skeletonHP: 0
+  skeletonDamage: 0
+  skeletonSpeed: 0
 --- !u!223 &519420034
 Canvas:
   m_ObjectHideFlags: 0
@@ -6997,7 +7001,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0060559064, y: -0.07144554}
+  m_Offset: {x: 0.0060559064, y: -0.04286787}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7008,7 +7012,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.21193954, y: 0.35887012}
+  m_Size: {x: 0.21193954, y: 0.41602546}
   m_EdgeRadius: 0
 --- !u!114 &1433946434
 MonoBehaviour:
@@ -7065,7 +7069,7 @@ GameObject:
   - component: {fileID: 1441138254}
   m_Layer: 0
   m_Name: Rooms
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -4,7 +4,7 @@ public class Hero : MonoBehaviour {
 
     [SerializeField] float      m_speed = 4.0f;
     [SerializeField] float      m_jumpForce = 7.5f;
-    [SerializeField] float      m_rollForce = 6.0f;
+    [SerializeField] float      m_rollForce = 7.5f;
     [SerializeField] bool       m_noBlood = false;
     [SerializeField] GameObject m_slideDust;
 
@@ -32,10 +32,12 @@ public class Hero : MonoBehaviour {
     public float stamina;
 
     public bool playerDead = false; //мертв игрок или нет, пока нужно для того чтобы при смерти игрока делать рестарт
-    public int mageAttackDamage;
+    public float mageAttackDamage;
 
     public bool block = false;
     public bool isAttack = false;
+
+    private bool isGrounded;
 
     private BoxCollider2D boxCollider;
 
@@ -121,7 +123,7 @@ public class Hero : MonoBehaviour {
             Jump();
             PlayerSpeedMode();
             Roll(); //Кувырок
-            if (Input.GetKey(KeyCode.LeftControl) && m_timeSinceAttack > 0.25f && !m_rolling && stamina > 15f)
+            if (Input.GetKey(KeyCode.LeftControl) && m_timeSinceAttack > 0.25f && !m_rolling && stamina > 15f) //это сделано чтобы кнопка работала на тачскрине
             {
                 MeeleAtack();
             }
@@ -189,7 +191,7 @@ public class Hero : MonoBehaviour {
             m_animator.SetBool("IdleBlock", false);
         }
     }
-    public void GetDamage(int dmg) //Мы создаем новый метод GetDamage() 
+    public void GetDamage(float dmg) //Мы создаем новый метод GetDamage() 
     {
         if (block == false && !m_rolling)
         {
@@ -257,13 +259,13 @@ public class Hero : MonoBehaviour {
         float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
         float vertical = Input.GetAxis("Vertical");
         //Roll
-        if ((joystickMoveY < -0.35f || vertical < 0) && cooldownTimer > 1.5f && stamina > 5 && !m_rolling && !m_isWallSliding && cooldownTimer > 1) //кувырок
+        if ((joystickMoveY < -0.35f || vertical < 0) && cooldownTimer > 1.5f && stamina > 5 && !m_rolling && cooldownTimer > 1) //кувырок
         {
             cooldownTimer = 0;
             HeroAttack.Instance.DecreaseStamina(5);
             m_rolling = true;
+            m_body2d.velocity = new Vector2((m_facingDirection * -1) * m_rollForce, m_body2d.velocity.y);
             m_animator.SetTrigger("Roll");
-            m_body2d.velocity = new Vector2((m_facingDirection*-1) * m_rollForce, m_body2d.velocity.y);
         }
     }
     public void PlayerMovement()
@@ -274,14 +276,14 @@ public class Hero : MonoBehaviour {
         //Run
         //keyboard control
         Vector2 movementX = new Vector2(move, m_body2d.velocity.y); //keyboard
-        if (move != 0 && !m_rolling)
+        if (move != 0 && !m_rolling && isGrounded)
         {
             m_body2d.velocity = new Vector2(move * m_speed, m_body2d.velocity.y);
         }
 
         //joystick controll
         Vector2 movementJoystickX = new Vector2(joystickMoveX, m_body2d.velocity.y); //tuchpad
-        if (joystickMoveX != 0 && !m_rolling)
+        if (joystickMoveX != 0 && !m_rolling && isGrounded)
         {
             m_body2d.velocity = new Vector2(joystickMoveX * m_speed, m_body2d.velocity.y);
         }
@@ -332,5 +334,19 @@ public class Hero : MonoBehaviour {
             // Reset timer
             m_timeSinceAttack = 0.0f;
         }    
+    }
+    private void OnCollisionEnter2D(Collision2D collision) //срабатывает тогда, когда наш объект соприкасается с другим объектом:
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision) //срабатывает тогда, когда соприкосновение двух объектов разрушается.
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded =false;
+        }
     }
 }

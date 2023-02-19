@@ -22,7 +22,7 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
     private bool playerIsAttack; //Атакует ли игрок?
     private int currentAttack = 0; //Кулдаун на атаку обьекта
     private float timeSinceAttack = 0.0f;//время с прошлой атаки нужно для комбо анимации атаки
-    private bool isRebound; //Отскакивает ли обьект
+
     private float jumpCooldown; //кулдаун на отскок и прыжок
     private float sporesCooldown = 10f; //кулдаун атаки спор
     private int level; //проверка какой уровень проходит игрок, нужно для подключения способностей
@@ -32,7 +32,7 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
         player = GameObject.FindWithTag("PlayerCharacter"); //тут при старте игры скелет находит игрока по тегу Player и присваивает найденную и информацию переменной player
         rb = this.gameObject.GetComponent<Rigidbody2D>(); //Переменная rb получает компонент Rigidbody2D (Физика game.Object) к которому привязан скрипт
         anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object) к которому привязан скрипт
-        speed = SaveSerial.Instance.enemySpeed;
+        speed = SaveSerial.Instance.moushroomSpeed;
         if (speed < 2f)
         {
             speed = 2f;
@@ -45,6 +45,7 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
     {
         jumpCooldown += Time.deltaTime;
         sporesCooldown += Time.deltaTime;
+        timeSinceAttack += Time.deltaTime;
         if (this.gameObject.GetComponent<Entity_Mushroom>().currentHP > 0)
         {
             PlayerFollow(); //движение за игроком
@@ -85,7 +86,7 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
     }
     public void BoostSpeed() //метод для усиления скорости
     {
-        speed += 0.1f;
+        speed *= 1.1f;
     }
     public void JumpToPlayer() //прыжок к игроку
     {
@@ -103,7 +104,7 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
         playerIsAttack = Hero.Instance.isAttack;
         if(playerIsAttack == true && level >= 2)
         {
-            isRebound = true;
+
             Vector3 theScale = transform.localScale;
             transform.localScale = theScale;
             jumpCooldown = 0;
@@ -162,7 +163,7 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
         {
             MushroomSpores();
         }
-        if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1)
         {
             //Damage Deal
             currentAttack++;
@@ -177,6 +178,10 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
             anim.SetTrigger("attack" + currentAttack);
             // Reset timer
             timeSinceAttack = 0.0f;
+        }
+        else
+        {
+            return;
         }
     }
     public void EnemyJump() //Прыжок если противник видит препятствие

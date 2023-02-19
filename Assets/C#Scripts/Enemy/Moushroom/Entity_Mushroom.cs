@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Entity_Mushroom : MonoBehaviour
 {
-    public int maxHP = 50; //Максимальные жизни скелета
-    public int currentHP;
+    public float maxHP = 50; //Максимальные жизни скелета
+    public float currentHP;
     public float takedDamage; //разница между макс хп и полученным уроном
     public float enemyAttackRange = 1.2f; //Дальность физ атаки
-    public int enemyAttackDamage = 15; // Урон от физ атаки
+    public float enemyAttackDamage = 15; // Урон от физ атаки
     public Transform enemyAttackPoint; //Тут мы ссылаемся на точку которая является дочерним (нужна для реализации физ атаки)
     public LayerMask playerLayers;
     public Vector3 lossyScale;
@@ -17,6 +17,8 @@ public class Entity_Mushroom : MonoBehaviour
     public bool enemyTakeDamage = false;
     public int rewardForKillEnemy = 2;//награда за победу над врагом
 
+    private float playerHP;
+
     private BoxCollider2D boxCollider;
 
     private float directionY;
@@ -24,13 +26,13 @@ public class Entity_Mushroom : MonoBehaviour
 
     private void Start()
     {
-        maxHP = SaveSerial.Instance.enemyHP;
+        maxHP = SaveSerial.Instance.moushroomHP;
         if (maxHP == 0)
         {
             maxHP = 50;
         }
         currentHP = maxHP;
-        enemyAttackDamage = SaveSerial.Instance.enemyDamage;
+        enemyAttackDamage = SaveSerial.Instance.moushroomDamage;
         if (enemyAttackDamage == 0)
         {
             enemyAttackDamage = 15;
@@ -40,14 +42,19 @@ public class Entity_Mushroom : MonoBehaviour
         e_rb = this.gameObject.GetComponent<Rigidbody2D>();
         boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
     }
+    private void Update()
+    {
+        playerHP = Hero.Instance.hp;
+    }
     public void DamageDeealToPlayer()
     {
-        directionX = Enemy_Mushroom.Instance.directionX;
-        directionY = Enemy_Mushroom.Instance.directionY;
-        if(directionX < 0.8f && directionY < 0.3f)
+        directionX = this.gameObject.GetComponent<Enemy_Mushroom>().directionX;
+        directionY = this.gameObject.GetComponent<Enemy_Mushroom>().directionY;
+        if(playerHP > 0 && directionX < 1.5f && directionY < 0.3f)
         {
-            Hero.Instance.GetDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage  
-        }                                                       
+            Hero.Instance.GetDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage
+            maxHP += (enemyAttackDamage / 3); //Лайфстил скелета
+        }
     }
     public void BoostHP() //тут усиливыем хп
     {
@@ -61,18 +68,7 @@ public class Entity_Mushroom : MonoBehaviour
     {
         rewardForKillEnemy += 2;
     }
-    public void Push() //Метод для отталкивания тела во время получения урона
-    {
-        if (transform.lossyScale.x < 0) //смотрим в трансформе в какую сторону повернут по х обьект
-        {
-            this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(-0.5f, e_rb.velocity.y ), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
-        }
-        else
-        {
-            this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(0.5f, e_rb.velocity.y), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
-        }
-    }
-    public void TakeDamage(int dmg) //Метод для получения дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
+    public void TakeDamage(float dmg) //Метод для получения дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
     {
         if (currentHP > 0)
         {
@@ -80,10 +76,7 @@ public class Entity_Mushroom : MonoBehaviour
             currentHP -= dmg;
             enemyTakeDamage = true;
             takedDamage = (float)dmg / (float)maxHP; //на сколько надо уменьшаить прогресс бар
-            //Debug.Log(takedDamage);
-            //Push();
             this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
-            //Debug.Log(currentHP + " " + gameObject.name);
         }
         else
         {
@@ -96,9 +89,9 @@ public class Entity_Mushroom : MonoBehaviour
             e_rb.gravityScale = 0;
             e_rb.velocity = Vector2.zero;
             boxCollider.enabled = false;
+            anim.StopPlayback();
             anim.SetTrigger("m_death");//анимация смерти
             enemyDead = true;
-            //Debug.Log("Enemy Defeat -> " + gameObject.name);
         }
     }
     public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти

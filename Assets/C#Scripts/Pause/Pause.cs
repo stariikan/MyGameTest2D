@@ -16,11 +16,11 @@ public class Pause : MonoBehaviour
 
     public static Pause Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     // Характеристики указанные в BOX
-    private int infoPlayerAttackDamage;
-    private int infoPlayerMageDamage;
-    private int infoPassedLvl;
-    private int infoEnemyHP;
-    private int infoEnemyDamage;
+    private float infoPlayerAttackDamage;
+    private float infoPlayerMageDamage;
+    private float infoPassedLvl;
+    private float infoEnemyHP;
+    private float infoEnemyDamage;
     private float infoEnemySpeed;
 
     private void Start()
@@ -49,17 +49,17 @@ public class Pause : MonoBehaviour
         {
             infoPassedLvl = 1;
         }
-        infoEnemyHP = SaveSerial.Instance.enemyHP;
+        infoEnemyHP = SaveSerial.Instance.moushroomHP;
         if (infoEnemyHP == 0)
         {
             infoEnemyHP = 50;
         }
-        infoEnemyDamage = SaveSerial.Instance.enemyDamage;
+        infoEnemyDamage = SaveSerial.Instance.moushroomDamage;
         if (infoEnemyDamage == 0)
         {
             infoEnemyDamage = 7;
         }
-        infoEnemySpeed = SaveSerial.Instance.enemySpeed;
+        infoEnemySpeed = SaveSerial.Instance.moushroomSpeed;
         if (infoEnemySpeed == 0)
         {
             infoEnemySpeed = 1f;

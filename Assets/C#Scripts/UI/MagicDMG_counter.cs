@@ -5,7 +5,7 @@ using UnityEngine.UI;//для UI
 
 public class MagicDMG_counter : MonoBehaviour
 {
-    int magicDMG_ui;
+    float magicDMG_ui;
 
     // Start is called before the first frame update
     void Start()

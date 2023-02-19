@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour
@@ -7,11 +5,10 @@ public class MeleeWeapon : MonoBehaviour
     public static MeleeWeapon Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     public float direction;//переменная направления
     [SerializeField] private float lifetime; //длительность жизни снаряда
-    private bool hit = false; //переменная метки попал ли во что-то снаряд
 
     private BoxCollider2D boxCollider; //Коллайдер удара
 
-    public int AttackDamage = 10;
+    public float AttackDamage = 15;
     public string TargetName;
     public GameObject target;
 
@@ -28,26 +25,32 @@ public class MeleeWeapon : MonoBehaviour
         AttackDamage = SaveSerial.Instance.playerAttackDamage;
         if (AttackDamage == 0)
         {
-            AttackDamage = 10;
+            AttackDamage = 15;
         }
     }
 
     private void Update()
     {
         lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
-        if (lifetime > 1) gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
+        if (lifetime > 1) 
+        {
+            gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
+        }
+        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         TargetName = collision.gameObject.name;
-        hit = true; //тут указываем что произошло столкновение
         boxCollider.enabled = false; //отключаем коллайдер
-        meleeDamageObject();
-        TargetName = string.Empty;
-    }
-    public void meleeDamageObject()
-    {
         target = GameObject.Find(TargetName);
+    }
+    public void meleeDirection(Vector3 _direction)// выбор направления полета 
+    {
+        lifetime = 0;
+        gameObject.SetActive(true); //активация игрового обьекта
+        this.gameObject.transform.position = _direction;
+        boxCollider.enabled = true; //активация коллайдера
+
         if (target.CompareTag("Skeleton"))
         {
             target.GetComponent<Entity_Skeleton>().TakeDamage(AttackDamage);
@@ -56,26 +59,14 @@ public class MeleeWeapon : MonoBehaviour
         {
             target.GetComponent<Entity_Mushroom>().TakeDamage(AttackDamage);
         }
-        else if (target.CompareTag("Chest"))
+        if (target.CompareTag("Chest"))
         {
             target.GetComponent<Chest>().TakeDamage(AttackDamage);
         }
-        else if (target.CompareTag("Door"))
+        if (target.CompareTag("Door"))
         {
             target.GetComponent<door>().TryToOpen();
         }
-        else
-        {
-            return;
-        }
-    }
-    public void meleeDirection(Vector3 _direction)// выбор направления полета 
-    {
-        lifetime = 0;
-        gameObject.SetActive(true); //активация игрового обьекта
-        this.gameObject.transform.position = _direction;
-        boxCollider.enabled = true; //активация коллайдера 
-        hit = false; //обьект коснулся другого обьекта = false
     }
     private void Deactivate() //деактивация снаряда после завершения анимации взрывал
     {
