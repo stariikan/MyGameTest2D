@@ -90,6 +90,7 @@ public class Entity_Mushroom : MonoBehaviour
             e_rb.velocity = Vector2.zero;
             boxCollider.enabled = false;
             anim.StopPlayback();
+            anim.SetBool("dead", true);
             anim.SetTrigger("m_death");//анимация смерти
             enemyDead = true;
         }
