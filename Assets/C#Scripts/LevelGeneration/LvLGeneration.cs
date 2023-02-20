@@ -119,12 +119,25 @@ public class LvLGeneration : MonoBehaviour
         SaveSerial.Instance.ResetData();
         SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
     }
-    public void CompleteLevel() // Добавим метод CompleteLevel, который будет увеличивать переменную completeLevels на одну единицу каждый раз, когда игрок пройдет очередной уровень.
+    public void Boost_Moushroom()
     {
-        this.Level += 1;;
         GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().BoostHP();
         GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().BoostAttackDamage();
         GameObject.Find("Mushroom").GetComponent<Enemy_Mushroom>().BoostSpeed();
+    }
+    public void Boost_Skeleton()
+    {
+        GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().BoostHP();
+        GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().BoostAttackDamage();
+        GameObject.Find("Skeleton").GetComponent<Enemy_Skeleton>().BoostSpeed();
+    }
+    public void CompleteLevel() // Добавим метод CompleteLevel, который будет увеличивать переменную completeLevels на одну единицу каждый раз, когда игрок пройдет очередной уровень.
+    {
+        this.Level += 1;;
+        //Boost Enemy
+        Boost_Moushroom();
+        Boost_Skeleton();
+
         SaveSerial.Instance.SaveGame();
         SceneManager.LoadScene("LevelComplete", LoadSceneMode.Single);
     }

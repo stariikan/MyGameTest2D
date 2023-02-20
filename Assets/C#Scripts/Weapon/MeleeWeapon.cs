@@ -43,14 +43,6 @@ public class MeleeWeapon : MonoBehaviour
         TargetName = collision.gameObject.name;
         boxCollider.enabled = false; //отключаем коллайдер
         target = GameObject.Find(TargetName);
-    }
-    public void meleeDirection(Vector3 _direction)// выбор направления полета 
-    {
-        lifetime = 0;
-        gameObject.SetActive(true); //активация игрового обьекта
-        this.gameObject.transform.position = _direction;
-        boxCollider.enabled = true; //активация коллайдера
-
         if (target.CompareTag("Skeleton"))
         {
             target.GetComponent<Entity_Skeleton>().TakeDamage(AttackDamage);
@@ -67,6 +59,13 @@ public class MeleeWeapon : MonoBehaviour
         {
             target.GetComponent<door>().TryToOpen();
         }
+    }
+    public void meleeDirection(Vector3 _direction)// выбор направления полета 
+    {
+        lifetime = 0;
+        gameObject.SetActive(true); //активация игрового обьекта
+        this.gameObject.transform.position = _direction;
+        boxCollider.enabled = true; //активация коллайдера
     }
     private void Deactivate() //деактивация снаряда после завершения анимации взрывал
     {

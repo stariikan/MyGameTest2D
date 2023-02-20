@@ -87,7 +87,7 @@ public class Entity_Skeleton : MonoBehaviour
         }
         else if(currentHP > 0 && isBlock)
         {
-            anim.SetTrigger("block_damage");//анимация получения демейджа
+            //anim.SetTrigger("block_damage");//анимация получения демейджа
             float blockDMG = dmg * 0.1f;
             currentHP -= blockDMG;
             enemyTakeDamage = true;
@@ -101,6 +101,7 @@ public class Entity_Skeleton : MonoBehaviour
             e_rb.velocity = Vector2.zero;
             boxCollider.enabled = false;
             anim.StopPlayback();
+            anim.SetBool("dead", true);
             anim.SetTrigger("m_death");//анимация смерти
             enemyDead = true;
         }
