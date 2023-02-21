@@ -157,7 +157,7 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
         }
         if ((Mathf.Abs(directionX)) < 1.5f && jumpCooldown > 2 && Mathf.Abs(directionY) < 2)
         {
-            ReboundFromTarget();
+            //ReboundFromTarget();
         }
         if ((Mathf.Abs(directionX)) < 1f && sporesCooldown > 10)
         {

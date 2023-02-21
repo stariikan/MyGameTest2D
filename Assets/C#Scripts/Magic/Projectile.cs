@@ -18,7 +18,7 @@ public class Projectile : MonoBehaviour
     public string magicTargetName; //имя цели по которому попал снаряд
     public GameObject target; //обьект по которому попал снаряд
 
-    private float shootingForce = 0.005f; //скорость снаряда
+    private float shootingForce = 0.03f; //скорость снаряда
 
     private void Awake() //Действие выполняется до старта игры и 1 раз
     {

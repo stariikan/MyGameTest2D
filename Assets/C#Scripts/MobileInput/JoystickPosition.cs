@@ -14,7 +14,7 @@ public class JoystickPosition : MonoBehaviour
     }
     public void ChangeJoystickPosition()
     {
-        if (Input.GetMouseButtonDown(0) && Input.mousePosition.x < Screen.width / 2)
+        if (Input.GetMouseButtonDown(0) && Input.mousePosition.x < Screen.width / 2 && Input.mousePosition.y < Screen.height / 2)
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(mouseWorldPos.x, mouseWorldPos.y, transform.position.z);

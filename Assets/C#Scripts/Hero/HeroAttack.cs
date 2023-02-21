@@ -15,12 +15,15 @@ public class HeroAttack : MonoBehaviour
     public float currentMP;
     public float stamina = 100;
     public float currentStamina;
-    public float staminaSpeedRecovery = 5f;
+    private float staminaSpeedRecovery = 10f;
 
     public bool block = false;
 
     private int playerDirecction;
-    
+
+    private Vector3 shootingDirection;
+
+
     private Camera mainCamera;
 
     private void Start()
@@ -106,18 +109,15 @@ public class HeroAttack : MonoBehaviour
             {
                 magicProjectile[FindMagicBall()].transform.position = firePointLeft.position;
             }
-            // Get the mouse position in screen space
-            Vector3 mousePosition = Input.mousePosition;
 
-            // Convert the mouse position to world space
-            Vector3 worldSpaceMousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
-
-            // Get the direction from the shooter to the mouse
-            Vector3 shootingDirection = worldSpaceMousePosition - transform.position;
-
-            // Normalize the direction
-            //shootingDirection.Normalize();
-            //Debug.Log(shootingDirection);
+            if (playerDirecction > 0)
+            {
+                shootingDirection = new Vector3(1, 0, 109);
+            }
+            if (playerDirecction < 0)
+            {
+                shootingDirection = new Vector3(-1, 0, 109);
+            }
             magicProjectile[FindMagicBall()].GetComponent<Projectile>().SetDirection(shootingDirection);
         }
     }
