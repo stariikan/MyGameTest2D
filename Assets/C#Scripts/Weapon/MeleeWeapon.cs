@@ -42,6 +42,7 @@ public class MeleeWeapon : MonoBehaviour
     {
         TargetName = collision.gameObject.name;
         boxCollider.enabled = false; //отключаем коллайдер
+        this.gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
         target = GameObject.Find(TargetName);
         if (target.CompareTag("Skeleton"))
         {
