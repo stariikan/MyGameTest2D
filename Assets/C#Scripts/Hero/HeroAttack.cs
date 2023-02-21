@@ -15,7 +15,7 @@ public class HeroAttack : MonoBehaviour
     public float currentMP;
     public float stamina = 100;
     public float currentStamina;
-    public float staminaSpeedRecovery = 5f;
+    private float staminaSpeedRecovery = 10f;
 
     public bool block = false;
 

@@ -9573,6 +9573,7 @@ MonoBehaviour:
   - {fileID: 2083592242}
   enemyForGeneration:
   - {fileID: 455363760}
+  - {fileID: 1433946428}
   trapsForGeneration:
   - {fileID: 164038719}
   chestForGeneration:
@@ -9760,7 +9761,6 @@ MonoBehaviour:
   currentMP: 0
   stamina: 100
   currentStamina: 0
-  staminaSpeedRecovery: 5
   block: 0
 --- !u!1 &1902204022
 GameObject:

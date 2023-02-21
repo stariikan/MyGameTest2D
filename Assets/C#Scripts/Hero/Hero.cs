@@ -123,7 +123,7 @@ public class Hero : MonoBehaviour {
             Jump();
             PlayerSpeedMode();
             Roll(); //Кувырок
-            if (Input.GetKey(KeyCode.LeftControl) && m_timeSinceAttack > 0.25f && !m_rolling && stamina > 15f) //это сделано чтобы кнопка работала на тачскрине
+            if (Input.GetKey(KeyCode.LeftControl)) //это сделано чтобы кнопка работала на тачскрине
             {
                 MeeleAtack();
             }
@@ -214,6 +214,7 @@ public class Hero : MonoBehaviour {
             boxCollider.enabled = false;
             m_animator.StopPlayback();
             m_animator.SetBool("noBlood", m_noBlood);
+            m_animator.SetBool("dead", true);
             m_animator.SetTrigger("Death");
         }
     }
@@ -315,7 +316,7 @@ public class Hero : MonoBehaviour {
     }
     public void MeeleAtack()
     {  
-        if(stamina > 20 && !m_rolling && !block) 
+        if(!m_rolling && !block && m_timeSinceAttack > 0.25f && !m_rolling && stamina > 15f) 
         {
             cooldownTimer = 0;
             isAttack = true;
