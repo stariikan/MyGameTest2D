@@ -12,6 +12,19 @@ public class JoystickPosition : MonoBehaviour
         Instance = this;
         originalPos = transform.position;
     }
+    // Update is called once per frame
+    void Update()
+    {
+        //ChangeJoystickPosition();
+    }
+    public void Joystick_ON()
+    {
+        this.gameObject.SetActive(true);
+    }
+    public void Joystick_OFF()
+    {
+        this.gameObject.SetActive(false);
+    }
     public void ChangeJoystickPosition()
     {
         if (Input.GetMouseButtonDown(0) && Input.mousePosition.x < Screen.width / 2 && Input.mousePosition.y < Screen.height / 2)
@@ -25,9 +38,5 @@ public class JoystickPosition : MonoBehaviour
             //transform.position = originalPos;
         }
     }
-    // Update is called once per frame
-    void Update()
-    {
-        ChangeJoystickPosition();
-    }
+
 }

@@ -59,6 +59,7 @@
     <Compile Include="Assets\C#Scripts\Enemy\Skeleton\Entity_Skeleton.cs" />
     <Compile Include="Assets\C#Scripts\Camera\CameraFolow.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Skeleton\DisableProgressBarSkeleton.cs" />
+    <Compile Include="Assets\C#Scripts\MobileInput\Button_Left.cs" />
     <Compile Include="Assets\C#Scripts\UI\key_counter.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickMovement.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickPosition.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Assets\C#Scripts\Enemy\Moushroom\Entity_Mushroom.cs" />
     <Compile Include="Assets\C#Scripts\Door\door.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\LvL.cs" />
+    <Compile Include="Assets\C#Scripts\MobileInput\Movement_buttons.cs" />
     <Compile Include="Assets\C#Scripts\UI\EnemyProgressBar\DisableProgressBar.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\Joystick.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Sensor_HeroKnight.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="Assets\C#Scripts\Magic\Projectile.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickPause.cs" />
     <Compile Include="Assets\C#Scripts\Hero\HeroAttack.cs" />
+    <Compile Include="Assets\C#Scripts\Weapon\Shield.cs" />
     <Compile Include="Assets\C#Scripts\LevelGeneration\LvLGeneration.cs" />
     <Compile Include="Assets\C#Scripts\UI\EnemyProgressBar\enemyProgressBar.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Coin.cs" />
@@ -92,6 +95,7 @@
     <Compile Include="Assets\C#Scripts\UI\Stamina_counter.cs" />
     <Compile Include="Assets\C#Scripts\UI\mp_counter.cs" />
     <Compile Include="Assets\C#Scripts\UI\coin_counter.cs" />
+    <Compile Include="Assets\C#Scripts\MobileInput\Button_Right.cs" />
     <Compile Include="Assets\C#Scripts\SaveProgress\SaveSerial.cs" />
     <Compile Include="Assets\C#Scripts\UI\Level_counter.cs" />
     <Compile Include="Assets\C#Scripts\Chest\Chest.cs" />

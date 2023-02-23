@@ -22,6 +22,9 @@ public class SaveSerial : MonoBehaviour
     public float skeletonHP;
     public float skeletonDamage;
     public float skeletonSpeed;
+
+    //Settings
+    public bool joystick_settings;
     public static SaveSerial Instance { get; set; } //Для сбора и отправки данных из этого скрипта
 
     private void Awake()
@@ -48,6 +51,8 @@ public class SaveSerial : MonoBehaviour
         public float skeletonHP;
         public float skeletonDamage;
         public float skeletonSpeed;
+
+        public bool joystick_settings;
     }
     //Обратите внимание, три переменные в классе SaveData соответствуют переменным из класса SaveSerial.
     //Для сохранения мы будем передавать значения из SaveSerial в SaveData, а затем сериализовать последний.
@@ -81,6 +86,8 @@ public class SaveSerial : MonoBehaviour
             skeletonHP = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().maxHP;
             skeletonDamage = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().enemyAttackDamage;
             skeletonSpeed = GameObject.Find("Skeleton").GetComponent<Enemy_Skeleton>().speed;
+
+            joystick_settings = Pause.Instance.joystick;
         }
         
         data.playerCoin = playerCoin;
@@ -99,6 +106,8 @@ public class SaveSerial : MonoBehaviour
         data.skeletonHP = skeletonHP;
         data.skeletonDamage = skeletonDamage;
         data.skeletonSpeed = skeletonSpeed;
+
+        data.joystick_settings = joystick_settings;
 
 
         //data.savedBool = boolToSave;
@@ -135,6 +144,8 @@ public class SaveSerial : MonoBehaviour
             skeletonHP = data.skeletonHP;
             skeletonDamage = data.skeletonDamage;
             skeletonSpeed = data.skeletonSpeed;
+
+            joystick_settings = data.joystick_settings;
 
             Debug.Log("Game data loaded!"); //Выводим в отладочную консоль сообщение об успешной загрузке.
         }

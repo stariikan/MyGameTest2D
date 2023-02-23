@@ -34,7 +34,7 @@ public class Joystick : MonoBehaviour
         {
             Debug.Log("Unity platform");
             platform = 0;
-            this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(false);
         }
     }
 }
