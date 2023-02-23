@@ -6103,7 +6103,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1896078292}
         m_TargetAssemblyTypeName: HeroAttack, Assembly-CSharp
-        m_MethodName: magicAttack
+        m_MethodName: MagicAttack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

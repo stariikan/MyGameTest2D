@@ -92,14 +92,16 @@ public class Enemy_Skeleton : MonoBehaviour //наследование класса сущности (то е
     public void Block() // Использование щита
     {
         playerIsAttack = Hero.Instance.isAttack;
-        if (playerIsAttack == true && (Mathf.Abs(directionX)) < 1.5f && Mathf.Abs(directionY) < 2 && level > 3)
+        if (playerIsAttack == true && (Mathf.Abs(directionX)) < 1.5f && Mathf.Abs(directionY) < 2 && level > 0)
         {
             blockCooldown = 0;
+            speed = 0;
             skeleton_block = true;
             anim.SetBool("Block", true);
         }
-        if (blockCooldown > 0.4f)
+        if (blockCooldown > 0.4f || directionX > 2f)
         {
+            speed = speedRecovery;
             skeleton_block = false;
             anim.SetBool("Block", false);
         }
