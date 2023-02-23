@@ -3,7 +3,7 @@ using UnityEngine;
 public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то есть методы которые используются в Entity будут применены и к этому обьекту)
 {
     // Start is called before the first frame update
-    [SerializeField] public float speed = 2f;//параметр скорости скелета
+    public float speed = 2f;//параметр скорости скелета
     [SerializeField] private float speedRecovery;//параметр скорости скелета 2 параметр нужен для восстановление скорости по умолчанию (после остановки перед пропастью и наверное после замедлений которых я еще не придумал))
 
     GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
@@ -19,7 +19,6 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
     public float directionX; //переменная для понимания разницы между игроком и врагом
     public float directionY; //переменная для понимания разницы между игроком и врагом
 
-    private bool playerIsAttack; //Атакует ли игрок?
     private int currentAttack = 0; //Кулдаун на атаку обьекта
     private float timeSinceAttack = 0.0f;//время с прошлой атаки нужно для комбо анимации атаки
 
@@ -51,7 +50,7 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
             PlayerFollow(); //движение за игроком
             DieByFall(); // Смерть при падении
             AnimState(); //Стейтмашина Анимации
-            groundCheckPosition(); //проверка пропасти
+            GroundCheckPosition(); //проверка пропасти
             EnemyJump(); //прыжок перед препятсвием
             Attack(); //Атака
         }
@@ -67,11 +66,6 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
     private void OnCollisionExit2D(Collision2D collision) //срабатывает тогда, когда соприкосновение двух объектов разрушается.
     {
             isGround = false;
-    }
-    private States State //Создание стейтмашины, переменная = State. Значение состояния может быть передано или изминено извне благодаря get и set
-    {
-        get { return (States)anim.GetInteger("State"); }
-        set { anim.SetInteger("State", (int)value); }
     }
     public enum States //Определения какие бывают состояния, указал названия как в Аниматоре Unity
     {
@@ -90,26 +84,22 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
     }
     public void JumpToPlayer() //прыжок к игроку
     {
-        if (level >= 3) //способность активируется на 3 уровне
+        if (level >= 1) //способность активируется на 3 уровне
         {
-            Vector3 theScale = transform.localScale;
-            transform.localScale = theScale;
             jumpCooldown = 0;
-            float jumpToPlayer = Mathf.Sign(directionX) * 3000 * Time.deltaTime;
-            rb.AddForce(new Vector2(jumpToPlayer, 2.5f), ForceMode2D.Impulse);
+            if (directionX > 0) rb.AddForce(new Vector2(10, 2.5f), ForceMode2D.Impulse);
+            if (directionX < 0) rb.AddForce(new Vector2(-10, 2.5f), ForceMode2D.Impulse);
         }
     }
-    public void ReboundFromTarget() // отскок от игрока
+    public void PushFromPlayer() // отскок от игрока
     {
-        playerIsAttack = Hero.Instance.isAttack;
-        if(playerIsAttack == true && level >= 2)
+        if(Mathf.Abs(directionX) < 1f)
         {
-
             Vector3 theScale = transform.localScale;
             transform.localScale = theScale;
+            if (theScale.x > 0) rb.AddForce(new Vector2(-5, 1.5f), ForceMode2D.Impulse);
+            if (theScale.x < 0) rb.AddForce(new Vector2(5, 1.5f), ForceMode2D.Impulse);
             jumpCooldown = 0;
-            float jumpToPlayer = Mathf.Sign(directionX) * 6;
-            rb.AddForce(new Vector2(-jumpToPlayer, 1f), ForceMode2D.Impulse);
         }
     }
     public void MushroomSpores() //создает облако спор которая дамажит игрока
@@ -124,7 +114,7 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
     {
         directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
         directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
-        if ((Mathf.Abs(directionX) < 3 && Mathf.Abs(directionX) > 1f && Mathf.Abs(directionY) < 2) || this.gameObject.GetComponent<Entity_Mushroom>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f) //следует за игроком если маленькое растояние или получил урон
+        if ((Mathf.Abs(directionX) < 3f && Mathf.Abs(directionX) > 1f && Mathf.Abs(directionY) < 2) || this.gameObject.GetComponent<Entity_Mushroom>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f) //следует за игроком если маленькое растояние или получил урон
         {
             Vector3 pos = transform.position; //позиция обьекта
             Vector3 theScale = transform.localScale; //нужно для понимания направления
@@ -154,10 +144,6 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
         if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2)
         {
             JumpToPlayer();
-        }
-        if ((Mathf.Abs(directionX)) < 1.5f && jumpCooldown > 2 && Mathf.Abs(directionY) < 2)
-        {
-            //ReboundFromTarget();
         }
         if ((Mathf.Abs(directionX)) < 1f && sporesCooldown > 10)
         {
@@ -215,7 +201,7 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
         }
     }
     //Проверка на пропость, чтобы скелет туда не упал мы стреляем Raycast вниз с позиции обьекта groundcheck, на 2 еденицы и проверяем столкнулся ли обьект с землей (groundLayers) PlayerFollow();
-    public void groundCheckPosition()
+    public void GroundCheckPosition()
     {
         hit = Physics2D.Raycast(groundcheck.position, -transform.up, 0.1f, LayerMask.GetMask("Ground"));
         if (hit.collider != true) //если обьект groundcheck не столкнулся с полом (то есть пропасть)

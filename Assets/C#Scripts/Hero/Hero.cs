@@ -36,12 +36,19 @@ public class Hero : MonoBehaviour {
 
     public bool block = false;
     public bool isAttack = false;
+    public bool isPush = false;
 
-    private bool isGrounded;
 
     private BoxCollider2D boxCollider;
 
     private float cooldownTimer = Mathf.Infinity;
+
+    //Settings
+    private bool joystick_Settings = false;
+
+    //Touchscreen buttons for movement
+    public bool move_Right = false;
+    public bool move_Left = false;
 
     // Use this for initialization
     void Awake()
@@ -116,6 +123,11 @@ public class Hero : MonoBehaviour {
        //old
         cooldownTimer += Time.deltaTime; //прибавление по 1 секунде к cooldownTimer
         stamina = HeroAttack.Instance.currentStamina; //проверка стамины
+
+        joystick_Settings = Pause.Instance.joystick; //проверка настройки джойстика
+        //Debug.Log(joystick_Settings);
+        Jostick_Settings_Controll();
+
         if (hp > 0)
         {
             PlayerMovement();//Метод для движения и поворота спрайта персонажа
@@ -132,6 +144,21 @@ public class Hero : MonoBehaviour {
             return;
         }  
     }
+
+    private void Jostick_Settings_Controll()
+    {
+        if (joystick_Settings == false)
+        {
+            JoystickPosition.Instance.Joystick_OFF();
+            Movement_buttons.Instance.MovementButtons_ON();
+        }
+        if (joystick_Settings == true)
+        {
+            JoystickPosition.Instance.Joystick_ON();
+            Movement_buttons.Instance.MovementButtons_OFF();
+        }
+    }
+
     // Animation Events
     // Called in slide animation.
     void AE_SlideDust()
@@ -219,7 +246,6 @@ public class Hero : MonoBehaviour {
     }
     private void Deactivate() //деактивация игрока после завершения анимации смерти (благодоря метки в аниматоре выполняется этот метод
     {
-        //gameObject.SetActive(false);
         playerDead = true;
     }
     public void Hero_hp() //Метод который просто вызывает значение переменной HP, нужен мне был для передачи этого числа в скрипт с каунтером жизней
@@ -266,7 +292,7 @@ public class Hero : MonoBehaviour {
             float vertical = Input.GetAxis("Vertical");
             if (move > 0f)
             {
-                if (!m_rolling && isGrounded)
+                if (!m_rolling)
                 {
                     m_body2d.velocity = new Vector2(move * m_speed, m_body2d.velocity.y);
                     m_facingDirection = 1;
@@ -274,7 +300,7 @@ public class Hero : MonoBehaviour {
             }
             if (move < 0f)
             {
-                if (!m_rolling && isGrounded)
+                if (!m_rolling)
                 {
                     m_body2d.velocity = new Vector2(move * m_speed, m_body2d.velocity.y);
                     m_facingDirection = -1;
@@ -298,7 +324,7 @@ public class Hero : MonoBehaviour {
             float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
             if (joystickMoveX > 0f)
             {
-                if (!m_rolling && isGrounded)
+                if (!m_rolling)
                 {
                     m_body2d.velocity = new Vector2(joystickMoveX * m_speed, m_body2d.velocity.y);
                     m_facingDirection = 1;
@@ -306,7 +332,7 @@ public class Hero : MonoBehaviour {
             }
             if (joystickMoveX < 0f)
             {
-                if (!m_rolling && isGrounded)
+                if (!m_rolling)
                 {
                     m_body2d.velocity = new Vector2(joystickMoveX * m_speed, m_body2d.velocity.y);
                     m_facingDirection = -1;
@@ -316,6 +342,23 @@ public class Hero : MonoBehaviour {
             if (joystickMoveY > 0)
             {
                 Jump();
+            }
+        }
+        //TouchScreen Button
+        if (move_Right == true && platform == 2 || move_Right == true && platform == 0)
+        {
+            if (!m_rolling)
+            {
+                m_body2d.velocity = new Vector2(1 * m_speed, m_body2d.velocity.y);
+                m_facingDirection = 1;
+            }
+        }
+        if (move_Left == true && platform == 2 || move_Left == true && platform == 0)
+        {
+            if (!m_rolling)
+            {
+                m_body2d.velocity = new Vector2(-1 * m_speed, m_body2d.velocity.y);
+                m_facingDirection = -1;
             }
         }
         //player state
@@ -338,6 +381,19 @@ public class Hero : MonoBehaviour {
             GetComponent<SpriteRenderer>().flipX = true;
         }
     }
+    public void Right()
+    {
+        move_Right = true;
+    }
+    public void Left()
+    {
+        move_Left = true;
+    }
+    public void Stop()
+    {
+        move_Right = false;
+        move_Left = false;
+    }
     public void MeeleAtack()
     {  
         if(!m_rolling && !block && m_timeSinceAttack > 0.25f && !m_rolling && stamina > 15f) 
@@ -359,19 +415,5 @@ public class Hero : MonoBehaviour {
             // Reset timer
             m_timeSinceAttack = 0.0f;
         }    
-    }
-    private void OnCollisionEnter2D(Collision2D collision) //срабатывает тогда, когда наш объект соприкасается с другим объектом:
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
-    }
-    private void OnCollisionExit2D(Collision2D collision) //срабатывает тогда, когда соприкосновение двух объектов разрушается.
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded =false;
-        }
     }
 }

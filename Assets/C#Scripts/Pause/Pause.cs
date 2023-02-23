@@ -6,13 +6,7 @@ public class Pause : MonoBehaviour
     public bool ispause;
 
     public bool guipuse;
-    public Texture BoxTexture; //текустуру устаналиваем сами в эдиторе (это для бокса с параметрами
-    GUIContent contentPlayerAttackDamage;
-    GUIContent contentPlayerMageDamage;
-    GUIContent contentPassedLvl;
-    GUIContent contentEnemyHP;
-    GUIContent contentEnemyDamage;
-    GUIContent contentEnemySpeed;
+    public Texture BoxTexture; //текустуру устаналиваем сами в эдиторе
 
     public static Pause Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     // Характеристики указанные в BOX
@@ -23,12 +17,18 @@ public class Pause : MonoBehaviour
     private float infoEnemyDamage;
     private float infoEnemySpeed;
 
+    public bool joystick = false;
+
+    private int platform;
     private void Start()
     {
         Instance = this;
+        joystick = SaveSerial.Instance.joystick_settings;
+        
     }
     void Update()
     {
+        platform = Joystick.Instance.platform;
         GameInfo();
         ClickPause();
     }
@@ -64,12 +64,6 @@ public class Pause : MonoBehaviour
         {
             infoEnemySpeed = 1f;
         }
-        contentPlayerAttackDamage = new GUIContent("Player Attack Damage = " + $"{infoPlayerAttackDamage}", BoxTexture, "This is a tooltip");
-        contentPlayerMageDamage = new GUIContent("Player Mage Damage = " + $"{infoPlayerMageDamage}", BoxTexture, "This is a tooltip");
-        contentPassedLvl = new GUIContent("Passed LvL = " + $"{infoPassedLvl}", BoxTexture, "This is a tooltip");
-        contentEnemyHP = new GUIContent("Enemy HP = " + $"{infoEnemyHP}", BoxTexture, "This is a tooltip");
-        contentEnemyDamage = new GUIContent("Enemy Attack Damage = " + $"{infoEnemyDamage}", BoxTexture, "This is a tooltip");
-        contentEnemySpeed = new GUIContent("Enemy Movement Speed = " + $"{infoEnemySpeed}", BoxTexture, "This is a tooltip");
     }
     public void PauseON()
     {
@@ -119,7 +113,18 @@ public class Pause : MonoBehaviour
             guipuse = false;
         }
     }
-
+    private void ChangeJoystickSetting()
+    {
+        if (joystick == false)
+        {
+            joystick = true;
+        }
+        else
+        {
+            joystick = false;
+        }
+        
+    }
     public void OnGUI()
     {
         if (guipuse == true)
@@ -140,12 +145,15 @@ public class Pause : MonoBehaviour
                 SaveSerial.Instance.ResetData();
                 SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
             }
-            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 2f, Screen.width / 2.5f, Screen.height / 19f), contentPlayerAttackDamage);
-            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.81f, Screen.width / 2.5f, Screen.height / 19f), contentPlayerMageDamage);
-            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.66f, Screen.width / 2.5f, Screen.height / 19f), contentPassedLvl);
-            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.538f, Screen.width / 2.5f, Screen.height / 19f), contentEnemyHP);
-            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.428f, Screen.width / 2.5f, Screen.height / 19f), contentEnemyDamage);
-            GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.33f, Screen.width / 2.5f, Screen.height / 19f), contentEnemySpeed);
+            if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 2f, Screen.width / 2.5f, Screen.height / 11.5f), "Touchscreen Joystick " + joystick))
+            {
+                ChangeJoystickSetting();
+            }
+            if(platform == 1)
+            {
+                GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.66f, Screen.width / 2.5f, Screen.height / 11.5f), "WASD = Movement; CTRL = Attack;");
+                GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.42f, Screen.width / 2.5f, Screen.height / 11.5f), "Alt = Magic Attack; Shift = Shield;");
+            }
         } 
     } 
 }
