@@ -3,7 +3,7 @@ using UnityEngine;
 public class Enemy_Skeleton : MonoBehaviour //наследование класса сущности (то есть методы которые используются в Entity будут применены и к этому обьекту)
 {
     // Start is called before the first frame update
-    [SerializeField] public float speed = 2f;//параметр скорости скелета
+    public float speed = 2f;//параметр скорости скелета
     [SerializeField] private float speedRecovery;//параметр скорости скелета 2 параметр нужен для восстановление скорости по умолчанию (после остановки перед пропастью и наверное после замедлений которых я еще не придумал))
 
     GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
@@ -50,7 +50,7 @@ public class Enemy_Skeleton : MonoBehaviour //наследование класса сущности (то е
             PlayerFollow(); //движение за игроком
             DieByFall(); // Смерть при падении
             AnimState(); //Стейтмашина Анимации
-            groundCheckPosition(); //проверка пропасти
+            GroundCheckPosition(); //проверка пропасти
             EnemyJump(); //прыжок перед препятсвием
             Attack(); //Атака
             Block(); //Блок
@@ -74,11 +74,6 @@ public class Enemy_Skeleton : MonoBehaviour //наследование класса сущности (то е
             isGround = false;
         }
     }
-    private States State //Создание стейтмашины, переменная = State. Значение состояния может быть передано или изминено извне благодаря get и set
-    {
-        get { return (States)anim.GetInteger("State"); }
-        set { anim.SetInteger("State", (int)value); }
-    }
     public enum States //Определения какие бывают состояния, указал названия как в Аниматоре Unity
     {
         idle,
@@ -97,16 +92,28 @@ public class Enemy_Skeleton : MonoBehaviour //наследование класса сущности (то е
     public void Block() // Использование щита
     {
         playerIsAttack = Hero.Instance.isAttack;
-        if (playerIsAttack == true && (Mathf.Abs(directionX)) < 1.5f && Mathf.Abs(directionY) < 2 && level > 3)
+        if (playerIsAttack == true && (Mathf.Abs(directionX)) < 1.5f && Mathf.Abs(directionY) < 2 && level > 0)
         {
             blockCooldown = 0;
+            speed = 0;
             skeleton_block = true;
             anim.SetBool("Block", true);
         }
-        if (blockCooldown > 0.4f)
+        if (blockCooldown > 0.4f || directionX > 2f)
         {
+            speed = speedRecovery;
             skeleton_block = false;
             anim.SetBool("Block", false);
+        }
+    }
+    public void PushFromPlayer() // отскок от игрока
+    {
+        if (Mathf.Abs(directionX) < 1f)
+        {
+            Vector3 theScale = transform.localScale;
+            transform.localScale = theScale;
+            if (theScale.x > 0) rb.AddForce(new Vector2(-5, 1.5f), ForceMode2D.Impulse);
+            if (theScale.x < 0) rb.AddForce(new Vector2(5, 1.5f), ForceMode2D.Impulse);
         }
     }
     public void PlayerFollow() //Метод в котором описываем логику следования за игроком
@@ -193,7 +200,7 @@ public class Enemy_Skeleton : MonoBehaviour //наследование класса сущности (то е
         }
     }
     //Проверка на пропость, чтобы скелет туда не упал мы стреляем Raycast вниз с позиции обьекта groundcheck, на 2 еденицы и проверяем столкнулся ли обьект с землей (groundLayers) PlayerFollow();
-    public void groundCheckPosition()
+    public void GroundCheckPosition()
     {
         hit = Physics2D.Raycast(groundcheck.position, -transform.up, 0.1f, LayerMask.GetMask("Ground"));
         if (hit.collider != true) //если обьект groundcheck не столкнулся с полом (то есть пропасть)

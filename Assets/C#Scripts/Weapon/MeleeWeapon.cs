@@ -61,7 +61,7 @@ public class MeleeWeapon : MonoBehaviour
             target.GetComponent<door>().TryToOpen();
         }
     }
-    public void meleeDirection(Vector3 _direction)// выбор направления полета 
+    public void MeleeDirection(Vector3 _direction)// выбор направления полета 
     {
         lifetime = 0;
         gameObject.SetActive(true); //активация игрового обьекта
