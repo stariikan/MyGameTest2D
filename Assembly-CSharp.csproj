@@ -59,11 +59,10 @@
     <Compile Include="Assets\C#Scripts\Enemy\Skeleton\Entity_Skeleton.cs" />
     <Compile Include="Assets\C#Scripts\Camera\CameraFolow.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Skeleton\DisableProgressBarSkeleton.cs" />
-    <Compile Include="Assets\C#Scripts\MobileInput\Button_Left.cs" />
-    <Compile Include="Assets\C#Scripts\UI\key_counter.cs" />
+    <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\key_counter.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickMovement.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickPosition.cs" />
-    <Compile Include="Assets\C#Scripts\UI\MeleeDMG_counter.cs" />
+    <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\MeleeDMG_counter.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Moushroom\Entity_Mushroom.cs" />
     <Compile Include="Assets\C#Scripts\Door\door.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\LvL.cs" />
@@ -73,7 +72,7 @@
     <Compile Include="Assets\C#Scripts\Hero\Sensor_HeroKnight.cs" />
     <Compile Include="Assets\C#Scripts\Weapon\MeleeWeapon.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Mana.cs" />
-    <Compile Include="Assets\C#Scripts\UI\Info.cs" />
+    <Compile Include="Assets\C#Scripts\UI\LvL and info\Info.cs" />
     <Compile Include="Assets\C#Scripts\Shop\Shop.cs" />
     <Compile Include="Assets\C#Scripts\Magic\Projectile.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickPause.cs" />
@@ -84,20 +83,19 @@
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Coin.cs" />
     <Compile Include="Assets\C#Scripts\Traps\Spike.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Moushroom\Enemy_Mushroom.cs" />
-    <Compile Include="Assets\C#Scripts\UI\hp_counter.cs" />
+    <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\hp_counter.cs" />
     <Compile Include="Assets\C#Scripts\Pause\Pause.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Skeleton\Enemy_Skeleton.cs" />
-    <Compile Include="Assets\C#Scripts\UI\MagicDMG_counter.cs" />
+    <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\MagicDMG_counter.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Stamina.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Hero_old.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickBlock.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Hero.cs" />
-    <Compile Include="Assets\C#Scripts\UI\Stamina_counter.cs" />
-    <Compile Include="Assets\C#Scripts\UI\mp_counter.cs" />
-    <Compile Include="Assets\C#Scripts\UI\coin_counter.cs" />
-    <Compile Include="Assets\C#Scripts\MobileInput\Button_Right.cs" />
+    <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\Stamina_counter.cs" />
+    <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\mp_counter.cs" />
+    <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\coin_counter.cs" />
     <Compile Include="Assets\C#Scripts\SaveProgress\SaveSerial.cs" />
-    <Compile Include="Assets\C#Scripts\UI\Level_counter.cs" />
+    <Compile Include="Assets\C#Scripts\UI\LvL and info\Level_counter.cs" />
     <Compile Include="Assets\C#Scripts\Chest\Chest.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Moushroom\Spore.cs" />
     <Compile Include="Assets\Materials\Hero Knight - Pixel Art\ColorSwap\ColorSwap_HeroKnight.cs" />
@@ -105,6 +103,10 @@
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickAttack.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\HP.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Skeleton\SkeletonProgressBar.cs" />
+    <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\Bar_Position.cs" />
+    <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\LvL_Tab.cs" />
+    <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\Movement_zone_position.cs" />
+    <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\Button_zone.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Hero Knight - Pixel Art\ColorSwap\Sprites-ColorSwap.shader" />

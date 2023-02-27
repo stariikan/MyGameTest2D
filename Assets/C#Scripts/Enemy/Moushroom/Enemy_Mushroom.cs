@@ -87,8 +87,24 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
         if (level >= 1) //способность активируется на 3 уровне
         {
             jumpCooldown = 0;
-            if (directionX > 0) rb.AddForce(new Vector2(10, 2.5f), ForceMode2D.Impulse);
-            if (directionX < 0) rb.AddForce(new Vector2(-10, 2.5f), ForceMode2D.Impulse);
+            Vector3 theScale = transform.localScale;
+            transform.localScale = theScale;
+            if (directionX > 0)
+            {
+                if (theScale.x < 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+                {
+                    Flip();
+                }
+                rb.AddForce(new Vector2(10, 2.5f), ForceMode2D.Impulse);
+            }
+            if (directionX < 0)
+            {
+                if (theScale.x > 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+                {
+                    Flip();
+                }
+                rb.AddForce(new Vector2(-10, 2.5f), ForceMode2D.Impulse); 
+            }
         }
     }
     public void PushFromPlayer() // отскок от игрока
@@ -106,8 +122,13 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
     {
         if (level >= 5)
         {
-            sporesCooldown = 0;
-            Spore.Instance.sporeDirection(this.gameObject.transform.position);
+            sporesCooldown = 0; // сброс таймера спор
+            Vector3 MoushroomScale = transform.localScale; //взятие параметра поворота спрайта грибочка
+            transform.localScale = MoushroomScale; //взятие параметра поворота спрайта грибочка
+            Vector3 sporeSpawnPosition = this.gameObject.transform.position; //взятие позиции грибочка
+            if (MoushroomScale.x < 0) sporeSpawnPosition.x -= 0.8f; //перемещения сбор вперед грибочка в зависимости от поворота спрайта
+            if (MoushroomScale.x > 0) sporeSpawnPosition.x += 0.8f; //перемещения сбор вперед грибочка в зависимости от поворота спрайта
+            Spore.Instance.sporeDirection(sporeSpawnPosition); //передача координаты для спавна облака спор
         }
     }
     public void PlayerFollow() //Метод в котором описываем логику следования за игроком
@@ -145,7 +166,7 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
         {
             JumpToPlayer();
         }
-        if ((Mathf.Abs(directionX)) < 1f && sporesCooldown > 10)
+        if ((Mathf.Abs(directionX)) < 0.8f && sporesCooldown > 10)
         {
             MushroomSpores();
         }

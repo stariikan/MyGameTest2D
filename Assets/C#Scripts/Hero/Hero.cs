@@ -278,9 +278,9 @@ public class Hero : MonoBehaviour {
         {
             cooldownTimer = 0;
             HeroAttack.Instance.DecreaseStamina(5);
+            m_body2d.velocity = new Vector2((m_facingDirection * -1) * m_rollForce, m_body2d.velocity.y);
             m_rolling = true;
             m_animator.SetTrigger("Roll");
-            m_body2d.velocity = new Vector2((m_facingDirection * -1) * m_rollForce, m_body2d.velocity.y);
         }
     }
     public void PlayerMovement()
