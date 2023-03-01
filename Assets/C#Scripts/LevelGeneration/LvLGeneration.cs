@@ -39,7 +39,7 @@ public class LvLGeneration : MonoBehaviour
     {
         if (Hero.Instance.playerDead == true)
         {
-            Restart();
+            DeadScreen();
         }
         if (Chest.Instance.chestOpen == true)
         {
@@ -118,6 +118,10 @@ public class LvLGeneration : MonoBehaviour
         Level = 1;
         SaveSerial.Instance.ResetData();
         SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
+    }
+    public void DeadScreen()
+    {
+        SceneManager.LoadScene("DeadScreen", LoadSceneMode.Single);
     }
     public void Boost_Moushroom()
     {
