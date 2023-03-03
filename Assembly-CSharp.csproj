@@ -67,6 +67,7 @@
     <Compile Include="Assets\C#Scripts\Door\door.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\LvL.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\Movement_buttons.cs" />
+    <Compile Include="Assets\C#Scripts\Main menu\Main_menu.cs" />
     <Compile Include="Assets\C#Scripts\UI\EnemyProgressBar\DisableProgressBar.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\Joystick.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Sensor_HeroKnight.cs" />
@@ -83,12 +84,18 @@
     <Compile Include="Assets\C#Scripts\Weapon\Shield.cs" />
     <Compile Include="Assets\C#Scripts\LevelGeneration\LvLGeneration.cs" />
     <Compile Include="Assets\C#Scripts\UI\EnemyProgressBar\enemyProgressBar.cs" />
+    <Compile Include="Assets\C#Scripts\Camera\CameraMenu.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Coin.cs" />
-    <Compile Include="Assets\C#Scripts\Traps\Spike.cs" />
+    <Compile Include="Assets\C#Scripts\Main menu\SettingsBool.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Moushroom\Enemy_Mushroom.cs" />
+    <Compile Include="Assets\C#Scripts\Traps\Spike.cs" />
     <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\hp_counter.cs" />
     <Compile Include="Assets\C#Scripts\Pause\Pause.cs" />
+    <Compile Include="Assets\C#Scripts\Main menu\Joystick_Settings.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Skeleton\Enemy_Skeleton.cs" />
+    <Compile Include="Assets\C#Scripts\Main menu\Settings.cs" />
+    <Compile Include="Assets\C#Scripts\Main menu\Music_Settings.cs" />
+    <Compile Include="Assets\C#Scripts\Main menu\Sound_Settings.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\MagicDMG_counter.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\Stamina.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Hero_old.cs" />
@@ -108,12 +115,7 @@
     <Compile Include="Assets\C#Scripts\DeadScreen\UI_Transform_Position.cs" />
     <Compile Include="Assets\C#Scripts\UI\ChestWindowUI\HP.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Skeleton\SkeletonProgressBar.cs" />
-    <Compile Include="Assets\C#Scripts\Main menu\Settings.cs" />
-    <Compile Include="Assets\C#Scripts\Main menu\Main_menu.cs" />
-    <Compile Include="Assets\C#Scripts\Main menu\Joystick_Settings.cs" />
-    <Compile Include="Assets\C#Scripts\Main menu\Music_Settings.cs" />
-    <Compile Include="Assets\C#Scripts\Main menu\Sound_Settings.cs" />
-    <Compile Include="Assets\C#Scripts\Main menu\SettingsBool.cs" />
+    <Compile Include="Assets\C#Scripts\Main menu\Collectables.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Hero Knight - Pixel Art\ColorSwap\Sprites-ColorSwap.shader" />
