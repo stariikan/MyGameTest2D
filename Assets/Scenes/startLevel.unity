@@ -4232,7 +4232,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &397972905
 GameObject:
@@ -4303,6 +4303,7 @@ GameObject:
   - component: {fileID: 433137801}
   - component: {fileID: 433137800}
   - component: {fileID: 433137803}
+  - component: {fileID: 433137804}
   m_Layer: 7
   m_Name: Goblin
   m_TagString: Goblin
@@ -4395,7 +4396,7 @@ Transform:
   - {fileID: 82705931}
   - {fileID: 352276158}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &433137803
 CapsuleCollider2D:
@@ -4413,6 +4414,27 @@ CapsuleCollider2D:
   m_Offset: {x: 0.012401581, y: -0.08433604}
   m_Size: {x: 0.20519766, y: 0.33914232}
   m_Direction: 0
+--- !u!50 &433137804
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433137799}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!1 &442795375
 GameObject:
   m_ObjectHideFlags: 0
@@ -4606,7 +4628,7 @@ Transform:
   - {fileID: 225361262}
   - {fileID: 1195596232}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &455363764
 Rigidbody2D:
@@ -8490,7 +8512,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1004281292
 BoxCollider2D:
@@ -12144,7 +12166,7 @@ Transform:
   - {fileID: 702997720}
   - {fileID: 1358278532}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1433946432
 Rigidbody2D:
@@ -19211,7 +19233,7 @@ Transform:
   - {fileID: 1076342420}
   - {fileID: 1941146795}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8631832244348062415
 GameObject:

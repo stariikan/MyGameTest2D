@@ -29,6 +29,7 @@ public class Spore : MonoBehaviour
         sporeCooldownDmg += Time.deltaTime;//кулдаун атаки спор
         playerHP = Hero.Instance.hp;
         SporeDmg();
+        SporeMovement();
         if (lifetime > 5) this.gameObject.SetActive(false);//когда переменная достигает 5, коллайдер атаки исчезает
         
     }
@@ -36,7 +37,7 @@ public class Spore : MonoBehaviour
     {
         float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
         //int level = LvLGeneration.Instance.Level;
-        if ((Mathf.Abs(directionX) < 1.5f) && playerHP > 0)
+        if (playerHP > 0)
         {
             Vector3 pos = transform.position; //позиция обьекта
             Vector3 theScale = transform.localScale; //нужно для понимания направления
