@@ -274,7 +274,7 @@ public class Hero : MonoBehaviour {
     }
     public void Roll()
     {
-        if (cooldownTimer > 1.5f && stamina > 5 && cooldownTimer > 1) //кувырок
+        if (stamina > 5 && cooldownTimer > 0.5f) //кувырок
         {
             cooldownTimer = 0;
             HeroAttack.Instance.DecreaseStamina(5);

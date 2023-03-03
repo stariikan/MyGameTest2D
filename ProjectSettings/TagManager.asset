@@ -11,6 +11,7 @@ TagManager:
   - Mushroom
   - PlayerCharacter
   - Skeleton
+  - Goblin
   layers:
   - Default
   - TransparentFX

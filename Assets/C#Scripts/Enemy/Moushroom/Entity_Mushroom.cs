@@ -19,7 +19,7 @@ public class Entity_Mushroom : MonoBehaviour
 
     private float playerHP;
 
-    private BoxCollider2D boxCollider;
+    private CapsuleCollider2D capsuleCollider;
 
     private float directionY;
     private float directionX;
@@ -40,7 +40,7 @@ public class Entity_Mushroom : MonoBehaviour
         Instance = this;
         anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
         e_rb = this.gameObject.GetComponent<Rigidbody2D>();
-        boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
+        capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
     }
     private void Update()
     {
@@ -88,7 +88,7 @@ public class Entity_Mushroom : MonoBehaviour
             LvLGeneration.Instance.PlusCoin(rewardForKillEnemy);//вызов метода для увелечения очков
             e_rb.gravityScale = 0;
             e_rb.velocity = Vector2.zero;
-            boxCollider.enabled = false;
+            capsuleCollider.enabled = false;
             anim.StopPlayback();
             anim.SetBool("dead", true);
             anim.SetTrigger("m_death");//анимация смерти
