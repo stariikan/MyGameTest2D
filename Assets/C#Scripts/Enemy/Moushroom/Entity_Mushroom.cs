@@ -53,7 +53,6 @@ public class Entity_Mushroom : MonoBehaviour
         if(playerHP > 0 && directionX < 1.5f && directionY < 0.3f)
         {
             Hero.Instance.GetDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage
-            maxHP += (enemyAttackDamage / 3); //Лайфстил скелета
         }
     }
     public void BoostHP() //тут усиливыем хп
