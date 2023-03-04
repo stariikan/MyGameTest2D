@@ -16,7 +16,7 @@ public class Enemy_Goblin : MonoBehaviour
     private float e_delayToIdle = 0.0f;
     public Transform wallChekPoint; //Тут мы ссылаемся на точку которая является дочерним обьектом 
     private bool isGround; // находиться ли обьект на земле
-    private bool runFromPlayer = false; //моб не убегает от игрока
+    private bool goblinRun = false; //моб не убегает от игрока
     RaycastHit2D hit; //тут будем получать информацию с чем сталкивается обьект
 
     public float directionX; //переменная для понимания разницы между игроком и врагом
@@ -28,9 +28,9 @@ public class Enemy_Goblin : MonoBehaviour
     private float jumpCooldown; //кулдаун на отскок и прыжок
     private int level; //проверка какой уровень проходит игрок, нужно для подключения способностей
 
-    private bool bombAttack; //проверка поставлен ли блок
+    private bool jump = false;
     private float bombCooldown = 4f; //кулдаун броска бомбы
-    private int remainingBombs = 5; //всего 5 бомб
+    public int remainingBombs = 3; //всего 3 бомб
     public static Enemy_Goblin Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     private void Start()
     {
@@ -53,11 +53,11 @@ public class Enemy_Goblin : MonoBehaviour
         timeSinceAttack += Time.deltaTime;
         if (this.gameObject.GetComponent<Entity_Goblin>().currentHP > 0)
         {
-            RunFromPlayer(); //движение от игрока
+            GoblinMovement(); //движение от игрока
             DieByFall(); // Смерть при падении
             AnimState(); //Стейтмашина Анимации
             GroundCheckPosition(); //проверка пропасти
-            EnemyJump(); //прыжок перед препятсвием
+            //EnemyJump(); //прыжок перед препятсвием
             Attack(); //Атака
         }
         else
@@ -115,27 +115,31 @@ public class Enemy_Goblin : MonoBehaviour
     }
     public void JumpFromPlayer() // отскок от игрока
     {
-        if (Mathf.Abs(directionX) < 1f)
+        if (level >= 1) //способность активируется на 3 уровне
         {
             jumpCooldown = 0;
-            Vector3 theScale = transform.localScale;
-            transform.localScale = theScale;
             if (directionX > 0)
             {
-                if (theScale.x > 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
-                {
-                    Flip();
-                }
+                jump = true;
+                anim.SetTrigger("roll");
                 rb.AddForce(new Vector2(-10, 2.5f), ForceMode2D.Impulse);
             }
             if (directionX < 0)
             {
-                if (theScale.x < 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
-                {
-                    Flip();
-                }
+                jump = true;
+                anim.SetTrigger("roll");
                 rb.AddForce(new Vector2(10, 2.5f), ForceMode2D.Impulse);
             }
+        }
+    }
+    public void PushFromPlayer() // отскок от игрока
+    {
+        if (Mathf.Abs(directionX) < 1f)
+        {
+            Vector3 theScale = transform.localScale;
+            transform.localScale = theScale;
+            if (theScale.x > 0) rb.AddForce(new Vector2(-5, 1.5f), ForceMode2D.Impulse);
+            if (theScale.x < 0) rb.AddForce(new Vector2(5, 1.5f), ForceMode2D.Impulse);
         }
     }
     public void GoblinBomb() //бросок бомбы
@@ -143,7 +147,7 @@ public class Enemy_Goblin : MonoBehaviour
         if (level >= 1 && remainingBombs >= 1)
         {
             remainingBombs -= 1;
-            bombCooldown = 0; // сброс таймера спор
+            bombCooldown = 0; // сброс таймера бомб
             Vector3 goblinScale = transform.localScale; //взятие параметра поворота спрайта гоблина
             transform.localScale = goblinScale; //взятие параметра поворота спрайта гоблина
             Vector3 bombSpawnPosition = this.gameObject.transform.position; //взятие позиции гоблина
@@ -152,20 +156,19 @@ public class Enemy_Goblin : MonoBehaviour
             Bomb.Instance.bombDirection(bombSpawnPosition); //передача координаты для спавна бомбы
         }
     }
-    public void RunFromPlayer() //Метод в котором описываем логику следования за игроком
+    public void GoblinMovement() //Метод в котором описываем логику следования за игроком
     {
         directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
         directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
-        if ((Mathf.Abs(directionX) < 2f && Mathf.Abs(directionX) > 1f && Mathf.Abs(directionY) < 2) || this.gameObject.GetComponent<Entity_Goblin>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f) //следует за игроком если маленькое растояние или получил урон
+        if ((Mathf.Abs(directionX) < 4f && Mathf.Abs(directionX) > 3f && Mathf.Abs(directionY) < 2) && remainingBombs < 1 || this.gameObject.GetComponent<Entity_Goblin>().enemyTakeDamage == true && Mathf.Abs(directionX) > 5f) //следует за игроком если маленькое растояние или получил урон
         {
             Vector3 pos = transform.position; //позиция обьекта
             Vector3 theScale = transform.localScale; //нужно для понимания направления
             transform.localScale = theScale; //нужно для понимания направления
             float playerFollowSpeed = Mathf.Sign(directionX) * speed * Time.deltaTime; //вычесление направления
-            pos.x -= playerFollowSpeed; //вычесление позиции по оси х
+            pos.x += playerFollowSpeed; //вычесление позиции по оси х
             transform.position = pos; //применение позиции
-            runFromPlayer = true;
-
+            goblinRun = true;
             if (playerFollowSpeed < 0 && theScale.x > 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
             {
                 Flip();
@@ -177,23 +180,39 @@ public class Enemy_Goblin : MonoBehaviour
         }
         else
         {
-            runFromPlayer = false;
+            goblinRun = false;
         }
     }
     public void Attack()
     {
         float playerHP = Hero.Instance.hp;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 1 && Mathf.Abs(directionY) < 2 && remainingBombs < 1)
+        if ((Mathf.Abs(directionX)) < 5f && (Mathf.Abs(directionX)) > 1f && jumpCooldown >= 2 && Mathf.Abs(directionY) < 2 && remainingBombs < 1)
         {
             JumpToPlayer();
         }
-        if ((Mathf.Abs(directionX)) < 7.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 1 && Mathf.Abs(directionY) < 2 && remainingBombs >= 1)
+        if ((Mathf.Abs(directionX)) < 2f && (Mathf.Abs(directionX)) > 1f && jumpCooldown >= 2 && Mathf.Abs(directionY) < 2 && remainingBombs >= 1)
         {
             JumpFromPlayer();
         }
-        if ((Mathf.Abs(directionX)) < 7f && bombCooldown > 4)
+        if ((Mathf.Abs(directionX)) < 6f && bombCooldown > 4 && !jump || this.gameObject.GetComponent<Entity_Goblin>().enemyTakeDamage == true && bombCooldown > 4 && !jump)
         {
+            Vector3 pos = transform.position; //позиция обьекта
+            Vector3 theScale = transform.localScale; //нужно для понимания направления
+            transform.localScale = theScale; //нужно для понимания направления
+            float RunSpeed = Mathf.Sign(directionX) * speed * Time.deltaTime; //вычесление направления
             GoblinBomb();
+            if (RunSpeed < 0 && theScale.x > 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+            {
+                Flip();
+            }
+            else if (RunSpeed > 0 && theScale.x < 0) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+            {
+                Flip();
+            }
+        }
+        if (jumpCooldown > 2.1f)
+        {
+            jump = false;
         }
         if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1)
         {
@@ -234,12 +253,12 @@ public class Enemy_Goblin : MonoBehaviour
     }
     public void AnimState()//Метод для определения стейта анимации
     {
-        if (runFromPlayer == true)
+        if (goblinRun == true)
         {
             e_delayToIdle = 0.05f;
             this.gameObject.GetComponent<Animator>().SetInteger("State", 1);
         }
-        if (runFromPlayer == false)
+        if (goblinRun == false)
         {
             e_delayToIdle -= Time.deltaTime;
             if (e_delayToIdle < 0)

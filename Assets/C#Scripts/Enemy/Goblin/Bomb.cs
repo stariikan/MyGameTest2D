@@ -33,11 +33,11 @@ public class Bomb : MonoBehaviour
         float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движени€ это ѕозици€ игрока по оси х - позиции тумана по оси х
         if (directionX > 0)
         {
-            rb.AddForce(new Vector2(3, 1.5f), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(2.7f, 1f), ForceMode2D.Impulse);
         }
         if (directionX < 0)
         {
-            rb.AddForce(new Vector2(-3, 1.5f), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(-2.7f, 1.0f), ForceMode2D.Impulse);
         }
     }
     public void BombDestroy() //отключени€ обьекта бомбы
@@ -46,6 +46,7 @@ public class Bomb : MonoBehaviour
     }
     public void BombExplosion() //включени€ анимации взрыва
     {
+        rb.velocity = Vector3.zero; //дл€ остановки обьекта
         anim.SetTrigger("explosion");
     }
     public void BombDmg() //нанесени€ урона
@@ -55,6 +56,18 @@ public class Bomb : MonoBehaviour
         if ((Mathf.Abs(directionX) < 3f && Mathf.Abs(directionY) < 2f) && playerHP > 0)
         {
             Hero.Instance.GetDamage(bombDamage);
+        }
+    }
+    public void PushFromPlayer() // отскок от игрока
+    {
+        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движени€ это ѕозици€ игрока по оси х - позиции тумана по оси х
+        float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движени€ это ѕозици€ игрока по оси y - позиции тумана по оси y
+        if (Mathf.Abs(directionX) < 1f)
+        {
+            Vector3 theScale = transform.localScale;
+            transform.localScale = theScale;
+            if (theScale.x > 0) rb.AddForce(new Vector2(-2.7f, 1.5f), ForceMode2D.Impulse);
+            if (theScale.x < 0) rb.AddForce(new Vector2(2.7f, 1.5f), ForceMode2D.Impulse);
         }
     }
     public void bombDirection(Vector3 _direction)// выбор направлени€ полета 

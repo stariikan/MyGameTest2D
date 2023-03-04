@@ -9,7 +9,7 @@ public class Spore : MonoBehaviour
     [SerializeField] private float lifetime; //длительность жизни снар€да
     private float playerHP; //переменна€ метки попал ли во что-то снар€д
 
-    private BoxCollider2D boxCollider; // оллайдер удара
+    private CircleCollider2D circleCollider; // оллайдер удара
 
     private float sporeDamage = 20;
     private float sporeCooldownDmg;
@@ -19,7 +19,7 @@ public class Spore : MonoBehaviour
     private void Start() //ƒействие выполн€етс€ до старта игры и 1 раз
     {
         player = GameObject.FindWithTag("PlayerCharacter");
-        boxCollider = GetComponent<BoxCollider2D>(); // вытаскиваем информацию из компанента бокс колайдер
+        circleCollider = GetComponent<CircleCollider2D>(); // вытаскиваем информацию из компанента бокс колайдер
         Instance = this;
         playerHP = Hero.Instance.hp;
     }

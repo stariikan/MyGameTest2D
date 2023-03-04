@@ -50,8 +50,8 @@ public class Entity_Goblin : MonoBehaviour
     }
     public void DamageDeealToPlayer()
     {
-        directionX = this.gameObject.GetComponent<Enemy_Mushroom>().directionX;
-        directionY = this.gameObject.GetComponent<Enemy_Mushroom>().directionY;
+        directionX = this.gameObject.GetComponent<Enemy_Goblin>().directionX;
+        directionY = this.gameObject.GetComponent<Enemy_Goblin>().directionY;
         if (playerHP > 0 && directionX < 1.5f && directionY < 0.3f)
         {
             Hero.Instance.GetDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage
@@ -77,7 +77,7 @@ public class Entity_Goblin : MonoBehaviour
             currentHP -= dmg;
             enemyTakeDamage = true;
             takedDamage = (float)dmg / (float)maxHP; //на сколько надо уменьшаить прогресс бар
-            this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара
+            this.gameObject.GetComponentInChildren<Goblin_progress_bar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара
         }
         else
         {

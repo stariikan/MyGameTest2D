@@ -4507,6 +4507,7 @@ MonoBehaviour:
   wallChekPoint: {fileID: 82705931}
   directionX: 0
   directionY: 0
+  remainingBombs: 3
 --- !u!1 &442795375
 GameObject:
   m_ObjectHideFlags: 0
@@ -5458,6 +5459,9 @@ MonoBehaviour:
   skeletonHP: 0
   skeletonDamage: 0
   skeletonSpeed: 0
+  goblinHP: 0
+  goblinDamage: 0
+  goblinSpeed: 0
   joystick_settings: 0
 --- !u!223 &519420034
 Canvas:
@@ -7762,9 +7766,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.050911844, y: -0.055362463}
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 0.22015291
 --- !u!50 &826046346
 Rigidbody2D:
   serializedVersion: 4
@@ -7865,7 +7869,7 @@ Transform:
   m_GameObject: {fileID: 826046344}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -54.36, y: 4.57, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 16
@@ -8733,8 +8737,8 @@ GameObject:
   - component: {fileID: 1004281295}
   - component: {fileID: 1004281294}
   - component: {fileID: 1004281293}
-  - component: {fileID: 1004281292}
   - component: {fileID: 1004281296}
+  - component: {fileID: 1004281292}
   m_Layer: 0
   m_Name: Spore
   m_TagString: Untagged
@@ -8756,8 +8760,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1004281292
-BoxCollider2D:
+--- !u!58 &1004281292
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8769,19 +8773,9 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.27412724}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3, y: 3}
-    newSize: {x: 3, y: 3}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0, y: -0.179019}
   serializedVersion: 2
-  m_Size: {x: 3, y: 2.1028564}
-  m_EdgeRadius: 0
+  m_Radius: 1.0550103
 --- !u!114 &1004281293
 MonoBehaviour:
   m_ObjectHideFlags: 0

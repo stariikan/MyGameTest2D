@@ -12,6 +12,7 @@ TagManager:
   - PlayerCharacter
   - Skeleton
   - Goblin
+  - Bomb
   layers:
   - Default
   - TransparentFX

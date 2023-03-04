@@ -39,7 +39,7 @@ public class Hero : MonoBehaviour {
     public bool isPush = false;
 
 
-    private BoxCollider2D boxCollider;
+    private CapsuleCollider2D circleCollider;
 
     private float cooldownTimer = Mathf.Infinity;
 
@@ -59,7 +59,7 @@ public class Hero : MonoBehaviour {
     {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
-        boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
+        circleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
         m_wallSensorR1 = transform.Find("WallSensor_R1").GetComponent<Sensor_HeroKnight>();
         m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
@@ -237,7 +237,7 @@ public class Hero : MonoBehaviour {
             m_speed = 0;
             m_body2d.gravityScale = 0;
             m_body2d.velocity = Vector2.zero;
-            boxCollider.enabled = false;
+            circleCollider.enabled = false;
             m_animator.StopPlayback();
             m_animator.SetBool("noBlood", m_noBlood);
             m_animator.SetBool("dead", true);

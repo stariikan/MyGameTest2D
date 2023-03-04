@@ -135,12 +135,19 @@ public class LvLGeneration : MonoBehaviour
         GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().BoostAttackDamage();
         GameObject.Find("Skeleton").GetComponent<Enemy_Skeleton>().BoostSpeed();
     }
+    public void Boost_Goblin()
+    {
+        GameObject.Find("Goblin").GetComponent<Entity_Goblin>().BoostHP();
+        GameObject.Find("Goblin").GetComponent<Entity_Goblin>().BoostAttackDamage();
+        GameObject.Find("Goblin").GetComponent<Enemy_Goblin>().BoostSpeed();
+    }
     public void CompleteLevel() // Добавим метод CompleteLevel, который будет увеличивать переменную completeLevels на одну единицу каждый раз, когда игрок пройдет очередной уровень.
     {
         this.Level += 1;;
         //Boost Enemy
         Boost_Moushroom();
         Boost_Skeleton();
+        Boost_Goblin();
 
         SaveSerial.Instance.SaveGame();
         SceneManager.LoadScene("LevelComplete", LoadSceneMode.Single);
