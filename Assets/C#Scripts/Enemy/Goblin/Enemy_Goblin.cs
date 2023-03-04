@@ -144,16 +144,20 @@ public class Enemy_Goblin : MonoBehaviour
     }
     public void GoblinBomb() //бросок бомбы
     {
-        if (level >= 1 && remainingBombs >= 1)
+        if (level >= 5 && remainingBombs >= 1)
         {
             remainingBombs -= 1;
             bombCooldown = 0; // сброс таймера бомб
             Vector3 goblinScale = transform.localScale; //взятие параметра поворота спрайта гоблина
             transform.localScale = goblinScale; //взятие параметра поворота спрайта гоблина
             Vector3 bombSpawnPosition = this.gameObject.transform.position; //взятие позиции гоблина
-            if (goblinScale.x < 0) bombSpawnPosition.x -= 0.8f; //перемещения бомбы вперед гоблина в зависимости от поворота спрайта
-            if (goblinScale.x > 0) bombSpawnPosition.x += 0.8f; 
+            if (goblinScale.x < 0) bombSpawnPosition.x -= 1f; //перемещения бомбы вперед гоблина в зависимости от поворота спрайта
+            if (goblinScale.x > 0) bombSpawnPosition.x += 1f; 
             Bomb.Instance.bombDirection(bombSpawnPosition); //передача координаты для спавна бомбы
+        }
+        if(level < 5)
+        {
+            remainingBombs = 0;
         }
     }
     public void GoblinMovement() //Метод в котором описываем логику следования за игроком
@@ -194,20 +198,21 @@ public class Enemy_Goblin : MonoBehaviour
         {
             JumpFromPlayer();
         }
-        if ((Mathf.Abs(directionX)) < 6f && bombCooldown > 4 && !jump || this.gameObject.GetComponent<Entity_Goblin>().enemyTakeDamage == true && bombCooldown > 4 && !jump)
+        if ((Mathf.Abs(directionX)) < 6f && bombCooldown > 3 && !jump && remainingBombs >=1 || this.gameObject.GetComponent<Entity_Goblin>().enemyTakeDamage == true && bombCooldown > 3 && !jump && remainingBombs >= 1)
         {
             Vector3 pos = transform.position; //позиция обьекта
             Vector3 theScale = transform.localScale; //нужно для понимания направления
             transform.localScale = theScale; //нужно для понимания направления
             float RunSpeed = Mathf.Sign(directionX) * speed * Time.deltaTime; //вычесление направления
-            GoblinBomb();
-            if (RunSpeed < 0 && theScale.x > 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+            if (theScale.x > 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
             {
                 Flip();
+                GoblinBomb();
             }
-            else if (RunSpeed > 0 && theScale.x < 0) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+            else if (theScale.x < 0) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
             {
                 Flip();
+                GoblinBomb();
             }
         }
         if (jumpCooldown > 2.1f)

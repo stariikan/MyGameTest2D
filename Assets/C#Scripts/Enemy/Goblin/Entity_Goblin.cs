@@ -52,7 +52,7 @@ public class Entity_Goblin : MonoBehaviour
     {
         directionX = this.gameObject.GetComponent<Enemy_Goblin>().directionX;
         directionY = this.gameObject.GetComponent<Enemy_Goblin>().directionY;
-        if (playerHP > 0 && directionX < 1.5f && directionY < 0.3f)
+        if (playerHP > 0 && directionX < 1.2f && directionY < 0.3f)
         {
             Hero.Instance.GetDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage
         }

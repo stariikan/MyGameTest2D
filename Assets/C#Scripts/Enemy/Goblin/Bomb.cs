@@ -53,7 +53,7 @@ public class Bomb : MonoBehaviour
     {
         float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
         float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиции тумана по оси y
-        if ((Mathf.Abs(directionX) < 3f && Mathf.Abs(directionY) < 2f) && playerHP > 0)
+        if ((Mathf.Abs(directionX) < 2.0f && Mathf.Abs(directionY) < 2f) && playerHP > 0)
         {
             Hero.Instance.GetDamage(bombDamage);
         }
