@@ -17,12 +17,14 @@ public class Entity_Skeleton : MonoBehaviour
     public bool enemyTakeDamage = false;
     public int rewardForKillEnemy = 2;//награда за победу над врагом
 
-    private BoxCollider2D boxCollider;
+    private CapsuleCollider2D capsuleCollider;
 
     private float directionY;
     private float directionX;
 
+
     private bool isBlock; //проверка поставлен ли блок
+    private float blockDMG;
 
     private void Start()
     {
@@ -40,7 +42,7 @@ public class Entity_Skeleton : MonoBehaviour
         Instance = this;
         anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
         e_rb = this.gameObject.GetComponent<Rigidbody2D>();
-        boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
+        capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
     }
     public void DamageDeealToPlayer()
     {
@@ -48,7 +50,11 @@ public class Entity_Skeleton : MonoBehaviour
         directionY = this.gameObject.GetComponent<Enemy_Skeleton>().directionY;
         if(directionX < 0.8f && directionY < 0.3f)
         {
-            Hero.Instance.GetDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage  
+            Hero.Instance.GetDamage(enemyAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage
+            float heal = enemyAttackDamage * 0.5f; //Скелет ворует половину урона который наносит скелет игроку к себе в хп
+            currentHP += heal;
+            float healBar = heal / (float)maxHP; //на сколько надо увеличить прогресс бар
+            this.gameObject.GetComponentInChildren<SkeletonProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
         }                                                       
     }
     public void BoostHP() //тут усиливыем хп
@@ -88,7 +94,15 @@ public class Entity_Skeleton : MonoBehaviour
         else if(currentHP > 0 && isBlock)
         {
             //anim.SetTrigger("block_damage");//анимация получения демейджа
-            float blockDMG = dmg * 0.1f;
+            int level = LvLGeneration.Instance.Level;
+            if (level < 5) //если меньше 5 уровня то 50% блокирования урона
+            {
+                blockDMG = dmg * 0.5f;
+            }
+            if (level >= 5) //если больше 5 уровня то 90% блокирования урона
+            {
+                blockDMG = dmg * 0.1f;
+            }
             currentHP -= blockDMG;
             enemyTakeDamage = true;
             takedDamage = blockDMG / (float)maxHP; //на сколько надо уменьшаить прогресс бар
@@ -99,7 +113,7 @@ public class Entity_Skeleton : MonoBehaviour
             LvLGeneration.Instance.PlusCoin(rewardForKillEnemy);//вызов метода для увелечения очков
             e_rb.gravityScale = 0;
             e_rb.velocity = Vector2.zero;
-            boxCollider.enabled = false;
+            capsuleCollider.enabled = false;
             anim.StopPlayback();
             anim.SetBool("dead", true);
             anim.SetTrigger("m_death");//анимация смерти

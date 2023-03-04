@@ -74,10 +74,10 @@ public class Projectile : MonoBehaviour
             {
             target.GetComponent<Entity_Mushroom>().TakeDamage(magicAttackDamage);
             }
-        else 
-            {
-            return;
-            }
+        if (target.CompareTag("Goblin"))
+        {
+            target.GetComponent<Entity_Goblin>().TakeDamage(magicAttackDamage);
+        }
     }
     public void SetDirection(Vector3 shootingDirection)// выбор направления полета 
     {

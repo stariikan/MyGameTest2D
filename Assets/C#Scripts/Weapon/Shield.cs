@@ -44,6 +44,14 @@ public class Shield : MonoBehaviour
         {
             target.GetComponent<Enemy_Mushroom>().PushFromPlayer();
         }
+        if (target.CompareTag("Goblin"))
+        {
+            target.GetComponent<Enemy_Goblin>().PushFromPlayer();
+        }
+        if (target.CompareTag("Bomb"))
+        {
+            target.GetComponent<Bomb>().PushFromPlayer();
+        }
     }
     public void MeleeDirection(Vector3 _direction)// выбор направления полета 
     {

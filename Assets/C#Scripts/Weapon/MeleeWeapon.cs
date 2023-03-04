@@ -52,6 +52,10 @@ public class MeleeWeapon : MonoBehaviour
         {
             target.GetComponent<Entity_Mushroom>().TakeDamage(AttackDamage);
         }
+        if (target.CompareTag("Goblin"))
+        {
+            target.GetComponent<Entity_Goblin>().TakeDamage(AttackDamage);
+        }
         if (target.CompareTag("Chest"))
         {
             target.GetComponent<Chest>().TakeDamage(AttackDamage);

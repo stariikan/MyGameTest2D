@@ -115,7 +115,6 @@ public class Enemy_Mushroom : MonoBehaviour //наследование класса сущности (то е
             transform.localScale = theScale;
             if (theScale.x > 0) rb.AddForce(new Vector2(-5, 1.5f), ForceMode2D.Impulse);
             if (theScale.x < 0) rb.AddForce(new Vector2(5, 1.5f), ForceMode2D.Impulse);
-            jumpCooldown = 0;
         }
     }
     public void MushroomSpores() //создает облако спор которая дамажит игрока

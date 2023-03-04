@@ -9,28 +9,43 @@ public class Spore : MonoBehaviour
     [SerializeField] private float lifetime; //длительность жизни снаряда
     private float playerHP; //переменная метки попал ли во что-то снаряд
 
-    private BoxCollider2D boxCollider; //Коллайдер удара
+    private CircleCollider2D circleCollider; //Коллайдер удара
 
     private float sporeDamage = 20;
     private float sporeCooldownDmg;
+    private float sporeSpeed = 1f;
     GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
 
     private void Start() //Действие выполняется до старта игры и 1 раз
     {
         player = GameObject.FindWithTag("PlayerCharacter");
-        boxCollider = GetComponent<BoxCollider2D>(); // вытаскиваем информацию из компанента бокс колайдер
+        circleCollider = GetComponent<CircleCollider2D>(); // вытаскиваем информацию из компанента бокс колайдер
         Instance = this;
         playerHP = Hero.Instance.hp;
     }
-
     private void Update()
     {
         lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
         sporeCooldownDmg += Time.deltaTime;//кулдаун атаки спор
         playerHP = Hero.Instance.hp;
         SporeDmg();
+        SporeMovement();
         if (lifetime > 5) this.gameObject.SetActive(false);//когда переменная достигает 5, коллайдер атаки исчезает
         
+    }
+    private void SporeMovement()
+    {
+        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
+        //int level = LvLGeneration.Instance.Level;
+        if (playerHP > 0)
+        {
+            Vector3 pos = transform.position; //позиция обьекта
+            Vector3 theScale = transform.localScale; //нужно для понимания направления
+            transform.localScale = theScale; //нужно для понимания направления
+            float playerFollowSpeed = Mathf.Sign(directionX) * sporeSpeed * Time.deltaTime; //вычесление направления
+            pos.x += playerFollowSpeed; //вычесление позиции по оси х
+            transform.position = pos; //применение позиции
+        }
     }
     private void SporeDmg()
     {

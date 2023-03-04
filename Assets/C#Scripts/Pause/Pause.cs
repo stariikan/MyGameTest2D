@@ -31,6 +31,7 @@ public class Pause : MonoBehaviour
         platform = Joystick.Instance.platform;
         GameInfo();
         ClickPause();
+        GamePause();
     }
     private void GameInfo()
     {
@@ -113,7 +114,7 @@ public class Pause : MonoBehaviour
             guipuse = false;
         }
     }
-    private void ChangeJoystickSetting()
+    public void ChangeJoystickSetting()
     {
         if (joystick == false)
         {
@@ -122,38 +123,39 @@ public class Pause : MonoBehaviour
         else
         {
             joystick = false;
-        }
-        
+        }   
     }
-    public void OnGUI()
+    public void ContinuePlay()
+    {
+        ispause = false;
+        timer = 0;
+        Cursor.visible = false;
+    }
+    public void RestartGame()
+    {
+        SaveSerial.Instance.ResetData();
+        SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
+    }
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+    }
+    public void GamePause()
     {
         if (guipuse == true)
         {
             Cursor.visible = true;// включаем отображение курсора
-                                  
-            if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 5f, Screen.width / 2.5f, Screen.height / 11.5f), "Continue")) 
-            {
-                ispause = false;
-                timer = 0;
-                Cursor.visible = false;
-            } 
-            if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 3.33f, Screen.width / 2.5f, Screen.height / 11.5f), "Save")) 
-            {
-            } 
-            if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 2.5f, Screen.width / 2.5f, Screen.height / 11.5f), "Restart"))
-            {
-                SaveSerial.Instance.ResetData();
-                SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
-            }
-            if (GUI.Button(new Rect(Screen.width / 3.3f, Screen.height / 2f, Screen.width / 2.5f, Screen.height / 11.5f), "Touchscreen Joystick " + joystick))
-            {
-                ChangeJoystickSetting();
-            }
-            if(platform == 1)
+            Settings.Instance.Settings_menu_ON();
+
+            if (platform == 1)
             {
                 GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.66f, Screen.width / 2.5f, Screen.height / 11.5f), "WASD = Movement; CTRL = Attack;");
                 GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.42f, Screen.width / 2.5f, Screen.height / 11.5f), "Alt = Magic Attack; Shift = Shield;");
             }
-        } 
-    } 
+        }
+        else
+        {
+            Settings.Instance.Settings_menu_OFF();
+        }
+    }
 }

@@ -23,6 +23,10 @@ public class SaveSerial : MonoBehaviour
     public float skeletonDamage;
     public float skeletonSpeed;
 
+    public float goblinHP;
+    public float goblinDamage;
+    public float goblinSpeed;
+
     //Settings
     public bool joystick_settings;
     public static SaveSerial Instance { get; set; } //Для сбора и отправки данных из этого скрипта
@@ -51,6 +55,10 @@ public class SaveSerial : MonoBehaviour
         public float skeletonHP;
         public float skeletonDamage;
         public float skeletonSpeed;
+
+        public float goblinHP;
+        public float goblinDamage;
+        public float goblinSpeed;
 
         public bool joystick_settings;
     }
@@ -87,6 +95,10 @@ public class SaveSerial : MonoBehaviour
             skeletonDamage = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().enemyAttackDamage;
             skeletonSpeed = GameObject.Find("Skeleton").GetComponent<Enemy_Skeleton>().speed;
 
+            goblinHP = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().maxHP;
+            goblinDamage = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().enemyAttackDamage;
+            goblinSpeed = GameObject.Find("Skeleton").GetComponent<Enemy_Skeleton>().speed;
+
             joystick_settings = Pause.Instance.joystick;
         }
         
@@ -106,6 +118,10 @@ public class SaveSerial : MonoBehaviour
         data.skeletonHP = skeletonHP;
         data.skeletonDamage = skeletonDamage;
         data.skeletonSpeed = skeletonSpeed;
+
+        data.goblinHP = goblinHP;
+        data.goblinDamage = goblinDamage;
+        data.goblinSpeed = goblinSpeed;
 
         data.joystick_settings = joystick_settings;
 
@@ -144,6 +160,10 @@ public class SaveSerial : MonoBehaviour
             skeletonHP = data.skeletonHP;
             skeletonDamage = data.skeletonDamage;
             skeletonSpeed = data.skeletonSpeed;
+
+            goblinHP = data.goblinHP;
+            goblinDamage = data.goblinDamage;
+            goblinSpeed = data.goblinSpeed;
 
             joystick_settings = data.joystick_settings;
 
