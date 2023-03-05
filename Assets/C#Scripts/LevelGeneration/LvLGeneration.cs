@@ -121,6 +121,8 @@ public class LvLGeneration : MonoBehaviour
     }
     public void DeadScreen()
     {
+        Level = 1;
+        SaveSerial.Instance.ResetData();
         SceneManager.LoadScene("DeadScreen", LoadSceneMode.Single);
     }
     public void Boost_Moushroom()
@@ -150,6 +152,7 @@ public class LvLGeneration : MonoBehaviour
         Boost_Goblin();
 
         SaveSerial.Instance.SaveGame();
+        SaveSerial.Instance.SaveLastGame();
         SceneManager.LoadScene("LevelComplete", LoadSceneMode.Single);
     }
 }

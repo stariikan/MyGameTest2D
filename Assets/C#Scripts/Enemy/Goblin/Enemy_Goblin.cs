@@ -198,7 +198,7 @@ public class Enemy_Goblin : MonoBehaviour
         {
             JumpFromPlayer();
         }
-        if ((Mathf.Abs(directionX)) < 6f && bombCooldown > 3 && !jump && remainingBombs >=1 || this.gameObject.GetComponent<Entity_Goblin>().enemyTakeDamage == true && bombCooldown > 3 && !jump && remainingBombs >= 1)
+        if ((Mathf.Abs(directionX)) < 4.5 && bombCooldown > 3 && !jump && remainingBombs >=1 || this.gameObject.GetComponent<Entity_Goblin>().enemyTakeDamage == true && bombCooldown > 3 && !jump && remainingBombs >= 1)
         {
             Vector3 pos = transform.position; //позици€ обьекта
             Vector3 theScale = transform.localScale; //нужно дл€ понимани€ направлени€

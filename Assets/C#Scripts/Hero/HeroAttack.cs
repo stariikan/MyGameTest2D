@@ -92,6 +92,10 @@ public class HeroAttack : MonoBehaviour
             meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePointLeft.position);
         }
     }
+    public void MeleeWeaponOff() //отключения обьекта бомбы
+    {
+        MeleeWeapon.Instance.WeaponOff();
+    }
     public void MagicAttack()
     {
         if(MagicCooldownTimer > magicAttackCooldown)

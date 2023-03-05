@@ -54,7 +54,7 @@ public class Entity_Skeleton : MonoBehaviour
             float heal = enemyAttackDamage * 0.5f; //Скелет ворует половину урона который наносит скелет игроку к себе в хп
             currentHP += heal;
             float healBar = heal / (float)maxHP; //на сколько надо увеличить прогресс бар
-            this.gameObject.GetComponentInChildren<SkeletonProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
+            if(this.gameObject != null) this.gameObject.GetComponentInChildren<SkeletonProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
         }                                                       
     }
     public void BoostHP() //тут усиливыем хп
@@ -89,7 +89,7 @@ public class Entity_Skeleton : MonoBehaviour
             currentHP -= dmg;
             enemyTakeDamage = true;
             takedDamage = (float)dmg / (float)maxHP; //на сколько надо уменьшаить прогресс бар
-            this.gameObject.GetComponentInChildren<SkeletonProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
+            if (this.gameObject != null) this.gameObject.GetComponentInChildren<SkeletonProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
         }
         else if(currentHP > 0 && isBlock)
         {
@@ -106,7 +106,7 @@ public class Entity_Skeleton : MonoBehaviour
             currentHP -= blockDMG;
             enemyTakeDamage = true;
             takedDamage = blockDMG / (float)maxHP; //на сколько надо уменьшаить прогресс бар
-            this.gameObject.GetComponentInChildren<SkeletonProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара
+            if (this.gameObject != null) this.gameObject.GetComponentInChildren<SkeletonProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара
         }
         if (currentHP <= 0)
         {

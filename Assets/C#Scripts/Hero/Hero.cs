@@ -410,7 +410,6 @@ public class Hero : MonoBehaviour {
                 m_currentAttack = 1;
 
             // Call one of three attack animations "Attack1", "Attack2", "Attack3"
-            HeroAttack.Instance.Attack();
             m_animator.SetTrigger("Attack" + m_currentAttack);
             // Reset timer
             m_timeSinceAttack = 0.0f;

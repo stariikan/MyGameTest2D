@@ -23,6 +23,8 @@ public class UI_Transform_Position : MonoBehaviour
     }
     public void ContinueAD()
     {
+        SaveSerial.Instance.LoadlLastGame();
+        SaveSerial.Instance.SaveGame();
         SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
     }
     public void RestartLVL()
