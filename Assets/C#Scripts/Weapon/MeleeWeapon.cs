@@ -32,11 +32,7 @@ public class MeleeWeapon : MonoBehaviour
     private void Update()
     {
         lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
-        if (lifetime > 1) 
-        {
-            gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
-        }
-        
+        //if (lifetime > 0.8) gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -64,6 +60,10 @@ public class MeleeWeapon : MonoBehaviour
         {
             target.GetComponent<door>().TryToOpen();
         }
+    }
+    public void WeaponOff() //отключения обьекта бомбы
+    {
+        this.gameObject.SetActive(false);
     }
     public void MeleeDirection(Vector3 _direction)// выбор направления полета 
     {

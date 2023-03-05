@@ -21,6 +21,7 @@ public class door : MonoBehaviour
     void Update()
     {
         player_key = LvLGeneration.Instance.key;
+        TryToOpen();
         OpenDoor();
     }
     public void TryToOpen() //Метод для получения дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
@@ -33,7 +34,7 @@ public class door : MonoBehaviour
         }
         else
         {
-            Info.Instance.infoNeedKey();
+            //Info.Instance.infoNeedKey();
             return;
         }
     }

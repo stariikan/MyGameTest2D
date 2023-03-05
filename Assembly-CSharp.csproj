@@ -123,6 +123,7 @@
     <Compile Include="Assets\C#Scripts\Main menu\Collectables.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\EVil Wizard\License.txt" />
     <None Include="Assets\Materials\Hero Knight - Pixel Art\ColorSwap\Sprites-ColorSwap.shader" />
   </ItemGroup>
   <ItemGroup>
