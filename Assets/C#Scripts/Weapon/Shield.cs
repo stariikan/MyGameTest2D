@@ -36,22 +36,12 @@ public class Shield : MonoBehaviour
         boxCollider.enabled = false; //отключаем коллайдер
         this.gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
         target = GameObject.Find(TargetName);
-        if (target.CompareTag("Skeleton"))
-        {
-            target.GetComponent<Enemy_Skeleton>().PushFromPlayer();
-        }
-        if (target.CompareTag("Mushroom"))
-        {
-            target.GetComponent<Enemy_Mushroom>().PushFromPlayer();
-        }
-        if (target.CompareTag("Goblin"))
-        {
-            target.GetComponent<Enemy_Goblin>().PushFromPlayer();
-        }
+        if (target == null) return;
         if (target.CompareTag("Bomb"))
         {
             target.GetComponent<Bomb>().PushFromPlayer();
         }
+        target.GetComponent<Enemy_Behavior>().PushFromPlayer();
     }
     public void MeleeDirection(Vector3 _direction)// выбор направления полета 
     {

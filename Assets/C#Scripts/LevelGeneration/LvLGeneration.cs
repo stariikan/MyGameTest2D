@@ -41,7 +41,7 @@ public class LvLGeneration : MonoBehaviour
         {
             DeadScreen();
         }
-        if (Chest.Instance.chestOpen == true)
+        if (SpellBook.Instance.chestOpen == true)
         {
             CompleteLevel();
         }
@@ -125,32 +125,16 @@ public class LvLGeneration : MonoBehaviour
         SaveSerial.Instance.ResetData();
         SceneManager.LoadScene("DeadScreen", LoadSceneMode.Single);
     }
-    public void Boost_Moushroom()
+    public void Boost_Enemy()
     {
-        GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().BoostHP();
-        GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().BoostAttackDamage();
-        GameObject.Find("Mushroom").GetComponent<Enemy_Mushroom>().BoostSpeed();
-    }
-    public void Boost_Skeleton()
-    {
-        GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().BoostHP();
-        GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().BoostAttackDamage();
-        GameObject.Find("Skeleton").GetComponent<Enemy_Skeleton>().BoostSpeed();
-    }
-    public void Boost_Goblin()
-    {
-        GameObject.Find("Goblin").GetComponent<Entity_Goblin>().BoostHP();
-        GameObject.Find("Goblin").GetComponent<Entity_Goblin>().BoostAttackDamage();
-        GameObject.Find("Goblin").GetComponent<Enemy_Goblin>().BoostSpeed();
+        Entity_Enemy.Instance.BoostEnemyHP();
+        Entity_Enemy.Instance.BoostEnemyAttackDamage();
+        Enemy_Behavior.Instance.BoostEnemySpeed();
     }
     public void CompleteLevel() // Добавим метод CompleteLevel, который будет увеличивать переменную completeLevels на одну единицу каждый раз, когда игрок пройдет очередной уровень.
     {
-        this.Level += 1;;
-        //Boost Enemy
-        Boost_Moushroom();
-        Boost_Skeleton();
-        Boost_Goblin();
-
+        this.Level += 1;
+        Boost_Enemy();
         SaveSerial.Instance.SaveGame();
         SaveSerial.Instance.SaveLastGame();
         SceneManager.LoadScene("LevelComplete", LoadSceneMode.Single);

@@ -87,17 +87,17 @@ public class SaveSerial : MonoBehaviour
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
 
-            moushroomHP = GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().maxHP;
-            moushroomDamage = GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().enemyAttackDamage;
-            moushroomSpeed = GameObject.Find("Mushroom").GetComponent<Enemy_Mushroom>().speed;
+            moushroomHP = Entity_Enemy.Instance.moushroomMaxHP;
+            moushroomDamage = Entity_Enemy.Instance.moushroomAttackDamage;
+            moushroomSpeed = Enemy_Behavior.Instance.moushroomSpeed;
 
-            skeletonHP = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().maxHP;
-            skeletonDamage = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().enemyAttackDamage;
-            skeletonSpeed = GameObject.Find("Skeleton").GetComponent<Enemy_Skeleton>().speed;
+            skeletonHP = Entity_Enemy.Instance.skeletonMaxHP;
+            skeletonDamage = Entity_Enemy.Instance.skeletonAttackDamage;
+            skeletonSpeed = Enemy_Behavior.Instance.skeletonSpeed;
 
-            goblinHP = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().maxHP;
-            goblinDamage = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().enemyAttackDamage;
-            goblinSpeed = GameObject.Find("Skeleton").GetComponent<Enemy_Skeleton>().speed;
+            goblinHP = Entity_Enemy.Instance.goblinMaxHP;
+            goblinDamage = Entity_Enemy.Instance.goblinAttackDamage;
+            goblinSpeed = Enemy_Behavior.Instance.goblinSpeed;
 
             joystick_settings = Pause.Instance.joystick;
         }
@@ -152,17 +152,17 @@ public class SaveSerial : MonoBehaviour
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
 
-            moushroomHP = GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().maxHP;
-            moushroomDamage = GameObject.Find("Mushroom").GetComponent<Entity_Mushroom>().enemyAttackDamage;
-            moushroomSpeed = GameObject.Find("Mushroom").GetComponent<Enemy_Mushroom>().speed;
+            moushroomHP = Entity_Enemy.Instance.moushroomMaxHP;
+            moushroomDamage = Entity_Enemy.Instance.moushroomAttackDamage;
+            moushroomSpeed = Enemy_Behavior.Instance.moushroomSpeed;
 
-            skeletonHP = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().maxHP;
-            skeletonDamage = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().enemyAttackDamage;
-            skeletonSpeed = GameObject.Find("Skeleton").GetComponent<Enemy_Skeleton>().speed;
+            skeletonHP = Entity_Enemy.Instance.skeletonMaxHP;
+            skeletonDamage = Entity_Enemy.Instance.skeletonAttackDamage;
+            skeletonSpeed = Enemy_Behavior.Instance.skeletonSpeed;
 
-            goblinHP = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().maxHP;
-            goblinDamage = GameObject.Find("Skeleton").GetComponent<Entity_Skeleton>().enemyAttackDamage;
-            goblinSpeed = GameObject.Find("Skeleton").GetComponent<Enemy_Skeleton>().speed;
+            goblinHP = Entity_Enemy.Instance.goblinMaxHP;
+            goblinDamage = Entity_Enemy.Instance.goblinAttackDamage;
+            goblinSpeed = Enemy_Behavior.Instance.goblinSpeed;
 
             joystick_settings = Pause.Instance.joystick;
         }

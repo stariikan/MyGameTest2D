@@ -40,26 +40,16 @@ public class MeleeWeapon : MonoBehaviour
         boxCollider.enabled = false; //отключаем коллайдер
         this.gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
         target = GameObject.Find(TargetName);
-        if (target.CompareTag("Skeleton"))
+        if (target == null) return;
+        if (target.CompareTag("SpellBook"))
         {
-            target.GetComponent<Entity_Skeleton>().TakeDamage(AttackDamage);
-        }
-        if (target.CompareTag("Mushroom"))
-        {
-            target.GetComponent<Entity_Mushroom>().TakeDamage(AttackDamage);
-        }
-        if (target.CompareTag("Goblin"))
-        {
-            target.GetComponent<Entity_Goblin>().TakeDamage(AttackDamage);
-        }
-        if (target.CompareTag("Chest"))
-        {
-            target.GetComponent<Chest>().TakeDamage(AttackDamage);
+            target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
         }
         if (target.CompareTag("Door"))
         {
             target.GetComponent<door>().TryToOpen();
         }
+        target.GetComponent<Entity_Enemy>().TakeDamage(AttackDamage);
     }
     public void WeaponOff() //отключения обьекта бомбы
     {
