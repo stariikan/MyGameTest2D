@@ -26,7 +26,7 @@ public class Shield : MonoBehaviour
         lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
         if (lifetime > 1)
         {
-            gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
+            this.gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
         }
 
     }
@@ -36,12 +36,16 @@ public class Shield : MonoBehaviour
         boxCollider.enabled = false; //отключаем коллайдер
         this.gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
         target = GameObject.Find(TargetName);
-        if (target == null) return;
+        
         if (target.CompareTag("Bomb"))
         {
             target.GetComponent<Bomb>().PushFromPlayer();
         }
         target.GetComponent<Enemy_Behavior>().PushFromPlayer();
+        if (target == null)
+        {
+            Debug.Log("Not counter strike");
+        }
     }
     public void MeleeDirection(Vector3 _direction)// выбор направления полета 
     {

@@ -88,6 +88,7 @@
     <Compile Include="Assets\C#Scripts\Main menu\SettingsBool.cs" />
     <Compile Include="Assets\C#Scripts\Traps\Spike.cs" />
     <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\hp_counter.cs" />
+    <Compile Include="Assets\C#Scripts\Enemy\BossDeathAbility\SummonSlime.cs" />
     <Compile Include="Assets\C#Scripts\Pause\Pause.cs" />
     <Compile Include="Assets\C#Scripts\Main menu\Joystick_Settings.cs" />
     <Compile Include="Assets\C#Scripts\Main menu\Settings.cs" />
@@ -95,8 +96,8 @@
     <Compile Include="Assets\C#Scripts\Main menu\Sound_Settings.cs" />
     <Compile Include="Assets\C#Scripts\Shop\MagicDMG_counter.cs" />
     <Compile Include="Assets\C#Scripts\Shop\Stamina.cs" />
-    <Compile Include="Assets\C#Scripts\Hero\Hero_old.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickBlock.cs" />
+    <Compile Include="Assets\C#Scripts\Enemy\BossDeathAbility\DrainHP.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Hero.cs" />
     <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\Stamina_counter.cs" />
     <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\mp_counter.cs" />
@@ -104,9 +105,9 @@
     <Compile Include="Assets\C#Scripts\SaveProgress\SaveSerial.cs" />
     <Compile Include="Assets\C#Scripts\UI\LvL and info\Level_counter.cs" />
     <Compile Include="Assets\C#Scripts\SpellBook\SpellBook.cs" />
-    <Compile Include="Assets\C#Scripts\Enemy\Spore.cs" />
+    <Compile Include="Assets\C#Scripts\Enemy\MoushroomAbility\Spore.cs" />
     <Compile Include="Assets\Materials\Hero Knight - Pixel Art\ColorSwap\ColorSwap_HeroKnight.cs" />
-    <Compile Include="Assets\C#Scripts\Enemy\Bomb.cs" />
+    <Compile Include="Assets\C#Scripts\Enemy\GoblinAbility\Bomb.cs" />
     <Compile Include="Assets\C#Scripts\Hero\DestroyEvent_HeroKnight.cs" />
     <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\Bar_Position.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickAttack.cs" />
