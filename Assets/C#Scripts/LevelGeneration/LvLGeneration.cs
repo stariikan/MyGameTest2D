@@ -148,6 +148,7 @@ public class LvLGeneration : MonoBehaviour
         Entity_Enemy.Instance.BoostEnemyHP();
         Entity_Enemy.Instance.BoostEnemyAttackDamage();
         Enemy_Behavior.Instance.BoostEnemySpeed();
+        if (Level == 5 || Level == 10 || Level == 15 || Level == 20 || Level == 30 || Level == 35 || Level == 40) Entity_Enemy.Instance.BoostEnemyReward();
     }
     public void CompleteLevel() // Добавим метод CompleteLevel, который будет увеличивать переменную completeLevels на одну единицу каждый раз, когда игрок пройдет очередной уровень.
     {

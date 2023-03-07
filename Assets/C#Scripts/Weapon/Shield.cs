@@ -41,11 +41,7 @@ public class Shield : MonoBehaviour
         {
             target.GetComponent<Bomb>().PushFromPlayer();
         }
-        target.GetComponent<Enemy_Behavior>().PushFromPlayer();
-        if (target == null)
-        {
-            Debug.Log("Not counter strike");
-        }
+        if (target != null && target.layer == 7) target.GetComponent<Enemy_Behavior>().PushFromPlayer();
     }
     public void MeleeDirection(Vector3 _direction)// выбор направления полета 
     {

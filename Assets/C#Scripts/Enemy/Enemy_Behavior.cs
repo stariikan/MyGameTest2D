@@ -39,7 +39,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     private float timeSinceAttack = 0.0f;//время с прошлой атаки нужно для комбо анимации атаки
     private int level; //проверка какой уровень проходит игрок, нужно для подключения способностей
 
-    GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
+    public GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
     public Rigidbody2D rb; //Физическое тело
     private Animator anim; //Переменная благодаря которой анимирован обьект
     private float e_delayToIdle = 0.0f;
@@ -49,7 +49,6 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     private void Start()
     {
         Instance = this;
-        player = GameObject.FindWithTag("PlayerCharacter"); //тут при старте игры скелет находит игрока по тегу Player и присваивает найденную и информацию переменной player
         rb = this.gameObject.GetComponent<Rigidbody2D>(); //Переменная rb получает компонент Rigidbody2D (Физика game.Object) к которому привязан скрипт
         anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object) к которому привязан скрипт
         tag = this.gameObject.transform.tag;
@@ -119,7 +118,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         }
         if (tag == "Slime")
         {
-            EnemyMovement();
+            SlimeMovement();
             SlimeAttack();
         }
         if (tag == "Death")
@@ -227,18 +226,8 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         if (level >= 1) //способность активируется на 3 уровне
         {
             jumpCooldown = 0;
-            Vector3 theScale = transform.localScale;
-            transform.localScale = theScale;
-            if (directionX > 0)
-            {
-                if (theScale.x < 0) Flip();//если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
-                rb.AddForce(new Vector2(10, 2.5f), ForceMode2D.Impulse);
-            }
-            if (directionX < 0)
-            {
-                if (theScale.x > 0) Flip(); //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
-                rb.AddForce(new Vector2(-10, 2.5f), ForceMode2D.Impulse);
-            }
+            if (directionX > 0) rb.AddForce(new Vector2(10, 2.5f), ForceMode2D.Impulse);
+            if (directionX < 0) rb.AddForce(new Vector2(-10, 2.5f), ForceMode2D.Impulse);
         }
     }
     public void GoblinJumpFromPlayer() // отскок от игрока (Гоблин)
@@ -281,8 +270,8 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         {
             summonCooldown = 0; // сброс таймера
             anim.SetTrigger("cast1");
-            Vector3 spellSpawnPosition = player.transform.position; //взятие позиции Игрока
-            spellSpawnPosition.y += 1.7f; // нужно чтобы магия спавнилась чуть выше игрока
+            Vector3 spellSpawnPosition = this.gameObject.transform.position; //взятие позиции Игрока
+            spellSpawnPosition.x -= 2f;
             SummonSlime.Instance.SummonDirection(spellSpawnPosition); //передача координаты для спавна магии
         }
     }
@@ -354,7 +343,27 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         }
         else movement = false;
     }
-
+    public void SlimeMovement()
+    {
+        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
+        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
+        if (Mathf.Abs(directionX) > 1f && !skeleton_block && !isAttack || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !skeleton_block && !isAttack) //следует за игроком если маленькое растояние или получил урон
+        {
+            Vector3 pos = transform.position; //позиция обьекта
+            Vector3 theScale = transform.localScale; //нужно для понимания направления
+            transform.localScale = theScale; //нужно для понимания направления
+            float playerFollowSpeed = Mathf.Sign(directionX) * Time.deltaTime;
+            if (tag == "Skeleton") playerFollowSpeed = Mathf.Sign(directionX) * skeletonSpeed * Time.deltaTime; //вычесление направления
+            if (tag == "Mushroom") playerFollowSpeed = Mathf.Sign(directionX) * moushroomSpeed * Time.deltaTime; //вычесление направления
+            if (tag == "Slime") playerFollowSpeed = Mathf.Sign(directionX) * slimeSpeed * Time.deltaTime; //вычесление направления
+            pos.x += playerFollowSpeed; //вычесление позиции по оси х
+            transform.position = pos; //применение позиции
+            movement = true;
+            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();//если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();//если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+        }
+        else movement = false;
+    }
     //Методы атаки у разных мобов
     public void MoushroomAttack()
     {
@@ -410,18 +419,19 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         {
             Vector3 theScale = transform.localScale; //нужно для понимания направления
             transform.localScale = theScale; //нужно для понимания направления
-            if (theScale.x > 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+            Debug.Log(directionX);
+            if (directionX < 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
             {
-                Flip();
+                if (theScale.x > 0) Flip();
                 GoblinBomb();
             }
-            else if (theScale.x < 0) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+            else if (directionX > 0) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
             {
-                Flip();
+                if (theScale.x < 0) Flip();
                 GoblinBomb();
             }
         }
-        if (jumpCooldown > 2.1f) jump = false;
+        if (jumpCooldown > 1.2f) jump = false;
         if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1)
         {
             //Damage Deal
@@ -456,7 +466,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     {
         float playerHP = Hero.Instance.hp;
 
-        if (playerHP > 0 && Mathf.Abs(directionX) < 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2)
         {
             anim.SetTrigger("attack1");
             timeSinceAttack = 0.0f;

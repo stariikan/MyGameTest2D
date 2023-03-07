@@ -221,7 +221,7 @@ public class Hero : MonoBehaviour {
     {
         if (block == false && !m_rolling)
         {
-            hp -= dmg;//Отнимает int 10 из переменной hp (жизни).
+            hp -= dmg;//Отнимает dmg из переменной hp (жизни).
             m_animator.SetTrigger("Hurt");
             //Push();
         }

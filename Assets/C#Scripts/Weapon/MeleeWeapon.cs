@@ -4,7 +4,6 @@ public class MeleeWeapon : MonoBehaviour
 {
     public static MeleeWeapon Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     public float direction;//переменная направления
-    [SerializeField] private float lifetime; //длительность жизни снаряда
 
     private BoxCollider2D boxCollider; //Коллайдер удара
 
@@ -28,28 +27,14 @@ public class MeleeWeapon : MonoBehaviour
             AttackDamage = 15;
         }
     }
-
-    private void Update()
-    {
-        lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
-        //if (lifetime > 0.8) gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает        
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         TargetName = collision.gameObject.name;
         boxCollider.enabled = false; //отключаем коллайдер
         this.gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
         target = GameObject.Find(TargetName);
-        if (target == null) return;
-        if (target.CompareTag("SpellBook"))
-        {
-            target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
-        }
-        if (target.CompareTag("Door"))
-        {
-            target.GetComponent<door>().TryToOpen();
-        }
-        target.GetComponent<Entity_Enemy>().TakeDamage(AttackDamage);
+        if (target.CompareTag("SpellBook")) target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
+        if (target !=null && target.layer == 7) target.GetComponent<Entity_Enemy>().TakeDamage(AttackDamage); //7 это EnemyLayer
     }
     public void WeaponOff() //отключения обьекта бомбы
     {
@@ -57,7 +42,6 @@ public class MeleeWeapon : MonoBehaviour
     }
     public void MeleeDirection(Vector3 _direction)// выбор направления полета 
     {
-        lifetime = 0;
         gameObject.SetActive(true); //активация игрового обьекта
         this.gameObject.transform.position = _direction;
         boxCollider.enabled = true; //активация коллайдера

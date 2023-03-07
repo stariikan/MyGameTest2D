@@ -40,8 +40,6 @@ public class Entity_Enemy : MonoBehaviour
     public bool enemyDead = false; //ћертвый ли обьект
     public bool enemyTakeDamage = false; //ѕолучил ли обьект урон
 
-    public Transform enemyAttackPoint; //“ут мы ссылаемс€ на точку котора€ €вл€етс€ дочерним (нужна дл€ реализации физ атаки)
-    public LayerMask playerLayers;
     public Vector3 lossyScale;
     private Rigidbody2D e_rb;
     private CapsuleCollider2D capsuleCollider;
@@ -97,9 +95,9 @@ public class Entity_Enemy : MonoBehaviour
     //—екци€ где идет уселение характеристик врагов, если добавл€етс€ новый враг, тут нужно добавить его характеристики
     public void BoostEnemyHP() 
     {
-        skeletonMaxHP += 10;
-        moushroomMaxHP += 10;
-        goblinMaxHP += 10;
+        skeletonMaxHP *= 1.2f;
+        moushroomMaxHP *= 1.2f;
+        goblinMaxHP *= 1.2f;
     }
     public void BoostEnemyAttackDamage() //тут усиливыем урон
     {
@@ -119,18 +117,18 @@ public class Entity_Enemy : MonoBehaviour
     {
         directionX = Enemy_Behavior.Instance.directionX;
         directionY = Enemy_Behavior.Instance.directionY;
-        if (directionX < 1f && directionY < 1f && tag == "Skeleton")
+        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Skeleton")
         {
             Hero.Instance.GetDamage(skeletonAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage
             float heal = skeletonAttackDamage * 0.5f; //—келет ворует половину урона который наносит скелет игроку к себе в хп
             currentHP += heal;
             float healBar = heal / (float)skeletonMaxHP; //на сколько надо увеличить прогресс бар
-            this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
+            if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
         }
-        if (directionX < 1f && directionY < 1f && tag == "Mushroom") Hero.Instance.GetDamage(moushroomAttackDamage);
-        if (directionX < 1f && directionY < 1f && tag == "Goblin") Hero.Instance.GetDamage(goblinAttackDamage);
-        if (directionX < 1f && directionY < 1f && tag == "Slime") Hero.Instance.GetDamage(slimeAttackDamage);
-        if (directionX < 1.8f && directionY < 1f && tag == "Death")
+        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Mushroom") Hero.Instance.GetDamage(moushroomAttackDamage);
+        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Goblin") Hero.Instance.GetDamage(goblinAttackDamage);
+        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Slime") Hero.Instance.GetDamage(slimeAttackDamage);
+        if (directionX < 1.8f && currentHP > 0 && directionY < 1f && tag == "Death")
         {
             Hero.Instance.GetDamage(deathAttackDamage);
             float heal = deathAttackDamage * 0.5f; //—мерть ворует половину урона который наносит скелет игроку к себе в хп
@@ -186,7 +184,6 @@ public class Entity_Enemy : MonoBehaviour
             if (tag == "Slime")
             {
                 reward = 1;
-                BossDeathDamage();
             }
             if (tag == "Death") reward = 40;
             LvLGeneration.Instance.PlusCoin(reward);//вызов метода дл€ увелечени€ очков
@@ -212,7 +209,7 @@ public class Entity_Enemy : MonoBehaviour
             {
                 if (obj.name != "BossDeath")
                 {
-                    obj.GetComponent<Entity_Enemy>().BossDeathDamage();
+                    obj.GetComponent<Entity_Enemy>().BossDeathDamage(50);
                 }
             }
         }
@@ -220,18 +217,17 @@ public class Entity_Enemy : MonoBehaviour
     }
 
     //ћетоды атаки у разных мобов
-    public void BossDeathHeal()
+    public void BossDeathHeal(float heal)
     {
-        currentHP += 50;
-        float heal = 50; //—мерть ворует половину урона который наносит скелет игроку к себе в хп
         currentHP += heal;
         float healBar = heal / deathMaxHP; //на сколько надо увеличить прогресс бар
-        this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
+        if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
     }
-    public void BossDeathDamage()
+    public void BossDeathDamage(float dmg)
     {
-        currentHP -= 100;
-        takedDamage = (float)100 / deathMaxHP; //на сколько надо уменьшаить прогресс бар
-        this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара
+        currentHP -= dmg;
+        enemyTakeDamage = true;
+        takedDamage = dmg / deathMaxHP; //на сколько надо уменьшаить прогресс бар
+        if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара
     }
 }

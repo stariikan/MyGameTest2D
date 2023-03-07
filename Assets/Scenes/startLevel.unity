@@ -496,6 +496,7 @@ MonoBehaviour:
   deathSpeed: 2
   directionX: 0
   directionY: 0
+  player: {fileID: 6323719954861377910}
   rb: {fileID: 0}
 --- !u!114 &28677083
 MonoBehaviour:
@@ -529,10 +530,6 @@ MonoBehaviour:
   enemyAttackRange: 1.2
   enemyDead: 0
   enemyTakeDamage: 0
-  enemyAttackPoint: {fileID: 2017457237}
-  playerLayers:
-    serializedVersion: 2
-    m_Bits: 256
   lossyScale: {x: 0, y: 0, z: 0}
 --- !u!1 &42493937
 GameObject:
@@ -3506,6 +3503,7 @@ GameObject:
   - component: {fileID: 331685514}
   - component: {fileID: 331685513}
   - component: {fileID: 331685516}
+  - component: {fileID: 331685517}
   m_Layer: 7
   m_Name: DrainHP
   m_TagString: Untagged
@@ -3632,6 +3630,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!61 &331685517
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331685511}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.051412106, y: -0.21018595}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.4, y: 0.93}
+    newSize: {x: 1.4, y: 0.93}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.22053814, y: 0.5580164}
+  m_EdgeRadius: 0
 --- !u!1 &338201522
 GameObject:
   m_ObjectHideFlags: 0
@@ -4013,7 +4037,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 0
-  lifetime: 0.8
   AttackDamage: 20
   TargetName: 
   target: {fileID: 0}
@@ -4917,6 +4940,7 @@ MonoBehaviour:
   deathSpeed: 2
   directionX: 0
   directionY: 0
+  player: {fileID: 6323719954861377910}
   rb: {fileID: 0}
 --- !u!114 &433137806
 MonoBehaviour:
@@ -4950,10 +4974,6 @@ MonoBehaviour:
   enemyAttackRange: 1.2
   enemyDead: 0
   enemyTakeDamage: 0
-  enemyAttackPoint: {fileID: 0}
-  playerLayers:
-    serializedVersion: 2
-    m_Bits: 0
   lossyScale: {x: 0, y: 0, z: 0}
 --- !u!1 &442795375
 GameObject:
@@ -5259,10 +5279,6 @@ MonoBehaviour:
   enemyAttackRange: 1.2
   enemyDead: 0
   enemyTakeDamage: 0
-  enemyAttackPoint: {fileID: 0}
-  playerLayers:
-    serializedVersion: 2
-    m_Bits: 0
   lossyScale: {x: 0, y: 0, z: 0}
 --- !u!114 &455363767
 MonoBehaviour:
@@ -5285,6 +5301,7 @@ MonoBehaviour:
   deathSpeed: 2
   directionX: 0
   directionY: 0
+  player: {fileID: 6323719954861377910}
   rb: {fileID: 0}
 --- !u!70 &455363768
 CapsuleCollider2D:
@@ -8298,6 +8315,7 @@ MonoBehaviour:
   direction: 0
   lifetime: 0
   rb: {fileID: 0}
+  player: {fileID: 6323719954861377910}
 --- !u!1 &835374979
 GameObject:
   m_ObjectHideFlags: 0
@@ -12948,10 +12966,6 @@ MonoBehaviour:
   enemyAttackRange: 1.2
   enemyDead: 0
   enemyTakeDamage: 0
-  enemyAttackPoint: {fileID: 0}
-  playerLayers:
-    serializedVersion: 2
-    m_Bits: 0
   lossyScale: {x: 0, y: 0, z: 0}
 --- !u!114 &1433946435
 MonoBehaviour:
@@ -12974,6 +12988,7 @@ MonoBehaviour:
   deathSpeed: 2
   directionX: 0
   directionY: 0
+  player: {fileID: 6323719954861377910}
   rb: {fileID: 0}
 --- !u!70 &1433946436
 CapsuleCollider2D:
@@ -13237,6 +13252,7 @@ MonoBehaviour:
   deathSpeed: 2
   directionX: 0
   directionY: 0
+  player: {fileID: 6323719954861377910}
   rb: {fileID: 0}
 --- !u!114 &1453525427
 MonoBehaviour:
@@ -13270,10 +13286,6 @@ MonoBehaviour:
   enemyAttackRange: 1.2
   enemyDead: 0
   enemyTakeDamage: 0
-  enemyAttackPoint: {fileID: 1269871322}
-  playerLayers:
-    serializedVersion: 2
-    m_Bits: 256
   lossyScale: {x: 0, y: 0, z: 0}
 --- !u!70 &1453525428
 CapsuleCollider2D:
@@ -17718,7 +17730,7 @@ MonoBehaviour:
   chestForGeneration:
   - {fileID: 1574964221}
   powerUpForGeneration: []
-  Level: 5
+  Level: 10
   coin: 0
   key: 0
 --- !u!4 &1851200105

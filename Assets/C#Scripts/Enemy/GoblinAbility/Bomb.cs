@@ -12,11 +12,10 @@ public class Bomb : MonoBehaviour
     private float bombDamage = 40;
     private Animator anim;
     public Rigidbody2D rb; //Физическое тело
-    GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
+    public GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
 
     private void Start() //Действие выполняется до старта игры и 1 раз
     {
-        player = GameObject.FindWithTag("PlayerCharacter");
         Instance = this;
         playerHP = Hero.Instance.hp;
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -31,14 +30,9 @@ public class Bomb : MonoBehaviour
     private void BombMovement() //направления и сила полета бомбы 
     {
         float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
-        if (directionX > 0)
-        {
-            rb.AddForce(new Vector2(2.7f, 1f), ForceMode2D.Impulse);
-        }
-        if (directionX < 0)
-        {
-            rb.AddForce(new Vector2(-2.7f, 1.0f), ForceMode2D.Impulse);
-        }
+        if (directionX > 0) rb.AddForce(new Vector2(2.7f, 0.5f), ForceMode2D.Impulse);
+        if (directionX < 0) rb.AddForce(new Vector2(-2.7f, 0.5f), ForceMode2D.Impulse);
+ 
     }
     public void BombDestroy() //отключения обьекта бомбы
     {
@@ -66,8 +60,8 @@ public class Bomb : MonoBehaviour
         {
             Vector3 theScale = transform.localScale;
             transform.localScale = theScale;
-            if (theScale.x > 0) rb.AddForce(new Vector2(-2.7f, 1.5f), ForceMode2D.Impulse);
-            if (theScale.x < 0) rb.AddForce(new Vector2(2.7f, 1.5f), ForceMode2D.Impulse);
+            if (theScale.x > 0) rb.AddForce(new Vector2(+2.7f, 0.5f), ForceMode2D.Impulse);
+            if (theScale.x < 0) rb.AddForce(new Vector2(-2.7f, 0.5f), ForceMode2D.Impulse);
         }
     }
     public void bombDirection(Vector3 _direction)// выбор направления полета 
