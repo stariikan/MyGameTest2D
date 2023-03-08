@@ -3,24 +3,24 @@ using UnityEngine;
 public class Entity_Enemy : MonoBehaviour
 {
     //Параметры Скелета
-    public float skeletonMaxHP = 50; //Максимальные жизни скелета
-    public float skeletonAttackDamage = 15; // Урон от физ атаки
+    public float skeletonMaxHP = 100; //Максимальные жизни скелета
+    public float skeletonAttackDamage = 10; // Урон от физ атаки
     public int skeletonReward = 2;//награда за победу над врагом
     private bool isBlock; //проверка поставлен ли блок
     private float blockDMG;
 
     //Параметры Гриба
-    public float moushroomMaxHP = 50; //Максимальные жизни Гриба
-    public float moushroomAttackDamage = 15; // Урон от физ атаки
+    public float moushroomMaxHP = 100; //Максимальные жизни Гриба
+    public float moushroomAttackDamage = 10; // Урон от физ атаки
     public int moushroomReward = 2;//награда за победу над врагом
 
     //Параметры Гоблина
-    public float goblinMaxHP = 35; //Максимальные жизни Гоблина
-    public float goblinAttackDamage = 25; // Урон от физ атаки
+    public float goblinMaxHP = 70; //Максимальные жизни Гоблина
+    public float goblinAttackDamage = 15; // Урон от физ атаки
     public int goblinReward = 2;//награда за победу над врагом
 
     //Параметры Слайма
-    public float slimeMaxHP = 20;//Максимальные жизни Слайма
+    public float slimeMaxHP = 40;//Максимальные жизни Слайма
     public float slimeAttackDamage = 15; // Урон от физ атаки
     public int slimeReward = 1;//награда за победу над врагом
 
@@ -57,7 +57,7 @@ public class Entity_Enemy : MonoBehaviour
         if (tag == "Skeleton")
         {
             skeletonMaxHP = SaveSerial.Instance.skeletonHP;
-            if (skeletonMaxHP == 0) skeletonMaxHP = 50;
+            if (skeletonMaxHP == 0) skeletonMaxHP = 100;
             currentHP = skeletonMaxHP;
             skeletonAttackDamage = SaveSerial.Instance.skeletonDamage;
             if (skeletonAttackDamage == 0) skeletonAttackDamage = 15;
@@ -65,7 +65,7 @@ public class Entity_Enemy : MonoBehaviour
         if (tag == "Mushroom")
         {
             moushroomMaxHP = SaveSerial.Instance.moushroomHP;
-            if (moushroomMaxHP == 0) moushroomMaxHP = 50;
+            if (moushroomMaxHP == 0) moushroomMaxHP = 150;
             currentHP = moushroomMaxHP;
             moushroomAttackDamage = SaveSerial.Instance.moushroomDamage;
             if (moushroomAttackDamage == 0) moushroomAttackDamage = 15;
@@ -73,14 +73,14 @@ public class Entity_Enemy : MonoBehaviour
         if (tag == "Goblin")
         {
             goblinMaxHP = SaveSerial.Instance.goblinHP;
-            if (goblinMaxHP == 0) goblinMaxHP = 35;
+            if (goblinMaxHP == 0) goblinMaxHP = 70;
             currentHP = goblinMaxHP;
             goblinAttackDamage = SaveSerial.Instance.goblinDamage;
             if (goblinAttackDamage == 0) goblinAttackDamage = 25;
         }
         if (tag == "Slime")
         {
-            if (slimeMaxHP == 0) slimeMaxHP = 35;
+            if (slimeMaxHP == 0) slimeMaxHP = 40;
             currentHP = slimeMaxHP;
             if (slimeAttackDamage == 0) slimeAttackDamage = 15;
         }
@@ -144,7 +144,7 @@ public class Entity_Enemy : MonoBehaviour
     }
     public void TakeDamage(float dmg) //Получение урона (в dmg указывается значение, в Hero скрипте при вызове метода TakeDamage в dmg записывается переменная дамага от оружия ) 
     {
-        isBlock = Enemy_Behavior.Instance.skeleton_block;
+        isBlock = Enemy_Behavior.Instance.block;
         if (currentHP > 0 && !isBlock)
         {
             anim.SetTrigger("damage");//анимация получения демейджа

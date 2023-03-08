@@ -5,7 +5,6 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     //ѕараметры —келета
     public float skeletonSpeed = 2f;//скорость —келета
     private float blockCooldown; //кулдаун блока
-    public bool skeleton_block = false;
 
     //ѕараметры √риба
     public float moushroomSpeed = 2f;//скорость √риба
@@ -31,6 +30,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
 
     //ќбщие параметры
     private float jumpCooldown; //кулдаун на отскок и прыжок
+    public bool block = false;
     private bool movement = false; //моб не приследует игрока
     private bool playerIsAttack; //јтакует ли игрок?
     private bool isAttack; //јтакует ли обьект (враг)
@@ -115,6 +115,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         {
             GoblinMovement();
             GoblinAttack();
+            Block();
         }
         if (tag == "Slime")
         {
@@ -179,13 +180,13 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         {
             blockCooldown = 0;
             skeletonSpeed = 0;
-            skeleton_block = true;
+            block = true;
             anim.SetBool("Block", true);
         }
         if (blockCooldown > 0.4f || directionX > 2f)
         {
             skeletonSpeed = speedRecovery;
-            skeleton_block = false;
+            block = false;
             anim.SetBool("Block", false);
         }
     }
@@ -292,7 +293,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     {
         directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движени€ это ѕозици€ игрока по оси х - позици€ скелета по оси х
         directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движени€ это ѕозици€ игрока по оси y - позици€ скелета по оси y
-        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1f && Mathf.Abs(directionY) < 2) && !skeleton_block && !isAttack || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !skeleton_block && !isAttack) //следует за игроком если маленькое расто€ние или получил урон
+        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1f && Mathf.Abs(directionY) < 2) && !block && !isAttack || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack) //следует за игроком если маленькое расто€ние или получил урон
         {
             Vector3 pos = transform.position; //позици€ обьекта
             Vector3 theScale = transform.localScale; //нужно дл€ понимани€ направлени€
@@ -347,7 +348,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     {
         directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движени€ это ѕозици€ игрока по оси х - позици€ скелета по оси х
         directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движени€ это ѕозици€ игрока по оси y - позици€ скелета по оси y
-        if (Mathf.Abs(directionX) > 1f && !skeleton_block && !isAttack || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !skeleton_block && !isAttack) //следует за игроком если маленькое расто€ние или получил урон
+        if (Mathf.Abs(directionX) > 1f && !block && !isAttack || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack) //следует за игроком если маленькое расто€ние или получил урон
         {
             Vector3 pos = transform.position; //позици€ обьекта
             Vector3 theScale = transform.localScale; //нужно дл€ понимани€ направлени€
@@ -391,7 +392,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     public void SkeletonAttack()
     {
         float playerHP = Hero.Instance.hp;
-        if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && !skeleton_block && timeSinceAttack > 1)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && !block && timeSinceAttack > 1)
         {
             isAttack = true;
             //Damage Deal

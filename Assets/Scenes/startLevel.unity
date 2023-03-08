@@ -488,7 +488,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonSpeed: 2
-  skeleton_block: 0
   moushroomSpeed: 2
   goblinSpeed: 3
   remainingBombs: 3
@@ -496,6 +495,7 @@ MonoBehaviour:
   deathSpeed: 2
   directionX: 0
   directionY: 0
+  block: 0
   player: {fileID: 6323719954861377910}
   rb: {fileID: 0}
 --- !u!114 &28677083
@@ -510,20 +510,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c529861a181dca4b8fb8a975b483489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonMaxHP: 50
+  skeletonMaxHP: 100
   skeletonAttackDamage: 15
   skeletonReward: 2
-  moushroomMaxHP: 50
+  moushroomMaxHP: 150
   moushroomAttackDamage: 15
   moushroomReward: 2
-  goblinMaxHP: 35
+  goblinMaxHP: 70
   goblinAttackDamage: 25
   goblinReward: 2
-  slimeMaxHP: 20
+  slimeMaxHP: 40
   slimeAttackDamage: 15
   slimeReward: 1
-  deathMaxHP: 150
-  deathAttackDamage: 50
+  deathMaxHP: 900
+  deathAttackDamage: 25
   deathReward: 40
   currentHP: 0
   takedDamage: 0
@@ -4932,7 +4932,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonSpeed: 2
-  skeleton_block: 0
   moushroomSpeed: 2
   goblinSpeed: 3
   remainingBombs: 3
@@ -4940,6 +4939,7 @@ MonoBehaviour:
   deathSpeed: 2
   directionX: 0
   directionY: 0
+  block: 0
   player: {fileID: 6323719954861377910}
   rb: {fileID: 0}
 --- !u!114 &433137806
@@ -5259,20 +5259,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c529861a181dca4b8fb8a975b483489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonMaxHP: 50
+  skeletonMaxHP: 100
   skeletonAttackDamage: 15
   skeletonReward: 2
-  moushroomMaxHP: 50
+  moushroomMaxHP: 150
   moushroomAttackDamage: 15
   moushroomReward: 2
-  goblinMaxHP: 35
+  goblinMaxHP: 70
   goblinAttackDamage: 25
   goblinReward: 2
-  slimeMaxHP: 20
+  slimeMaxHP: 40
   slimeAttackDamage: 15
   slimeReward: 1
-  deathMaxHP: 150
-  deathAttackDamage: 50
+  deathMaxHP: 900
+  deathAttackDamage: 25
   deathReward: 40
   currentHP: 0
   takedDamage: 0
@@ -5293,7 +5293,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonSpeed: 2
-  skeleton_block: 0
   moushroomSpeed: 2
   goblinSpeed: 3
   remainingBombs: 3
@@ -5301,6 +5300,7 @@ MonoBehaviour:
   deathSpeed: 2
   directionX: 0
   directionY: 0
+  block: 0
   player: {fileID: 6323719954861377910}
   rb: {fileID: 0}
 --- !u!70 &455363768
@@ -12878,7 +12878,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433946428}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -59.14, y: 2.25, z: 0}
+  m_LocalPosition: {x: -57.461, y: 2.25, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children:
   - {fileID: 113079286}
@@ -12946,20 +12946,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c529861a181dca4b8fb8a975b483489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonMaxHP: 50
+  skeletonMaxHP: 100
   skeletonAttackDamage: 15
   skeletonReward: 2
-  moushroomMaxHP: 50
+  moushroomMaxHP: 150
   moushroomAttackDamage: 15
   moushroomReward: 2
-  goblinMaxHP: 35
+  goblinMaxHP: 70
   goblinAttackDamage: 25
   goblinReward: 2
-  slimeMaxHP: 20
+  slimeMaxHP: 40
   slimeAttackDamage: 15
   slimeReward: 1
-  deathMaxHP: 150
-  deathAttackDamage: 50
+  deathMaxHP: 900
+  deathAttackDamage: 25
   deathReward: 40
   currentHP: 0
   takedDamage: 0
@@ -12980,7 +12980,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonSpeed: 2
-  skeleton_block: 0
   moushroomSpeed: 2
   goblinSpeed: 3
   remainingBombs: 3
@@ -12988,6 +12987,7 @@ MonoBehaviour:
   deathSpeed: 2
   directionX: 0
   directionY: 0
+  block: 0
   player: {fileID: 6323719954861377910}
   rb: {fileID: 0}
 --- !u!70 &1433946436
@@ -13244,7 +13244,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonSpeed: 2
-  skeleton_block: 0
   moushroomSpeed: 2
   goblinSpeed: 3
   remainingBombs: 3
@@ -13252,6 +13251,7 @@ MonoBehaviour:
   deathSpeed: 2
   directionX: 0
   directionY: 0
+  block: 0
   player: {fileID: 6323719954861377910}
   rb: {fileID: 0}
 --- !u!114 &1453525427
