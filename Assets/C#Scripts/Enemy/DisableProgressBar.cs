@@ -21,15 +21,18 @@ public class DisableProgressBar : MonoBehaviour
         {
             enemyDead = this.gameObject.GetComponentInParent<Entity_Enemy>().enemyDead;
         }
+        if (parentTag == "EvilWizard")
+        {
+            enemyDead = this.gameObject.GetComponentInParent<Entity_Enemy>().enemyDead;
+        }
         if (parentTag == "Slime")
         {
             enemyDead = this.gameObject.GetComponentInParent<Entity_Enemy>().enemyDead;
         }
         if (parentTag == "Death")
         {
-            //enemyDead = this.gameObject.GetComponentInParent<Entity_Death>().enemyDead;
+            enemyDead = this.gameObject.GetComponentInParent<Entity_Enemy>().enemyDead;
         }
-
         if (enemyDead == true)
         {
             this.gameObject.SetActive(false);

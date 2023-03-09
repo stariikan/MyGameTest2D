@@ -16,6 +16,7 @@ TagManager:
   - Slime
   - Death
   - SpellBook
+  - EvilWizard
   layers:
   - Default
   - TransparentFX

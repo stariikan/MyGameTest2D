@@ -27,6 +27,10 @@ public class SaveSerial : MonoBehaviour
     public float goblinDamage;
     public float goblinSpeed;
 
+    public float wizardHP;
+    public float wizardDamage;
+    public float wizardSpeed;
+
     //Settings
     public bool joystick_settings;
     public static SaveSerial Instance { get; set; } //Для сбора и отправки данных из этого скрипта
@@ -59,6 +63,10 @@ public class SaveSerial : MonoBehaviour
         public float goblinHP;
         public float goblinDamage;
         public float goblinSpeed;
+
+        public float wizardHP;
+        public float wizardDamage;
+        public float wizardSpeed;
 
         public bool joystick_settings;
     }
@@ -99,6 +107,10 @@ public class SaveSerial : MonoBehaviour
             goblinDamage = Entity_Enemy.Instance.goblinAttackDamage;
             goblinSpeed = Enemy_Behavior.Instance.goblinSpeed;
 
+            wizardHP = Entity_Enemy.Instance.wizardMaxHP;
+            wizardDamage = Entity_Enemy.Instance.wizardAttackDamage;
+            wizardSpeed = Enemy_Behavior.Instance.wizardSpeed;
+
             joystick_settings = Pause.Instance.joystick;
         }
         
@@ -122,6 +134,10 @@ public class SaveSerial : MonoBehaviour
         data.goblinHP = goblinHP;
         data.goblinDamage = goblinDamage;
         data.goblinSpeed = goblinSpeed;
+
+        data.wizardHP = wizardHP;
+        data.wizardDamage = wizardDamage;
+        data.wizardSpeed = wizardSpeed;
 
         data.joystick_settings = joystick_settings;
 
@@ -164,6 +180,10 @@ public class SaveSerial : MonoBehaviour
             goblinDamage = Entity_Enemy.Instance.goblinAttackDamage;
             goblinSpeed = Enemy_Behavior.Instance.goblinSpeed;
 
+            wizardHP = Entity_Enemy.Instance.wizardMaxHP;
+            wizardDamage = Entity_Enemy.Instance.wizardAttackDamage;
+            wizardSpeed = Enemy_Behavior.Instance.wizardSpeed;
+
             joystick_settings = Pause.Instance.joystick;
         }
 
@@ -187,6 +207,10 @@ public class SaveSerial : MonoBehaviour
         data.goblinHP = goblinHP;
         data.goblinDamage = goblinDamage;
         data.goblinSpeed = goblinSpeed;
+
+        data.wizardHP = wizardHP;
+        data.wizardDamage = wizardDamage;
+        data.wizardSpeed = wizardSpeed;
 
         data.joystick_settings = joystick_settings;
 
@@ -229,6 +253,10 @@ public class SaveSerial : MonoBehaviour
             goblinDamage = data.goblinDamage;
             goblinSpeed = data.goblinSpeed;
 
+            wizardHP = data.wizardHP;
+            wizardDamage = data.wizardDamage;
+            wizardSpeed = data.wizardSpeed;
+
             joystick_settings = data.joystick_settings;
 
             Debug.Log("Game data loaded!"); //Выводим в отладочную консоль сообщение об успешной загрузке.
@@ -267,6 +295,10 @@ public class SaveSerial : MonoBehaviour
             goblinHP = data.goblinHP;
             goblinDamage = data.goblinDamage;
             goblinSpeed = data.goblinSpeed;
+
+            wizardHP = data.wizardHP;
+            wizardDamage = data.wizardDamage;
+            wizardSpeed = data.wizardSpeed;
 
             joystick_settings = data.joystick_settings;
 

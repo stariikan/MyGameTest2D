@@ -63,6 +63,7 @@ public class Shop : MonoBehaviour
     public void Continue()
     {
         SaveSerial.Instance.SaveGame();
+        SaveSerial.Instance.SaveLastGame();
         SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
     }
 }

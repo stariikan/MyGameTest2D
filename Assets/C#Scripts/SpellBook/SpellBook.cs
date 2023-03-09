@@ -25,6 +25,7 @@ public class SpellBook : MonoBehaviour
     {
         currentHP = maxHP;
         Instance = this;
+        chestOpen = false;
         anim = GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
                                          //к которому привязан скрипт
     }

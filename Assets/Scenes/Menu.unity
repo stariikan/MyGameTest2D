@@ -6636,6 +6636,7 @@ GameObject:
   - component: {fileID: 944724800}
   - component: {fileID: 944724799}
   - component: {fileID: 944724803}
+  - component: {fileID: 944724804}
   m_Layer: 0
   m_Name: Menu Camera
   m_TagString: MainCamera
@@ -6748,6 +6749,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b68fcec002301f4ea31728468629e84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &944724804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944724798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 359fe0a1f5efc284bb62ffa35bacae10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCoin: 0
+  playerHP: 0
+  playerMP: 0
+  playerStamina: 0
+  playerAttackDamage: 0
+  playerMageDamage: 0
+  passedLvl: 0
+  moushroomHP: 0
+  moushroomDamage: 0
+  moushroomSpeed: 0
+  skeletonHP: 0
+  skeletonDamage: 0
+  skeletonSpeed: 0
+  goblinHP: 0
+  goblinDamage: 0
+  goblinSpeed: 0
+  joystick_settings: 0
 --- !u!1 &944741014
 GameObject:
   m_ObjectHideFlags: 0
