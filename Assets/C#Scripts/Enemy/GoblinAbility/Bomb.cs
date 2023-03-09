@@ -6,7 +6,6 @@ public class Bomb : MonoBehaviour
 {
     public static Bomb Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     public float direction;//переменная направления
-    [SerializeField] private float lifetime; //длительность жизни снаряда
     private float playerHP; //переменная метки попал ли во что-то снаряд
 
     private float bombDamage = 40;
@@ -17,15 +16,15 @@ public class Bomb : MonoBehaviour
     private void Start() //Действие выполняется до старта игры и 1 раз
     {
         Instance = this;
-        playerHP = Hero.Instance.hp;
+    }
+    private void Awake()
+    {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object) к которому привязан скрипт
     }
     private void Update()
     {
-        lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
         playerHP = Hero.Instance.hp;
-        //if (lifetime > 3) this.gameObject.SetActive(false);//когда переменная достигает 5, коллайдер атаки исчезает
     }
     private void BombMovement() //направления и сила полета бомбы 
     {
@@ -36,7 +35,7 @@ public class Bomb : MonoBehaviour
     }
     public void BombDestroy() //отключения обьекта бомбы
     {
-        this.gameObject.SetActive(false);
+        Destroy(this.gameObject);//уничтожить этот игровой обьект
     }
     public void BombExplosion() //включения анимации взрыва
     {
@@ -67,7 +66,6 @@ public class Bomb : MonoBehaviour
     public void bombDirection(Vector3 _direction)// выбор направления полета 
     {
         float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
-        lifetime = 0;
         this.gameObject.SetActive(true); //активация игрового обьекта
         this.gameObject.transform.position = _direction;
         BombMovement();

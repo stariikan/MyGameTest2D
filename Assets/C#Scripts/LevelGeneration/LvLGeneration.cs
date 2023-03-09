@@ -78,6 +78,7 @@ public class LvLGeneration : MonoBehaviour
 
                 GameObject enemy = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); // лонировани€ обьекта (враг) и его координаты)
                 enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.gameObject.SetActive(true);
 
                 yield return new WaitForEndOfFrame(); //ожидани€ установки блоков
             }
@@ -94,6 +95,7 @@ public class LvLGeneration : MonoBehaviour
 
             GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); // лонировани€ обьекта (враг) и его координаты)
             enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.gameObject.SetActive(true);
 
             yield return new WaitForEndOfFrame(); //ожидани€ установки блоков
         }
@@ -103,8 +105,8 @@ public class LvLGeneration : MonoBehaviour
         newEndBlock.name = "End block";// создаем новый обьект
         GameObject newBorderEnd = Instantiate(endBorder[Random.Range(0, endBorder.Length)], new Vector3(position.x + 9.8f, position.y, 105), Quaternion.identity);
 
-
         GameObject newChest = Instantiate(chestForGeneration[Random.Range(0, chestForGeneration.Length)], new Vector3(position.x + 9.8f, position.y, position.z - 2), Quaternion.identity);
+
         yield return new WaitForEndOfFrame(); //ожидани€ установки блоков
     }
     public void PlusCoin(int count) //сколько будем плюсовать монеток

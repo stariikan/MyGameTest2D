@@ -7,14 +7,22 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     private float blockCooldown; //кулдаун блока
 
     //Параметры Гриба
+    [SerializeField] private GameObject[] spore;
     public float moushroomSpeed = 2f;//скорость Гриба
     private float sporesCooldown = 10f; //кулдаун атаки спор
 
     //Параметры Гоблина
+    [SerializeField] private GameObject[] bomb;
     public float goblinSpeed = 3f;//скорость Гоблина
     private float bombCooldown = 4f; //кулдаун броска бомбы
     public int remainingBombs = 3; //всего 3 бомб
     private bool jump = false;
+
+    //Параметры Злого мага
+    [SerializeField] private GameObject[] magicBall; //Массив наших снарядов
+    public float wizardSpeed = 2f;//скорость Гоблина
+    private bool stuned = true; //стан обьекта
+    public float stunCooldown; //кулдаун стана
 
     //Параметры Слайма
     public float slimeSpeed = 2f;//скорость Слайма
@@ -117,6 +125,11 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             GoblinAttack();
             Block();
         }
+        if (tag == "EvilWizard")
+        {
+            EnemyMovement();
+            EvilWizardAttack();
+        }
         if (tag == "Slime")
         {
             SlimeMovement();
@@ -171,6 +184,12 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             if (theScale.x < 0) rb.AddForce(new Vector2(5, 1.5f), ForceMode2D.Impulse);
         }
     }
+    public void Stun()
+    {
+        stunCooldown = 0;
+        stuned = true;
+        anim.SetBool("stun", true);
+    }
     
     //Особые скилы у мобов
     public void Block() // Использование щита (Скелет)
@@ -217,9 +236,11 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             Vector3 MoushroomScale = transform.localScale; //взятие параметра поворота спрайта грибочка
             transform.localScale = MoushroomScale; //взятие параметра поворота спрайта грибочка
             Vector3 sporeSpawnPosition = this.gameObject.transform.position; //взятие позиции грибочка
+            GameObject newSpore = Instantiate(spore[Random.Range(0, spore.Length)], new Vector3(sporeSpawnPosition.x, sporeSpawnPosition.y, sporeSpawnPosition.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            newSpore.name = "spore" + Random.Range(1, 999);
             if (MoushroomScale.x < 0) sporeSpawnPosition.x -= 0.8f; //перемещения сбор вперед грибочка в зависимости от поворота спрайта
             if (MoushroomScale.x > 0) sporeSpawnPosition.x += 0.8f; //перемещения сбор вперед грибочка в зависимости от поворота спрайта
-            Spore.Instance.sporeDirection(sporeSpawnPosition); //передача координаты для спавна облака спор
+            newSpore.GetComponent<Spore>().sporeDirection(sporeSpawnPosition); //передача координаты для спавна облака спор
         }
     }
     public void GoblinJumpToPlayer() //прыжок к игроку (Гоблин)
@@ -259,11 +280,33 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             Vector3 goblinScale = transform.localScale; //взятие параметра поворота спрайта гоблина
             transform.localScale = goblinScale; //взятие параметра поворота спрайта гоблина
             Vector3 bombSpawnPosition = this.gameObject.transform.position; //взятие позиции гоблина
+            GameObject bombBall = Instantiate(bomb[Random.Range(0, bomb.Length)], new Vector3(bombSpawnPosition.x, bombSpawnPosition.y, bombSpawnPosition.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            bombBall.name = "Bomb" + Random.Range(1, 999);
             if (goblinScale.x < 0) bombSpawnPosition.x -= 1f; //перемещения бомбы вперед гоблина в зависимости от поворота спрайта
             if (goblinScale.x > 0) bombSpawnPosition.x += 1f;
-            Bomb.Instance.bombDirection(bombSpawnPosition); //передача координаты для спавна бомбы
+            bombBall.GetComponent<Bomb>().bombDirection(bombSpawnPosition);
         }
         if (level < 5) remainingBombs = 0;
+    }
+    public void MagicAttack() // EvilWizard FireBall
+    {
+        Vector3 shootingDirection = new Vector3(1, 0, 109);
+        Vector3 pos = this.gameObject.transform.position;
+        Debug.Log(pos);
+        if (transform.localScale.x > 0)
+        {
+            shootingDirection = new Vector3(1, 0, 109);
+            pos.x += 1;
+        }
+        if (transform.localScale.x < 0)
+        {
+            shootingDirection = new Vector3(-1, 0, 109);
+            pos.x -= 1;
+        }
+        GameObject fireBall = Instantiate(magicBall[0], new Vector3(pos.x, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+        fireBall.name = "fireball" + Random.Range(1, 999);
+
+        fireBall.GetComponent<FireBall>().SetDirection(shootingDirection);
     }
     public void DeathSummonMinioins() //призыв Слаймов (Босс Смерть)
     {
@@ -293,7 +336,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     {
         directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
         directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
-        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1f && Mathf.Abs(directionY) < 2) && !block && !isAttack || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack) //следует за игроком если маленькое растояние или получил урон
+        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1f && Mathf.Abs(directionY) < 2) && !block && !isAttack && !stuned || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack && !stuned) //следует за игроком если маленькое растояние или получил урон
         {
             Vector3 pos = transform.position; //позиция обьекта
             Vector3 theScale = transform.localScale; //нужно для понимания направления
@@ -420,7 +463,6 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         {
             Vector3 theScale = transform.localScale; //нужно для понимания направления
             transform.localScale = theScale; //нужно для понимания направления
-            Debug.Log(directionX);
             if (directionX < 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
             {
                 if (theScale.x > 0) Flip();
@@ -451,6 +493,49 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         }
         else isAttack = false;
     }
+    public void EvilWizardAttack()
+    {
+        float playerHP = Hero.Instance.hp;
+        stunCooldown += Time.deltaTime;
+        if (stunCooldown > 3f) //выход из стана
+        {
+            stuned = false;
+            anim.SetBool("stun", false);
+        }
+
+        if (playerHP > 0 && Mathf.Abs(directionX) < 6f && (Mathf.Abs(directionX)) > 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !stuned)
+        {
+            anim.SetTrigger("attack1");
+            timeSinceAttack = 0.0f;
+            Vector3 theScale = transform.localScale; //нужно для понимания направления
+            transform.localScale = theScale; //нужно для понимания направления
+            if (directionX < 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+            {
+                if (theScale.x > 0) Flip();
+                MagicAttack();
+            }
+            else if (directionX > 0) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+            {
+                if (theScale.x < 0) Flip();
+                MagicAttack();
+            }
+        }
+        else isAttack = false;
+        if (playerHP > 0 && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2 && !stuned)
+        {
+            anim.SetTrigger("attack2");
+            timeSinceAttack = 0.0f;
+            float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
+            float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиции тумана по оси y
+            if ((Mathf.Abs(directionX) < 2f && Mathf.Abs(directionY) < 2f) && sporesCooldown > 0.5 && playerHP > 0)
+            {
+                timeSinceAttack = 0.0f;
+                sporesCooldown = 0;
+                float fireDMG = 100f * (Entity_Enemy.Instance.wizardAttackDamage) * Time.deltaTime; 
+                Hero.Instance.GetDamage(fireDMG);
+            }
+        }
+    }
     public void SlimeAttack()
     {
         float playerHP = Hero.Instance.hp;
@@ -473,7 +558,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             timeSinceAttack = 0.0f;
         }
         else isAttack = false;
-        if ((Mathf.Abs(directionX)) < 8f && (Mathf.Abs(directionX)) > 2 && Mathf.Abs(directionY) < 2 || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true)
+        if ((Mathf.Abs(directionX)) < 8f && (Mathf.Abs(directionX)) > 2 && Mathf.Abs(directionY) < 2f || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true)
         {
             SpellDrainHP();
             DeathSummonMinioins();

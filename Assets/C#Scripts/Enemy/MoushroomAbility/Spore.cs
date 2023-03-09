@@ -30,8 +30,8 @@ public class Spore : MonoBehaviour
         playerHP = Hero.Instance.hp;
         SporeDmg();
         SporeMovement();
-        if (lifetime > 5) this.gameObject.SetActive(false);//когда переменная достигает 5, коллайдер атаки исчезает
-        
+        if (lifetime > 5) Destroy(this.gameObject);//уничтожить этот игровой обьект
+
     }
     private void SporeMovement()
     {

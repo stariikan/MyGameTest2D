@@ -3,21 +3,26 @@ using UnityEngine;
 public class Entity_Enemy : MonoBehaviour
 {
     //Параметры Скелета
-    public float skeletonMaxHP = 100; //Максимальные жизни скелета
+    public float skeletonMaxHP = 70; //Максимальные жизни скелета
     public float skeletonAttackDamage = 10; // Урон от физ атаки
     public int skeletonReward = 2;//награда за победу над врагом
     private bool isBlock; //проверка поставлен ли блок
     private float blockDMG;
 
     //Параметры Гриба
-    public float moushroomMaxHP = 100; //Максимальные жизни Гриба
+    public float moushroomMaxHP = 70; //Максимальные жизни Гриба
     public float moushroomAttackDamage = 10; // Урон от физ атаки
     public int moushroomReward = 2;//награда за победу над врагом
 
     //Параметры Гоблина
-    public float goblinMaxHP = 70; //Максимальные жизни Гоблина
+    public float goblinMaxHP = 50; //Максимальные жизни Гоблина
     public float goblinAttackDamage = 15; // Урон от физ атаки
     public int goblinReward = 2;//награда за победу над врагом
+
+    //Параметры Злого мага
+    public float wizardMaxHP = 50; //Максимальные жизни Гоблина
+    public float wizardAttackDamage = 15; // Урон от физ атаки
+    public int wizardReward = 2;//награда за победу над врагом
 
     //Параметры Слайма
     public float slimeMaxHP = 40;//Максимальные жизни Слайма
@@ -40,7 +45,10 @@ public class Entity_Enemy : MonoBehaviour
     public bool enemyDead = false; //Мертвый ли обьект
     public bool enemyTakeDamage = false; //Получил ли обьект урон
 
+    [SerializeField] private Transform firePoint; //Позиция из которых будет выпущены снаряди
+
     public Vector3 lossyScale;
+    public Vector3 thisObjectPosition;
     private Rigidbody2D e_rb;
     private CapsuleCollider2D capsuleCollider;
     private Animator anim;
@@ -57,7 +65,7 @@ public class Entity_Enemy : MonoBehaviour
         if (tag == "Skeleton")
         {
             skeletonMaxHP = SaveSerial.Instance.skeletonHP;
-            if (skeletonMaxHP == 0) skeletonMaxHP = 100;
+            if (skeletonMaxHP == 0) skeletonMaxHP = 70;
             currentHP = skeletonMaxHP;
             skeletonAttackDamage = SaveSerial.Instance.skeletonDamage;
             if (skeletonAttackDamage == 0) skeletonAttackDamage = 15;
@@ -65,7 +73,7 @@ public class Entity_Enemy : MonoBehaviour
         if (tag == "Mushroom")
         {
             moushroomMaxHP = SaveSerial.Instance.moushroomHP;
-            if (moushroomMaxHP == 0) moushroomMaxHP = 150;
+            if (moushroomMaxHP == 0) moushroomMaxHP = 70;
             currentHP = moushroomMaxHP;
             moushroomAttackDamage = SaveSerial.Instance.moushroomDamage;
             if (moushroomAttackDamage == 0) moushroomAttackDamage = 15;
@@ -73,10 +81,18 @@ public class Entity_Enemy : MonoBehaviour
         if (tag == "Goblin")
         {
             goblinMaxHP = SaveSerial.Instance.goblinHP;
-            if (goblinMaxHP == 0) goblinMaxHP = 70;
+            if (goblinMaxHP == 0) goblinMaxHP = 50;
             currentHP = goblinMaxHP;
             goblinAttackDamage = SaveSerial.Instance.goblinDamage;
             if (goblinAttackDamage == 0) goblinAttackDamage = 25;
+        }
+        if (tag == "EvilWizard")
+        {
+            wizardMaxHP = SaveSerial.Instance.wizardHP;
+            if (wizardMaxHP == 0) wizardMaxHP = 50;
+            currentHP = wizardMaxHP;
+            wizardAttackDamage = SaveSerial.Instance.wizardDamage;
+            if (wizardAttackDamage == 0) wizardAttackDamage = 25;
         }
         if (tag == "Slime")
         {
@@ -91,25 +107,27 @@ public class Entity_Enemy : MonoBehaviour
             if (deathAttackDamage == 0) deathAttackDamage = 25;
         }
     }
-
     //Секция где идет уселение характеристик врагов, если добавляется новый враг, тут нужно добавить его характеристики
     public void BoostEnemyHP() 
     {
         skeletonMaxHP *= 1.2f;
         moushroomMaxHP *= 1.2f;
         goblinMaxHP *= 1.2f;
+        wizardMaxHP *= 1.2f;
     }
     public void BoostEnemyAttackDamage() //тут усиливыем урон
     {
-        skeletonAttackDamage += 3;
-        moushroomAttackDamage += 3;
-        goblinAttackDamage += 3;
+        skeletonAttackDamage *= 1.2f;
+        moushroomAttackDamage *= 1.2f;
+        goblinAttackDamage *= 1.2f;
+        wizardAttackDamage *= 1.2f;
     }
     public void BoostEnemyReward() //тут увеличиваем награду за убийство
     {
         skeletonReward += 2;
         moushroomReward += 2;
         goblinReward += 2;
+        wizardReward += 2;
     }
 
     //Общие методы и поведения
@@ -144,18 +162,20 @@ public class Entity_Enemy : MonoBehaviour
     }
     public void TakeDamage(float dmg) //Получение урона (в dmg указывается значение, в Hero скрипте при вызове метода TakeDamage в dmg записывается переменная дамага от оружия ) 
     {
+        float maxHP = 1;
+        if (tag == "Skeleton") maxHP = skeletonMaxHP;
+        if (tag == "Mushroom") maxHP = moushroomMaxHP;
+        if (tag == "Goblin") maxHP = goblinMaxHP;
+        if (tag == "EvilWizard") maxHP = wizardMaxHP;
+        if (tag == "Slime") maxHP = slimeMaxHP;
+        if (tag == "Death") maxHP = deathMaxHP;
+
         isBlock = Enemy_Behavior.Instance.block;
         if (currentHP > 0 && !isBlock)
         {
             anim.SetTrigger("damage");//анимация получения демейджа
             currentHP -= dmg;
             enemyTakeDamage = true;
-            float maxHP = 50;
-            if (tag == "Skeleton") maxHP = skeletonMaxHP;
-            if (tag == "Mushroom") maxHP = moushroomMaxHP;
-            if (tag == "Goblin") maxHP = goblinMaxHP;
-            if (tag == "Slime") maxHP = slimeMaxHP;
-            if (tag == "Death") maxHP = deathMaxHP;
             takedDamage = (float)dmg / maxHP; //на сколько надо уменьшаить прогресс бар
             if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
         }
@@ -166,12 +186,6 @@ public class Entity_Enemy : MonoBehaviour
             if (level > 4) blockDMG = dmg * 0.1f;//если Игрок выше чем 4 уровеня то 90% блокирования урона
             currentHP -= blockDMG;
             enemyTakeDamage = true;
-            float maxHP = 50;
-            if (tag == "Skeleton") maxHP = skeletonMaxHP;
-            if (tag == "Mushroom") maxHP = moushroomMaxHP;
-            if (tag == "Goblin") maxHP = goblinMaxHP;
-            if (tag == "Slime") maxHP = slimeMaxHP;
-            if (tag == "Death") maxHP = deathMaxHP;
             takedDamage = blockDMG / maxHP; //на сколько надо уменьшаить прогресс бар
             if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара
         }
@@ -202,6 +216,7 @@ public class Entity_Enemy : MonoBehaviour
         if (tag == "Skeleton") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "Mushroom") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "Goblin") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
+        if (tag == "EvilWizard") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "Slime")
         {
             GameObject[] deathObjects = GameObject.FindGameObjectsWithTag("Death");
@@ -230,4 +245,6 @@ public class Entity_Enemy : MonoBehaviour
         takedDamage = dmg / deathMaxHP; //на сколько надо уменьшаить прогресс бар
         if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара
     }
+
 }
+

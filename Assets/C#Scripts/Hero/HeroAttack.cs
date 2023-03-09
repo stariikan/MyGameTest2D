@@ -5,7 +5,7 @@ public class HeroAttack : MonoBehaviour
     [SerializeField] private float magicAttackCooldown;//кулдаун запуска снар€да (магии)
     [SerializeField] private Transform firePointRight; //ѕозици€ из которых будет выпущены снар€ди
     [SerializeField] private Transform firePointLeft; //ѕозици€ из которых будет выпущены снар€ди
-    [SerializeField] private GameObject[] magicProjectile; //ћассив наших снар€дов
+    [SerializeField] private GameObject [] magicProjectile; //—нар€ды снар€дов
     [SerializeField] private GameObject meleeAttackArea; // ‘из оружее
     [SerializeField] private GameObject shieldArea; // ўит
 
@@ -102,15 +102,11 @@ public class HeroAttack : MonoBehaviour
         {
             currentMP -= 20;
             MagicCooldownTimer = 0; //сброс кулдауна приминени€ магии дл€ того чтобы работа формула при атаке которой она смотрит на кулдаун и если он наступил, то можно вновь атаковать
-            if (playerDirecction > 0)
-            {
-                magicProjectile[FindMagicBall()].transform.position = firePointRight.position; //ѕри каждой атаки мы будем мен€ть положени€ снар€да и задавать ей положение огневой точки получить компонент из снар€да и отправить его в направление в котором находитьс€ игрок
-            }
-            if (playerDirecction < 0)
-            {
-                magicProjectile[FindMagicBall()].transform.position = firePointLeft.position;
-            }
 
+            Vector3 shootingDirection = new Vector3(1, 0, 109);
+            Vector3 pos = firePointRight.position;
+            GameObject fireBall = Instantiate(magicProjectile[Random.Range(0, magicProjectile.Length)], new Vector3(pos.x, pos.y, pos.z), Quaternion.identity); // лонировани€ обьекта (враг) и его координаты)
+            fireBall.name = "Enemy" + Random.Range(1, 999);
             if (playerDirecction > 0)
             {
                 shootingDirection = new Vector3(1, 0, 109);
@@ -119,7 +115,7 @@ public class HeroAttack : MonoBehaviour
             {
                 shootingDirection = new Vector3(-1, 0, 109);
             }
-            magicProjectile[FindMagicBall()].GetComponent<Projectile>().SetDirection(shootingDirection);
+            fireBall.GetComponent<Projectile>().SetDirection(shootingDirection);
         }
     }
     private void AttackControl()
@@ -132,15 +128,6 @@ public class HeroAttack : MonoBehaviour
         {
             MagicAttack(); // выполнени€ маг атаки
         }
-    }
-    private int FindMagicBall()// метод дл€ перебора огненных шаров от 0 до +1 пока не дойдет до неактивного снар€да
-    {
-        for (int i = 0; i < magicProjectile.Length; i++)
-        {
-            if (!magicProjectile[i].activeInHierarchy)
-                return i;
-        }
-        return 0;
     }
     public void Enemy_Push_by_BLOCK()
     {

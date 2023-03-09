@@ -19,7 +19,7 @@ public class Hero : MonoBehaviour {
     private bool                m_isWallSliding = false;
     private bool                m_grounded = false;
     private bool                m_rolling = false;
-    public int                 m_facingDirection = 1;
+    public int                  m_facingDirection = 1;
     private int                 m_currentAttack = 0;
     private float               m_timeSinceAttack = 0.0f;
     private float               m_rollDuration = 8.0f / 14.0f;
@@ -39,7 +39,7 @@ public class Hero : MonoBehaviour {
     public bool isPush = false;
 
 
-    private CapsuleCollider2D circleCollider;
+    private CapsuleCollider2D capsuleCollider;
 
     private float cooldownTimer = Mathf.Infinity;
 
@@ -59,7 +59,7 @@ public class Hero : MonoBehaviour {
     {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
-        circleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
+        capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
         m_wallSensorR1 = transform.Find("WallSensor_R1").GetComponent<Sensor_HeroKnight>();
         m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
@@ -131,13 +131,10 @@ public class Hero : MonoBehaviour {
         if (hp > 0)
         {
             PlayerMovement();//Метод для движения и поворота спрайта персонажа
-            DieByFall();//Метод для смерти от падения
             CheckBlock(); //Проверка блока
             PlayerSpeedMode();
-            if (Input.GetKey(KeyCode.LeftControl)) //это сделано чтобы кнопка работала на тачскрине
-            {
-                MeeleAtack();
-            }
+            if (Input.GetKey(KeyCode.LeftControl)) MeeleAtack();
+            if (cooldownTimer > 1f) capsuleCollider.enabled = true;
         }
         else
         {
@@ -237,27 +234,15 @@ public class Hero : MonoBehaviour {
             m_speed = 0;
             m_body2d.gravityScale = 0;
             m_body2d.velocity = Vector2.zero;
-            circleCollider.enabled = false;
             m_animator.StopPlayback();
             m_animator.SetBool("noBlood", m_noBlood);
             m_animator.SetBool("dead", true);
             m_animator.SetTrigger("Death");
         }
     }
-    private void Deactivate() //деактивация игрока после завершения анимации смерти (благодоря метки в аниматоре выполняется этот метод
-    {
-        playerDead = true;
-    }
     public void Hero_hp() //Метод который просто вызывает значение переменной HP, нужен мне был для передачи этого числа в скрипт с каунтером жизней
     {
         Debug.Log(hp);
-    }
-    private void DieByFall() //Метод который наносит урон при падении с платформы
-    {
-        if (m_body2d.transform.position.y < -100)//если координаты игрока по оси y меньше 10, то происходит вызов метода GetDamage
-        {
-            GetDamage(100);
-        }
     }
     public void Jump()
     {
@@ -277,7 +262,9 @@ public class Hero : MonoBehaviour {
         if (stamina > 5 && cooldownTimer > 0.5f) //кувырок
         {
             cooldownTimer = 0;
+            capsuleCollider.enabled = false;
             HeroAttack.Instance.DecreaseStamina(5);
+            capsuleCollider.enabled = false;
             m_body2d.velocity = new Vector2((m_facingDirection * -1) * m_rollForce, m_body2d.velocity.y);
             m_rolling = true;
             m_animator.SetTrigger("Roll");
@@ -414,5 +401,9 @@ public class Hero : MonoBehaviour {
             // Reset timer
             m_timeSinceAttack = 0.0f;
         }    
+    }
+    private void Deactivate() //деактивация игрока после завершения анимации смерти (благодоря метки в аниматоре выполняется этот метод
+    {
+        playerDead = true;
     }
 }
