@@ -21,7 +21,7 @@ public class Entity_Enemy : MonoBehaviour
 
     //Параметры Злого мага
     public float wizardMaxHP = 50; //Максимальные жизни Гоблина
-    public float wizardAttackDamage = 15; // Урон от физ атаки
+    public float wizardAttackDamage = 10; // Урон от физ атаки
     public int wizardReward = 2;//награда за победу над врагом
 
     //Параметры Слайма
@@ -46,7 +46,7 @@ public class Entity_Enemy : MonoBehaviour
     public bool enemyTakeDamage = false; //Получил ли обьект урон
 
     [SerializeField] private Transform firePoint; //Позиция из которых будет выпущены снаряди
-
+    [SerializeField] private GameObject[] blood; //кровь
     public Vector3 lossyScale;
     public Vector3 thisObjectPosition;
     private Rigidbody2D e_rb;
@@ -62,13 +62,14 @@ public class Entity_Enemy : MonoBehaviour
         e_rb = this.gameObject.GetComponent<Rigidbody2D>();
         capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
         tag = this.gameObject.transform.tag;
+
         if (tag == "Skeleton")
         {
             skeletonMaxHP = SaveSerial.Instance.skeletonHP;
             if (skeletonMaxHP == 0) skeletonMaxHP = 70;
             currentHP = skeletonMaxHP;
             skeletonAttackDamage = SaveSerial.Instance.skeletonDamage;
-            if (skeletonAttackDamage == 0) skeletonAttackDamage = 15;
+            if (skeletonAttackDamage == 0) skeletonAttackDamage = 10;
         }
         if (tag == "Mushroom")
         {
@@ -76,7 +77,7 @@ public class Entity_Enemy : MonoBehaviour
             if (moushroomMaxHP == 0) moushroomMaxHP = 70;
             currentHP = moushroomMaxHP;
             moushroomAttackDamage = SaveSerial.Instance.moushroomDamage;
-            if (moushroomAttackDamage == 0) moushroomAttackDamage = 15;
+            if (moushroomAttackDamage == 0) moushroomAttackDamage = 10;
         }
         if (tag == "Goblin")
         {
@@ -84,7 +85,7 @@ public class Entity_Enemy : MonoBehaviour
             if (goblinMaxHP == 0) goblinMaxHP = 50;
             currentHP = goblinMaxHP;
             goblinAttackDamage = SaveSerial.Instance.goblinDamage;
-            if (goblinAttackDamage == 0) goblinAttackDamage = 25;
+            if (goblinAttackDamage == 0) goblinAttackDamage = 15;
         }
         if (tag == "EvilWizard")
         {
@@ -92,7 +93,7 @@ public class Entity_Enemy : MonoBehaviour
             if (wizardMaxHP == 0) wizardMaxHP = 50;
             currentHP = wizardMaxHP;
             wizardAttackDamage = SaveSerial.Instance.wizardDamage;
-            if (wizardAttackDamage == 0) wizardAttackDamage = 25;
+            if (wizardAttackDamage == 0) wizardAttackDamage = 10;
         }
         if (tag == "Slime")
         {
@@ -173,6 +174,11 @@ public class Entity_Enemy : MonoBehaviour
         isBlock = Enemy_Behavior.Instance.block;
         if (currentHP > 0 && !isBlock)
         {
+            if (tag != "Skeleton")
+            {
+                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Клонирования обьекта
+                bloodSpawn.gameObject.SetActive(true);
+            }
             anim.SetTrigger("damage");//анимация получения демейджа
             currentHP -= dmg;
             enemyTakeDamage = true;

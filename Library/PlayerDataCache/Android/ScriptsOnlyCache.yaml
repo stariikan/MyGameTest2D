@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - Bar_Position
+    - Blood
     - Bomb
     - Button_zone
     - CameraFolow
@@ -519,6 +520,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 5812}
     - Class: 114
       Script: {instanceID: 5854}
+    - Class: 114
+      Script: {instanceID: 21504}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -526,6 +529,10 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
       Script: {instanceID: 0}
     - Class: 212
       Script: {instanceID: 0}
@@ -918,7 +925,7 @@ ScriptsOnlyBuild:
     className: TestResultRendererCallback
   - hash:
       serializedVersion: 2
-      Hash: aeee313d21c3e846c656da5ac0aeaa01
+      Hash: bc5a35571575cc5823d0a3e43701f6ae
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Entity_Enemy
@@ -1450,6 +1457,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Collectables
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Blood
   platform: 13
   scenePathNames:
   - Assets/Scenes/Menu.unity
@@ -1457,4 +1470,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/LevelComplete.unity
   - Assets/Scenes/DeadScreen.unity
   - Assets/Scenes/Collectables.unity
-  playerPath: D:/Games/WAAD_0.2.45.apk
+  playerPath: D:/Games/WAAD_0.2.47.apk

@@ -39,6 +39,7 @@ public class Shield : MonoBehaviour
         Debug.Log(target);
         if (target.CompareTag("Bomb")) target.GetComponent<Bomb>().PushFromPlayer();
         if (target.CompareTag("EvilWizard")) target.GetComponent<Enemy_Behavior>().Stun();
+        if (target.CompareTag("Moushroom")) target.GetComponent<Enemy_Behavior>().Stun();
         if (target != null && target.layer == 7) target.GetComponent<Enemy_Behavior>().PushFromPlayer();
     }
     public void MeleeDirection(Vector3 _direction)// выбор направления полета 

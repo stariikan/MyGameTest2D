@@ -21,7 +21,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     //Параметры Злого мага
     [SerializeField] private GameObject[] magicBall; //Массив наших снарядов
     public float wizardSpeed = 2f;//скорость Гоблина
-    private bool stuned = true; //стан обьекта
+    private bool stuned = false; //стан обьекта
     public float stunCooldown; //кулдаун стана
 
     //Параметры Слайма
@@ -412,7 +412,11 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     public void MoushroomAttack()
     {
         float playerHP = Hero.Instance.hp;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2) MoushroomJumpToPlayer();
+        if (stunCooldown > 3f) //выход из стана
+        {
+            stuned = false;
+        }
+        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned) MoushroomJumpToPlayer();
         if ((Mathf.Abs(directionX)) < 0.8f && sporesCooldown > 10) MushroomSpores();
         if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1)
         {
@@ -525,10 +529,14 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         {
             anim.SetTrigger("attack2");
             timeSinceAttack = 0.0f;
+            Vector3 theScale = transform.localScale; //нужно для понимания направления
+            transform.localScale = theScale; //нужно для понимания направления
             float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
             float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиции тумана по оси y
             if ((Mathf.Abs(directionX) < 2f && Mathf.Abs(directionY) < 2f) && sporesCooldown > 0.5 && playerHP > 0)
             {
+                if (directionX < 0 && theScale.x > 0) Flip();
+                else if (directionX > 0 && theScale.x < 0) Flip();
                 timeSinceAttack = 0.0f;
                 sporesCooldown = 0;
                 float fireDMG = 100f * (Entity_Enemy.Instance.wizardAttackDamage) * Time.deltaTime; 
