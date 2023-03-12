@@ -10,9 +10,9 @@ public class Entity_Enemy : MonoBehaviour
     private float blockDMG;
 
     //Параметры Гриба
-    public float moushroomMaxHP = 70; //Максимальные жизни Гриба
-    public float moushroomAttackDamage = 10; // Урон от физ атаки
-    public int moushroomReward = 2;//награда за победу над врагом
+    public float mushroomMaxHP = 70; //Максимальные жизни Гриба
+    public float mushroomAttackDamage = 10; // Урон от физ атаки
+    public int mushroomReward = 2;//награда за победу над врагом
 
     //Параметры Гоблина
     public float goblinMaxHP = 50; //Максимальные жизни Гоблина
@@ -23,6 +23,11 @@ public class Entity_Enemy : MonoBehaviour
     public float wizardMaxHP = 50; //Максимальные жизни Гоблина
     public float wizardAttackDamage = 10; // Урон от физ атаки
     public int wizardReward = 2;//награда за победу над врагом
+
+    //Параметры Самурая
+    public float martialMaxHP = 75; //Максимальные жизни Гоблина
+    public float martialAttackDamage = 15; // Урон от физ атаки
+    public int martialReward = 2;//награда за победу над врагом
 
     //Параметры Слайма
     public float slimeMaxHP = 40;//Максимальные жизни Слайма
@@ -73,11 +78,11 @@ public class Entity_Enemy : MonoBehaviour
         }
         if (tag == "Mushroom")
         {
-            moushroomMaxHP = SaveSerial.Instance.moushroomHP;
-            if (moushroomMaxHP == 0) moushroomMaxHP = 70;
-            currentHP = moushroomMaxHP;
-            moushroomAttackDamage = SaveSerial.Instance.moushroomDamage;
-            if (moushroomAttackDamage == 0) moushroomAttackDamage = 10;
+            mushroomMaxHP = SaveSerial.Instance.mushroomHP;
+            if (mushroomMaxHP == 0) mushroomMaxHP = 70;
+            currentHP = mushroomMaxHP;
+            mushroomAttackDamage = SaveSerial.Instance.mushroomDamage;
+            if (mushroomAttackDamage == 0) mushroomAttackDamage = 10;
         }
         if (tag == "Goblin")
         {
@@ -94,6 +99,14 @@ public class Entity_Enemy : MonoBehaviour
             currentHP = wizardMaxHP;
             wizardAttackDamage = SaveSerial.Instance.wizardDamage;
             if (wizardAttackDamage == 0) wizardAttackDamage = 10;
+        }
+        if (tag == "Martial")
+        {
+            martialMaxHP = SaveSerial.Instance.martialHP;
+            if (martialMaxHP == 0) martialMaxHP = 75;
+            currentHP = martialMaxHP;
+            martialAttackDamage = SaveSerial.Instance.martialDamage;
+            if (martialAttackDamage == 0) martialAttackDamage = 15;
         }
         if (tag == "Slime")
         {
@@ -112,23 +125,26 @@ public class Entity_Enemy : MonoBehaviour
     public void BoostEnemyHP() 
     {
         skeletonMaxHP *= 1.2f;
-        moushroomMaxHP *= 1.2f;
+        mushroomMaxHP *= 1.2f;
         goblinMaxHP *= 1.2f;
         wizardMaxHP *= 1.2f;
+        martialMaxHP *= 1.2f;
     }
     public void BoostEnemyAttackDamage() //тут усиливыем урон
     {
         skeletonAttackDamage *= 1.2f;
-        moushroomAttackDamage *= 1.2f;
+        mushroomAttackDamage *= 1.2f;
         goblinAttackDamage *= 1.2f;
         wizardAttackDamage *= 1.2f;
+        martialAttackDamage *= 1.2f;
     }
     public void BoostEnemyReward() //тут увеличиваем награду за убийство
     {
         skeletonReward += 2;
-        moushroomReward += 2;
+        mushroomReward += 2;
         goblinReward += 2;
         wizardReward += 2;
+        martialReward += 2;
     }
 
     //Общие методы и поведения
@@ -144,9 +160,10 @@ public class Entity_Enemy : MonoBehaviour
             float healBar = heal / (float)skeletonMaxHP; //на сколько надо увеличить прогресс бар
             if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
         }
-        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Mushroom") Hero.Instance.GetDamage(moushroomAttackDamage);
+        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Mushroom") Hero.Instance.GetDamage(mushroomAttackDamage);
         if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Goblin") Hero.Instance.GetDamage(goblinAttackDamage);
         if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Slime") Hero.Instance.GetDamage(slimeAttackDamage);
+        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Martial") Hero.Instance.GetDamage(martialAttackDamage);
         if (directionX < 1.8f && currentHP > 0 && directionY < 1f && tag == "Death")
         {
             Hero.Instance.GetDamage(deathAttackDamage);
@@ -165,9 +182,10 @@ public class Entity_Enemy : MonoBehaviour
     {
         float maxHP = 1;
         if (tag == "Skeleton") maxHP = skeletonMaxHP;
-        if (tag == "Mushroom") maxHP = moushroomMaxHP;
+        if (tag == "Mushroom") maxHP = mushroomMaxHP;
         if (tag == "Goblin") maxHP = goblinMaxHP;
         if (tag == "EvilWizard") maxHP = wizardMaxHP;
+        if (tag == "Martial") maxHP = martialMaxHP;
         if (tag == "Slime") maxHP = slimeMaxHP;
         if (tag == "Death") maxHP = deathMaxHP;
 
@@ -199,12 +217,10 @@ public class Entity_Enemy : MonoBehaviour
         {
             int reward = 2;
             if (tag == "Skeleton") reward = skeletonReward;
-            if (tag == "Mushroom") reward = moushroomReward;
+            if (tag == "Mushroom") reward = mushroomReward;
             if (tag == "Goblin") reward = goblinReward;
-            if (tag == "Slime")
-            {
-                reward = 1;
-            }
+            if (tag == "Martial") reward = martialReward;
+            if (tag == "Slime") reward = 1;
             if (tag == "Death") reward = 40;
             LvLGeneration.Instance.PlusCoin(reward);//вызов метода для увелечения очков
             e_rb.gravityScale = 0;
@@ -223,6 +239,7 @@ public class Entity_Enemy : MonoBehaviour
         if (tag == "Mushroom") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "Goblin") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "EvilWizard") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
+        if (tag == "Martial") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "Slime")
         {
             GameObject[] deathObjects = GameObject.FindGameObjectsWithTag("Death");

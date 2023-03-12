@@ -17,6 +17,7 @@ TagManager:
   - Death
   - SpellBook
   - EvilWizard
+  - Martial
   layers:
   - Default
   - TransparentFX
