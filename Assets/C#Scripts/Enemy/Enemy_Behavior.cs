@@ -21,8 +21,11 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     //Параметры Злого мага
     [SerializeField] private GameObject[] magicBall; //Массив наших снарядов
     public float wizardSpeed = 2f;//скорость Гоблина
-    private bool stuned = true; //стан обьекта
+    private bool stuned = false; //стан обьекта
     public float stunCooldown; //кулдаун стана
+                               
+    //Параметры Самурай мага
+    public float martialSpeed = 4f;//скорость Гоблина
 
     //Параметры Слайма
     public float slimeSpeed = 2f;//скорость Слайма
@@ -71,7 +74,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         }
         if (tag == "Mushroom")
         {
-            moushroomSpeed = SaveSerial.Instance.moushroomSpeed;
+            moushroomSpeed = SaveSerial.Instance.mushroomSpeed;
             if (moushroomSpeed < 2f) moushroomSpeed = 2f;
             speedRecovery = moushroomSpeed;
         }
@@ -80,6 +83,12 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             goblinSpeed = SaveSerial.Instance.goblinSpeed;
             if (goblinSpeed < 2f) goblinSpeed = 2f;
             speedRecovery = goblinSpeed;
+        }
+        if (tag == "Martial")
+        {
+            martialSpeed = SaveSerial.Instance.martialSpeed;
+            if (martialSpeed < 4f) martialSpeed = 4f;
+            speedRecovery = martialSpeed;
         }
         if (tag == "Slime")
         {
@@ -101,6 +110,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         bombCooldown += Time.deltaTime;
         summonCooldown += Time.deltaTime;
         drainHPCooldown += Time.deltaTime;
+        stunCooldown += Time.deltaTime;
 
         if (this.gameObject.GetComponent<Entity_Enemy>().currentHP > 0) EnemyBehavior(); 
     }
@@ -117,7 +127,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         if (tag == "Mushroom")
         {
             EnemyMovement();
-            MoushroomAttack();
+            MushroomAttack();
         }
         if (tag == "Goblin")
         {
@@ -129,6 +139,11 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         {
             EnemyMovement();
             EvilWizardAttack();
+        }
+        if (tag == "Martial")
+        {
+            EnemyMovement();
+            MartialAttack();
         }
         if (tag == "Slime")
         {
@@ -209,7 +224,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             anim.SetBool("Block", false);
         }
     }
-    public void MoushroomJumpToPlayer() //прыжок к игроку (Гриб и Слайм)
+    public void MushroomJumpToPlayer() //прыжок к игроку (Гриб и Слайм)
     {
         if (level >= 1) //способность активируется на 3 уровне
         {
@@ -344,6 +359,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             float playerFollowSpeed = Mathf.Sign(directionX) * Time.deltaTime;
             if (tag == "Skeleton") playerFollowSpeed = Mathf.Sign(directionX) * skeletonSpeed * Time.deltaTime; //вычесление направления
             if (tag == "Mushroom") playerFollowSpeed = Mathf.Sign(directionX) * moushroomSpeed * Time.deltaTime; //вычесление направления
+            if (tag == "Martial") playerFollowSpeed = Mathf.Sign(directionX) * martialSpeed * Time.deltaTime; //вычесление направления
             if (tag == "Slime") playerFollowSpeed = Mathf.Sign(directionX) * slimeSpeed * Time.deltaTime; //вычесление направления
             pos.x += playerFollowSpeed; //вычесление позиции по оси х
             transform.position = pos; //применение позиции
@@ -409,10 +425,14 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         else movement = false;
     }
     //Методы атаки у разных мобов
-    public void MoushroomAttack()
+    public void MushroomAttack()
     {
         float playerHP = Hero.Instance.hp;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2) MoushroomJumpToPlayer();
+        if (stunCooldown > 3f) //выход из стана
+        {
+            stuned = false;
+        }
+        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned) MushroomJumpToPlayer();
         if ((Mathf.Abs(directionX)) < 0.8f && sporesCooldown > 10) MushroomSpores();
         if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1)
         {
@@ -496,7 +516,6 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     public void EvilWizardAttack()
     {
         float playerHP = Hero.Instance.hp;
-        stunCooldown += Time.deltaTime;
         if (stunCooldown > 3f) //выход из стана
         {
             stuned = false;
@@ -525,10 +544,14 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         {
             anim.SetTrigger("attack2");
             timeSinceAttack = 0.0f;
+            Vector3 theScale = transform.localScale; //нужно для понимания направления
+            transform.localScale = theScale; //нужно для понимания направления
             float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
             float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиции тумана по оси y
             if ((Mathf.Abs(directionX) < 2f && Mathf.Abs(directionY) < 2f) && sporesCooldown > 0.5 && playerHP > 0)
             {
+                if (directionX < 0 && theScale.x > 0) Flip();
+                else if (directionX > 0 && theScale.x < 0) Flip();
                 timeSinceAttack = 0.0f;
                 sporesCooldown = 0;
                 float fireDMG = 100f * (Entity_Enemy.Instance.wizardAttackDamage) * Time.deltaTime; 
@@ -536,10 +559,37 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             }
         }
     }
+    public void MartialAttack()
+    {
+        float playerHP = Hero.Instance.hp;
+        if (stunCooldown > 2f) //выход из стана
+        {
+            stuned = false;
+        }
+        //if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned) MoushroomJumpToPlayer();
+        //if ((Mathf.Abs(directionX)) < 0.8f) MushroomSpores();
+        if (playerHP > 0 && Mathf.Abs(directionX) < 2.5f && Mathf.Abs(directionY) < 1.5f && timeSinceAttack > 1 && !stuned)
+        {
+            //Damage Deal
+            currentAttack++;
+
+            // Loop back to one after third attack
+            if (currentAttack > 2)
+                currentAttack = 1;
+
+            // Reset Attack combo if time since last attack is too large
+            if (timeSinceAttack > 2.0f)
+                currentAttack = 1;
+            anim.SetTrigger("attack" + currentAttack);
+            // Reset timer
+            timeSinceAttack = 0.0f;
+        }
+        else isAttack = false;
+    }
     public void SlimeAttack()
     {
         float playerHP = Hero.Instance.hp;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2) MoushroomJumpToPlayer();
+        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2) MushroomJumpToPlayer();
         if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1)
         {
             anim.SetTrigger("spin");

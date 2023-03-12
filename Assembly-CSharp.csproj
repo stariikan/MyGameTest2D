@@ -80,6 +80,7 @@
     <Compile Include="Assets\C#Scripts\Hero\HeroAttack.cs" />
     <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\Movement_zone_position.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\EvilWizard\FireBall.cs" />
+    <Compile Include="Assets\C#Scripts\Blood\Blood.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Entity_Enemy.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Weapon\Shield.cs" />
     <Compile Include="Assets\C#Scripts\LevelGeneration\LvLGeneration.cs" />
@@ -117,7 +118,7 @@
     <Compile Include="Assets\C#Scripts\Main menu\Collectables.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Materials\Monsters Creatures Fantasy\EvilWizard\License.txt" />
+    <None Include="Assets\Materials\Monsters Creatures Fantasy\Sprites\EvilWizard\License.txt" />
     <None Include="Assets\Materials\Hero Knight - Pixel Art\ColorSwap\Sprites-ColorSwap.shader" />
   </ItemGroup>
   <ItemGroup>

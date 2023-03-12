@@ -24,6 +24,7 @@ public class Hero : MonoBehaviour {
     private float               m_timeSinceAttack = 0.0f;
     private float               m_rollDuration = 8.0f / 14.0f;
     private float               m_rollCurrentTime;
+    private float m_JumpCooldownTime;
 
     public static Hero Instance { get; set; } //Для сбора и отправки данных из этого скрипта
 
@@ -96,7 +97,7 @@ public class Hero : MonoBehaviour {
             m_rollCurrentTime += Time.deltaTime;
 
         // Disable rolling if timer extends duration
-        if(m_rollCurrentTime > m_rollDuration)
+        if(m_rollCurrentTime > m_rollDuration) 
             m_rolling = false;
 
         //Check if character just landed on the ground
@@ -123,7 +124,7 @@ public class Hero : MonoBehaviour {
        //old
         cooldownTimer += Time.deltaTime; //прибавление по 1 секунде к cooldownTimer
         stamina = HeroAttack.Instance.currentStamina; //проверка стамины
-
+        m_JumpCooldownTime += Time.deltaTime;
         joystick_Settings = Pause.Instance.joystick; //проверка настройки джойстика
         //Debug.Log(joystick_Settings);
         Jostick_Settings_Controll();
@@ -190,7 +191,7 @@ public class Hero : MonoBehaviour {
     {
         if (block || isAttack)
         {
-            m_speed = 0f;
+            m_speed = 2f;
         }
         else
         {
@@ -204,9 +205,8 @@ public class Hero : MonoBehaviour {
     public void CheckBlock()
     {
         block = HeroAttack.Instance.block;
-        if (block == true && !m_rolling)
+        if (block == true)
         {
-            m_animator.SetTrigger("Block");
             m_animator.SetBool("IdleBlock", true);
         }
         else
@@ -246,9 +246,9 @@ public class Hero : MonoBehaviour {
     }
     public void Jump()
     {
-            if (stamina > 10 && cooldownTimer > 1 && m_grounded && !m_rolling)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
+            if (stamina > 10 && m_JumpCooldownTime > 1 && m_grounded && !m_rolling && !block)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
             {
-                cooldownTimer = 0;
+            m_JumpCooldownTime = 0;
                 HeroAttack.Instance.DecreaseStamina(10);
                 m_animator.SetTrigger("Jump");
                 m_grounded = false;
@@ -259,7 +259,7 @@ public class Hero : MonoBehaviour {
     }
     public void Roll()
     {
-        if (stamina > 5 && cooldownTimer > 0.5f) //кувырок
+        if (stamina > 5 && cooldownTimer > 0.5f && !block) //кувырок
         {
             cooldownTimer = 0;
             capsuleCollider.enabled = false;
@@ -382,10 +382,15 @@ public class Hero : MonoBehaviour {
         move_Left = false;
     }
     public void MeeleAtack()
-    {  
-        if(!m_rolling && !block && m_timeSinceAttack > 0.25f && !m_rolling && stamina > 15f) 
+    {
+        if (!m_rolling && block && m_timeSinceAttack > 0.5f && !m_rolling && stamina > 5f)
         {
-            cooldownTimer = 0;
+            m_timeSinceAttack = 0.0f;
+            m_animator.SetTrigger("BlockAttack");
+            HeroAttack.Instance.Enemy_Push_by_BLOCK();
+        }
+            if (!m_rolling && !block && m_timeSinceAttack > 0.25f && !m_rolling && stamina > 15f) 
+        {
             isAttack = true;
             m_currentAttack++;
             // Loop back to one after third attack

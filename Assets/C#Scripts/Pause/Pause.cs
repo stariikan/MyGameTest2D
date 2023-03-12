@@ -50,17 +50,17 @@ public class Pause : MonoBehaviour
         {
             infoPassedLvl = 1;
         }
-        infoEnemyHP = SaveSerial.Instance.moushroomHP;
+        infoEnemyHP = SaveSerial.Instance.mushroomHP;
         if (infoEnemyHP == 0)
         {
             infoEnemyHP = 50;
         }
-        infoEnemyDamage = SaveSerial.Instance.moushroomDamage;
+        infoEnemyDamage = SaveSerial.Instance.mushroomDamage;
         if (infoEnemyDamage == 0)
         {
             infoEnemyDamage = 7;
         }
-        infoEnemySpeed = SaveSerial.Instance.moushroomSpeed;
+        infoEnemySpeed = SaveSerial.Instance.mushroomSpeed;
         if (infoEnemySpeed == 0)
         {
             infoEnemySpeed = 1f;

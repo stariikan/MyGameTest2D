@@ -98,7 +98,7 @@ public class HeroAttack : MonoBehaviour
     }
     public void MagicAttack()
     {
-        if(MagicCooldownTimer > magicAttackCooldown)
+        if(MagicCooldownTimer > magicAttackCooldown && currentMP >= 20)
         {
             currentMP -= 20;
             MagicCooldownTimer = 0; //сброс кулдауна приминения магии для того чтобы работа формула при атаке которой она смотрит на кулдаун и если он наступил, то можно вновь атаковать
@@ -120,7 +120,7 @@ public class HeroAttack : MonoBehaviour
     }
     private void AttackControl()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && currentStamina > 20f)
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             Block();
         }
@@ -131,6 +131,7 @@ public class HeroAttack : MonoBehaviour
     }
     public void Enemy_Push_by_BLOCK()
     {
+        currentStamina -= 5;
         if (playerDirecction > 0)
         {
             shieldArea.transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
