@@ -20,6 +20,11 @@ public class SaveSerial : MonoBehaviour
     public float mushroomSpeed;
     public int mushroomReward;
 
+    public float flyingEyeHP;
+    public float flyingEyeDamage;
+    public float flyingEyeSpeed;
+    public int flyingEyeReward;
+
     public float skeletonHP;
     public float skeletonDamage;
     public float skeletonSpeed;
@@ -65,6 +70,11 @@ public class SaveSerial : MonoBehaviour
         public float mushroomDamage;
         public float mushroomSpeed;
         public int mushroomReward;
+
+        public float flyingEyeHP;
+        public float flyingEyeDamage;
+        public float flyingEyeSpeed;
+        public int flyingEyeReward;
 
         public float skeletonHP;
         public float skeletonDamage;
@@ -118,6 +128,11 @@ public class SaveSerial : MonoBehaviour
             mushroomSpeed = Enemy_Behavior.Instance.moushroomSpeed;
             mushroomReward = Entity_Enemy.Instance.mushroomReward;
 
+            flyingEyeHP = Entity_Enemy.Instance.flyingEyeMaxHP;
+            flyingEyeDamage = Entity_Enemy.Instance.flyingEyeAttackDamage;
+            flyingEyeSpeed = Enemy_Behavior.Instance.flyingEyeSpeed;
+            flyingEyeReward = Entity_Enemy.Instance.flyingEyeReward;
+
             skeletonHP = Entity_Enemy.Instance.skeletonMaxHP;
             skeletonDamage = Entity_Enemy.Instance.skeletonAttackDamage;
             skeletonSpeed = Enemy_Behavior.Instance.skeletonSpeed;
@@ -154,6 +169,11 @@ public class SaveSerial : MonoBehaviour
         data.mushroomDamage = mushroomDamage;
         data.mushroomSpeed = mushroomSpeed;
         data.mushroomReward = mushroomReward;
+
+        data.flyingEyeHP = flyingEyeHP;
+        data.flyingEyeDamage = flyingEyeDamage;
+        data.flyingEyeSpeed = flyingEyeSpeed;
+        data.flyingEyeReward = flyingEyeReward;
 
         data.skeletonHP = skeletonHP;
         data.skeletonDamage = skeletonDamage;
@@ -209,6 +229,11 @@ public class SaveSerial : MonoBehaviour
             mushroomSpeed = Enemy_Behavior.Instance.moushroomSpeed;
             mushroomReward = Entity_Enemy.Instance.mushroomReward;
 
+            flyingEyeHP = Entity_Enemy.Instance.flyingEyeMaxHP;
+            flyingEyeDamage = Entity_Enemy.Instance.flyingEyeAttackDamage;
+            flyingEyeSpeed = Enemy_Behavior.Instance.flyingEyeSpeed;
+            flyingEyeReward = Entity_Enemy.Instance.flyingEyeReward;
+
             skeletonHP = Entity_Enemy.Instance.skeletonMaxHP;
             skeletonDamage = Entity_Enemy.Instance.skeletonAttackDamage;
             skeletonSpeed = Enemy_Behavior.Instance.skeletonSpeed;
@@ -245,6 +270,11 @@ public class SaveSerial : MonoBehaviour
         data.mushroomDamage = mushroomDamage;
         data.mushroomSpeed = mushroomSpeed;
         data.mushroomReward = mushroomReward;
+
+        data.flyingEyeHP = flyingEyeHP;
+        data.flyingEyeDamage = flyingEyeDamage;
+        data.flyingEyeSpeed = flyingEyeSpeed;
+        data.flyingEyeReward = flyingEyeReward;
 
         data.skeletonHP = skeletonHP;
         data.skeletonDamage = skeletonDamage;
@@ -300,6 +330,11 @@ public class SaveSerial : MonoBehaviour
             mushroomSpeed = data.mushroomSpeed;
             mushroomReward = data.mushroomReward;
 
+            flyingEyeHP = data.flyingEyeHP;
+            flyingEyeDamage = data.flyingEyeDamage;
+            flyingEyeSpeed = data.flyingEyeSpeed;
+            flyingEyeReward = data.flyingEyeReward;
+
             skeletonHP = data.skeletonHP;
             skeletonDamage = data.skeletonDamage;
             skeletonSpeed = data.skeletonSpeed;
@@ -351,6 +386,11 @@ public class SaveSerial : MonoBehaviour
             mushroomDamage = data.mushroomDamage;
             mushroomSpeed = data.mushroomSpeed;
             mushroomReward = data.mushroomReward;
+
+            flyingEyeHP = data.flyingEyeHP;
+            flyingEyeDamage = data.flyingEyeDamage;
+            flyingEyeSpeed = data.flyingEyeSpeed;
+            flyingEyeReward = data.flyingEyeReward;
 
             skeletonHP = data.skeletonHP;
             skeletonDamage = data.skeletonDamage;
@@ -405,7 +445,7 @@ public class SaveSerial : MonoBehaviour
     }
     public void IncreaseAttackDamage()
     {
-        playerAttackDamage += 10;
+        playerAttackDamage += 5;
         playerCoin -= 20;
     }
     public void IncreaseMageDamage()

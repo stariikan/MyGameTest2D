@@ -63,6 +63,7 @@
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickPosition.cs" />
     <Compile Include="Assets\C#Scripts\Shop\MeleeDMG_counter.cs" />
     <Compile Include="Assets\C#Scripts\Door\door.cs" />
+    <Compile Include="Assets\new\Bandits - Pixel Art\Demo\Bandit.cs" />
     <Compile Include="Assets\C#Scripts\Shop\LvL.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\Movement_buttons.cs" />
     <Compile Include="Assets\C#Scripts\Main menu\Main_menu.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Assets\C#Scripts\Hero\Magic\Projectile.cs" />
     <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\LvL_Tab.cs" />
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickPause.cs" />
+    <Compile Include="Assets\new\Bandits - Pixel Art\Demo\Sensor_Bandit.cs" />
     <Compile Include="Assets\C#Scripts\Hero\HeroAttack.cs" />
     <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\Movement_zone_position.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\EvilWizard\FireBall.cs" />
@@ -89,7 +91,7 @@
     <Compile Include="Assets\C#Scripts\Shop\Coin.cs" />
     <Compile Include="Assets\C#Scripts\Main menu\SettingsBool.cs" />
     <Compile Include="Assets\C#Scripts\Traps\Spike.cs" />
-    <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\hp_counter.cs" />
+    <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\HeroProgressBar.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\BossDeathAbility\SummonSlime.cs" />
     <Compile Include="Assets\C#Scripts\Pause\Pause.cs" />
     <Compile Include="Assets\C#Scripts\Main menu\Joystick_Settings.cs" />
@@ -101,8 +103,6 @@
     <Compile Include="Assets\C#Scripts\MobileInput\JoystickBlock.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\BossDeathAbility\DrainHP.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Hero.cs" />
-    <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\Stamina_counter.cs" />
-    <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\mp_counter.cs" />
     <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\coin_counter.cs" />
     <Compile Include="Assets\C#Scripts\SaveProgress\SaveSerial.cs" />
     <Compile Include="Assets\C#Scripts\UI\LvL and info\Level_counter.cs" />
@@ -118,6 +118,10 @@
     <Compile Include="Assets\C#Scripts\Main menu\Collectables.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\new\Gothicvania Cemetery Artwork\about.txt" />
+    <None Include="Assets\new\Cainos\Pixel Art Platformer - Village Props\Changelog.txt" />
+    <None Include="Assets\new\Hero and Opponents\license.txt" />
+    <None Include="Assets\new\Hero_Knight_2\License.txt" />
     <None Include="Assets\Materials\Monsters Creatures Fantasy\Sprites\EvilWizard\License.txt" />
     <None Include="Assets\Materials\Hero Knight - Pixel Art\ColorSwap\Sprites-ColorSwap.shader" />
   </ItemGroup>
