@@ -18,6 +18,7 @@ TagManager:
   - SpellBook
   - EvilWizard
   - Martial
+  - FlyingEye
   layers:
   - Default
   - TransparentFX

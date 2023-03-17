@@ -14,6 +14,11 @@ public class Entity_Enemy : MonoBehaviour
     public float mushroomAttackDamage = 10; // Урон от физ атаки
     public int mushroomReward = 2;//награда за победу над врагом
 
+    //Параметры Летающего глаза
+    public float flyingEyeMaxHP = 70; //Максимальные жизни Летающего глаза
+    public float flyingEyeAttackDamage = 10; // Урон от физ атаки
+    public int flyingEyeReward = 2;//награда за победу над врагом
+
     //Параметры Гоблина
     public float goblinMaxHP = 50; //Максимальные жизни Гоблина
     public float goblinAttackDamage = 15; // Урон от физ атаки
@@ -26,7 +31,7 @@ public class Entity_Enemy : MonoBehaviour
 
     //Параметры Самурая
     public float martialMaxHP = 75; //Максимальные жизни Гоблина
-    public float martialAttackDamage = 15; // Урон от физ атаки
+    public float martialAttackDamage = 20; // Урон от физ атаки
     public int martialReward = 2;//награда за победу над врагом
 
     //Параметры Слайма
@@ -84,6 +89,14 @@ public class Entity_Enemy : MonoBehaviour
             mushroomAttackDamage = SaveSerial.Instance.mushroomDamage;
             if (mushroomAttackDamage == 0) mushroomAttackDamage = 10;
         }
+        if (tag == "FlyingEye")
+        {
+            flyingEyeMaxHP = SaveSerial.Instance.mushroomHP;
+            if (flyingEyeMaxHP == 0) flyingEyeMaxHP = 70;
+            currentHP = flyingEyeMaxHP;
+            flyingEyeAttackDamage = SaveSerial.Instance.flyingEyeDamage;
+            if (flyingEyeAttackDamage == 0) flyingEyeAttackDamage = 10;
+        }
         if (tag == "Goblin")
         {
             goblinMaxHP = SaveSerial.Instance.goblinHP;
@@ -106,7 +119,7 @@ public class Entity_Enemy : MonoBehaviour
             if (martialMaxHP == 0) martialMaxHP = 75;
             currentHP = martialMaxHP;
             martialAttackDamage = SaveSerial.Instance.martialDamage;
-            if (martialAttackDamage == 0) martialAttackDamage = 15;
+            if (martialAttackDamage == 0) martialAttackDamage = 20;
         }
         if (tag == "Slime")
         {
@@ -129,6 +142,7 @@ public class Entity_Enemy : MonoBehaviour
         goblinMaxHP *= 1.2f;
         wizardMaxHP *= 1.2f;
         martialMaxHP *= 1.2f;
+        flyingEyeMaxHP *= 1.2f;
     }
     public void BoostEnemyAttackDamage() //тут усиливыем урон
     {
@@ -137,6 +151,7 @@ public class Entity_Enemy : MonoBehaviour
         goblinAttackDamage *= 1.2f;
         wizardAttackDamage *= 1.2f;
         martialAttackDamage *= 1.2f;
+        flyingEyeAttackDamage *= 1.2f;
     }
     public void BoostEnemyReward() //тут увеличиваем награду за убийство
     {
@@ -145,6 +160,7 @@ public class Entity_Enemy : MonoBehaviour
         goblinReward += 2;
         wizardReward += 2;
         martialReward += 2;
+        flyingEyeReward += 2;
     }
 
     //Общие методы и поведения
@@ -161,6 +177,7 @@ public class Entity_Enemy : MonoBehaviour
             if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
         }
         if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Mushroom") Hero.Instance.GetDamage(mushroomAttackDamage);
+        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "FlyingEye") Hero.Instance.GetDamage(mushroomAttackDamage);
         if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Goblin") Hero.Instance.GetDamage(goblinAttackDamage);
         if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Slime") Hero.Instance.GetDamage(slimeAttackDamage);
         if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Martial") Hero.Instance.GetDamage(martialAttackDamage);
@@ -183,6 +200,7 @@ public class Entity_Enemy : MonoBehaviour
         float maxHP = 1;
         if (tag == "Skeleton") maxHP = skeletonMaxHP;
         if (tag == "Mushroom") maxHP = mushroomMaxHP;
+        if (tag == "FlyingEye") maxHP = flyingEyeMaxHP;
         if (tag == "Goblin") maxHP = goblinMaxHP;
         if (tag == "EvilWizard") maxHP = wizardMaxHP;
         if (tag == "Martial") maxHP = martialMaxHP;
@@ -192,9 +210,14 @@ public class Entity_Enemy : MonoBehaviour
         isBlock = Enemy_Behavior.Instance.block;
         if (currentHP > 0 && !isBlock)
         {
-            if (tag != "Skeleton")
+            if (tag != "Skeleton" && tag != "Death")
             {
                 GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Клонирования обьекта
+                bloodSpawn.gameObject.SetActive(true);
+            }
+            if (tag == "Death")
+            {
+                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x + 1.5f, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Клонирования обьекта
                 bloodSpawn.gameObject.SetActive(true);
             }
             anim.SetTrigger("damage");//анимация получения демейджа
@@ -218,6 +241,7 @@ public class Entity_Enemy : MonoBehaviour
             int reward = 2;
             if (tag == "Skeleton") reward = skeletonReward;
             if (tag == "Mushroom") reward = mushroomReward;
+            if (tag == "FlyingEye") reward = mushroomReward;
             if (tag == "Goblin") reward = goblinReward;
             if (tag == "Martial") reward = martialReward;
             if (tag == "Slime") reward = 1;
@@ -234,9 +258,11 @@ public class Entity_Enemy : MonoBehaviour
     }
     public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти
     {
+        bool copy = this.gameObject.GetComponent<Enemy_Behavior>().copy;
         Destroy(this.gameObject);//уничтожить этот игровой обьект
         if (tag == "Skeleton") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "Mushroom") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
+        if (tag == "FlyingEye" && !copy) LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "Goblin") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "EvilWizard") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "Martial") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
