@@ -258,9 +258,11 @@ public class Entity_Enemy : MonoBehaviour
     }
     public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти
     {
+        bool copy = this.gameObject.GetComponent<Enemy_Behavior>().copy;
         Destroy(this.gameObject);//уничтожить этот игровой обьект
         if (tag == "Skeleton") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "Mushroom") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
+        if (tag == "FlyingEye" && !copy) LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "Goblin") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "EvilWizard") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "Martial") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей

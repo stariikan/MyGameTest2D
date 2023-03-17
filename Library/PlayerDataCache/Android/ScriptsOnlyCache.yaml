@@ -148,9 +148,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3630}
     - Class: 114
-      Script: {instanceID: 5966}
+      Script: {instanceID: 5962}
     - Class: 114
-      Script: {instanceID: 6178}
+      Script: {instanceID: 6174}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -221,7 +221,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3740}
     - Class: 114
-      Script: {instanceID: 5966}
+      Script: {instanceID: 5962}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -312,11 +312,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 4800}
     - Class: 114
-      Script: {instanceID: 5416}
+      Script: {instanceID: 5412}
     - Class: 114
-      Script: {instanceID: 5822}
+      Script: {instanceID: 5818}
     - Class: 114
-      Script: {instanceID: 6072}
+      Script: {instanceID: 6068}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -395,9 +395,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 4400}
     - Class: 114
-      Script: {instanceID: 5416}
+      Script: {instanceID: 5412}
     - Class: 114
-      Script: {instanceID: 5966}
+      Script: {instanceID: 5962}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -532,21 +532,21 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 4800}
     - Class: 114
-      Script: {instanceID: 5010}
+      Script: {instanceID: 5006}
     - Class: 114
-      Script: {instanceID: 5416}
+      Script: {instanceID: 5412}
     - Class: 114
-      Script: {instanceID: 5504}
+      Script: {instanceID: 5500}
     - Class: 114
-      Script: {instanceID: 5584}
+      Script: {instanceID: 5580}
     - Class: 114
-      Script: {instanceID: 5628}
+      Script: {instanceID: 5624}
     - Class: 114
-      Script: {instanceID: 5792}
+      Script: {instanceID: 5788}
     - Class: 114
-      Script: {instanceID: 5822}
+      Script: {instanceID: 5818}
     - Class: 114
-      Script: {instanceID: 5864}
+      Script: {instanceID: 5860}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1495,4 +1495,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/LevelComplete.unity
   - Assets/Scenes/DeadScreen.unity
   - Assets/Scenes/Collectables.unity
-  playerPath: D:/Games/WAAD_0.2.56.apk
+  playerPath: D:/Games/WAAD_0.2.57.apk
