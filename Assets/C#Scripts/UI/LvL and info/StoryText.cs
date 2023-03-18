@@ -14,6 +14,7 @@ public class StoryText : MonoBehaviour
     private int currentLineIndex = 0;
     private int currentLine = 0;
     private int linesDisplayed = 0;
+    private int storyNum;
     private float timer = 0.0f;
     private float delTimer = 0.0f;
     private string currentText = "";
@@ -22,6 +23,7 @@ public class StoryText : MonoBehaviour
     {
         // Set the initial text to an empty string
         textUI.text = "";
+        storyNum = HeroText.Instance.storyNum;
     }
 
     void Update()
@@ -35,7 +37,7 @@ public class StoryText : MonoBehaviour
         // If the current text is empty, select a new random text from the array
         if (currentText.Length == 0)
         {
-            currentText = textArray[Random.Range(0, textArray.Length)];
+            currentText = textArray[storyNum];
         }
 
         // If we haven't finished displaying the current line, keep displaying it
@@ -56,7 +58,7 @@ public class StoryText : MonoBehaviour
                     textUI.text = textUI.text.Substring(currentLine - maxLineLength);
                 }
 
-                // If the current text exceeds the maximum number of lines, roll it up
+                 //If the current text exceeds the maximum number of lines, roll it up
                 if (textUI.cachedTextGenerator.lineCount > maxLines)
                 {
                     // Get the index of the end of the first line
@@ -71,18 +73,22 @@ public class StoryText : MonoBehaviour
             }
         }
         // If we've finished displaying the current line, move on to the next one
-        else
-        {
-            currentLineIndex++;
-            currentLine = 0;
-            linesDisplayed = 0;
-            currentText = "";
+        //else
+        //{
+        //    currentLineIndex++;
+         //   currentLine = 0;
+         //   linesDisplayed = 0;
+         //   currentText = "";
 
-            if (currentLineIndex < textArray.Length)
-            {
-                // Split the text into separate lines based on the text box size
-                textUI.text = "";
-            }
-        }
+        //    if (currentLineIndex < textArray.Length)
+        //    {
+              //Split the text into separate lines based on the text box size
+         //       textUI.text = "";
+        //    }
+       // }
+    }
+    public void ChangeTextSpeed()
+    {
+       speed = 0.001f;
     }
 }
