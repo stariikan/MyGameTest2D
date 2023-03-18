@@ -9,6 +9,8 @@ public class Bomb : MonoBehaviour
     private float playerHP; //переменная метки попал ли во что-то снаряд
 
     private float bombDamage = 40;
+    private string enemyName;
+    private GameObject enemy;
     private Animator anim;
     public Rigidbody2D rb; //Физическое тело
     public GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
@@ -28,7 +30,7 @@ public class Bomb : MonoBehaviour
     }
     private void BombMovement() //направления и сила полета бомбы 
     {
-        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
+        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции бомбы по оси х
         if (directionX > 0) rb.AddForce(new Vector2(2.7f, 0.5f), ForceMode2D.Impulse);
         if (directionX < 0) rb.AddForce(new Vector2(-2.7f, 0.5f), ForceMode2D.Impulse);
  
@@ -44,17 +46,19 @@ public class Bomb : MonoBehaviour
     }
     public void BombDmg() //нанесения урона
     {
-        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
-        float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиции тумана по оси y
+        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции бомбы по оси х
+        float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиции бомбы по оси y
+        float enemyDirectionX = enemy.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция врага по оси х - позиции бомбы по оси х 
         if ((Mathf.Abs(directionX) < 2.0f && Mathf.Abs(directionY) < 2f) && playerHP > 0)
         {
             Hero.Instance.GetDamage(bombDamage);
         }
+        if (Mathf.Abs(enemyDirectionX) < 2f) enemy.GetComponent<Entity_Enemy>().TakeDamage(bombDamage/1.5f);
     }
     public void PushFromPlayer() // отскок от игрока
     {
-        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
-        float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиции тумана по оси y
+        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции бомбы по оси х
+        float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиции бомбы по оси y
         if (Mathf.Abs(directionX) < 1f)
         {
             Vector3 theScale = transform.localScale;
@@ -69,5 +73,10 @@ public class Bomb : MonoBehaviour
         this.gameObject.SetActive(true); //активация игрового обьекта
         this.gameObject.transform.position = _direction;
         BombMovement();
+    }
+    public void GetEnemyName(string name)
+    {
+        enemyName = name;
+        enemy = GameObject.Find(name);
     }
 }

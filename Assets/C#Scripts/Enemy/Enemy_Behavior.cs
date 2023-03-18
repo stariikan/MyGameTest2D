@@ -274,11 +274,11 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         {
             magicCooldown = 0;
             Vector3 pos = transform.position;
-            GameObject guard1 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x + 1.5f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            GameObject guard1 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x - 1.5f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
             guard1.name = "Enemy" + Random.Range(1, 999);
-            GameObject guard2 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x + 1f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            GameObject guard2 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x - 1f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
             guard2.name = "Enemy" + Random.Range(1, 999);
-            GameObject guard3 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x + 2f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            GameObject guard3 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x - 2f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
             guard3.name = "Enemy" + Random.Range(1, 999);
         }
         else return;
@@ -325,7 +325,8 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             bombBall.name = "Bomb" + Random.Range(1, 999);
             if (goblinScale.x < 0) bombSpawnPosition.x -= 1f; //перемещения бомбы вперед гоблина в зависимости от поворота спрайта
             if (goblinScale.x > 0) bombSpawnPosition.x += 1f;
-            bombBall.GetComponent<Bomb>().bombDirection(bombSpawnPosition);
+            bombBall.GetComponent<Bomb>().GetEnemyName(this.gameObject.name);
+            bombBall.GetComponent<Bomb>().bombDirection(bombSpawnPosition);  
         }
         if (level < 5) remainingBombs = 0;
     }
@@ -377,7 +378,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     {
         directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
         directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
-        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1.5f && Mathf.Abs(directionY) < 2) && !block && !isAttack && !stuned || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack && !stuned) //следует за игроком если маленькое растояние или получил урон
+        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1.5f && Mathf.Abs(directionY) < 2) && !block && !isAttack && !stuned || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack && !stuned || copy) //следует за игроком если маленькое растояние или получил урон
         {
             Vector3 pos = transform.position; //позиция обьекта
             Vector3 theScale = transform.localScale; //нужно для понимания направления

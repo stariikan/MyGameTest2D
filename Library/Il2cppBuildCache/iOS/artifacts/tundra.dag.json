@@ -1,0 +1,166 @@
+{
+  "Nodes": [
+    {
+      "Annotation": "all_tundra_nodes",
+      "Action": "",
+      "Inputs": [],
+      "Outputs": [],
+      "TargetDirectories": [],
+      "PassIndex": 0,
+      "ToBuildDependencies": [
+        1,
+        2,
+        3
+      ],
+      "ToUseDependencies": [],
+      "OverwriteOutputs": true,
+      "FrontendResponseFiles": [],
+      "AllowUnexpectedOutput": true,
+      "AllowedOutputSubstrings": [],
+      "DebugActionIndex": 0
+    },
+    {
+      "Annotation": "Il2Cpp D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Library/Il2cppBuildCache/iOS/il2cppOutput/Data/Metadata/global-metadata.dat",
+      "Action": "\"D:\\Program File\\UnityEdit\\Unity 2020.3.41f1\\2020.3.41f1\\Editor\\Data\\il2cpp/build/deploy/netcoreapp3.1/il2cpp.exe\" --convert-to-cpp --emit-null-checks --enable-array-bounds-check --dotnetprofile=\"unityaot\" --additional-cpp=D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Library/Il2cppBuildCache/iOS/additionalCppFiles/UnityClassRegistration.cpp --additional-cpp=D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Library/Il2cppBuildCache/iOS/additionalCppFiles/UnityICallRegistration.cpp --incremental-g-c-time-slice=3 --avoid-dynamic-library-copy --profiler-report --map-file-parser=\"D:/Program File/UnityEdit/Unity 2020.3.41f1/2020.3.41f1/Editor/Data/Tools/MapFileParser/MapFileParser.exe\" --directory=D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed --generatedcppdir=D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Library/Il2cppBuildCache/iOS/il2cppOutput --stats-output-dir=D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Library/Il2cppBuildCache/iOS/il2cppStats",
+      "Inputs": [
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/Assembly-CSharp.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/Mono.Security.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/mscorlib.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/System.Configuration.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/System.Core.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/System.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/System.Xml.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/Unity.TextMeshPro.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/Unity.XR.Management.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.AnimationModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.AudioModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.CoreModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.GameCenterModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.GridModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.IMGUIModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.InputLegacyModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.ParticleSystemModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.Physics2DModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.PhysicsModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.SharedInternalsModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.SpriteShapeModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.SubsystemsModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.TextCoreModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.TextRenderingModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.TilemapModule.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.UI.dll",
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Temp/StagingArea/Data/Managed/UnityEngine.UIModule.dll",
+        "\"D:/Program File/UnityEdit/Unity 2020.3.41f1/2020.3.41f1/Editor/Data/il2cpp/build/deploy/netcoreapp3.1/il2cpp.exe\""
+      ],
+      "Outputs": [
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Library/Il2cppBuildCache/iOS/il2cppOutput/Data/Metadata/global-metadata.dat"
+      ],
+      "TargetDirectories": [],
+      "PassIndex": 0,
+      "ToBuildDependencies": [],
+      "ToUseDependencies": [],
+      "OverwriteOutputs": false,
+      "FrontendResponseFiles": [],
+      "AllowUnexpectedOutput": true,
+      "AllowedOutputSubstrings": [],
+      "DebugActionIndex": 1
+    },
+    {
+      "Annotation": "Copy Additional C++ File D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Library/Il2cppBuildCache/iOS/il2cppOutput/UnityClassRegistration.cpp",
+      "Action": "copy \"D:\\Games\\MyGameTest2D\\MyGameTest2D\\MyGameTest2D\\Library\\Il2cppBuildCache\\iOS\\additionalCppFiles\\UnityClassRegistration.cpp\" \"D:\\Games\\MyGameTest2D\\MyGameTest2D\\MyGameTest2D\\Library\\Il2cppBuildCache\\iOS\\il2cppOutput\\UnityClassRegistration.cpp\" && copy /b \"D:\\Games\\MyGameTest2D\\MyGameTest2D\\MyGameTest2D\\Library\\Il2cppBuildCache\\iOS\\il2cppOutput\\UnityClassRegistration.cpp\" +,, \"D:\\Games\\MyGameTest2D\\MyGameTest2D\\MyGameTest2D\\Library\\Il2cppBuildCache\\iOS\\il2cppOutput\\UnityClassRegistration.cpp\" ",
+      "Inputs": [
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Library/Il2cppBuildCache/iOS/additionalCppFiles/UnityClassRegistration.cpp"
+      ],
+      "Outputs": [
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Library/Il2cppBuildCache/iOS/il2cppOutput/UnityClassRegistration.cpp"
+      ],
+      "TargetDirectories": [],
+      "PassIndex": 0,
+      "ToBuildDependencies": [
+        1
+      ],
+      "ToUseDependencies": [
+        1
+      ],
+      "OverwriteOutputs": true,
+      "FrontendResponseFiles": [],
+      "AllowUnexpectedOutput": true,
+      "AllowedOutputSubstrings": [],
+      "DebugActionIndex": 2
+    },
+    {
+      "Annotation": "Copy Additional C++ File D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Library/Il2cppBuildCache/iOS/il2cppOutput/UnityICallRegistration.cpp",
+      "Action": "copy \"D:\\Games\\MyGameTest2D\\MyGameTest2D\\MyGameTest2D\\Library\\Il2cppBuildCache\\iOS\\additionalCppFiles\\UnityICallRegistration.cpp\" \"D:\\Games\\MyGameTest2D\\MyGameTest2D\\MyGameTest2D\\Library\\Il2cppBuildCache\\iOS\\il2cppOutput\\UnityICallRegistration.cpp\" && copy /b \"D:\\Games\\MyGameTest2D\\MyGameTest2D\\MyGameTest2D\\Library\\Il2cppBuildCache\\iOS\\il2cppOutput\\UnityICallRegistration.cpp\" +,, \"D:\\Games\\MyGameTest2D\\MyGameTest2D\\MyGameTest2D\\Library\\Il2cppBuildCache\\iOS\\il2cppOutput\\UnityICallRegistration.cpp\" ",
+      "Inputs": [
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Library/Il2cppBuildCache/iOS/additionalCppFiles/UnityICallRegistration.cpp"
+      ],
+      "Outputs": [
+        "D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Library/Il2cppBuildCache/iOS/il2cppOutput/UnityICallRegistration.cpp"
+      ],
+      "TargetDirectories": [],
+      "PassIndex": 0,
+      "ToBuildDependencies": [
+        1
+      ],
+      "ToUseDependencies": [
+        1
+      ],
+      "OverwriteOutputs": true,
+      "FrontendResponseFiles": [],
+      "AllowUnexpectedOutput": true,
+      "AllowedOutputSubstrings": [],
+      "DebugActionIndex": 3
+    }
+  ],
+  "FileSignatures": [
+    {
+      "File": "../../../Temp/StagingArea/Data/Managed"
+    },
+    {
+      "File": "artifacts/buildprogram/tundra_buildprogram.dag.json"
+    },
+    {
+      "File": "il2cpp_settings.json"
+    },
+    {
+      "File": "unitylinker_settings.json"
+    }
+  ],
+  "GlobSignatures": [
+    {
+      "Path": "../../../Temp/StagingArea/Data/Managed"
+    }
+  ],
+  "ContentDigestExtensions": [
+    ".rsp",
+    ".dll",
+    ".exe",
+    ".txt",
+    ".c",
+    ".cpp",
+    ".h",
+    ".cs",
+    ".hpp"
+  ],
+  "StructuredLogFileName": "artifacts/tundra.log.json",
+  "StateFileName": "artifacts/TundraBuildState.state",
+  "StateFileNameTmp": "artifacts/TundraBuildState.state.tmp",
+  "ScanCacheFileName": "artifacts/tundra.scancache",
+  "ScanCacheFileNameTmp": "artifacts/tundra.scancache.tmp",
+  "DigestCacheFileName": "artifacts/tundra.digestcache",
+  "DigestCacheFileNameTmp": "artifacts/tundra.digestcache.tmp",
+  "DirectoriesCausingImplicitDependencies": [],
+        "NamedNodes": {
+          "all_tundra_nodes": 0
+        }
+,  "DefaultNodes": [
+    0
+  ],
+  "SharedResources": [],
+  "Scanners": [],
+  "Identifier": "artifacts/tundra.dag.json",
+  "BuildTitle": "Bee",
+  "RelativePathToRoot": ".."
+}

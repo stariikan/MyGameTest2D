@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638085280273401181
+      ticks: 638146773353420947
     m_Hash: 1227962507
   m_LockFileStatus:
     m_FilePath: D:/Games/MyGameTest2D/MyGameTest2D/MyGameTest2D/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638085280285784018
+      ticks: 638146773353480786
     m_Hash: 2826659941
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
@@ -133,6 +133,7 @@ m_PackageAssets:
         - 7.0.7
         - 7.0.8
         - 7.0.9
+        - 7.0.10
         - 8.0.0-pre.3
         - 8.0.0-pre.4
         - 8.0.0
@@ -147,6 +148,7 @@ m_PackageAssets:
         - 9.0.1
         - 10.0.0-pre.1
         - 10.0.0-pre.2
+        - 10.0.0
         compatible:
         - 5.2.0
         - 5.2.1
@@ -377,6 +379,7 @@ m_PackageAssets:
         - 8.0.2
         - 9.0.0-pre.1
         - 9.0.0-pre.2
+        - 9.0.0
         compatible:
         - 4.3.0
         - 4.3.1
@@ -575,6 +578,7 @@ m_PackageAssets:
         - 7.0.4
         - 7.0.5
         - 7.0.6
+        - 7.0.7
         - 8.0.0-pre.4
         - 8.0.0-pre.5
         - 8.0.0
@@ -584,6 +588,7 @@ m_PackageAssets:
         - 9.0.1
         - 10.0.0-pre.1
         - 10.0.0-pre.2
+        - 10.0.0
         compatible:
         - 5.3.0
         verified: 5.3.0
@@ -1503,8 +1508,10 @@ m_PackageAssets:
         - 1.7.1
         - 1.7.2
         - 1.7.3
+        - 1.7.4
         - 1.8.0
         - 1.8.1
+        - 1.8.2
         compatible:
         - 1.4.8
         - 1.5.0-pre.2
@@ -1535,8 +1542,10 @@ m_PackageAssets:
         - 1.7.1
         - 1.7.2
         - 1.7.3
+        - 1.7.4
         - 1.8.0
         - 1.8.1
+        - 1.8.2
         verified: 1.4.8
       dependencies:
       - name: com.unity.modules.director
@@ -3996,6 +4005,7 @@ m_PackageAssets:
         - 8.0.1
         - 9.0.0-pre.1
         - 9.0.0-pre.2
+        - 9.0.0
         compatible:
         - 4.2.0
         - 4.2.1
