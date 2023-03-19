@@ -35,18 +35,6 @@ public class UI_Transform_Position : MonoBehaviour
     {
         SceneManager.LoadScene("Collectables", LoadSceneMode.Single);
     }
-    public void JoystickSettings()
-    {
-        //Pause.Instance.ChangeJoystickSetting();
-    }
-    public void MusicSettings()
-    {
-
-    }
-    public void SoundSettings()
-    {
-
-    }
     public void MainMenu()
     {
         SceneManager.LoadScene("Menu", LoadSceneMode.Single);

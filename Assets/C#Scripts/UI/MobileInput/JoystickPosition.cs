@@ -5,7 +5,9 @@ using UnityEngine;
 public class JoystickPosition : MonoBehaviour
 {
     private Vector3 originalPos;
-    public static JoystickPosition Instance { get; set; }
+    public bool joystick_settings; //Джойстик или кнопки
+
+    public static JoystickPosition Instance { get; set; } //Для сбора и отправки данных из этого скрипта
 
     private void Start()
     {
@@ -13,10 +15,7 @@ public class JoystickPosition : MonoBehaviour
         originalPos = transform.position;
     }
     // Update is called once per frame
-    void Update()
-    {
-        //ChangeJoystickPosition();
-    }
+
     public void Joystick_ON()
     {
         this.gameObject.SetActive(true);

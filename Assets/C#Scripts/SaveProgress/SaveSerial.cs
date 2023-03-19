@@ -56,6 +56,7 @@ public class SaveSerial : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        LoadlSetting(); //загрузка данных ранее выставленных настроек игры
     }
     //—оздадим новый сериализуемый класс SaveData, который будет содержать сохран€емые данные
     [Serializable]
@@ -103,6 +104,7 @@ public class SaveSerial : MonoBehaviour
     }
     //ќбратите внимание, три переменные в классе SaveData соответствуют переменным из класса SaveSerial.
     //ƒл€ сохранени€ мы будем передавать значени€ из SaveSerial в SaveData, а затем сериализовать последний.
+    [Serializable]
     class SaveSettings
     {
         //Settings
@@ -331,7 +333,7 @@ public class SaveSerial : MonoBehaviour
         //data.savedBool = boolToSave;
         bf.Serialize(file, data);
         file.Close();
-        Debug.Log("Game settings data saved!");
+        Debug.Log("Settings data saved!");
     }
     //ћетод LoadGame Ц это, как и раньше, SaveGame наоборот:
     public void LoadGame()
@@ -442,6 +444,29 @@ public class SaveSerial : MonoBehaviour
             martialReward = data.martialReward;
 
             Debug.Log("Game data loaded!"); //¬ыводим в отладочную консоль сообщение об успешной загрузке.
+        }
+        else
+            Debug.LogWarning("There is no save data!"); //≈сли файла с данными не окажетс€ в папке проекта, выведем в консоль сообщение об ошибке.
+    }
+    public void LoadlSetting()
+    {
+        if (File.Exists(Application.persistentDataPath
+          + "/SettingsData.dat")) //—начала ищем файл с сохраненными данными, который мы создали в методе SaveGame.
+        {
+            BinaryFormatter bf = new BinaryFormatter(); //≈сли он существует, открываем его и десериализуем с помощью BinaryFormatter.
+            FileStream file =
+              File.Open(Application.persistentDataPath
+              + "/SettingsData.dat", FileMode.Open);
+            SaveSettings data = (SaveSettings)bf.Deserialize(file); // ѕередаем записанные в нем значени€ в переменные класса SaveSerial.
+            file.Close();
+            
+            joystick_settings = data.joystick_settings;
+            localization = data.localization;
+            sound = data.sound;
+            music = data.music;
+
+
+            Debug.Log("Settings loaded!"); //¬ыводим в отладочную консоль сообщение об успешной загрузке.
         }
         else
             Debug.LogWarning("There is no save data!"); //≈сли файла с данными не окажетс€ в папке проекта, выведем в консоль сообщение об ошибке.

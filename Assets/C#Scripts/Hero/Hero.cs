@@ -45,9 +45,6 @@ public class Hero : MonoBehaviour {
 
     private float cooldownTimer = Mathf.Infinity;
 
-    //Settings
-    private bool joystick_Settings = false;
-
     //Touchscreen buttons for movement
     public bool move_Right = false;
     public bool move_Left = false;
@@ -131,8 +128,7 @@ public class Hero : MonoBehaviour {
         cooldownTimer += Time.deltaTime; //прибавление по 1 секунде к cooldownTimer
         stamina = HeroAttack.Instance.currentStamina; //проверка стамины
         m_JumpCooldownTime += Time.deltaTime;
-        joystick_Settings = Pause.Instance.joystick; //проверка настройки джойстика
-        //Debug.Log(joystick_Settings);
+
         Jostick_Settings_Controll();
 
         if (hp > 0)
@@ -151,12 +147,13 @@ public class Hero : MonoBehaviour {
 
     private void Jostick_Settings_Controll()
     {
-        if (joystick_Settings == false)
+        bool joystick = SaveSerial.Instance.joystick_settings;
+        if (!joystick)
         {
             JoystickPosition.Instance.Joystick_OFF();
             Movement_buttons.Instance.MovementButtons_ON();
         }
-        if (joystick_Settings == true)
+        if (joystick)
         {
             JoystickPosition.Instance.Joystick_ON();
             Movement_buttons.Instance.MovementButtons_OFF();

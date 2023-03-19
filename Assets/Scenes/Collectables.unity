@@ -7641,8 +7641,9 @@ GameObject:
   - component: {fileID: 1512313588}
   - component: {fileID: 1512313590}
   - component: {fileID: 1512313589}
+  - component: {fileID: 1512313591}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7689,10 +7690,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 585188cdc4600544eb408bee749e4b3a, type: 3}
-    m_FontSize: 15
+    m_FontSize: 25
     m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 1
+    m_BestFit: 0
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 1
@@ -7709,6 +7710,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512313587}
   m_CullTransparentMesh: 1
+--- !u!114 &1512313591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512313587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fed2ff62b6b14b42bc1bdbee9216f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonName: {fileID: 1512313587}
+  textUI: {fileID: 1512313589}
+  textArray:
+  - back
+  - "\u043D\u0430\u0437\u0430\u0434"
+  joystick_settings: 0
+  localization: 0
+  sound: 0
+  music: 0
 --- !u!1 &1517063920
 GameObject:
   m_ObjectHideFlags: 0
@@ -11419,7 +11441,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2063897652}
-  - component: {fileID: 2063897653}
   m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
@@ -11443,18 +11464,6 @@ Transform:
   m_Father: {fileID: 1947362317}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2063897653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2063897651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81e90c45c3490ed4489a136838b18924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2065818706
 GameObject:
   m_ObjectHideFlags: 0

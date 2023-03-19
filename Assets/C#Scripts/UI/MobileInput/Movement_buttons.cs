@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class Movement_buttons : MonoBehaviour
 {
-    public static Movement_buttons Instance { get; set; }
+    public bool joystick_settings; //Джойстик или кнопки
+
+    public static Movement_buttons Instance { get; set; } //Для сбора и отправки данных из этого скрипта
 
     private void Start()
     {
         Instance = this;
     }
     // Update is called once per frame
-    void Update()
-    {
-        //ChangeJoystickPosition();
-    }
     public void MovementButtons_ON()
     {
         this.gameObject.SetActive(true);

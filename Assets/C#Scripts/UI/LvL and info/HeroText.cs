@@ -25,8 +25,12 @@ public class HeroText : MonoBehaviour
     {
         // Set the initial text to an empty string
         textUI.text = "";
-        storyNum = Random.Range(0, textArray.Length);
         Instance = this;
+
+        bool localization = SaveSerial.Instance.localization;
+        if (localization) storyNum = Random.Range(0, 4);
+        if (!localization) storyNum = Random.Range(5, 9);
+
 
     }
 
