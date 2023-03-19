@@ -38,6 +38,17 @@ public class Shop : MonoBehaviour
             return;
         }
     }
+    public void PlusSpeed()
+    {
+        if (SaveSerial.Instance.playerCoin >= 20)
+        {
+            SaveSerial.Instance.IncreaseSpeed();
+        }
+        else
+        {
+            return;
+        }
+    }
     public void PlusMeleeDMG()
     {
         if (SaveSerial.Instance.playerCoin >= 20)

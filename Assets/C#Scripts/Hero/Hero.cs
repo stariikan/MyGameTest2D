@@ -3,7 +3,6 @@
 public class Hero : MonoBehaviour {
     public int platform;
 
-    [SerializeField] float      m_speed = 4.0f;
     [SerializeField] float      m_jumpForce = 7.5f;
     [SerializeField] float      m_rollForce = 7.5f;
     [SerializeField] bool       m_noBlood = false;
@@ -31,6 +30,8 @@ public class Hero : MonoBehaviour {
     public float maxHP;
     public float hp; //Количество жизней
     public float stamina;
+    public float m_speed;
+    public float m_curentSpeed;
 
     public bool playerDead = false; //мертв игрок или нет, пока нужно для того чтобы при смерти игрока делать рестарт
     public float mageAttackDamage;
@@ -79,12 +80,17 @@ public class Hero : MonoBehaviour {
         {
             mageAttackDamage = 30;
         }
-
         stamina = SaveSerial.Instance.playerStamina;
         if (stamina == 0)
         {
             stamina = 100;
         }
+        m_speed = SaveSerial.Instance.playerSpeed;
+        if (m_speed == 0)
+        {
+            m_speed = 4;
+        }
+        m_curentSpeed = m_speed;
     }
     // Update is called once per frame
     private void FixedUpdate()
@@ -191,11 +197,11 @@ public class Hero : MonoBehaviour {
     {
         if (block || isAttack)
         {
-            m_speed = 2f;
+            m_curentSpeed = m_speed / 2;
         }
         else
         {
-            m_speed = 4f;
+            m_curentSpeed = m_speed;
         }
         if (cooldownTimer > 0.5f)
         {
@@ -231,7 +237,7 @@ public class Hero : MonoBehaviour {
         }
         if (hp <= 0 && !m_rolling) //Если жизней меньше 0
         {
-            m_speed = 0;
+            m_curentSpeed = 0;
             m_body2d.gravityScale = 0;
             m_body2d.velocity = Vector2.zero;
             m_animator.StopPlayback();
@@ -281,7 +287,7 @@ public class Hero : MonoBehaviour {
             {
                 if (!m_rolling)
                 {
-                    m_body2d.velocity = new Vector2(move * m_speed, m_body2d.velocity.y);
+                    m_body2d.velocity = new Vector2(move * m_curentSpeed, m_body2d.velocity.y);
                     m_facingDirection = 1;
                 }
             }
@@ -289,7 +295,7 @@ public class Hero : MonoBehaviour {
             {
                 if (!m_rolling)
                 {
-                    m_body2d.velocity = new Vector2(move * m_speed, m_body2d.velocity.y);
+                    m_body2d.velocity = new Vector2(move * m_curentSpeed, m_body2d.velocity.y);
                     m_facingDirection = -1;
                 }
             }
@@ -313,7 +319,7 @@ public class Hero : MonoBehaviour {
             {
                 if (!m_rolling)
                 {
-                    m_body2d.velocity = new Vector2(joystickMoveX * m_speed, m_body2d.velocity.y);
+                    m_body2d.velocity = new Vector2(joystickMoveX * m_curentSpeed, m_body2d.velocity.y);
                     m_facingDirection = 1;
                 }
             }
@@ -321,7 +327,7 @@ public class Hero : MonoBehaviour {
             {
                 if (!m_rolling)
                 {
-                    m_body2d.velocity = new Vector2(joystickMoveX * m_speed, m_body2d.velocity.y);
+                    m_body2d.velocity = new Vector2(joystickMoveX * m_curentSpeed, m_body2d.velocity.y);
                     m_facingDirection = -1;
                 }
             }
@@ -336,7 +342,7 @@ public class Hero : MonoBehaviour {
         {
             if (!m_rolling)
             {
-                m_body2d.velocity = new Vector2(1 * m_speed, m_body2d.velocity.y);
+                m_body2d.velocity = new Vector2(1 * m_curentSpeed, m_body2d.velocity.y);
                 m_facingDirection = 1;
             }
         }
@@ -344,7 +350,7 @@ public class Hero : MonoBehaviour {
         {
             if (!m_rolling)
             {
-                m_body2d.velocity = new Vector2(-1 * m_speed, m_body2d.velocity.y);
+                m_body2d.velocity = new Vector2(-1 * m_curentSpeed, m_body2d.velocity.y);
                 m_facingDirection = -1;
             }
         }

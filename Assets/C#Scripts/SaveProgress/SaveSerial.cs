@@ -10,6 +10,7 @@ public class SaveSerial : MonoBehaviour
     public float playerHP;
     public float playerMP;
     public float playerStamina;
+    public float playerSpeed;
     public float playerAttackDamage;
     public float playerMageDamage;
 
@@ -46,7 +47,10 @@ public class SaveSerial : MonoBehaviour
     public int martialReward;
 
     //Settings
-    public bool joystick_settings;
+    public bool joystick_settings = false; //Джойстик или кнопки
+    public bool localization; //Eng/Ru
+    public bool sound; //Включен ли звук
+    public bool music; //Включена ли музыка
     public static SaveSerial Instance { get; set; } //Для сбора и отправки данных из этого скрипта
 
     private void Awake()
@@ -61,8 +65,9 @@ public class SaveSerial : MonoBehaviour
         public float playerHP;
         public float playerMP;
         public float playerStamina;
+        public float playerSpeed;
         public float playerAttackDamage;
-        public float playerMageDamage = 30;
+        public float playerMageDamage;
 
         public int passedLvl;
 
@@ -95,11 +100,18 @@ public class SaveSerial : MonoBehaviour
         public float martialDamage;
         public float martialSpeed;
         public int martialReward;
-
-        public bool joystick_settings;
     }
     //Обратите внимание, три переменные в классе SaveData соответствуют переменным из класса SaveSerial.
     //Для сохранения мы будем передавать значения из SaveSerial в SaveData, а затем сериализовать последний.
+    class SaveSettings
+    {
+        //Settings
+        public bool joystick_settings; //Джойстик или кнопки
+        public bool localization; //Eng/Ru
+        public bool sound; //Включен ли звук
+        public bool music; //Включена ли музыка
+    }
+
 
     //Добавим в класс SaveSerial метод SaveGame:
     public void SaveGame()
@@ -119,6 +131,7 @@ public class SaveSerial : MonoBehaviour
             playerHP = Hero.Instance.maxHP;
             playerMP = HeroAttack.Instance.maxMP;
             playerStamina = HeroAttack.Instance.stamina;
+            playerSpeed = Hero.Instance.m_curentSpeed;
             playerAttackDamage = MeleeWeapon.Instance.AttackDamage;
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
@@ -152,14 +165,13 @@ public class SaveSerial : MonoBehaviour
             martialDamage = Entity_Enemy.Instance.martialAttackDamage;
             martialSpeed = Enemy_Behavior.Instance.martialSpeed;
             martialReward = Entity_Enemy.Instance.martialReward;
-
-            joystick_settings = Pause.Instance.joystick;
         }
         
         data.playerCoin = playerCoin;
         data.playerHP = playerHP;
         data.playerMP = playerMP;
         data.playerStamina = playerStamina;
+        data.playerSpeed = playerSpeed;
         data.playerAttackDamage = playerAttackDamage;
         data.playerMageDamage = playerMageDamage;
         
@@ -195,8 +207,6 @@ public class SaveSerial : MonoBehaviour
         data.martialSpeed = martialSpeed;
         data.martialReward = martialReward;
 
-        data.joystick_settings = joystick_settings;
-
 
         //data.savedBool = boolToSave;
         bf.Serialize(file, data);
@@ -220,6 +230,7 @@ public class SaveSerial : MonoBehaviour
             playerHP = Hero.Instance.maxHP;
             playerMP = HeroAttack.Instance.maxMP;
             playerStamina = HeroAttack.Instance.stamina;
+            playerSpeed = Hero.Instance.m_curentSpeed;
             playerAttackDamage = MeleeWeapon.Instance.AttackDamage;
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
@@ -253,14 +264,13 @@ public class SaveSerial : MonoBehaviour
             martialDamage = Entity_Enemy.Instance.martialAttackDamage;
             martialSpeed = Enemy_Behavior.Instance.martialSpeed;
             martialReward = Entity_Enemy.Instance.martialReward;
-
-            joystick_settings = Pause.Instance.joystick;
         }
 
         data.playerCoin = playerCoin;
         data.playerHP = playerHP;
         data.playerMP = playerMP;
         data.playerStamina = playerStamina;
+        data.playerSpeed = playerSpeed;
         data.playerAttackDamage = playerAttackDamage;
         data.playerMageDamage = playerMageDamage;
 
@@ -296,13 +306,32 @@ public class SaveSerial : MonoBehaviour
         data.martialSpeed = martialSpeed;
         data.martialReward = martialReward;
 
-        data.joystick_settings = joystick_settings;
-
 
         //data.savedBool = boolToSave;
         bf.Serialize(file, data);
         file.Close();
         Debug.Log("Game data saved!");
+    }
+    public void SaveSetting()
+    {
+        BinaryFormatter bf = new BinaryFormatter(); //Объект BinaryFormatter предназначен для сериализации и десериализации.
+                                                    //При сериализации он отвечает за преобразование информации в поток бинарных данных (нулей и единиц).
+
+        FileStream file = File.Create(Application.persistentDataPath //FileStream и File нужны для создания файла с расширением .dat.
+                                                                     //Константа Application.persistentDataPath содержит путь к файлам проекта: C:\Users\[user]\AppData\LocalLow\[company name].
+          + "/SettingsData.dat");
+        SaveSettings data = new SaveSettings(); //В методе SaveGame создается новый экземпляр класса SaveData. В него записываются текущие данные из SaveSerial, которые нужно сохранить.
+                                        //BinaryFormatter сериализует эти данные и записывает их в файл, созданный FileStream. Затем файл закрывается, в консоль выводится сообщение об успешном сохранении.
+
+        data.joystick_settings = joystick_settings;
+        data.localization = localization;
+        data.sound = sound;
+        data.music = music;
+
+        //data.savedBool = boolToSave;
+        bf.Serialize(file, data);
+        file.Close();
+        Debug.Log("Game settings data saved!");
     }
     //Метод LoadGame – это, как и раньше, SaveGame наоборот:
     public void LoadGame()
@@ -320,6 +349,7 @@ public class SaveSerial : MonoBehaviour
             playerHP = data.playerHP;
             playerMP = data.playerMP;
             playerStamina = data.playerStamina;
+            playerSpeed = data.playerSpeed;
             playerAttackDamage = data.playerAttackDamage;
             playerMageDamage = data.playerMageDamage;
 
@@ -354,8 +384,6 @@ public class SaveSerial : MonoBehaviour
             martialDamage = data.martialDamage;
             martialSpeed = data.martialSpeed;
             martialReward = data.martialReward;
-
-            joystick_settings = data.joystick_settings;
 
             Debug.Log("Game data loaded!"); //Выводим в отладочную консоль сообщение об успешной загрузке.
         }
@@ -377,6 +405,7 @@ public class SaveSerial : MonoBehaviour
             playerHP = data.playerHP;
             playerMP = data.playerMP;
             playerStamina = data.playerStamina;
+            playerSpeed = data.playerSpeed;
             playerAttackDamage = data.playerAttackDamage;
             playerMageDamage = data.playerMageDamage;
 
@@ -411,8 +440,6 @@ public class SaveSerial : MonoBehaviour
             martialDamage = data.martialDamage;
             martialSpeed = data.martialSpeed;
             martialReward = data.martialReward;
-
-            joystick_settings = data.joystick_settings;
 
             Debug.Log("Game data loaded!"); //Выводим в отладочную консоль сообщение об успешной загрузке.
         }
@@ -443,6 +470,16 @@ public class SaveSerial : MonoBehaviour
         playerMP += 20;
         playerCoin -= 20;
     }
+    public void IncreaseStamina()
+    {
+        playerStamina += 20;
+        playerCoin -= 20;
+    }
+    public void IncreaseSpeed()
+    {
+        playerSpeed += 0.25f;
+        playerCoin -= 20;
+    }
     public void IncreaseAttackDamage()
     {
         playerAttackDamage += 5;
@@ -450,12 +487,51 @@ public class SaveSerial : MonoBehaviour
     }
     public void IncreaseMageDamage()
     {
-        playerMageDamage += 10;
+        playerMageDamage += 5;
         playerCoin -= 20;
     }
-    public void IncreaseStamina()
+    public void ChangeJoystickSetting()
     {
-        playerStamina += 20;
-        playerCoin -= 20;
+        if (joystick_settings == false)
+        {
+            joystick_settings = true;
+        }
+        else
+        {
+            joystick_settings = false;
+        }
+    }
+    public void ChangeLocalizationSetting()
+    {
+        if (localization == false)
+        {
+            localization = true;
+        }
+        else
+        {
+            localization = false;
+        }
+    }
+    public void ChangeMuiscSetting()
+    {
+        if (music == false)
+        {
+            music = true;
+        }
+        else
+        {
+            music = false;
+        }
+    }
+    public void ChangeSoundSetting()
+    {
+        if (sound == false)
+        {
+            sound = true;
+        }
+        else
+        {
+            sound = false;
+        }
     }
 }

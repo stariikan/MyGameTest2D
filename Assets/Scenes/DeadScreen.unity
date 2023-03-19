@@ -1726,6 +1726,7 @@ GameObject:
   - component: {fileID: 2049496691}
   - component: {fileID: 2049496693}
   - component: {fileID: 2049496692}
+  - component: {fileID: 2049496694}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1805,6 +1806,51 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2049496690}
   m_Enabled: 1
+--- !u!114 &2049496694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049496690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 359fe0a1f5efc284bb62ffa35bacae10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCoin: 0
+  playerHP: 0
+  playerMP: 0
+  playerStamina: 0
+  playerSpeed: 0
+  playerAttackDamage: 0
+  playerMageDamage: 0
+  passedLvl: 0
+  mushroomHP: 0
+  mushroomDamage: 0
+  mushroomSpeed: 0
+  mushroomReward: 0
+  flyingEyeHP: 0
+  flyingEyeDamage: 0
+  flyingEyeSpeed: 0
+  flyingEyeReward: 0
+  skeletonHP: 0
+  skeletonDamage: 0
+  skeletonSpeed: 0
+  skeletonReward: 0
+  goblinHP: 0
+  goblinDamage: 0
+  goblinSpeed: 0
+  goblinReward: 0
+  wizardHP: 0
+  wizardDamage: 0
+  wizardSpeed: 0
+  wizardReward: 0
+  martialHP: 0
+  martialDamage: 0
+  martialSpeed: 0
+  martialReward: 0
+  joystick_settings: 0
 --- !u!224 &2049496696
 RectTransform:
   m_ObjectHideFlags: 0

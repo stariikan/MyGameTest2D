@@ -25,7 +25,7 @@ public class HeroText : MonoBehaviour
     {
         // Set the initial text to an empty string
         textUI.text = "";
-        storyNum = Random.Range(0, 8);
+        storyNum = Random.Range(0, textArray.Length);
         Instance = this;
 
     }

@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 111612779}
   - component: {fileID: 111612778}
   m_Layer: 5
-  m_Name: Plus 20 HP
+  m_Name: Plus HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -894,6 +894,85 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &398456879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 398456880}
+  - component: {fileID: 398456882}
+  - component: {fileID: 398456881}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &398456880
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398456879}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1969191358}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &398456881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398456879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 43d59b5c638b0664db55f3a4e4d130ef, type: 2}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 585188cdc4600544eb408bee749e4b3a, type: 3}
+    m_FontSize: 18
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 1
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: +0.25 Speed = 20 coins
+--- !u!222 &398456882
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398456879}
+  m_CullTransparentMesh: 1
 --- !u!1001 &479628278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -995,13 +1074,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 535176009}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.6199996, y: 0.93, z: 0}
+  m_LocalPosition: {x: 3.6199996, y: 0.31000006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 47768582}
   - {fileID: 309499375}
   m_Father: {fileID: 1719085723}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &547553553
 GameObject:
@@ -1106,13 +1185,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 553654936}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.6600006, y: -4.0500007, z: 0}
+  m_LocalPosition: {x: -2.6600006, y: -4.6700006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 675549653}
   - {fileID: 985129178}
   m_Father: {fileID: 1719085723}
-  m_RootOrder: 2
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &555234549
 GameObject:
@@ -1126,6 +1205,7 @@ GameObject:
   - component: {fileID: 555234553}
   - component: {fileID: 555234552}
   - component: {fileID: 555234551}
+  - component: {fileID: 555234554}
   m_Layer: 3
   m_Name: Background
   m_TagString: Untagged
@@ -1209,6 +1289,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555234549}
   m_CullTransparentMesh: 1
+--- !u!114 &555234554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555234549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8ff11a9bee4c441977b600d583a19b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &560544166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1352,7 +1444,7 @@ RectTransform:
   - {fileID: 214923800}
   - {fileID: 1119537748}
   m_Father: {fileID: 1719085723}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1643,6 +1735,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 555234554}
+        m_TargetAssemblyTypeName: Buttons, Assembly-CSharp
+        m_MethodName: Buttons_menu_OFF
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &678837048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1676,14 +1780,21 @@ MonoBehaviour:
     \u0441 \u043A\u043E\u0442\u043E\u0440\u044B\u043C\u0438 \u043C\u043D\u0435 \u0434\u043E\u0432\u0435\u043B\u043E\u0441\u044C
     \u0441\u0440\u0430\u0436\u0430\u0442\u044C\u0441\u044F. \u0422\u0430\u043F \u0434\u043B\u044F
     \u0447\u0442\u0435\u043D\u0438\u044F \u0438\u0441\u0442\u043E\u0440\u0438\u0438."
+  - "\u042F \u0432\u0441\u043F\u043E\u043C\u043D\u0438\u043B \u0438\u0441\u0442\u043E\u0440\u0438\u044E
+    \u043F\u0440\u043E \u043B\u0435\u0442\u0430\u044E\u0449\u0438\u0439 \u0433\u043B\u0430\u0437
+    \u0441 \u043A\u043E\u0442\u043E\u0440\u044B\u043C\u0438 \u043C\u043D\u0435 \u0434\u043E\u0432\u0435\u043B\u043E\u0441\u044C
+    \u0441\u0440\u0430\u0436\u0430\u0442\u044C\u0441\u044F. \u0422\u0430\u043F \u0434\u043B\u044F
+    \u0447\u0442\u0435\u043D\u0438\u044F \u0438\u0441\u0442\u043E\u0440\u0438\u0438."
   - I remembered the story of the Goblins I fought. Tap to read the story.
   - I remembered the story of the Evil Wizard that I fought. Tap to read the story.
   - I remembered the story of the Forest with the spores and the Mushrooms I happened
     to fight. Tap to read the story.
   - I remembered the story of the Crypt and the Skeletons I had the chance to fight.
     Tap to read the story.
-  speed: 0.1
-  speedDel: 0.1
+  - I remembered the story of the flying eye that I had fought with. Tap to read
+    the story.
+  speed: 0.02
+  speedDel: 0.01
   maxLineLength: 150
   maxLines: 12
   storyNum: 0
@@ -1717,7 +1828,7 @@ Transform:
   - {fileID: 871211908}
   - {fileID: 303253825}
   m_Father: {fileID: 1719085723}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &774273364
 GameObject:
@@ -1733,7 +1844,7 @@ GameObject:
   - component: {fileID: 774273367}
   - component: {fileID: 774273366}
   m_Layer: 5
-  m_Name: Plus 10 Mage DMG
+  m_Name: Plus Mage DMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1752,11 +1863,11 @@ RectTransform:
   m_Children:
   - {fileID: 1086486379}
   m_Father: {fileID: 2129299269}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -80}
+  m_AnchoredPosition: {x: 0, y: -143.86002}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &774273366
@@ -1905,11 +2016,11 @@ RectTransform:
   m_Children:
   - {fileID: 1672922953}
   m_Father: {fileID: 2129299269}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -150}
+  m_AnchoredPosition: {x: 0, y: -213.86002}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &799764385
@@ -2049,13 +2160,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800042965}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.6199996, y: 0.2099999, z: 0}
+  m_LocalPosition: {x: 3.6199996, y: -0.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 58798162}
   - {fileID: 1557985176}
   m_Father: {fileID: 1719085723}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &857736916
 GameObject:
@@ -2089,7 +2200,7 @@ RectTransform:
   m_LocalScale: {x: -0.03846685, y: 0.03128602, z: 0}
   m_Children: []
   m_Father: {fileID: 1991276323}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2500,28 +2611,100 @@ MonoBehaviour:
     \u043C\u043D\u043E\u0439. \u0411\u0438\u0442\u0432\u0430 \u0431\u044B\u043B\u0430
     \u0436\u0435\u0441\u0442\u043E\u043A\u043E\u0439, \u043D\u043E \u043D\u0430\u0433\u0440\u0430\u0434\u0430
     \u0442\u043E\u0433\u043E \u0441\u0442\u043E\u0438\u043B\u0430. "
-  - 'One day, while traveling through a dark and misty forest, I heard tales of a
-    powerful sorcerer who had been terrorizing a nearby town. Determined to test
-    my mettle, I set out to face the sorcerer.  As I approached the town, I saw that
-    the sorcerer had already arrived, his dark magic engulfing the town in an impenetrable
-    mist. I drew my sword and charged into battle, determined to defeat the sorcerer
-    and free the town from his grasp.  The battle was intense, with the sorcerer
-    hurling spells and curses at me. I felt the heat of his fireball singe my skin,
-    and the force of his blasts knock me off my feet. I felt fear and doubt creeping
-    into my heart, but I pushed them aside, focusing instead on the task at hand. 
-    My sword clashed against the sorcerer''s wand, the sound of metal against wood
-    ringing through the air. We circled each other, each waiting for an opening.
-    I saw my chance and lunged, my sword slicing through the air.  The sorcerer dodged,
-    and his wand struck me in the chest, sending me flying back. I hit the ground
-    hard, my breath knocked out of me. I struggled to get up, pain shooting through
-    my ribs with every breath.  But I refused to give up. I staggered to my feet,
-    sword at the ready, and charged back into the fray. I felt a surge of adrenaline,
-    and my wounds were forgotten as I focused on the task at hand.  Finally, after
-    what seemed like an eternity, I struck the final blow, shattering the sorcerer''s
-    wand and banishing him back to the dark realm from which he came.  The town erupted
-    in cheers as I emerged victorious, their gratitude and admiration filling my
-    heart with warmth. I felt pride in my accomplishment, but also a sense of relief
-    and exhaustion. '
+  - "\u0421\u0442\u0430\u0440\u0435\u0439\u0448\u0438\u043D\u044B \u0434\u0435\u0440\u0435\u0432\u043D\u0438
+    \u043F\u0440\u0438\u043A\u0430\u0437\u0430\u043B\u0438 \u043C\u043D\u0435 \u0432\u044B\u0441\u043B\u0435\u0434\u0438\u0442\u044C
+    \u043E\u043F\u0430\u0441\u043D\u043E\u0435 \u043B\u0435\u0442\u0430\u044E\u0449\u0435\u0435
+    \u0447\u0443\u0434\u043E\u0432\u0438\u0449\u0435 \u0441 \u043E\u0434\u043D\u0438\u043C
+    \u0433\u043B\u0430\u0437\u043E\u043C, \u043A\u043E\u0442\u043E\u0440\u043E\u0435
+    \u043D\u0430\u0432\u043E\u0434\u0438\u043B\u043E \u0443\u0436\u0430\u0441 \u043D\u0430
+    \u0441\u043E\u0441\u0435\u0434\u043D\u0438\u0435 \u0434\u0435\u0440\u0435\u0432\u043D\u0438.
+    \u042F \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u043B\u0441\u044F \u0432 \u043F\u0443\u0442\u044C
+    \u0432\u0435\u0440\u0445\u043E\u043C, \u0432\u043E\u043E\u0440\u0443\u0436\u0438\u0432\u0448\u0438\u0441\u044C
+    \u043C\u0435\u0447\u043E\u043C \u0438 \u0449\u0438\u0442\u043E\u043C, \u043F\u043E\u043B\u043D\u044B\u0439
+    \u0440\u0435\u0448\u0438\u043C\u043E\u0441\u0442\u0438 \u0438\u0437\u0431\u0430\u0432\u0438\u0442\u044C
+    \u0437\u0435\u043C\u043B\u044E \u043E\u0442 \u044D\u0442\u043E\u0439 \u0443\u0433\u0440\u043E\u0437\u044B. 
+    \u041F\u043E\u0441\u043B\u0435 \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u0438\u0445
+    \u0434\u043D\u0435\u0439 \u043F\u043E\u0438\u0441\u043A\u043E\u0432 \u044F \u043D\u0430\u043A\u043E\u043D\u0435\u0446
+    \u0437\u0430\u043C\u0435\u0442\u0438\u043B \u0447\u0443\u0434\u043E\u0432\u0438\u0449\u0435,
+    \u043B\u0435\u0442\u044F\u0449\u0435\u0435 \u0432\u0434\u0430\u043B\u0435\u043A\u0435.
+    \u041E\u043D\u043E \u0431\u044B\u043B\u043E \u0431\u043E\u043B\u044C\u0448\u0435,
+    \u0447\u0435\u043C \u044F \u0441\u0435\u0431\u0435 \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u044F\u043B,
+    \u0441 \u043A\u043E\u0436\u0438\u0441\u0442\u044B\u043C\u0438 \u043A\u0440\u044B\u043B\u044C\u044F\u043C\u0438
+    \u0438 \u043E\u0434\u043D\u0438\u043C \u0441\u0432\u0435\u0442\u044F\u0449\u0438\u043C\u0441\u044F
+    \u043A\u0440\u0430\u0441\u043D\u044B\u043C \u0433\u043B\u0430\u0437\u043E\u043C,
+    \u043A\u043E\u0442\u043E\u0440\u044B\u0439, \u043A\u0430\u0437\u0430\u043B\u043E\u0441\u044C,
+    \u0432\u043F\u0438\u0432\u0430\u043B\u0441\u044F \u043C\u043D\u0435 \u0432 \u0434\u0443\u0448\u0443.
+    \u041A\u043E\u0433\u0434\u0430 \u044F \u043F\u0440\u0438\u0431\u043B\u0438\u0437\u0438\u043B\u0441\u044F,
+    \u043C\u043E\u043D\u0441\u0442\u0440 \u0432\u043D\u0435\u0437\u0430\u043F\u043D\u043E
+    \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u043B\u0441\u044F \u043D\u0430 \u0434\u0432\u0435
+    \u0438\u0434\u0435\u043D\u0442\u0438\u0447\u043D\u044B\u0435 \u043A\u043E\u043F\u0438\u0438,
+    \u043A\u0430\u0436\u0434\u0430\u044F \u0438\u0437 \u043A\u043E\u0442\u043E\u0440\u044B\u0445
+    \u043B\u0435\u0442\u0435\u043B\u0430 \u0432 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u043F\u043E\u043B\u043E\u0436\u043D\u044B\u0445
+    \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F\u0445.  \u042F
+    \u0437\u043D\u0430\u043B, \u0447\u0442\u043E \u0442\u043E\u043B\u044C\u043A\u043E
+    \u043E\u0434\u043D\u0430 \u0438\u0437 \u043D\u0438\u0445 \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0430\u044F,
+    \u0438 \u0434\u043E\u043B\u0436\u0435\u043D \u0431\u044B\u043B \u0434\u0435\u0439\u0441\u0442\u0432\u043E\u0432\u0430\u0442\u044C
+    \u0431\u044B\u0441\u0442\u0440\u043E. \u042F \u0431\u0440\u043E\u0441\u0438\u043B\u0441\u044F
+    \u043A \u043E\u0434\u043D\u043E\u0439 \u0438\u0437 \u043A\u043E\u043F\u0438\u0439,
+    \u043D\u0430\u0434\u0435\u044F\u0441\u044C \u0437\u0430\u0441\u0442\u0430\u0442\u044C
+    \u0435\u0435 \u0432\u0440\u0430\u0441\u043F\u043B\u043E\u0445. \u041D\u043E \u043A\u043E\u0433\u0434\u0430
+    \u044F \u0432\u0437\u043C\u0430\u0445\u043D\u0443\u043B \u043C\u0435\u0447\u043E\u043C,
+    \u043E\u043D \u0431\u0435\u0437 \u0442\u0440\u0443\u0434\u0430 \u0443\u043B\u0435\u0442\u0435\u043B
+    \u0437\u0430 \u043F\u0440\u0435\u0434\u0435\u043B\u044B \u0434\u043E\u0441\u044F\u0433\u0430\u0435\u043C\u043E\u0441\u0442\u0438,
+    \u043E\u0441\u0442\u0430\u0432\u0438\u0432 \u043C\u0435\u043D\u044F \u0431\u0435\u0437\u0437\u0430\u0449\u0438\u0442\u043D\u044B\u043C
+    \u043F\u0435\u0440\u0435\u0434 \u0432\u043D\u0435\u0437\u0430\u043F\u043D\u043E\u0439
+    \u043A\u043E\u043D\u0442\u0440\u0430\u0442\u0430\u043A\u043E\u0439 \u0432\u0442\u043E\u0440\u043E\u0439
+    \u043A\u043E\u043F\u0438\u0438. \u041E\u043D\u0430 \u0432\u0446\u0435\u043F\u0438\u043B\u0430\u0441\u044C
+    \u0432 \u043C\u0435\u043D\u044F \u0441\u0432\u043E\u0438\u043C\u0438 \u043E\u0441\u0442\u0440\u044B\u043C\u0438
+    \u043A\u043E\u0433\u0442\u044F\u043C\u0438, \u043E\u0442\u0447\u0435\u0433\u043E
+    \u044F \u043F\u043E\u0448\u0430\u0442\u043D\u0443\u043B\u0441\u044F \u043D\u0430\u0437\u0430\u0434
+    \u043E\u0442 \u0431\u043E\u043B\u0438.  \u042F \u0431\u044B\u0441\u0442\u0440\u043E
+    \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B \u0441\u0430\u043C\u043E\u043E\u0431\u043B\u0430\u0434\u0430\u043D\u0438\u0435
+    \u0438 \u0441\u043E\u0441\u0440\u0435\u0434\u043E\u0442\u043E\u0447\u0438\u043B\u0441\u044F
+    \u043D\u0430 \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0435\u043C \u043C\u043E\u043D\u0441\u0442\u0440\u0435.
+    \u041E\u043D \u043F\u043E\u0434\u043B\u0435\u0442\u0435\u043B \u043A\u043E \u043C\u043D\u0435,
+    \u0438 \u044F \u043F\u0440\u0438\u0433\u043E\u0442\u043E\u0432\u0438\u043B\u0441\u044F
+    \u043A \u0435\u0433\u043E \u0430\u0442\u0430\u043A\u0435. \u041E\u043D\u043E
+    \u0432\u0440\u0435\u0437\u0430\u043B\u043E\u0441\u044C \u0432 \u043C\u0435\u043D\u044F
+    \u0441 \u043D\u0435\u0432\u0435\u0440\u043E\u044F\u0442\u043D\u043E\u0439 \u0441\u0438\u043B\u043E\u0439,
+    \u0441\u0431\u0438\u0432 \u043C\u0435\u043D\u044F \u0441 \u043B\u043E\u0448\u0430\u0434\u0438
+    \u043D\u0430 \u0437\u0435\u043C\u043B\u044E. \u042F \u0441 \u0442\u0440\u0443\u0434\u043E\u043C
+    \u043F\u043E\u0434\u043D\u044F\u043B\u0441\u044F \u043D\u0430 \u043D\u043E\u0433\u0438,
+    \u0430 \u043E\u043D\u043E \u043F\u0440\u043E\u043D\u0435\u0441\u043B\u043E\u0441\u044C
+    \u0432\u043D\u0438\u0437 \u0434\u043B\u044F \u043D\u043E\u0432\u043E\u0439 \u0430\u0442\u0430\u043A\u0438. 
+    \u042F \u0443\u043A\u043B\u043E\u043D\u0438\u043B\u0441\u044F \u0432 \u0441\u0442\u043E\u0440\u043E\u043D\u0443,
+    \u0435\u0434\u0432\u0430 \u0438\u0437\u0431\u0435\u0436\u0430\u0432 \u0435\u0433\u043E
+    \u043A\u043E\u0433\u0442\u0435\u0439. \u041D\u043E \u043A\u043E\u0433\u0434\u0430
+    \u043E\u043D\u043E \u043F\u0440\u043E\u043B\u0435\u0442\u0430\u043B\u043E \u043C\u0438\u043C\u043E
+    \u043C\u0435\u043D\u044F, \u044F \u0443\u0441\u043F\u0435\u043B \u043D\u0430\u043D\u0435\u0441\u0442\u0438
+    \u0443\u0434\u0430\u0440 \u043C\u0435\u0447\u043E\u043C, \u043E\u0442\u0447\u0435\u0433\u043E
+    \u043E\u043D\u043E \u0438\u0437\u0434\u0430\u043B\u043E \u043E\u0433\u043B\u0443\u0448\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439
+    \u0432\u0438\u0437\u0433. \u042F \u0432\u0438\u0434\u0435\u043B, \u0447\u0442\u043E
+    \u0440\u0430\u043D\u0438\u043B \u0435\u0433\u043E, \u043D\u043E \u043E\u043D
+    \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u043B \u043B\u0435\u0442\u0435\u0442\u044C
+    \u0441 \u043D\u043E\u0432\u043E\u0439 \u0441\u0438\u043B\u043E\u0439.  \u041C\u044B
+    \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u043B\u0438 \u0441\u0440\u0430\u0436\u0430\u0442\u044C\u0441\u044F,
+    \u043E\u0431\u043C\u0435\u043D\u0438\u0432\u0430\u044F\u0441\u044C \u0443\u0434\u0430\u0440\u0430\u043C\u0438
+    \u0438 \u0443\u043A\u043B\u043E\u043D\u044F\u044F\u0441\u044C \u043E\u0442 \u0430\u0442\u0430\u043A
+    \u0434\u0440\u0443\u0433 \u0434\u0440\u0443\u0433\u0430. \u041C\u043E\u0439 \u0449\u0438\u0442
+    \u0438\u0437\u0440\u044F\u0434\u043D\u043E \u043F\u043E\u0442\u0440\u0435\u043F\u0430\u043B\u043E,
+    \u0438 \u044F \u0447\u0443\u0432\u0441\u0442\u0432\u043E\u0432\u0430\u043B, \u043A\u0430\u043A
+    \u043C\u043E\u0438 \u0441\u0438\u043B\u044B \u043D\u0430\u0447\u0438\u043D\u0430\u044E\u0442
+    \u0443\u0431\u044B\u0432\u0430\u0442\u044C. \u041D\u043E \u044F \u043D\u0435
+    \u0441\u0434\u0430\u0432\u0430\u043B\u0441\u044F, \u0437\u043D\u0430\u044F, \u0447\u0442\u043E
+    \u043D\u0430 \u043A\u0430\u0440\u0442\u0443 \u043F\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u044B
+    \u0436\u0438\u0437\u043D\u0438 \u043D\u0435\u0432\u0438\u043D\u043D\u044B\u0445
+    \u0436\u0438\u0442\u0435\u043B\u0435\u0439 \u0434\u0435\u0440\u0435\u0432\u043D\u0438. 
+    \u041D\u0430\u043A\u043E\u043D\u0435\u0446, \u0441\u043F\u0443\u0441\u0442\u044F,
+    \u043A\u0430\u0437\u0430\u043B\u043E\u0441\u044C, \u0432\u0435\u0447\u043D\u043E\u0441\u0442\u044C,
+    \u044F \u043D\u0430\u043D\u0435\u0441 \u0440\u0435\u0448\u0430\u044E\u0449\u0438\u0439
+    \u0443\u0434\u0430\u0440 \u0432 \u0433\u043B\u0430\u0437 \u043C\u043E\u043D\u0441\u0442\u0440\u0430.
+    \u041E\u043D\u043E \u0438\u0441\u043F\u0443\u0441\u0442\u0438\u043B\u043E \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439,
+    \u043C\u0443\u0447\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 \u043A\u0440\u0438\u043A
+    \u0438 \u0431\u0435\u0437\u0436\u0438\u0437\u043D\u0435\u043D\u043D\u043E \u0443\u043F\u0430\u043B\u043E
+    \u043D\u0430 \u0437\u0435\u043C\u043B\u044E. \u042F \u0432\u0437\u0434\u043E\u0445\u043D\u0443\u043B
+    \u0441 \u043E\u0431\u043B\u0435\u0433\u0447\u0435\u043D\u0438\u0435\u043C, \u043F\u043E\u043D\u0438\u043C\u0430\u044F,
+    \u0447\u0442\u043E \u043C\u043E\u044F \u043C\u0438\u0441\u0441\u0438\u044F \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D\u0430. "
   - 'I took a deep breath and stepped into the dark, foreboding entrance of the goblin
     catacombs. The stench of rotten flesh and filth filled my nostrils, and I could
     hear the sounds of scurrying feet and whispers coming from the shadows.  As I
@@ -2544,6 +2727,28 @@ MonoBehaviour:
     I plunged my sword into his chest, and he fell to the ground, lifeless.  I collapsed
     to my knees, my body racked with pain and exhaustion. But I had emerged victorious,
     and the goblin''s catacombs would no longer be a threat to the nearby villages. '
+  - 'One day, while traveling through a dark and misty forest, I heard tales of a
+    powerful sorcerer who had been terrorizing a nearby town. Determined to test
+    my mettle, I set out to face the sorcerer.  As I approached the town, I saw that
+    the sorcerer had already arrived, his dark magic engulfing the town in an impenetrable
+    mist. I drew my sword and charged into battle, determined to defeat the sorcerer
+    and free the town from his grasp.  The battle was intense, with the sorcerer
+    hurling spells and curses at me. I felt the heat of his fireball singe my skin,
+    and the force of his blasts knock me off my feet. I felt fear and doubt creeping
+    into my heart, but I pushed them aside, focusing instead on the task at hand. 
+    My sword clashed against the sorcerer''s wand, the sound of metal against wood
+    ringing through the air. We circled each other, each waiting for an opening.
+    I saw my chance and lunged, my sword slicing through the air.  The sorcerer dodged,
+    and his wand struck me in the chest, sending me flying back. I hit the ground
+    hard, my breath knocked out of me. I struggled to get up, pain shooting through
+    my ribs with every breath.  But I refused to give up. I staggered to my feet,
+    sword at the ready, and charged back into the fray. I felt a surge of adrenaline,
+    and my wounds were forgotten as I focused on the task at hand.  Finally, after
+    what seemed like an eternity, I struck the final blow, shattering the sorcerer''s
+    wand and banishing him back to the dark realm from which he came.  The town erupted
+    in cheers as I emerged victorious, their gratitude and admiration filling my
+    heart with warmth. I felt pride in my accomplishment, but also a sense of relief
+    and exhaustion. '
   - 'As I ventured deep into the forest, I stumbled upon a clearing where dozens
     of mushrooms stood ominously, their caps casting eerie shadows in the dim light.
     Suddenly, the mushrooms began to move, their roots ripping through the soil as
@@ -2681,6 +2886,30 @@ MonoBehaviour:
     \u043C\u043D\u043E\u0439. \u0411\u0438\u0442\u0432\u0430 \u0431\u044B\u043B\u0430
     \u0436\u0435\u0441\u0442\u043E\u043A\u043E\u0439, \u043D\u043E \u043D\u0430\u0433\u0440\u0430\u0434\u0430
     \u0442\u043E\u0433\u043E \u0441\u0442\u043E\u0438\u043B\u0430. "
+  - I was ordered by the village elders to hunt down a dangerous flying monster with
+    one eye that had been terrorizing nearby villages. I set out on horseback, armed
+    with my sword and shield, determined to rid the land of this menace.  After several
+    days of tracking, I finally spotted the monster flying in the distance. It was
+    larger than I had imagined, with leathery wings and a single, glowing red eye
+    that seemed to bore into my soul. As I approached, the monster suddenly split
+    into two identical copies, each flying in opposite directions.  I knew that only
+    one of them was real, and I had to act quickly. I charged towards one of the
+    copies, hoping to catch it off guard. But as I swung my sword, it flew effortlessly
+    out of range, leaving me exposed to a sudden counterattack from the other copy.
+    It clawed at me with its sharp talons, causing me to stagger backwards in pain. 
+    I quickly regained my composure and focused on the real monster. It flew towards
+    me, and I braced myself for its attack. It rammed into me with incredible force,
+    knocking me off my horse and onto the ground. I struggled to get back on my feet
+    as it swooped down for another attack.  I dodged to the side, narrowly avoiding
+    its claws. But as it flew past me, I managed to land a glancing blow with my
+    sword, causing it to let out a deafening screech. I could see that I had wounded
+    it, but it continued to fly with a renewed ferocity.  We continued to battle,
+    exchanging blows and dodging each other's attacks. My shield had taken a beating,
+    and I could feel my strength beginning to wane. But I refused to give up, knowing
+    that the lives of innocent villagers were at stake.  Finally, after what seemed
+    like an eternity, I landed a decisive blow on the monster's eye. It let out a
+    final, anguished cry before falling to the ground, lifeless. I breathed a sigh
+    of relief, knowing that my mission was accomplished.
   speed: 0.1
   speedDel: 0.1
   maxLineLength: 3000
@@ -2859,7 +3088,7 @@ Transform:
   - {fileID: 1791856475}
   - {fileID: 1217455462}
   m_Father: {fileID: 1719085723}
-  m_RootOrder: 3
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &985129177
 GameObject:
@@ -3042,6 +3271,7 @@ MonoBehaviour:
   playerHP: 0
   playerMP: 0
   playerStamina: 0
+  playerSpeed: 0
   playerAttackDamage: 0
   playerMageDamage: 0
   passedLvl: 0
@@ -3206,7 +3436,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +10 dmg =  20 coins
+  m_Text: +5 dmg =  20 coins
 --- !u!222 &1086486381
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3214,6 +3444,98 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086486378}
+  m_CullTransparentMesh: 1
+--- !u!1 &1096242673
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1096242674}
+  - component: {fileID: 1096242677}
+  - component: {fileID: 1096242676}
+  - component: {fileID: 1096242675}
+  m_Layer: 5
+  m_Name: Speed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1096242674
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096242673}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: -0.095497355, y: 0.13355854, z: 0}
+  m_Children: []
+  m_Father: {fileID: 1405951420}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -3.45, y: -0.73}
+  m_SizeDelta: {x: 44.098, y: 16}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1096242675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096242673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5abb09aa887dc9642b401ffb02f8437e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1096242676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096242673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 43d59b5c638b0664db55f3a4e4d130ef, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 585188cdc4600544eb408bee749e4b3a, type: 3}
+    m_FontSize: 18
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 0
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 1
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 100
+--- !u!222 &1096242677
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096242673}
   m_CullTransparentMesh: 1
 --- !u!1 &1119537747
 GameObject:
@@ -3465,6 +3787,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1392643626}
   m_CullTransparentMesh: 1
+--- !u!1 &1405951419
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1405951420}
+  - component: {fileID: 1405951421}
+  m_Layer: 5
+  m_Name: Speed badge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1405951420
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405951419}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.32500002, y: 0.18899998, z: 0}
+  m_Children:
+  - {fileID: 1847806549}
+  - {fileID: 1096242674}
+  m_Father: {fileID: 1719085723}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 3.5799994, y: 0.81}
+  m_SizeDelta: {x: 1.7838, y: 3.8948}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1405951421
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405951419}
+  m_CullTransparentMesh: 1
 --- !u!1 &1482212213
 GameObject:
   m_ObjectHideFlags: 0
@@ -3653,7 +4021,7 @@ GameObject:
   - component: {fileID: 1563424696}
   - component: {fileID: 1563424695}
   m_Layer: 5
-  m_Name: Plus 20 Stamina
+  m_Name: Plus Stamina
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3806,7 +4174,7 @@ GameObject:
   - component: {fileID: 1653565154}
   - component: {fileID: 1653565153}
   m_Layer: 5
-  m_Name: Plus 20 MP
+  m_Name: Plus MP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4051,15 +4419,16 @@ Transform:
   m_LocalPosition: {x: 7.1408997, y: -90.00002, z: 0}
   m_LocalScale: {x: -83.77068, y: 103.000015, z: 0}
   m_Children:
-  - {fileID: 671462524}
   - {fileID: 687157830}
-  - {fileID: 553654937}
-  - {fileID: 873865917}
   - {fileID: 1787015021}
+  - {fileID: 671462524}
+  - {fileID: 1405951420}
   - {fileID: 800042966}
   - {fileID: 535176010}
+  - {fileID: 553654937}
+  - {fileID: 873865917}
   m_Father: {fileID: 2129299269}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1751221849
 GameObject:
@@ -4132,7 +4501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4343,6 +4712,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 555234554}
+        m_TargetAssemblyTypeName: Buttons, Assembly-CSharp
+        m_MethodName: Buttons_menu_ON
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1787015020
 GameObject:
   m_ObjectHideFlags: 0
@@ -4373,7 +4754,7 @@ Transform:
   - {fileID: 316046613}
   - {fileID: 1881184866}
   m_Father: {fileID: 1719085723}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1791856474
 GameObject:
@@ -4646,6 +5027,88 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b51c25ce57dafd44a902678c69d0068b, type: 3}
+--- !u!1 &1847806548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1847806549}
+  - component: {fileID: 1847806551}
+  m_Layer: 0
+  m_Name: Speed icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1847806549
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847806548}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.02, y: -1.7, z: 0}
+  m_LocalScale: {x: -1.832, y: 2.5, z: 0}
+  m_Children: []
+  m_Father: {fileID: 1405951420}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1847806551
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847806548}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300018, guid: ae297123f091bbf4e8f1835eb98fb293, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 3, y: 3}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1881184865
 GameObject:
   m_ObjectHideFlags: 0
@@ -4758,6 +5221,159 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1969191357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1969191358}
+  - component: {fileID: 1969191362}
+  - component: {fileID: 1969191361}
+  - component: {fileID: 1969191360}
+  - component: {fileID: 1969191359}
+  m_Layer: 5
+  m_Name: Plus Speed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1969191358
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969191357}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10.000076}
+  m_LocalScale: {x: 1.6831937, y: 2.0691626, z: 0}
+  m_Children:
+  - {fileID: 398456880}
+  m_Father: {fileID: 2129299269}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -9.009972}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &1969191359
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969191357}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: abbb6047f1aa98f4284fb1c5871dfea8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1969191360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969191357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1969191361}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1066261611}
+        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
+        m_MethodName: PlusSpeed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1969191361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969191357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: d92afbae9b7c4944cbe4f9742cf19437, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1969191362
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969191357}
+  m_CullTransparentMesh: 1
 --- !u!1 &1982630005
 GameObject:
   m_ObjectHideFlags: 0
@@ -4878,7 +5494,6 @@ RectTransform:
   m_LocalScale: {x: 0.8068414, y: 0.8068319, z: 0}
   m_Children:
   - {fileID: 1778935819}
-  - {fileID: 2039702478}
   - {fileID: 857736917}
   m_Father: {fileID: 560544167}
   m_RootOrder: 1
@@ -4902,7 +5517,7 @@ GameObject:
   - component: {fileID: 2004207217}
   - component: {fileID: 2004207216}
   m_Layer: 5
-  m_Name: Plus 10 Melee DMG
+  m_Name: Plus Melee DMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4921,11 +5536,11 @@ RectTransform:
   m_Children:
   - {fileID: 1392643627}
   m_Father: {fileID: 2129299269}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -10}
+  m_AnchoredPosition: {x: 0, y: -73.86001}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &2004207216
@@ -5041,88 +5656,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004207214}
   m_CullTransparentMesh: 1
---- !u!1 &2039702477
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2039702478}
-  - component: {fileID: 2039702479}
-  m_Layer: 5
-  m_Name: Paper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2039702478
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2039702477}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3635, y: -1.1385, z: -10}
-  m_LocalScale: {x: 2.4665163, y: 1.617059, z: 0}
-  m_Children: []
-  m_Father: {fileID: 1991276323}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &2039702479
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2039702477}
-  m_Enabled: 0
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -413479139
-  m_SortingLayer: 1
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cf1462bc694c3c249831ad8ac5293aa2, type: 3}
-  m_Color: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 2.56, y: 2.56}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &2129299268
 GameObject:
   m_ObjectHideFlags: 0
@@ -5154,6 +5687,7 @@ RectTransform:
   - {fileID: 111612777}
   - {fileID: 1653565152}
   - {fileID: 1563424694}
+  - {fileID: 1969191358}
   - {fileID: 2004207215}
   - {fileID: 774273365}
   - {fileID: 799764384}

@@ -23,7 +23,6 @@ public class Pause : MonoBehaviour
     private void Start()
     {
         Instance = this;
-        joystick = SaveSerial.Instance.joystick_settings;
         
     }
     void Update()
@@ -114,17 +113,7 @@ public class Pause : MonoBehaviour
             guipuse = false;
         }
     }
-    public void ChangeJoystickSetting()
-    {
-        if (joystick == false)
-        {
-            joystick = true;
-        }
-        else
-        {
-            joystick = false;
-        }   
-    }
+
     public void ContinuePlay()
     {
         ispause = false;
