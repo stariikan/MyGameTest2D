@@ -49,8 +49,8 @@ public class SaveSerial : MonoBehaviour
     //Settings
     public bool joystick_settings = false; //Джойстик или кнопки
     public bool localization; //Eng/Ru
-    public bool sound; //Включен ли звук
-    public bool music; //Включена ли музыка
+    public bool sound = true; //Включен ли звук
+    public bool music = true; //Включена ли музыка
     public static SaveSerial Instance { get; set; } //Для сбора и отправки данных из этого скрипта
 
     private void Awake()

@@ -577,7 +577,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             anim.SetBool("stun", false);
         }
 
-        if (playerHP > 0 && Mathf.Abs(directionX) < 6f && (Mathf.Abs(directionX)) > 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !stuned)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 6f && (Mathf.Abs(directionX)) > 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !stuned && level >= 5)
         {
             anim.SetTrigger("attack1");
             timeSinceAttack = 0.0f;
