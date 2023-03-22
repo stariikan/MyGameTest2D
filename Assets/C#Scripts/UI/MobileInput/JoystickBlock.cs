@@ -15,7 +15,7 @@ public class JoystickBlock : MonoBehaviour
     private void EmulateKeyPress()
     {
         Input.simulateMouseWithTouches = true;
-        HeroAttack.Instance.Block();
+        Hero.Instance.Block();
         Hero.Instance.CheckBlock();
         bool block = Hero.Instance.block;
         Debug.Log(block);

@@ -7,7 +7,7 @@ public class Hero : MonoBehaviour {
     [SerializeField] float      m_rollForce = 7.5f;
     [SerializeField] bool       m_noBlood = false;
     [SerializeField] GameObject m_slideDust;
-
+    
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;
     private Sensor_HeroKnight   m_groundSensor;
@@ -23,17 +23,18 @@ public class Hero : MonoBehaviour {
     private float               m_timeSinceAttack = 0.0f;
     private float               m_rollDuration = 8.0f / 14.0f;
     private float               m_rollCurrentTime;
-    private float m_JumpCooldownTime;
+    private float               m_JumpCooldownTime;
 
-    public static Hero Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-
+    //Параметры Героя
     public float maxHP;
-    public float hp; //Количество жизней
+    public float curentHP;
+    public float maxMP;
+    public float currentMP;
     public float stamina;
+    public float currentStamina;
+    public float staminaSpeedRecovery = 10f;
     public float m_speed;
     public float m_curentSpeed;
-
-    public bool playerDead = false; //мертв игрок или нет, пока нужно для того чтобы при смерти игрока делать рестарт
     public float mageAttackDamage;
 
     public bool block = false;
@@ -41,13 +42,37 @@ public class Hero : MonoBehaviour {
     public bool isPush = false;
 
 
+    public bool playerDead = false; //мертв игрок или нет, пока нужно для того чтобы при смерти игрока делать рестарт
     private CapsuleCollider2D capsuleCollider;
 
+    //Таймеры
     private float cooldownTimer = Mathf.Infinity;
+    private float MagicCooldownTimer = Mathf.Infinity;
 
     //Touchscreen buttons for movement
     public bool move_Right = false;
     public bool move_Left = false;
+
+    //Attack parameters
+    public GameObject[] magicProjectile; //Снаряды снарядов
+    public GameObject meleeAttackArea; // Физ оружее
+    public GameObject shieldArea; // Щит
+    private float magicAttackCooldown = 2;//кулдаун запуска снаряда (магии)
+    public Transform firePointRight; //Позиция из которых будет выпущены снаряди
+    public Transform firePointLeft; //Позиция из которых будет выпущены снаряди
+
+    //Sounds
+    public GameObject attackSound;
+    public GameObject runSound;
+    public GameObject takeDamageSound;
+    public GameObject dieSound;
+    public GameObject jumpSound;
+    public GameObject magicSound;
+    public GameObject shieldHitSound;
+    public GameObject shieldHitAttackSound;
+    public GameObject rollSound;
+
+    public static Hero Instance { get; set; } //Для сбора и отправки данных из этого скрипта
 
     // Use this for initialization
     void Awake()
@@ -71,16 +96,11 @@ public class Hero : MonoBehaviour {
         {
             maxHP = 100;
         }
-        hp = maxHP;
+        curentHP = maxHP;
         mageAttackDamage = SaveSerial.Instance.playerMageDamage;
         if (mageAttackDamage == 0)
         {
             mageAttackDamage = 30;
-        }
-        stamina = SaveSerial.Instance.playerStamina;
-        if (stamina == 0)
-        {
-            stamina = 100;
         }
         m_speed = SaveSerial.Instance.playerSpeed;
         if (m_speed == 0)
@@ -88,6 +108,19 @@ public class Hero : MonoBehaviour {
             m_speed = 4;
         }
         m_curentSpeed = m_speed;
+        maxMP = SaveSerial.Instance.playerMP;
+        if (maxMP == 0)
+        {
+            maxMP = 100;
+        }
+        currentMP = maxMP;
+
+        stamina = SaveSerial.Instance.playerStamina;
+        if (stamina == 0)
+        {
+            stamina = 100;
+        }
+        currentStamina = stamina;
     }
     // Update is called once per frame
     private void FixedUpdate()
@@ -126,12 +159,15 @@ public class Hero : MonoBehaviour {
         m_animator.SetBool("WallSlide", m_isWallSliding);
        //old
         cooldownTimer += Time.deltaTime; //прибавление по 1 секунде к cooldownTimer
-        stamina = HeroAttack.Instance.currentStamina; //проверка стамины
         m_JumpCooldownTime += Time.deltaTime;
+
+        MagicCooldownTimer += Time.deltaTime; //прибавление по 1 секунде к MagicCooldownTimer после его обнуления при выполенении метода magicAttack.
+        AttackControl();//атака с помощью мышки
+        StaminaRecovery();
 
         Jostick_Settings_Controll();
 
-        if (hp > 0)
+        if (curentHP > 0)
         {
             PlayerMovement();//Метод для движения и поворота спрайта персонажа
             CheckBlock(); //Проверка блока
@@ -207,7 +243,6 @@ public class Hero : MonoBehaviour {
     }
     public void CheckBlock()
     {
-        block = HeroAttack.Instance.block;
         if (block == true)
         {
             m_animator.SetBool("IdleBlock", true);
@@ -221,39 +256,47 @@ public class Hero : MonoBehaviour {
     {
         if (block == false && !m_rolling)
         {
-            hp -= dmg;//Отнимает dmg из переменной hp (жизни).
+            curentHP -= dmg;//Отнимает dmg из переменной hp (жизни).
+            takeDamageSound.GetComponent<SoundOfObject>().StopSound();
+            takeDamageSound.GetComponent<SoundOfObject>().PlaySound();
             m_animator.SetTrigger("Hurt");
-            //Push();
+            Push();
         }
         if (block == true && !m_rolling)
         {
-            hp -= dmg * 0.15f;//Отнимает int из переменной hp (жизни) и при активном блоке уменьшает урон в 3 раза
-            HeroAttack.Instance.DecreaseStamina(20);
+            curentHP -= dmg * 0.15f;//Отнимает int из переменной hp (жизни) и при активном блоке уменьшает урон в 3 раза
+            DecreaseStamina(20);
             m_animator.SetTrigger("Hurt");
-            //Push();
+            shieldHitSound.GetComponent<SoundOfObject>().StopSound();
+            shieldHitSound.GetComponent<SoundOfObject>().PlaySound();
+            Push();
         }
-        if (hp <= 0 && !m_rolling) //Если жизней меньше 0
+        if (curentHP <= 0 && !m_rolling) //Если жизней меньше 0
         {
             m_curentSpeed = 0;
             m_body2d.gravityScale = 0;
             m_body2d.velocity = Vector2.zero;
             m_animator.StopPlayback();
             m_animator.SetBool("noBlood", m_noBlood);
+            dieSound.GetComponent<SoundOfObject>().StopSound();
+            dieSound.GetComponent<SoundOfObject>().PlaySound();
             m_animator.SetBool("dead", true);
             m_animator.SetTrigger("Death");
         }
     }
     public void Hero_hp() //Метод который просто вызывает значение переменной HP, нужен мне был для передачи этого числа в скрипт с каунтером жизней
     {
-        Debug.Log(hp);
+        Debug.Log(curentHP);
     }
     public void Jump()
     {
             if (stamina > 10 && m_JumpCooldownTime > 1 && m_grounded && !m_rolling && !block)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
             {
-            m_JumpCooldownTime = 0;
-                HeroAttack.Instance.DecreaseStamina(10);
+                m_JumpCooldownTime = 0;
+                DecreaseStamina(10);
                 m_animator.SetTrigger("Jump");
+                jumpSound.GetComponent<SoundOfObject>().StopSound();
+                jumpSound.GetComponent<SoundOfObject>().PlaySound();
                 m_grounded = false;
                 m_animator.SetBool("Grounded", m_grounded);
                 m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
@@ -265,12 +308,13 @@ public class Hero : MonoBehaviour {
         if (stamina > 5 && cooldownTimer > 0.5f && !block) //кувырок
         {
             cooldownTimer = 0;
-            capsuleCollider.enabled = false;
-            HeroAttack.Instance.DecreaseStamina(5);
+            DecreaseStamina(5);
             capsuleCollider.enabled = false;
             m_body2d.velocity = new Vector2((m_facingDirection * -1) * m_rollForce, m_body2d.velocity.y);
             m_rolling = true;
             m_animator.SetTrigger("Roll");
+            rollSound.GetComponent<SoundOfObject>().StopSound();
+            rollSound.GetComponent<SoundOfObject>().PlaySound();
         }
     }
     public void PlayerMovement()
@@ -354,11 +398,13 @@ public class Hero : MonoBehaviour {
         //player state
         if (m_body2d.velocity != Vector2.zero)
         {
+            runSound.GetComponent<SoundOfObject>().ContinueSound();
             m_animator.SetInteger("AnimState", 1);
         }
         else
         {
-                m_animator.SetInteger("AnimState", 0);
+            runSound.GetComponent<SoundOfObject>().StopSound();
+            m_animator.SetInteger("AnimState", 0);
         }
 
         //Flip
@@ -384,13 +430,45 @@ public class Hero : MonoBehaviour {
         move_Right = false;
         move_Left = false;
     }
+    private void StaminaRecovery()
+    {
+        if (currentStamina < stamina)
+        {
+            currentStamina += Time.deltaTime * staminaSpeedRecovery;
+        }
+        if (currentStamina < 0)
+        {
+            currentStamina = 2;
+        }
+        if (currentStamina < 20)
+        {
+            block = false;
+        }
+    }
+    public void DecreaseStamina(float cost) //Метод для уменьшения стамины за различные действия
+    {
+        currentStamina -= cost;
+    }
+    public void Block()
+    {
+        if (block == false && currentStamina > 20)
+        {
+            block = true;
+        }
+        else
+        {
+            block = false;
+        }
+    }
     public void MeeleAtack()
     {
         if (!m_rolling && block && m_timeSinceAttack > 0.5f && !m_rolling && stamina > 5f)
         {
             m_timeSinceAttack = 0.0f;
             m_animator.SetTrigger("BlockAttack");
-            HeroAttack.Instance.Enemy_Push_by_BLOCK();
+            shieldHitAttackSound.GetComponent<SoundOfObject>().StopSound();
+            shieldHitAttackSound.GetComponent<SoundOfObject>().PlaySound();
+            Enemy_Push_by_BLOCK();
         }
             if (!m_rolling && !block && m_timeSinceAttack > 0.25f && !m_rolling && stamina > 15f) 
         {
@@ -406,9 +484,78 @@ public class Hero : MonoBehaviour {
 
             // Call one of three attack animations "Attack1", "Attack2", "Attack3"
             m_animator.SetTrigger("Attack" + m_currentAttack);
+            attackSound.GetComponent<SoundOfObject>().StopSound();
+            attackSound.GetComponent<SoundOfObject>().PlaySound();
             // Reset timer
             m_timeSinceAttack = 0.0f;
         }    
+    }
+    public void Attack()
+    {
+        currentStamina -= 15f;
+        if (m_facingDirection > 0)
+        {
+            meleeAttackArea.transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
+            meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePointRight.position);
+        }
+        else if (m_facingDirection < 0)
+        {
+            meleeAttackArea.transform.position = firePointLeft.position;
+            meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePointLeft.position);
+        }
+    }
+    public void MeleeWeaponOff() //отключения обьекта бомбы
+    {
+        MeleeWeapon.Instance.WeaponOff();
+    }
+    public void MagicAttack()
+    {
+        if (MagicCooldownTimer > magicAttackCooldown && currentMP >= 20)
+        {
+            currentMP -= 20;
+            MagicCooldownTimer = 0; //сброс кулдауна приминения магии для того чтобы работа формула при атаке которой она смотрит на кулдаун и если он наступил, то можно вновь атаковать
+
+            Vector3 shootingDirection = new Vector3(1, 0, 109);
+            Vector3 pos = firePointRight.position;
+            GameObject fireBall = Instantiate(magicProjectile[Random.Range(0, magicProjectile.Length)], new Vector3(pos.x, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            fireBall.name = "Enemy" + Random.Range(1, 999);
+            magicSound.GetComponent<SoundOfObject>().StopSound();
+            magicSound.GetComponent<SoundOfObject>().PlaySound();
+            if (m_facingDirection > 0)
+            {
+                shootingDirection = new Vector3(1, 0, 109);
+            }
+            if (m_facingDirection < 0)
+            {
+                shootingDirection = new Vector3(-1, 0, 109);
+            }
+            fireBall.GetComponent<Projectile>().SetDirection(shootingDirection);
+        }
+    }
+    private void AttackControl()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Block();
+        }
+        if (Input.GetKey(KeyCode.LeftAlt) && currentMP >= 15) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
+        {
+            MagicAttack(); // выполнения маг атаки
+        }
+    }
+    public void Enemy_Push_by_BLOCK()
+    {
+        currentStamina -= 5;
+        if (m_facingDirection > 0)
+        {
+            shieldArea.transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
+            shieldArea.GetComponent<Shield>().MeleeDirection(firePointRight.position);
+        }
+        else if (m_facingDirection < 0)
+        {
+            shieldArea.transform.position = firePointLeft.position;
+            shieldArea.GetComponent<Shield>().MeleeDirection(firePointLeft.position);
+        }
     }
     private void Deactivate() //деактивация игрока после завершения анимации смерти (благодоря метки в аниматоре выполняется этот метод
     {

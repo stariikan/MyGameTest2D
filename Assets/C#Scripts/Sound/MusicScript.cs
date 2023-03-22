@@ -18,8 +18,8 @@ public class MusicScript : MonoBehaviour
     void Update()
     {
         music_settings = SaveSerial.Instance.music;
-        if (!music_settings) AudioListener.volume = 0;
-        if (music_settings) AudioListener.volume = 1;
+        if (!music_settings) _audioSource.volume = 0;
+        if (music_settings) _audioSource.volume = 1;
 
         if (!_audioSource.isPlaying) ChangeSong(Random.Range(0, songs.Length));
     }

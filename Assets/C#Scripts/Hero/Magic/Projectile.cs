@@ -20,6 +20,9 @@ public class Projectile : MonoBehaviour
 
     private float shootingForce = 0.03f; //скорость снаряда
 
+    //Sound
+    public GameObject magicHitSound;
+
     private void Awake() //Действие выполняется до старта игры и 1 раз
     {
         anim = GetComponent<Animator>(); // вытаскиваем информацию из компанента аниматор
@@ -52,6 +55,8 @@ public class Projectile : MonoBehaviour
         hit = true; //тут указываем что произошло столкновение
         boxCollider.enabled = false; //отключаем коллайдер
         anim.SetTrigger("explode");//для воспроизведения анимации атаки снарядом при выполнения тригера magicAttack
+        magicHitSound.GetComponent<SoundOfObject>().StopSound();
+        magicHitSound.GetComponent<SoundOfObject>().PlaySound();
         DamageObject();
         magicTargetName = string.Empty;
         rb.constraints = RigidbodyConstraints2D.FreezePosition;

@@ -14,6 +14,6 @@ public class JoystickAttack : MonoBehaviour
     private void EmulateKeyPress()
     {
         Input.simulateMouseWithTouches = true;
-        HeroAttack.Instance.Attack();
+        Hero.Instance.Attack();
     }
 }

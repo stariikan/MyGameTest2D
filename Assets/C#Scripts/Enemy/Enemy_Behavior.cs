@@ -59,6 +59,17 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     private Animator anim; //Переменная благодаря которой анимирован обьект
     private float e_delayToIdle = 0.0f;
     new string tag; // к этой переменной присваивается тэг обьекта на старте
+
+    //Sounds
+    public GameObject attackSound;
+    public GameObject runSound;
+    public GameObject takeDamageSound;
+    public GameObject dieSound;
+    public GameObject jumpSound;
+    public GameObject magicSound;
+    public GameObject shieldHitSound;
+    public GameObject shieldHitAttackSound;
+    public GameObject rollSound;
     public static Enemy_Behavior Instance { get; set; } //Для сбора и отправки данных из этого скрипта
 
     private void Start()
@@ -455,7 +466,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     //Методы атаки у разных мобов
     public void MushroomAttack()
     {
-        float playerHP = Hero.Instance.hp;
+        float playerHP = Hero.Instance.curentHP;
         if (stunCooldown > 3f) //выход из стана
         {
             stuned = false;
@@ -482,7 +493,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     }
     public void FlyingEyeAttack()
     {
-        float playerHP = Hero.Instance.hp;
+        float playerHP = Hero.Instance.curentHP;
         if (stunCooldown > 3f) //выход из стана
         {
             stuned = false;
@@ -509,8 +520,8 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     }
     public void SkeletonAttack()
     {
-        float playerHP = Hero.Instance.hp;
-        if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && !block && timeSinceAttack > 1)
+        float playerHP = Hero.Instance.curentHP;
+        if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 1f && !block && timeSinceAttack > 1)
         {
             isAttack = true;
             //Damage Deal
@@ -531,7 +542,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     }
     public void GoblinAttack()
     {
-        float playerHP = Hero.Instance.hp;
+        float playerHP = Hero.Instance.curentHP;
         if ((Mathf.Abs(directionX)) < 5f && (Mathf.Abs(directionX)) > 1f && jumpCooldown >= 2 && Mathf.Abs(directionY) < 2 && remainingBombs < 1) GoblinJumpToPlayer();
         if ((Mathf.Abs(directionX)) < 2f && (Mathf.Abs(directionX)) > 1f && jumpCooldown >= 2 && Mathf.Abs(directionY) < 2 && remainingBombs >= 1) GoblinJumpFromPlayer();
         if ((Mathf.Abs(directionX)) < 4.5 && magicCooldown > 3 && !jump && remainingBombs >= 1 || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && magicCooldown > 3 && !jump && remainingBombs >= 1)
@@ -570,7 +581,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     }
     public void EvilWizardAttack()
     {
-        float playerHP = Hero.Instance.hp;
+        float playerHP = Hero.Instance.curentHP;
         if (stunCooldown > 3f) //выход из стана
         {
             stuned = false;
@@ -616,7 +627,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     }
     public void MartialAttack()
     {
-        float playerHP = Hero.Instance.hp;
+        float playerHP = Hero.Instance.curentHP;
         if (stunCooldown > 2f) //выход из стана
         {
             stuned = false;
@@ -641,7 +652,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     }
     public void SlimeAttack()
     {
-        float playerHP = Hero.Instance.hp;
+        float playerHP = Hero.Instance.curentHP;
         if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2) JumpToPlayer();
         if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1)
         {
@@ -653,7 +664,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     }
     public void DeathAttack()
     {
-        float playerHP = Hero.Instance.hp;
+        float playerHP = Hero.Instance.curentHP;
 
         if (playerHP > 0 && Mathf.Abs(directionX) < 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2)
         {

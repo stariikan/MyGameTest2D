@@ -131,8 +131,8 @@ public class SaveSerial : MonoBehaviour
         {
             playerCoin = LvLGeneration.Instance.coin;
             playerHP = Hero.Instance.maxHP;
-            playerMP = HeroAttack.Instance.maxMP;
-            playerStamina = HeroAttack.Instance.stamina;
+            playerMP = Hero.Instance.maxMP;
+            playerStamina = Hero.Instance.stamina;
             playerSpeed = Hero.Instance.m_curentSpeed;
             playerAttackDamage = MeleeWeapon.Instance.AttackDamage;
             playerMageDamage = Hero.Instance.mageAttackDamage;
@@ -230,8 +230,8 @@ public class SaveSerial : MonoBehaviour
         {
             playerCoin = LvLGeneration.Instance.coin;
             playerHP = Hero.Instance.maxHP;
-            playerMP = HeroAttack.Instance.maxMP;
-            playerStamina = HeroAttack.Instance.stamina;
+            playerMP = Hero.Instance.maxMP;
+            playerStamina = Hero.Instance.stamina;
             playerSpeed = Hero.Instance.m_curentSpeed;
             playerAttackDamage = MeleeWeapon.Instance.AttackDamage;
             playerMageDamage = Hero.Instance.mageAttackDamage;

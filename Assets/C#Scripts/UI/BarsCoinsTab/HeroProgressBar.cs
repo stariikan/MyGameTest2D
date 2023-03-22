@@ -16,7 +16,7 @@ public class HeroProgressBar : MonoBehaviour
     public void UpdateHPProgressBar()
     {
         maxProgress = Hero.Instance.maxHP;
-        currentProgress = Hero.Instance.hp; //смотрим какое сейчас кол-во хп
+        currentProgress = Hero.Instance.curentHP; //смотрим какое сейчас кол-во хп
         if (progressBar == null) // проверка на то, выбрана картинка прогресс бара или нет
         {
             Debug.LogError("progressBarMP is not set!");
@@ -29,8 +29,8 @@ public class HeroProgressBar : MonoBehaviour
     }
     public void UpdateMPProgressBar()
     {
-        maxProgress = HeroAttack.Instance.maxMP;
-        currentProgress = HeroAttack.Instance.currentMP;
+        maxProgress = Hero.Instance.maxMP;
+        currentProgress = Hero.Instance.currentMP;
 
         if (progressBar == null)
         {
@@ -44,8 +44,8 @@ public class HeroProgressBar : MonoBehaviour
     }
     public void UpdateStaminaProgressBar()
     {
-        maxProgress = HeroAttack.Instance.stamina;
-        currentProgress = HeroAttack.Instance.currentStamina;
+        maxProgress = Hero.Instance.stamina;
+        currentProgress = Hero.Instance.currentStamina;
 
         if (progressBar == null)
         {

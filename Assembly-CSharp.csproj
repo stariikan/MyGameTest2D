@@ -120,6 +120,8 @@
     <Compile Include="Assets\C#Scripts\UI\Shop\HP.cs" />
     <Compile Include="Assets\C#Scripts\UI\Localization\ButtonLocalization.cs" />
     <Compile Include="Assets\C#Scripts\UI\Main menu\Collectables.cs" />
+    <Compile Include="Assets\C#Scripts\Sound\SoundScript.cs" />
+    <Compile Include="Assets\C#Scripts\Sound\SoundOfObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Cainos\Pixel Art Platformer - Village Props\Changelog.txt" />

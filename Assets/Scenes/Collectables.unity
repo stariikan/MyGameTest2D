@@ -11798,6 +11798,14 @@ PrefabInstance:
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4797961733901094902, guid: c02d5eb96aca7f0479b2b4ac17985ddc, type: 3}
+      propertyPath: songs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4797961733901094902, guid: c02d5eb96aca7f0479b2b4ac17985ddc, type: 3}
+      propertyPath: songs.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 04f9e6d529c1a7a40ad0562555321f27, type: 3}
     - target: {fileID: 8529784187367649053, guid: c02d5eb96aca7f0479b2b4ac17985ddc, type: 3}
       propertyPath: m_RootOrder
       value: 1
