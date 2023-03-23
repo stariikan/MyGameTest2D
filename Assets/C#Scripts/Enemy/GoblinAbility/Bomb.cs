@@ -26,7 +26,7 @@ public class Bomb : MonoBehaviour
     }
     private void Update()
     {
-        playerHP = Hero.Instance.hp;
+        playerHP = Hero.Instance.curentHP;
     }
     private void BombMovement() //направления и сила полета бомбы 
     {

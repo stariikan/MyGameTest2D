@@ -22,11 +22,11 @@ public class DrainHP : MonoBehaviour
         rb = this.gameObject.GetComponent<Rigidbody2D>(); //Переменная rb получает компонент Rigidbody2D (Физика game.Object) к которому привязан скрипт
         anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object) к которому привязан скрипт
         boxCollider = GetComponent<BoxCollider2D>();
-        playerHP = Hero.Instance.hp;
+        playerHP = Hero.Instance.curentHP;
     }
     private void Update()
     {
-        playerHP = Hero.Instance.hp;
+        playerHP = Hero.Instance.curentHP;
     }
     public void DrainHPDmg()
     {

@@ -21,13 +21,13 @@ public class Spore : MonoBehaviour
         player = GameObject.FindWithTag("PlayerCharacter");
         circleCollider = GetComponent<CircleCollider2D>(); // вытаскиваем информацию из компанента бокс колайдер
         Instance = this;
-        playerHP = Hero.Instance.hp;
+        playerHP = Hero.Instance.curentHP;
     }
     private void Update()
     {
         lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
         sporeCooldownDmg += Time.deltaTime;//кулдаун атаки спор
-        playerHP = Hero.Instance.hp;
+        playerHP = Hero.Instance.curentHP;
         SporeDmg();
         SporeMovement();
         if (lifetime > 5) Destroy(this.gameObject);//уничтожить этот игровой обьект
