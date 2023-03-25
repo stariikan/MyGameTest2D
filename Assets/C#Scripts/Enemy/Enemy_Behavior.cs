@@ -172,7 +172,8 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         }
         if (tag == "Death")
         {
-            DeathMovement();
+            //DeathMovement();
+            EnemyMovement();
             DeathAttack();
         }
     }
@@ -189,12 +190,13 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         {
             e_delayToIdle = 0.05f;
             this.gameObject.GetComponent<Animator>().SetInteger("State", 1);
+            runSound.GetComponent<SoundOfObject>().ContinueSound();
         }
         if (movement == false)
         {
             e_delayToIdle -= Time.deltaTime;
             if (e_delayToIdle < 0) this.gameObject.GetComponent<Animator>().SetInteger("State", 0);
-
+            runSound.GetComponent<SoundOfObject>().StopSound();
         }
     }
     public void BoostEnemySpeed() //метод для усиления скорости врагов
@@ -400,6 +402,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             if (tag == "FlyingEye") playerFollowSpeed = Mathf.Sign(directionX) * flyingEyeSpeed * Time.deltaTime; //вычесление направления
             if (tag == "Martial") playerFollowSpeed = Mathf.Sign(directionX) * martialSpeed * Time.deltaTime; //вычесление направления
             if (tag == "Slime") playerFollowSpeed = Mathf.Sign(directionX) * slimeSpeed * Time.deltaTime; //вычесление направления
+            if (tag == "Death") playerFollowSpeed = Mathf.Sign(directionX) * deathSpeed * Time.deltaTime; //вычесление направления
             pos.x += playerFollowSpeed; //вычесление позиции по оси х
             transform.position = pos; //применение позиции
             movement = true;
@@ -439,6 +442,8 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             pos.x -= playerFollowSpeed; //вычесление позиции по оси х
             transform.position = pos; //применение позиции
             movement = true;
+            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();//если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();//если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
         }
         else movement = false;
     }
@@ -479,13 +484,12 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             currentAttack++;
 
             // Loop back to one after third attack
-            if (currentAttack > 2)
-                currentAttack = 1;
+            if (currentAttack > 2) currentAttack = 1;
 
             // Reset Attack combo if time since last attack is too large
-            if (timeSinceAttack > 2.0f)
-                currentAttack = 1;
+            if (timeSinceAttack > 2.0f) currentAttack = 1;
             anim.SetTrigger("attack" + currentAttack);
+            attackSound.GetComponent<SoundOfObject>().PlaySound();
             // Reset timer
             timeSinceAttack = 0.0f;
         }
@@ -513,6 +517,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             if (timeSinceAttack > 2.0f)
                 currentAttack = 1;
             anim.SetTrigger("attack" + currentAttack);
+            attackSound.GetComponent<SoundOfObject>().PlaySound();
             // Reset timer
             timeSinceAttack = 0.0f;
         }
@@ -535,6 +540,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             if (timeSinceAttack > 2.0f)
                 currentAttack = 1;
             anim.SetTrigger("attack" + currentAttack);
+            attackSound.GetComponent<SoundOfObject>().PlaySound();
             // Reset timer
             timeSinceAttack = 0.0f;
         }
@@ -574,6 +580,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             if (timeSinceAttack > 2.0f)
                 currentAttack = 1;
             anim.SetTrigger("attack" + currentAttack);
+            attackSound.GetComponent<SoundOfObject>().PlaySound();
             // Reset timer
             timeSinceAttack = 0.0f;
         }
@@ -591,6 +598,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         if (playerHP > 0 && Mathf.Abs(directionX) < 6f && (Mathf.Abs(directionX)) > 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !stuned && level >= 5)
         {
             anim.SetTrigger("attack1");
+            magicSound.GetComponent<SoundOfObject>().ContinueSound();
             timeSinceAttack = 0.0f;
             Vector3 theScale = transform.localScale; //нужно для понимания направления
             transform.localScale = theScale; //нужно для понимания направления
@@ -609,6 +617,8 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         if (playerHP > 0 && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2 && !stuned)
         {
             anim.SetTrigger("attack2");
+            //attackSound.GetComponent<SoundOfObject>().StopSound();
+            attackSound.GetComponent<SoundOfObject>().ContinueSound();
             timeSinceAttack = 0.0f;
             Vector3 theScale = transform.localScale; //нужно для понимания направления
             transform.localScale = theScale; //нужно для понимания направления
@@ -620,7 +630,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
                 else if (directionX > 0 && theScale.x < 0) Flip();
                 timeSinceAttack = 0.0f;
                 magicCooldown = 0;
-                float fireDMG = 100f * (Entity_Enemy.Instance.wizardAttackDamage) * Time.deltaTime; 
+                float fireDMG = 200f * (Entity_Enemy.Instance.wizardAttackDamage) * Time.deltaTime; 
                 Hero.Instance.GetDamage(fireDMG);
             }
         }
@@ -677,5 +687,16 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             SpellDrainHP();
             DeathSummonMinioins();
         }
+    }
+    
+    //Sound
+
+    public void DieSound()
+    {
+        dieSound.GetComponent<SoundOfObject>().ContinueSound();
+    }
+    public void TakeDamageSound()
+    {
+        takeDamageSound.GetComponent<SoundOfObject>().PlaySound();
     }
 }

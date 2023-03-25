@@ -7,12 +7,14 @@ public class SoundOfObject : MonoBehaviour
     private AudioSource _audioSource;
     public AudioClip [] sound;
     private bool sound_settings;
+    private float volume;
 
     public static SoundOfObject Instance { get; set; } //Для сбора и отправки данных из этого скрипта
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
         Instance = this;
+        volume = _audioSource.volume;
     }
 
     // Update is called once per frame
@@ -20,12 +22,12 @@ public class SoundOfObject : MonoBehaviour
     {
         sound_settings = SaveSerial.Instance.sound;
         if (!sound_settings) _audioSource.volume = 0;
-        if (sound_settings) _audioSource.volume = 1;
+        if (sound_settings) _audioSource.volume = volume;
     }
     public void PlaySound()
     {
         _audioSource.clip = sound[0];
-        if (!_audioSource.isPlaying) _audioSource.Play();
+        _audioSource.Play();
     }
     public void ContinueSound()
     {

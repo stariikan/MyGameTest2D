@@ -44,6 +44,7 @@ public class Hero : MonoBehaviour {
 
     public bool playerDead = false; //мертв игрок или нет, пока нужно для того чтобы при смерти игрока делать рестарт
     private CapsuleCollider2D capsuleCollider;
+    private BoxCollider2D boxCollider;
 
     //Таймеры
     private float cooldownTimer = Mathf.Infinity;
@@ -83,7 +84,7 @@ public class Hero : MonoBehaviour {
     {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
-        capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
         m_wallSensorR1 = transform.Find("WallSensor_R1").GetComponent<Sensor_HeroKnight>();
         m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
@@ -173,7 +174,10 @@ public class Hero : MonoBehaviour {
             CheckBlock(); //Проверка блока
             PlayerSpeedMode();
             if (Input.GetKey(KeyCode.LeftControl)) MeeleAtack();
-            if (cooldownTimer > 1f) capsuleCollider.enabled = true;
+            if (cooldownTimer > 1f)
+            {
+                capsuleCollider.enabled = true;
+            }
         }
         else
         {
@@ -260,7 +264,7 @@ public class Hero : MonoBehaviour {
             takeDamageSound.GetComponent<SoundOfObject>().StopSound();
             takeDamageSound.GetComponent<SoundOfObject>().PlaySound();
             m_animator.SetTrigger("Hurt");
-            Push();
+            //Push();
         }
         if (block == true && !m_rolling)
         {
@@ -269,7 +273,7 @@ public class Hero : MonoBehaviour {
             m_animator.SetTrigger("Hurt");
             shieldHitSound.GetComponent<SoundOfObject>().StopSound();
             shieldHitSound.GetComponent<SoundOfObject>().PlaySound();
-            Push();
+            //Push();
         }
         if (curentHP <= 0 && !m_rolling) //Если жизней меньше 0
         {
@@ -293,6 +297,7 @@ public class Hero : MonoBehaviour {
             if (stamina > 10 && m_JumpCooldownTime > 1 && m_grounded && !m_rolling && !block)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
             {
                 m_JumpCooldownTime = 0;
+                m_body2d.gravityScale = 1; //включение гравитации    
                 DecreaseStamina(10);
                 m_animator.SetTrigger("Jump");
                 jumpSound.GetComponent<SoundOfObject>().StopSound();
@@ -305,17 +310,26 @@ public class Hero : MonoBehaviour {
     }
     public void Roll()
     {
-        if (stamina > 5 && cooldownTimer > 0.5f && !block) //кувырок
+        
+        if (stamina > 5 && cooldownTimer > 0.5f && !block && m_grounded) //кувырок
         {
             cooldownTimer = 0;
-            DecreaseStamina(5);
-            capsuleCollider.enabled = false;
-            m_body2d.velocity = new Vector2((m_facingDirection * -1) * m_rollForce, m_body2d.velocity.y);
+            DecreaseStamina(5);            
+            if (m_body2d.velocity == Vector2.zero) m_body2d.velocity = new Vector2((m_facingDirection * -1), m_body2d.velocity.y);
+            if (m_body2d.velocity != Vector2.zero) m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
             m_rolling = true;
             m_animator.SetTrigger("Roll");
             rollSound.GetComponent<SoundOfObject>().StopSound();
             rollSound.GetComponent<SoundOfObject>().PlaySound();
         }
+    }
+    public void GravityAndColliderOFF()
+    {
+        capsuleCollider.enabled = false;
+    }
+    public void GravityAndCooliderON()
+    {
+        //capsuleCollider.enabled = true;
     }
     public void PlayerMovement()
     {
@@ -398,7 +412,9 @@ public class Hero : MonoBehaviour {
         //player state
         if (m_body2d.velocity != Vector2.zero)
         {
-            runSound.GetComponent<SoundOfObject>().ContinueSound();
+            if (!m_rolling && m_grounded)runSound.GetComponent<SoundOfObject>().ContinueSound();
+            if (m_rolling) runSound.GetComponent<SoundOfObject>().StopSound();
+            if (!m_grounded) runSound.GetComponent<SoundOfObject>().StopSound();
             m_animator.SetInteger("AnimState", 1);
         }
         else
@@ -534,7 +550,7 @@ public class Hero : MonoBehaviour {
     }
     private void AttackControl()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             Block();
         }
