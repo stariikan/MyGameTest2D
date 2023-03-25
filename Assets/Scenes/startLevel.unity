@@ -3545,6 +3545,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2891869}
     m_Modifications:
+    - target: {fileID: 1874556541036677021, guid: 59510a8ea2f2ab14d823bdde5d6dea49, type: 3}
+      propertyPath: sound.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4b4616fe807e2f945bf10630995e7ec5, type: 3}
     - target: {fileID: 1874556541161015206, guid: 59510a8ea2f2ab14d823bdde5d6dea49, type: 3}
       propertyPath: sound.Array.data[0]
       value: 
@@ -3597,6 +3601,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1874556542272027388, guid: 59510a8ea2f2ab14d823bdde5d6dea49, type: 3}
+      propertyPath: m_Volume
+      value: 0.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874556542272027391, guid: 59510a8ea2f2ab14d823bdde5d6dea49, type: 3}
+      propertyPath: sound.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 57dc1966164a92948842d93e0f2c9f8b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59510a8ea2f2ab14d823bdde5d6dea49, type: 3}
 --- !u!4 &273880753 stripped
@@ -4159,7 +4171,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 38b0ab4bb923adf43acf02d99c0e9c2c, type: 3}
     - target: {fileID: 1874556542272027388, guid: 59510a8ea2f2ab14d823bdde5d6dea49, type: 3}
       propertyPath: m_Volume
-      value: 0.299
+      value: 0.72
       objectReference: {fileID: 0}
     - target: {fileID: 1874556542272027391, guid: 59510a8ea2f2ab14d823bdde5d6dea49, type: 3}
       propertyPath: sound.Array.data[0]
@@ -24336,11 +24348,6 @@ MonoBehaviour:
   endBorder:
   - {fileID: 2083592242}
   enemyForGeneration:
-  - {fileID: 487385627}
-  - {fileID: 1433946428}
-  - {fileID: 455363760}
-  - {fileID: 397745814}
-  - {fileID: 433137799}
   - {fileID: 2891868}
   bossForGeneration:
   - {fileID: 1453525422}

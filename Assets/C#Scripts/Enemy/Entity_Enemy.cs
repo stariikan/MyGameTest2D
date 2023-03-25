@@ -210,20 +210,17 @@ public class Entity_Enemy : MonoBehaviour
         isBlock = Enemy_Behavior.Instance.block;
         if (currentHP > 0 && !isBlock)
         {
-            if (tag != "Skeleton" && tag != "Death")
+            if (tag != "Skeleton")
             {
                 GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Клонирования обьекта
                 bloodSpawn.gameObject.SetActive(true);
             }
-            if (tag == "Death")
-            {
-                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x + 1.5f, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Клонирования обьекта
-                bloodSpawn.gameObject.SetActive(true);
-            }
-            anim.SetTrigger("damage");//анимация получения демейджа
+            
             currentHP -= dmg;
             enemyTakeDamage = true;
             takedDamage = (float)dmg / maxHP; //на сколько надо уменьшаить прогресс бар
+            anim.SetTrigger("damage");//анимация получения демейджа
+            Enemy_Behavior.Instance.TakeDamageSound();
             if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
         }
         else if(currentHP > 0 && isBlock)
