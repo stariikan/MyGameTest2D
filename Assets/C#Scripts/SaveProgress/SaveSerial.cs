@@ -133,7 +133,7 @@ public class SaveSerial : MonoBehaviour
             playerHP = Hero.Instance.maxHP;
             playerMP = Hero.Instance.maxMP;
             playerStamina = Hero.Instance.stamina;
-            playerSpeed = Hero.Instance.m_curentSpeed;
+            playerSpeed = Hero.Instance.m_speed;
             playerAttackDamage = MeleeWeapon.Instance.AttackDamage;
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
