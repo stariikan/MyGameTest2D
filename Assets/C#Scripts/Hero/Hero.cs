@@ -44,6 +44,7 @@ public class Hero : MonoBehaviour {
 
     public bool playerDead = false; //мертв игрок или нет, пока нужно для того чтобы при смерти игрока делать рестарт
     private CapsuleCollider2D capsuleCollider;
+    private BoxCollider2D boxCollider;
 
     //Таймеры
     private float cooldownTimer = Mathf.Infinity;
@@ -83,7 +84,7 @@ public class Hero : MonoBehaviour {
     {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
-        capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
         m_wallSensorR1 = transform.Find("WallSensor_R1").GetComponent<Sensor_HeroKnight>();
         m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
@@ -173,14 +174,9 @@ public class Hero : MonoBehaviour {
             CheckBlock(); //Проверка блока
             PlayerSpeedMode();
             if (Input.GetKey(KeyCode.LeftControl)) MeeleAtack();
-            if (cooldownTimer > 1f) capsuleCollider.enabled = true;
+            if (cooldownTimer > 1f)  capsuleCollider.enabled = true;
         }
-        else
-        {
-            return;
-        }  
     }
-
     private void Jostick_Settings_Controll()
     {
         bool joystick = SaveSerial.Instance.joystick_settings;
@@ -236,9 +232,9 @@ public class Hero : MonoBehaviour {
         {
             m_curentSpeed = m_speed;
         }
-        if (cooldownTimer > 0.5f)
+        if (cooldownTimer > 0.3f)
         {
-            isAttack = false;
+            isAttack = false; 
         }
     }
     public void CheckBlock()
@@ -260,7 +256,7 @@ public class Hero : MonoBehaviour {
             takeDamageSound.GetComponent<SoundOfObject>().StopSound();
             takeDamageSound.GetComponent<SoundOfObject>().PlaySound();
             m_animator.SetTrigger("Hurt");
-            Push();
+            //Push();
         }
         if (block == true && !m_rolling)
         {
@@ -269,7 +265,7 @@ public class Hero : MonoBehaviour {
             m_animator.SetTrigger("Hurt");
             shieldHitSound.GetComponent<SoundOfObject>().StopSound();
             shieldHitSound.GetComponent<SoundOfObject>().PlaySound();
-            Push();
+            //Push();
         }
         if (curentHP <= 0 && !m_rolling) //Если жизней меньше 0
         {
@@ -284,15 +280,12 @@ public class Hero : MonoBehaviour {
             m_animator.SetTrigger("Death");
         }
     }
-    public void Hero_hp() //Метод который просто вызывает значение переменной HP, нужен мне был для передачи этого числа в скрипт с каунтером жизней
-    {
-        Debug.Log(curentHP);
-    }
     public void Jump()
     {
-            if (stamina > 10 && m_JumpCooldownTime > 1 && m_grounded && !m_rolling && !block)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
+            if (currentStamina > 10 && m_JumpCooldownTime > 1 && m_grounded && !m_rolling && !block)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
             {
                 m_JumpCooldownTime = 0;
+                m_body2d.gravityScale = 1; //включение гравитации    
                 DecreaseStamina(10);
                 m_animator.SetTrigger("Jump");
                 jumpSound.GetComponent<SoundOfObject>().StopSound();
@@ -305,17 +298,25 @@ public class Hero : MonoBehaviour {
     }
     public void Roll()
     {
-        if (stamina > 5 && cooldownTimer > 0.5f && !block) //кувырок
+        if (currentStamina > 5 && cooldownTimer > 0.5f && !block && m_grounded) //кувырок
         {
             cooldownTimer = 0;
-            DecreaseStamina(5);
-            capsuleCollider.enabled = false;
-            m_body2d.velocity = new Vector2((m_facingDirection * -1) * m_rollForce, m_body2d.velocity.y);
+            DecreaseStamina(5);            
+            if (m_body2d.velocity != Vector2.zero) m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
+            if (m_body2d.velocity == Vector2.zero) m_body2d.velocity = new Vector2((m_facingDirection * m_rollForce) * -1, m_body2d.velocity.y);
             m_rolling = true;
             m_animator.SetTrigger("Roll");
             rollSound.GetComponent<SoundOfObject>().StopSound();
             rollSound.GetComponent<SoundOfObject>().PlaySound();
         }
+    }
+    public void GravityAndColliderOFF()
+    {
+        capsuleCollider.enabled = false;
+    }
+    public void GravityAndCooliderON()
+    {
+        //capsuleCollider.enabled = true;
     }
     public void PlayerMovement()
     {
@@ -398,7 +399,9 @@ public class Hero : MonoBehaviour {
         //player state
         if (m_body2d.velocity != Vector2.zero)
         {
-            runSound.GetComponent<SoundOfObject>().ContinueSound();
+            if (!m_rolling && m_grounded)runSound.GetComponent<SoundOfObject>().ContinueSound();
+            if (m_rolling) runSound.GetComponent<SoundOfObject>().StopSound();
+            if (!m_grounded) runSound.GetComponent<SoundOfObject>().StopSound();
             m_animator.SetInteger("AnimState", 1);
         }
         else
@@ -462,7 +465,7 @@ public class Hero : MonoBehaviour {
     }
     public void MeeleAtack()
     {
-        if (!m_rolling && block && m_timeSinceAttack > 0.5f && !m_rolling && stamina > 5f)
+        if (!m_rolling && block && m_timeSinceAttack > 0.5f && !m_rolling && currentStamina > 10f)
         {
             m_timeSinceAttack = 0.0f;
             m_animator.SetTrigger("BlockAttack");
@@ -470,9 +473,11 @@ public class Hero : MonoBehaviour {
             shieldHitAttackSound.GetComponent<SoundOfObject>().PlaySound();
             Enemy_Push_by_BLOCK();
         }
-            if (!m_rolling && !block && m_timeSinceAttack > 0.25f && !m_rolling && stamina > 15f) 
+        if (!m_rolling && !block && m_timeSinceAttack > 0.25f && !m_rolling && currentStamina > 15f) 
         {
             isAttack = true;
+            cooldownTimer = 0;
+            currentStamina -= 15f;
             m_currentAttack++;
             // Loop back to one after third attack
             if (m_currentAttack > 3)
@@ -484,15 +489,13 @@ public class Hero : MonoBehaviour {
 
             // Call one of three attack animations "Attack1", "Attack2", "Attack3"
             m_animator.SetTrigger("Attack" + m_currentAttack);
-            attackSound.GetComponent<SoundOfObject>().StopSound();
-            attackSound.GetComponent<SoundOfObject>().PlaySound();
+            
             // Reset timer
             m_timeSinceAttack = 0.0f;
         }    
     }
     public void Attack()
     {
-        currentStamina -= 15f;
         if (m_facingDirection > 0)
         {
             meleeAttackArea.transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
@@ -534,7 +537,7 @@ public class Hero : MonoBehaviour {
     }
     private void AttackControl()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             Block();
         }
@@ -545,7 +548,7 @@ public class Hero : MonoBehaviour {
     }
     public void Enemy_Push_by_BLOCK()
     {
-        currentStamina -= 5;
+        currentStamina -= 10;
         if (m_facingDirection > 0)
         {
             shieldArea.transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
@@ -560,5 +563,10 @@ public class Hero : MonoBehaviour {
     private void Deactivate() //деактивация игрока после завершения анимации смерти (благодоря метки в аниматоре выполняется этот метод
     {
         playerDead = true;
+    }
+    public void AttackSound()
+    {
+        attackSound.GetComponent<SoundOfObject>().StopSound();
+        attackSound.GetComponent<SoundOfObject>().PlaySound();
     }
 }

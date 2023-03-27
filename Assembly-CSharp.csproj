@@ -110,7 +110,9 @@
     <Compile Include="Assets\C#Scripts\UI\Shop\Speed.cs" />
     <Compile Include="Assets\C#Scripts\SpellBook\SpellBook.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\MoushroomAbility\Spore.cs" />
+    <Compile Include="Assets\C#Scripts\Sound\SoundScript.cs" />
     <Compile Include="Assets\Materials\Hero Knight - Pixel Art\ColorSwap\ColorSwap_HeroKnight.cs" />
+    <Compile Include="Assets\C#Scripts\Sound\SoundOfObject.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\GoblinAbility\Bomb.cs" />
     <Compile Include="Assets\C#Scripts\Hero\DestroyEvent_HeroKnight.cs" />
     <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\Bar_Position.cs" />
@@ -120,12 +122,10 @@
     <Compile Include="Assets\C#Scripts\UI\Shop\HP.cs" />
     <Compile Include="Assets\C#Scripts\UI\Localization\ButtonLocalization.cs" />
     <Compile Include="Assets\C#Scripts\UI\Main menu\Collectables.cs" />
-    <Compile Include="Assets\C#Scripts\Sound\SoundScript.cs" />
-    <Compile Include="Assets\C#Scripts\Sound\SoundOfObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Cainos\Pixel Art Platformer - Village Props\Changelog.txt" />
-    <None Include="Assets\Materials\Monsters Creatures Fantasy\Sprites\EvilWizard\License.txt" />
+    <None Include="Assets\Materials\Monsters\EvilWizard\License.txt" />
     <None Include="Assets\Materials\Hero Knight - Pixel Art\ColorSwap\Sprites-ColorSwap.shader" />
   </ItemGroup>
   <ItemGroup>

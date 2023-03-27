@@ -168,7 +168,7 @@ public class Entity_Enemy : MonoBehaviour
     {
         directionX = Enemy_Behavior.Instance.directionX;
         directionY = Enemy_Behavior.Instance.directionY;
-        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Skeleton")
+        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Skeleton")
         {
             Hero.Instance.GetDamage(skeletonAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage
             float heal = skeletonAttackDamage * 0.5f; //Скелет ворует половину урона который наносит скелет игроку к себе в хп
@@ -176,11 +176,11 @@ public class Entity_Enemy : MonoBehaviour
             float healBar = heal / (float)skeletonMaxHP; //на сколько надо увеличить прогресс бар
             if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
         }
-        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Mushroom") Hero.Instance.GetDamage(mushroomAttackDamage);
-        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "FlyingEye") Hero.Instance.GetDamage(mushroomAttackDamage);
-        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Goblin") Hero.Instance.GetDamage(goblinAttackDamage);
-        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Slime") Hero.Instance.GetDamage(slimeAttackDamage);
-        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Martial") Hero.Instance.GetDamage(martialAttackDamage);
+        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Mushroom") Hero.Instance.GetDamage(mushroomAttackDamage);
+        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "FlyingEye") Hero.Instance.GetDamage(mushroomAttackDamage);
+        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Goblin") Hero.Instance.GetDamage(goblinAttackDamage);
+        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Slime") Hero.Instance.GetDamage(slimeAttackDamage);
+        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Martial") Hero.Instance.GetDamage(martialAttackDamage);
         if (directionX < 1.8f && currentHP > 0 && directionY < 1f && tag == "Death")
         {
             Hero.Instance.GetDamage(deathAttackDamage);
@@ -207,31 +207,31 @@ public class Entity_Enemy : MonoBehaviour
         if (tag == "Slime") maxHP = slimeMaxHP;
         if (tag == "Death") maxHP = deathMaxHP;
 
-        isBlock = Enemy_Behavior.Instance.block;
+        isBlock = this.gameObject.GetComponent<Enemy_Behavior>().block;
+        //Debug.Log(isBlock);
         if (currentHP > 0 && !isBlock)
         {
-            if (tag != "Skeleton" && tag != "Death")
+            if (tag != "Skeleton")
             {
                 GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Клонирования обьекта
                 bloodSpawn.gameObject.SetActive(true);
             }
-            if (tag == "Death")
-            {
-                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x + 1.5f, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Клонирования обьекта
-                bloodSpawn.gameObject.SetActive(true);
-            }
-            anim.SetTrigger("damage");//анимация получения демейджа
+            
             currentHP -= dmg;
             enemyTakeDamage = true;
             takedDamage = (float)dmg / maxHP; //на сколько надо уменьшаить прогресс бар
+            anim.SetTrigger("damage");//анимация получения демейджа
+            Enemy_Behavior.Instance.TakeDamageSound();
             if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
         }
-        else if(currentHP > 0 && isBlock)
+        if (currentHP > 0 && isBlock)
         {
             int level = LvLGeneration.Instance.Level;
-            if (level < 5) blockDMG = dmg * 0.5f;//если Игрок ниже 5 уровня то 50% блокирования урона
-            if (level > 4) blockDMG = dmg * 0.1f;//если Игрок выше чем 4 уровеня то 90% блокирования урона
+            if (level <= 4) blockDMG = dmg * 0.5f;//если Игрок ниже 5 уровня то 50% блокирования урона
+            if (level >= 5) blockDMG = dmg * 0.1f;//если Игрок выше чем 4 уровеня то 90% блокирования урона
             currentHP -= blockDMG;
+            Debug.Log(blockDMG);
+            Enemy_Behavior.Instance.ShieldDamageSound();
             enemyTakeDamage = true;
             takedDamage = blockDMG / maxHP; //на сколько надо уменьшаить прогресс бар
             if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара

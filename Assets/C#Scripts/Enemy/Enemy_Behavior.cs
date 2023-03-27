@@ -44,7 +44,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     private float magicCooldown = Mathf.Infinity; //кулдаун на маг атаку
 
     
-    public bool block = false;
+    public bool block;
     public bool copy; //этот обьект копия или нет?
     private bool movement = false; //моб не приследует игрока
     private bool playerIsAttack; //Атакует ли игрок?
@@ -125,8 +125,6 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         physicCooldown += Time.deltaTime; //КД Физ умения
         stunCooldown += Time.deltaTime; //КД Стана
 
-
-
         if (this.gameObject.GetComponent<Entity_Enemy>().currentHP > 0) EnemyBehavior(); 
     }
     //Метод описывающий разное поведение для разных врагов. Выбор поведения завист от тега Обьекта
@@ -172,7 +170,8 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         }
         if (tag == "Death")
         {
-            DeathMovement();
+            //DeathMovement();
+            EnemyMovement();
             DeathAttack();
         }
     }
@@ -189,13 +188,29 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         {
             e_delayToIdle = 0.05f;
             this.gameObject.GetComponent<Animator>().SetInteger("State", 1);
+            runSound.GetComponent<SoundOfObject>().ContinueSound();
         }
         if (movement == false)
         {
             e_delayToIdle -= Time.deltaTime;
             if (e_delayToIdle < 0) this.gameObject.GetComponent<Animator>().SetInteger("State", 0);
-
+            runSound.GetComponent<SoundOfObject>().StopSound();
         }
+    }
+    private void MeleeAttack() //Базовый метод атаки с двумя и более анимациями
+    {
+        //Damage Deal
+        currentAttack++;
+
+        // Loop back to one after third attack
+        if (currentAttack > 2) currentAttack = 1;
+
+        // Reset Attack combo if time since last attack is too large
+        if (timeSinceAttack > 2.0f) currentAttack = 1;
+        anim.SetTrigger("attack" + currentAttack);
+
+        // Reset timer
+        timeSinceAttack = 0.0f;
     }
     public void BoostEnemySpeed() //метод для усиления скорости врагов
     {
@@ -235,12 +250,14 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             if (directionX > 0)
             {
                 if (theScale.x < 0) Flip();//если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+                jumpSound.GetComponent<SoundOfObject>().PlaySound();
                 rb.AddForce(new Vector2(10, 2.5f), ForceMode2D.Impulse);
             }
             if (directionX < 0)
             {
                 if (theScale.x > 0) Flip();//если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
                 rb.AddForce(new Vector2(-10, 2.5f), ForceMode2D.Impulse);
+                jumpSound.GetComponent<SoundOfObject>().PlaySound();
             }
         }
     }
@@ -249,21 +266,20 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     public void Block() // Использование щита (Скелет)
     {
         playerIsAttack = Hero.Instance.isAttack;
-        if (playerIsAttack == true && (Mathf.Abs(directionX)) < 1.5f && Mathf.Abs(directionY) < 2 && level > 1)
+        if (playerIsAttack == true && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2)
         {
             blockCooldown = 0;
             skeletonSpeed = 0;
             block = true;
             anim.SetBool("Block", true);
         }
-        if (blockCooldown > 0.4f || directionX > 2f)
+        if (blockCooldown > 2f)
         {
             skeletonSpeed = speedRecovery;
             block = false;
             anim.SetBool("Block", false);
         }
     }
-
     public void MushroomSpores() //создает облако спор которая дамажит игрока (Гриб)
     {
         if (level > 4)
@@ -389,7 +405,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     {
         directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
         directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
-        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1.5f && Mathf.Abs(directionY) < 2) && !block && !isAttack && !stuned || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack && !stuned || copy) //следует за игроком если маленькое растояние или получил урон
+        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1.3f && Mathf.Abs(directionY) < 2) && !block && !isAttack && !stuned || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack && !stuned || copy) //следует за игроком если маленькое растояние или получил урон
         {
             Vector3 pos = transform.position; //позиция обьекта
             Vector3 theScale = transform.localScale; //нужно для понимания направления
@@ -400,6 +416,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             if (tag == "FlyingEye") playerFollowSpeed = Mathf.Sign(directionX) * flyingEyeSpeed * Time.deltaTime; //вычесление направления
             if (tag == "Martial") playerFollowSpeed = Mathf.Sign(directionX) * martialSpeed * Time.deltaTime; //вычесление направления
             if (tag == "Slime") playerFollowSpeed = Mathf.Sign(directionX) * slimeSpeed * Time.deltaTime; //вычесление направления
+            if (tag == "Death") playerFollowSpeed = Mathf.Sign(directionX) * deathSpeed * Time.deltaTime; //вычесление направления
             pos.x += playerFollowSpeed; //вычесление позиции по оси х
             transform.position = pos; //применение позиции
             movement = true;
@@ -430,7 +447,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     {
         directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
         directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
-        if ((Mathf.Abs(directionX) < 4f && Mathf.Abs(directionX) > 1f && Mathf.Abs(directionY) < 2) || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 5f) //следует за игроком если маленькое растояние или получил урон
+        if ((Mathf.Abs(directionX) < 4f && Mathf.Abs(directionX) > 1.3f && Mathf.Abs(directionY) < 2) || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 5f) //следует за игроком если маленькое растояние или получил урон
         {
             Vector3 pos = transform.position; //позиция обьекта
             Vector3 theScale = transform.localScale; //нужно для понимания направления
@@ -439,6 +456,8 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             pos.x -= playerFollowSpeed; //вычесление позиции по оси х
             transform.position = pos; //применение позиции
             movement = true;
+            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();//если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();//если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
         }
         else movement = false;
     }
@@ -464,6 +483,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         else movement = false;
     }
     //Методы атаки у разных мобов
+
     public void MushroomAttack()
     {
         float playerHP = Hero.Instance.curentHP;
@@ -475,19 +495,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         if ((Mathf.Abs(directionX)) < 0.8f && magicCooldown > 10) MushroomSpores();
         if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1)
         {
-            //Damage Deal
-            currentAttack++;
-
-            // Loop back to one after third attack
-            if (currentAttack > 2)
-                currentAttack = 1;
-
-            // Reset Attack combo if time since last attack is too large
-            if (timeSinceAttack > 2.0f)
-                currentAttack = 1;
-            anim.SetTrigger("attack" + currentAttack);
-            // Reset timer
-            timeSinceAttack = 0.0f;
+            MeleeAttack();
         }
         else isAttack = false;
     }
@@ -502,19 +510,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         if ((Mathf.Abs(directionX)) < 5f && magicCooldown > 5) SummonCopy(); 
         if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1)
         {
-            //Damage Deal
-            currentAttack++;
-
-            // Loop back to one after third attack
-            if (currentAttack > 2)
-                currentAttack = 1;
-
-            // Reset Attack combo if time since last attack is too large
-            if (timeSinceAttack > 2.0f)
-                currentAttack = 1;
-            anim.SetTrigger("attack" + currentAttack);
-            // Reset timer
-            timeSinceAttack = 0.0f;
+            MeleeAttack();
         }
         else isAttack = false;
     }
@@ -523,20 +519,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         float playerHP = Hero.Instance.curentHP;
         if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 1f && !block && timeSinceAttack > 1)
         {
-            isAttack = true;
-            //Damage Deal
-            currentAttack++;
-
-            // Loop back to one after third attack
-            if (currentAttack > 2)
-                currentAttack = 1;
-
-            // Reset Attack combo if time since last attack is too large
-            if (timeSinceAttack > 2.0f)
-                currentAttack = 1;
-            anim.SetTrigger("attack" + currentAttack);
-            // Reset timer
-            timeSinceAttack = 0.0f;
+            MeleeAttack();
         }
         else isAttack = false;
     }
@@ -563,19 +546,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         if (jumpCooldown > 1.2f) jump = false;
         if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1)
         {
-            //Damage Deal
-            currentAttack++;
-
-            // Loop back to one after third attack
-            if (currentAttack > 2)
-                currentAttack = 1;
-
-            // Reset Attack combo if time since last attack is too large
-            if (timeSinceAttack > 2.0f)
-                currentAttack = 1;
-            anim.SetTrigger("attack" + currentAttack);
-            // Reset timer
-            timeSinceAttack = 0.0f;
+            MeleeAttack();
         }
         else isAttack = false;
     }
@@ -591,6 +562,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         if (playerHP > 0 && Mathf.Abs(directionX) < 6f && (Mathf.Abs(directionX)) > 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !stuned && level >= 5)
         {
             anim.SetTrigger("attack1");
+            magicSound.GetComponent<SoundOfObject>().ContinueSound();
             timeSinceAttack = 0.0f;
             Vector3 theScale = transform.localScale; //нужно для понимания направления
             transform.localScale = theScale; //нужно для понимания направления
@@ -609,6 +581,8 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         if (playerHP > 0 && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2 && !stuned)
         {
             anim.SetTrigger("attack2");
+            //attackSound.GetComponent<SoundOfObject>().StopSound();
+            attackSound.GetComponent<SoundOfObject>().ContinueSound();
             timeSinceAttack = 0.0f;
             Vector3 theScale = transform.localScale; //нужно для понимания направления
             transform.localScale = theScale; //нужно для понимания направления
@@ -620,7 +594,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
                 else if (directionX > 0 && theScale.x < 0) Flip();
                 timeSinceAttack = 0.0f;
                 magicCooldown = 0;
-                float fireDMG = 100f * (Entity_Enemy.Instance.wizardAttackDamage) * Time.deltaTime; 
+                float fireDMG = 150f * (Entity_Enemy.Instance.wizardAttackDamage) * Time.deltaTime; 
                 Hero.Instance.GetDamage(fireDMG);
             }
         }
@@ -634,19 +608,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         }
         if (playerHP > 0 && Mathf.Abs(directionX) < 2.5f && Mathf.Abs(directionY) < 1.5f && timeSinceAttack > 1 && !stuned)
         {
-            //Damage Deal
-            currentAttack++;
-
-            // Loop back to one after third attack
-            if (currentAttack > 2)
-                currentAttack = 1;
-
-            // Reset Attack combo if time since last attack is too large
-            if (timeSinceAttack > 2.0f)
-                currentAttack = 1;
-            anim.SetTrigger("attack" + currentAttack);
-            // Reset timer
-            timeSinceAttack = 0.0f;
+            MeleeAttack();
         }
         else isAttack = false;
     }
@@ -677,5 +639,25 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             SpellDrainHP();
             DeathSummonMinioins();
         }
+    }
+    
+    //Sound Звук смерти и нанесения урона привязан к Анимации (пока), звуки нанесения урона и прыжка привязаны к коду в методах выше
+
+    public void DieSound()
+    {
+        dieSound.GetComponent<SoundOfObject>().ContinueSound();
+    }
+    public void TakeDamageSound()
+    {
+        takeDamageSound.GetComponent<SoundOfObject>().PlaySound();
+    }
+    public void ShieldDamageSound()
+    {
+       shieldHitSound.GetComponent<SoundOfObject>().PlaySound();
+    }
+    public void AttackSound()
+    {
+        attackSound.GetComponent<SoundOfObject>().StopSound();
+        attackSound.GetComponent<SoundOfObject>().PlaySound();
     }
 }

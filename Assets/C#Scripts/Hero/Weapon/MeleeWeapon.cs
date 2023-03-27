@@ -30,10 +30,8 @@ public class MeleeWeapon : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         TargetName = collision.gameObject.name;
-        //boxCollider.enabled = false; //отключаем коллайдер
-        //this.gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
         target = GameObject.Find(TargetName);
-        Debug.Log(target);
+        //Debug.Log(target);
         if (target.CompareTag("SpellBook")) target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
         if (target !=null && target.layer == 7) target.GetComponent<Entity_Enemy>().TakeDamage(AttackDamage); //7 это EnemyLayer
     }
