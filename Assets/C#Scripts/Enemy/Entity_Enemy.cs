@@ -168,7 +168,7 @@ public class Entity_Enemy : MonoBehaviour
     {
         directionX = Enemy_Behavior.Instance.directionX;
         directionY = Enemy_Behavior.Instance.directionY;
-        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Skeleton")
+        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Skeleton")
         {
             Hero.Instance.GetDamage(skeletonAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage
             float heal = skeletonAttackDamage * 0.5f; //—келет ворует половину урона который наносит скелет игроку к себе в хп
@@ -176,11 +176,11 @@ public class Entity_Enemy : MonoBehaviour
             float healBar = heal / (float)skeletonMaxHP; //на сколько надо увеличить прогресс бар
             if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
         }
-        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Mushroom") Hero.Instance.GetDamage(mushroomAttackDamage);
-        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "FlyingEye") Hero.Instance.GetDamage(mushroomAttackDamage);
-        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Goblin") Hero.Instance.GetDamage(goblinAttackDamage);
-        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Slime") Hero.Instance.GetDamage(slimeAttackDamage);
-        if (directionX < 1f && currentHP > 0 && directionY < 1f && tag == "Martial") Hero.Instance.GetDamage(martialAttackDamage);
+        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Mushroom") Hero.Instance.GetDamage(mushroomAttackDamage);
+        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "FlyingEye") Hero.Instance.GetDamage(mushroomAttackDamage);
+        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Goblin") Hero.Instance.GetDamage(goblinAttackDamage);
+        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Slime") Hero.Instance.GetDamage(slimeAttackDamage);
+        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Martial") Hero.Instance.GetDamage(martialAttackDamage);
         if (directionX < 1.8f && currentHP > 0 && directionY < 1f && tag == "Death")
         {
             Hero.Instance.GetDamage(deathAttackDamage);
@@ -207,7 +207,8 @@ public class Entity_Enemy : MonoBehaviour
         if (tag == "Slime") maxHP = slimeMaxHP;
         if (tag == "Death") maxHP = deathMaxHP;
 
-        isBlock = Enemy_Behavior.Instance.block;
+        isBlock = this.gameObject.GetComponent<Enemy_Behavior>().block;
+        //Debug.Log(isBlock);
         if (currentHP > 0 && !isBlock)
         {
             if (tag != "Skeleton")
@@ -223,12 +224,14 @@ public class Entity_Enemy : MonoBehaviour
             Enemy_Behavior.Instance.TakeDamageSound();
             if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
         }
-        else if(currentHP > 0 && isBlock)
+        if (currentHP > 0 && isBlock)
         {
             int level = LvLGeneration.Instance.Level;
-            if (level < 5) blockDMG = dmg * 0.5f;//если »грок ниже 5 уровн€ то 50% блокировани€ урона
-            if (level > 4) blockDMG = dmg * 0.1f;//если »грок выше чем 4 уровен€ то 90% блокировани€ урона
+            if (level <= 4) blockDMG = dmg * 0.5f;//если »грок ниже 5 уровн€ то 50% блокировани€ урона
+            if (level >= 5) blockDMG = dmg * 0.1f;//если »грок выше чем 4 уровен€ то 90% блокировани€ урона
             currentHP -= blockDMG;
+            Debug.Log(blockDMG);
+            Enemy_Behavior.Instance.ShieldDamageSound();
             enemyTakeDamage = true;
             takedDamage = blockDMG / maxHP; //на сколько надо уменьшаить прогресс бар
             if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара

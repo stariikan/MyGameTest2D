@@ -174,17 +174,9 @@ public class Hero : MonoBehaviour {
             CheckBlock(); //Проверка блока
             PlayerSpeedMode();
             if (Input.GetKey(KeyCode.LeftControl)) MeeleAtack();
-            if (cooldownTimer > 1f)
-            {
-                capsuleCollider.enabled = true;
-            }
+            if (cooldownTimer > 1f)  capsuleCollider.enabled = true;
         }
-        else
-        {
-            return;
-        }  
     }
-
     private void Jostick_Settings_Controll()
     {
         bool joystick = SaveSerial.Instance.joystick_settings;
@@ -240,9 +232,9 @@ public class Hero : MonoBehaviour {
         {
             m_curentSpeed = m_speed;
         }
-        if (cooldownTimer > 0.5f)
+        if (cooldownTimer > 0.3f)
         {
-            isAttack = false;
+            isAttack = false; 
         }
     }
     public void CheckBlock()
@@ -288,13 +280,9 @@ public class Hero : MonoBehaviour {
             m_animator.SetTrigger("Death");
         }
     }
-    public void Hero_hp() //Метод который просто вызывает значение переменной HP, нужен мне был для передачи этого числа в скрипт с каунтером жизней
-    {
-        Debug.Log(curentHP);
-    }
     public void Jump()
     {
-            if (stamina > 10 && m_JumpCooldownTime > 1 && m_grounded && !m_rolling && !block)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
+            if (currentStamina > 10 && m_JumpCooldownTime > 1 && m_grounded && !m_rolling && !block)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
             {
                 m_JumpCooldownTime = 0;
                 m_body2d.gravityScale = 1; //включение гравитации    
@@ -310,13 +298,12 @@ public class Hero : MonoBehaviour {
     }
     public void Roll()
     {
-        
-        if (stamina > 5 && cooldownTimer > 0.5f && !block && m_grounded) //кувырок
+        if (currentStamina > 5 && cooldownTimer > 0.5f && !block && m_grounded) //кувырок
         {
             cooldownTimer = 0;
             DecreaseStamina(5);            
-            if (m_body2d.velocity == Vector2.zero) m_body2d.velocity = new Vector2((m_facingDirection * -1), m_body2d.velocity.y);
             if (m_body2d.velocity != Vector2.zero) m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
+            if (m_body2d.velocity == Vector2.zero) m_body2d.velocity = new Vector2((m_facingDirection * m_rollForce) * -1, m_body2d.velocity.y);
             m_rolling = true;
             m_animator.SetTrigger("Roll");
             rollSound.GetComponent<SoundOfObject>().StopSound();
@@ -478,7 +465,7 @@ public class Hero : MonoBehaviour {
     }
     public void MeeleAtack()
     {
-        if (!m_rolling && block && m_timeSinceAttack > 0.5f && !m_rolling && stamina > 5f)
+        if (!m_rolling && block && m_timeSinceAttack > 0.5f && !m_rolling && currentStamina > 10f)
         {
             m_timeSinceAttack = 0.0f;
             m_animator.SetTrigger("BlockAttack");
@@ -486,9 +473,11 @@ public class Hero : MonoBehaviour {
             shieldHitAttackSound.GetComponent<SoundOfObject>().PlaySound();
             Enemy_Push_by_BLOCK();
         }
-            if (!m_rolling && !block && m_timeSinceAttack > 0.25f && !m_rolling && stamina > 15f) 
+        if (!m_rolling && !block && m_timeSinceAttack > 0.25f && !m_rolling && currentStamina > 15f) 
         {
             isAttack = true;
+            cooldownTimer = 0;
+            currentStamina -= 15f;
             m_currentAttack++;
             // Loop back to one after third attack
             if (m_currentAttack > 3)
@@ -500,15 +489,13 @@ public class Hero : MonoBehaviour {
 
             // Call one of three attack animations "Attack1", "Attack2", "Attack3"
             m_animator.SetTrigger("Attack" + m_currentAttack);
-            attackSound.GetComponent<SoundOfObject>().StopSound();
-            attackSound.GetComponent<SoundOfObject>().PlaySound();
+            
             // Reset timer
             m_timeSinceAttack = 0.0f;
         }    
     }
     public void Attack()
     {
-        currentStamina -= 15f;
         if (m_facingDirection > 0)
         {
             meleeAttackArea.transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
@@ -561,7 +548,7 @@ public class Hero : MonoBehaviour {
     }
     public void Enemy_Push_by_BLOCK()
     {
-        currentStamina -= 5;
+        currentStamina -= 10;
         if (m_facingDirection > 0)
         {
             shieldArea.transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
@@ -576,5 +563,10 @@ public class Hero : MonoBehaviour {
     private void Deactivate() //деактивация игрока после завершения анимации смерти (благодоря метки в аниматоре выполняется этот метод
     {
         playerDead = true;
+    }
+    public void AttackSound()
+    {
+        attackSound.GetComponent<SoundOfObject>().StopSound();
+        attackSound.GetComponent<SoundOfObject>().PlaySound();
     }
 }
