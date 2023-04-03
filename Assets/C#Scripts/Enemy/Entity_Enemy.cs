@@ -18,6 +18,7 @@ public class Entity_Enemy : MonoBehaviour
     public float flyingEyeMaxHP = 70; //Максимальные жизни Летающего глаза
     public float flyingEyeAttackDamage = 10; // Урон от физ атаки
     public int flyingEyeReward = 2;//награда за победу над врагом
+    private GameObject masterEnemy; //тут будет склыдваться ссылка на мастера глаза который призывает других глах
 
     //Параметры Гоблина
     public float goblinMaxHP = 50; //Максимальные жизни Гоблина
@@ -164,6 +165,10 @@ public class Entity_Enemy : MonoBehaviour
     }
 
     //Общие методы и поведения
+    public void GetNameOfObject(GameObject gameObjectName) //получить ссылку на игровой обьект, для суммонов, чтобы они могли обращаться к мастеру кто их призвал
+    {
+        masterEnemy = gameObjectName;
+    }
     public void DamageDeealToPlayer() // Метод для нанесения урона Игроку
     {
         directionX = Enemy_Behavior.Instance.directionX;
@@ -263,6 +268,7 @@ public class Entity_Enemy : MonoBehaviour
         if (tag == "Skeleton") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "Mushroom") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "FlyingEye" && !copy) LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
+        if (tag == "FlyingEye" && copy && masterEnemy != null) masterEnemy.GetComponent<Enemy_Behavior>().CopyCounter();//при уничтожении копии уменьшаяется каунтер копий, что позволяет вызвать доп копию.
         if (tag == "Goblin") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "EvilWizard") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
         if (tag == "Martial") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей

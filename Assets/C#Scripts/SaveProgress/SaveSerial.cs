@@ -51,6 +51,7 @@ public class SaveSerial : MonoBehaviour
     public bool localization; //Eng/Ru
     public bool sound = true; //Включен ли звук
     public bool music = true; //Включена ли музыка
+    public int enemyCheat; //чит на генерацию врагов
     public static SaveSerial Instance { get; set; } //Для сбора и отправки данных из этого скрипта
 
     private void Awake()
@@ -112,6 +113,7 @@ public class SaveSerial : MonoBehaviour
         public bool localization; //Eng/Ru
         public bool sound; //Включен ли звук
         public bool music; //Включена ли музыка
+        public int enemyCheat; //чит на генерацию врагов
     }
 
 
@@ -329,6 +331,7 @@ public class SaveSerial : MonoBehaviour
         data.localization = localization;
         data.sound = sound;
         data.music = music;
+        data.enemyCheat = enemyCheat;
 
         //data.savedBool = boolToSave;
         bf.Serialize(file, data);
@@ -464,7 +467,7 @@ public class SaveSerial : MonoBehaviour
             localization = data.localization;
             sound = data.sound;
             music = data.music;
-
+            enemyCheat = data.enemyCheat;
 
             Debug.Log("Settings loaded!"); //Выводим в отладочную консоль сообщение об успешной загрузке.
         }
@@ -558,5 +561,13 @@ public class SaveSerial : MonoBehaviour
         {
             sound = false;
         }
+    }
+    public void EnemyCheatSetting()
+    {
+        if (enemyCheat == 6)
+        {
+           enemyCheat = -1;
+        }
+        enemyCheat += 1;
     }
 }
