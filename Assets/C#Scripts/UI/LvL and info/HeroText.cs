@@ -19,7 +19,7 @@ public class HeroText : MonoBehaviour
     private float delTimer = 0.0f;
     private string currentText = "";
 
-    public static HeroText Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+    public static HeroText Instance { get; set; } //Ж’Р»В¤ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
 
     void Start()
     {

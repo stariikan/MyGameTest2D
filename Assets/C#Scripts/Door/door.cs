@@ -7,7 +7,7 @@ public class door : MonoBehaviour
     public int how_many_key_need;
     public bool door_open = false;
     bool player_key;
-    public static door Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+    public static door Instance { get; set; } //Ж’Р»В¤ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +24,7 @@ public class door : MonoBehaviour
         TryToOpen();
         OpenDoor();
     }
-    public void TryToOpen() //Метод для получения дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
+    public void TryToOpen() //С›РµС‚РѕРґ РґР»В¤ РїРѕР»СѓС‡РµРЅРёВ¤ РґР°РјР°РіР° РіРґРµ (int dmg) СЌС‚Рѕ Р·РЅР°С‡РµРЅРёРµ РјРѕР¶РЅРѕ Р±СѓРґРµС‚ РІРІРѕРґРёС‚СЊ РїСЂРё РІС‹Р·РѕРІРµ РјРµС‚РѕРґР° (С‚Рѕ РµСЃС‚СЊ С‚СѓРґР° РјРѕР¶РЅРѕ Р±СѓРґРµС‚ РІРїРёСЃР°С‚СЊ СѓСЂРѕРЅ)
     {
         if (player_key == true)
         {

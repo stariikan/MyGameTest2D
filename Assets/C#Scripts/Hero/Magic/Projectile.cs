@@ -2,31 +2,31 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public static Projectile Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    public float direction;//переменная направления
-    [SerializeField] private float Speed; //Скорость снаряда
-    [SerializeField] private float lifetime; //длительность жизни снаряда
-    private bool hit = false; //переменная метки попал ли во что-то снаряд
+    public static Projectile Instance { get; set; } //Р”Р»СЏ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
+    public float direction;//РїРµСЂРµРјРµРЅРЅР°СЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+    [SerializeField] private float Speed; //РЎРєРѕСЂРѕСЃС‚СЊ СЃРЅР°СЂСЏРґР°
+    [SerializeField] private float lifetime; //РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ Р¶РёР·РЅРё СЃРЅР°СЂСЏРґР°
+    private bool hit = false; //РїРµСЂРµРјРµРЅРЅР°СЏ РјРµС‚РєРё РїРѕРїР°Р» Р»Рё РІРѕ С‡С‚Рѕ-С‚Рѕ СЃРЅР°СЂСЏРґ
 
-    public Rigidbody2D rb; //Физическое тело
+    public Rigidbody2D rb; //Р¤РёР·РёС‡РµСЃРєРѕРµ С‚РµР»Рѕ
 
-    private BoxCollider2D boxCollider; //Коллайдер магии
-    private Animator anim; //переменная для аниматора
+    private BoxCollider2D boxCollider; //РљРѕР»Р»Р°Р№РґРµСЂ РјР°РіРёРё
+    private Animator anim; //РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ Р°РЅРёРјР°С‚РѕСЂР°
 
-    public int lifeTimeOfprojectile = 10; //время после которого снаряд уничтожается
+    public int lifeTimeOfprojectile = 10; //РІСЂРµРјСЏ РїРѕСЃР»Рµ РєРѕС‚РѕСЂРѕРіРѕ СЃРЅР°СЂСЏРґ СѓРЅРёС‡С‚РѕР¶Р°РµС‚СЃСЏ
     public float magicAttackDamage = 20;
-    public string magicTargetName; //имя цели по которому попал снаряд
-    public GameObject target; //обьект по которому попал снаряд
+    public string magicTargetName; //РёРјСЏ С†РµР»Рё РїРѕ РєРѕС‚РѕСЂРѕРјСѓ РїРѕРїР°Р» СЃРЅР°СЂСЏРґ
+    public GameObject target; //РѕР±СЊРµРєС‚ РїРѕ РєРѕС‚РѕСЂРѕРјСѓ РїРѕРїР°Р» СЃРЅР°СЂСЏРґ
 
-    private float shootingForce = 0.03f; //скорость снаряда
+    private float shootingForce = 0.03f; //СЃРєРѕСЂРѕСЃС‚СЊ СЃРЅР°СЂСЏРґР°
 
     //Sound
     public GameObject magicHitSound;
 
-    private void Awake() //Действие выполняется до старта игры и 1 раз
+    private void Awake() //Р”РµР№СЃС‚РІРёРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ РґРѕ СЃС‚Р°СЂС‚Р° РёРіСЂС‹ Рё 1 СЂР°Р·
     {
-        anim = GetComponent<Animator>(); // вытаскиваем информацию из компанента аниматор
-        boxCollider = GetComponent<BoxCollider2D>(); // вытаскиваем информацию из компанента бокс колайдер
+        anim = GetComponent<Animator>(); // РІС‹С‚Р°СЃРєРёРІР°РµРј РёРЅС„РѕСЂРјР°С†РёСЋ РёР· РєРѕРјРїР°РЅРµРЅС‚Р° Р°РЅРёРјР°С‚РѕСЂ
+        boxCollider = GetComponent<BoxCollider2D>(); // РІС‹С‚Р°СЃРєРёРІР°РµРј РёРЅС„РѕСЂРјР°С†РёСЋ РёР· РєРѕРјРїР°РЅРµРЅС‚Р° Р±РѕРєСЃ РєРѕР»Р°Р№РґРµСЂ
         Instance = this;
     }
 
@@ -42,30 +42,30 @@ public class Projectile : MonoBehaviour
     }
     private void Update()
     {
-        if (hit) return; //проверка попадания огненого шара во что-нибудь
-        float movementSpeed = Speed * Time.deltaTime * direction; // вычисление скорости перемещения в секунду и в каком направлении полетит снаряд
-        transform.Translate(movementSpeed, 0, 0);//ось х = movementspeed, y = 0, z=0 - все это перемещение по оси x
-        lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
-        if (lifetime > lifeTimeOfprojectile) gameObject.SetActive(false);//когда переменная достигает 5, снаряд исчезает
+        if (hit) return; //РїСЂРѕРІРµСЂРєР° РїРѕРїР°РґР°РЅРёСЏ РѕРіРЅРµРЅРѕРіРѕ С€Р°СЂР° РІРѕ С‡С‚Рѕ-РЅРёР±СѓРґСЊ
+        float movementSpeed = Speed * Time.deltaTime * direction; // РІС‹С‡РёСЃР»РµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё РїРµСЂРµРјРµС‰РµРЅРёСЏ РІ СЃРµРєСѓРЅРґСѓ Рё РІ РєР°РєРѕРј РЅР°РїСЂР°РІР»РµРЅРёРё РїРѕР»РµС‚РёС‚ СЃРЅР°СЂСЏРґ
+        transform.Translate(movementSpeed, 0, 0);//РѕСЃСЊ С… = movementspeed, y = 0, z=0 - РІСЃРµ СЌС‚Рѕ РїРµСЂРµРјРµС‰РµРЅРёРµ РїРѕ РѕСЃРё x
+        lifetime += Time.deltaTime; //СѓРІРµР»РµС‡РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ lifetime РєР°Р¶РґСѓСЋ СЃРµРє +1
+        if (lifetime > lifeTimeOfprojectile) gameObject.SetActive(false);//РєРѕРіРґР° РїРµСЂРµРјРµРЅРЅР°СЏ РґРѕСЃС‚РёРіР°РµС‚ 5, СЃРЅР°СЂСЏРґ РёСЃС‡РµР·Р°РµС‚
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         magicTargetName = collision.gameObject.name;
         if (collision.gameObject.tag == "PlayerCharacter") return;
-        hit = true; //тут указываем что произошло столкновение
-        boxCollider.enabled = false; //отключаем коллайдер
-        anim.SetTrigger("explode");//для воспроизведения анимации атаки снарядом при выполнения тригера magicAttack
+        hit = true; //С‚СѓС‚ СѓРєР°Р·С‹РІР°РµРј С‡С‚Рѕ РїСЂРѕРёР·РѕС€Р»Рѕ СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ
+        boxCollider.enabled = false; //РѕС‚РєР»СЋС‡Р°РµРј РєРѕР»Р»Р°Р№РґРµСЂ
+        anim.SetTrigger("explode");//РґР»СЏ РІРѕСЃРїСЂРѕРёР·РІРµРґРµРЅРёСЏ Р°РЅРёРјР°С†РёРё Р°С‚Р°РєРё СЃРЅР°СЂСЏРґРѕРј РїСЂРё РІС‹РїРѕР»РЅРµРЅРёСЏ С‚СЂРёРіРµСЂР° magicAttack
         magicHitSound.GetComponent<SoundOfObject>().StopSound();
         magicHitSound.GetComponent<SoundOfObject>().PlaySound();
         DamageObject();
         magicTargetName = string.Empty;
         rb.constraints = RigidbodyConstraints2D.FreezePosition;
     }
-    private void Flip() //Тут мы создаем метод Flip при вызове которого спрайт меняет направление
+    private void Flip() //РўСѓС‚ РјС‹ СЃРѕР·РґР°РµРј РјРµС‚РѕРґ Flip РїСЂРё РІС‹Р·РѕРІРµ РєРѕС‚РѕСЂРѕРіРѕ СЃРїСЂР°Р№С‚ РјРµРЅСЏРµС‚ РЅР°РїСЂР°РІР»РµРЅРёРµ
     {
-        Vector3 theScale = transform.localScale; //получение масштаб объекта
-        theScale.x *= -1;//тут происходит переворот изображения например 140 меняется на -140 тем самым полностью измени направление спрайта (картинка отзеркаливается)
-        transform.localScale = theScale; //Масштаб преобразования относительно родительского объекта GameObjects
+        Vector3 theScale = transform.localScale; //РїРѕР»СѓС‡РµРЅРёРµ РјР°СЃС€С‚Р°Р± РѕР±СЉРµРєС‚Р°
+        theScale.x *= -1;//С‚СѓС‚ РїСЂРѕРёСЃС…РѕРґРёС‚ РїРµСЂРµРІРѕСЂРѕС‚ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РЅР°РїСЂРёРјРµСЂ 140 РјРµРЅСЏРµС‚СЃСЏ РЅР° -140 С‚РµРј СЃР°РјС‹Рј РїРѕР»РЅРѕСЃС‚СЊСЋ РёР·РјРµРЅРё РЅР°РїСЂР°РІР»РµРЅРёРµ СЃРїСЂР°Р№С‚Р° (РєР°СЂС‚РёРЅРєР° РѕС‚Р·РµСЂРєР°Р»РёРІР°РµС‚СЃСЏ)
+        transform.localScale = theScale; //РњР°СЃС€С‚Р°Р± РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРіРѕ РѕР±СЉРµРєС‚Р° GameObjects
     }
     public void DamageObject()
     {
@@ -74,21 +74,21 @@ public class Projectile : MonoBehaviour
         Debug.Log(target);
         if (target != null && target.layer == 7) target.GetComponent<Entity_Enemy>().TakeDamage(magicAttackDamage);
     }
-    public void SetDirection(Vector3 shootingDirection)// выбор направления полета 
+    public void SetDirection(Vector3 shootingDirection)// РІС‹Р±РѕСЂ РЅР°РїСЂР°РІР»РµРЅРёСЏ РїРѕР»РµС‚Р° 
     {
         lifetime = 0;
-        gameObject.SetActive(true); //активация игрового обьекта
+        gameObject.SetActive(true); //Р°РєС‚РёРІР°С†РёСЏ РёРіСЂРѕРІРѕРіРѕ РѕР±СЊРµРєС‚Р°
         if (shootingDirection.x == -1 && transform.localScale.x > 0) Flip();
         if (shootingDirection.x == 1 && transform.localScale.x < 0) Flip();
-        boxCollider.enabled = true; //активация коллайдера 
+        boxCollider.enabled = true; //Р°РєС‚РёРІР°С†РёСЏ РєРѕР»Р»Р°Р№РґРµСЂР° 
         
-        hit = false; //обьект коснулся другого обьекта = false
-        Rigidbody2D rb = this.gameObject.GetComponent<Rigidbody2D>(); //получения компонента RigidBody2D
+        hit = false; //РѕР±СЊРµРєС‚ РєРѕСЃРЅСѓР»СЃСЏ РґСЂСѓРіРѕРіРѕ РѕР±СЊРµРєС‚Р° = false
+        Rigidbody2D rb = this.gameObject.GetComponent<Rigidbody2D>(); //РїРѕР»СѓС‡РµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚Р° RigidBody2D
         rb.constraints = RigidbodyConstraints2D.None;
-        rb.AddForce(shootingDirection * shootingForce); //приложение силы к обьекту = направления умноження на скорость снаряда
+        rb.AddForce(shootingDirection * shootingForce); //РїСЂРёР»РѕР¶РµРЅРёРµ СЃРёР»С‹ Рє РѕР±СЊРµРєС‚Сѓ = РЅР°РїСЂР°РІР»РµРЅРёСЏ СѓРјРЅРѕР¶РµРЅРЅСЏ РЅР° СЃРєРѕСЂРѕСЃС‚СЊ СЃРЅР°СЂСЏРґР°
     }
-    private void Deactivate() //деактивация снаряда после завершения анимации взрывал
+    private void Deactivate() //РґРµР°РєС‚РёРІР°С†РёСЏ СЃРЅР°СЂСЏРґР° РїРѕСЃР»Рµ Р·Р°РІРµСЂС€РµРЅРёСЏ Р°РЅРёРјР°С†РёРё РІР·СЂС‹РІР°Р»
     {
-        Destroy(this.gameObject);//уничтожить этот игровой обьект
+        Destroy(this.gameObject);//СѓРЅРёС‡С‚РѕР¶РёС‚СЊ СЌС‚РѕС‚ РёРіСЂРѕРІРѕР№ РѕР±СЊРµРєС‚
     }
 }

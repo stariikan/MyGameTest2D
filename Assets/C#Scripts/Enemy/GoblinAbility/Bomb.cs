@@ -4,61 +4,61 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    public static Bomb Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    public float direction;//переменная направления
-    private float playerHP; //переменная метки попал ли во что-то снаряд
+    public static Bomb Instance { get; set; } //Р”Р»СЏ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
+    public float direction;//РїРµСЂРµРјРµРЅРЅР°СЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+    private float playerHP; //РїРµСЂРµРјРµРЅРЅР°СЏ РјРµС‚РєРё РїРѕРїР°Р» Р»Рё РІРѕ С‡С‚Рѕ-С‚Рѕ СЃРЅР°СЂСЏРґ
 
     private float bombDamage = 40;
     private string enemyName;
     private GameObject enemy;
     private Animator anim;
-    public Rigidbody2D rb; //Физическое тело
-    public GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
+    public Rigidbody2D rb; //Р¤РёР·РёС‡РµСЃРєРѕРµ С‚РµР»Рѕ
+    public GameObject player; //РіРµР№РјРѕР±СЊРµРєС‚ РёРіСЂРѕРє Рё РЅРёР¶Рµ Р±СѓРґРµС‚ РјРµС‚РѕРґ РєР°Рє РѕРЅ РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ Рё РїСЂРёСЃРІР°РёРІР°РµС‚СЃСЏ СЌС‚РѕР№ РїРµСЂРµРјРµРЅРЅРѕР№
 
-    private void Start() //Действие выполняется до старта игры и 1 раз
+    private void Start() //Р”РµР№СЃС‚РІРёРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ РґРѕ СЃС‚Р°СЂС‚Р° РёРіСЂС‹ Рё 1 СЂР°Р·
     {
         Instance = this;
     }
     private void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
-        anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object) к которому привязан скрипт
+        anim = this.gameObject.GetComponent<Animator>(); //РџРµСЂРµРјРµРЅРЅР°СЏ anim РїРѕР»СѓС‡Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ РёР· РєРѕРјРїРѕРЅРµРЅС‚Р° Animator (РђРЅРёРјР°С†РёСЏ game.Object) Рє РєРѕС‚РѕСЂРѕРјСѓ РїСЂРёРІСЏР·Р°РЅ СЃРєСЂРёРїС‚
     }
     private void Update()
     {
         playerHP = Hero.Instance.curentHP;
     }
-    private void BombMovement() //направления и сила полета бомбы 
+    private void BombMovement() //РЅР°РїСЂР°РІР»РµРЅРёСЏ Рё СЃРёР»Р° РїРѕР»РµС‚Р° Р±РѕРјР±С‹ 
     {
-        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции бомбы по оси х
+        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё С… - РїРѕР·РёС†РёРё Р±РѕРјР±С‹ РїРѕ РѕСЃРё С…
         if (directionX > 0) rb.AddForce(new Vector2(2.7f, 0.5f), ForceMode2D.Impulse);
         if (directionX < 0) rb.AddForce(new Vector2(-2.7f, 0.5f), ForceMode2D.Impulse);
  
     }
-    public void BombDestroy() //отключения обьекта бомбы
+    public void BombDestroy() //РѕС‚РєР»СЋС‡РµРЅРёСЏ РѕР±СЊРµРєС‚Р° Р±РѕРјР±С‹
     {
-        Destroy(this.gameObject);//уничтожить этот игровой обьект
+        Destroy(this.gameObject);//СѓРЅРёС‡С‚РѕР¶РёС‚СЊ СЌС‚РѕС‚ РёРіСЂРѕРІРѕР№ РѕР±СЊРµРєС‚
     }
-    public void BombExplosion() //включения анимации взрыва
+    public void BombExplosion() //РІРєР»СЋС‡РµРЅРёСЏ Р°РЅРёРјР°С†РёРё РІР·СЂС‹РІР°
     {
-        rb.velocity = Vector3.zero; //для остановки обьекта
+        rb.velocity = Vector3.zero; //РґР»СЏ РѕСЃС‚Р°РЅРѕРІРєРё РѕР±СЊРµРєС‚Р°
         anim.SetTrigger("explosion");
     }
-    public void BombDmg() //нанесения урона
+    public void BombDmg() //РЅР°РЅРµСЃРµРЅРёСЏ СѓСЂРѕРЅР°
     {
-        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции бомбы по оси х
-        float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиции бомбы по оси y
-        float enemyDirectionX = enemy.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция врага по оси х - позиции бомбы по оси х 
+        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё С… - РїРѕР·РёС†РёРё Р±РѕРјР±С‹ РїРѕ РѕСЃРё С…
+        float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё y - РїРѕР·РёС†РёРё Р±РѕРјР±С‹ РїРѕ РѕСЃРё y
+        float enemyDirectionX = enemy.transform.position.x - this.gameObject.transform.localPosition.x; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РІСЂР°РіР° РїРѕ РѕСЃРё С… - РїРѕР·РёС†РёРё Р±РѕРјР±С‹ РїРѕ РѕСЃРё С… 
         if ((Mathf.Abs(directionX) < 2.0f && Mathf.Abs(directionY) < 2f) && playerHP > 0)
         {
             Hero.Instance.GetDamage(bombDamage);
         }
         if (Mathf.Abs(enemyDirectionX) < 2f) enemy.GetComponent<Entity_Enemy>().TakeDamage(bombDamage/1.5f);
     }
-    public void PushFromPlayer() // отскок от игрока
+    public void PushFromPlayer() // РѕС‚СЃРєРѕРє РѕС‚ РёРіСЂРѕРєР°
     {
-        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции бомбы по оси х
-        float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиции бомбы по оси y
+        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё С… - РїРѕР·РёС†РёРё Р±РѕРјР±С‹ РїРѕ РѕСЃРё С…
+        float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё y - РїРѕР·РёС†РёРё Р±РѕРјР±С‹ РїРѕ РѕСЃРё y
         if (Mathf.Abs(directionX) < 1f)
         {
             Vector3 theScale = transform.localScale;
@@ -67,10 +67,10 @@ public class Bomb : MonoBehaviour
             if (theScale.x < 0) rb.AddForce(new Vector2(-2.7f, 0.5f), ForceMode2D.Impulse);
         }
     }
-    public void bombDirection(Vector3 _direction)// выбор направления полета 
+    public void bombDirection(Vector3 _direction)// РІС‹Р±РѕСЂ РЅР°РїСЂР°РІР»РµРЅРёСЏ РїРѕР»РµС‚Р° 
     {
-        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
-        this.gameObject.SetActive(true); //активация игрового обьекта
+        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё С… - РїРѕР·РёС†РёРё С‚СѓРјР°РЅР° РїРѕ РѕСЃРё С…
+        this.gameObject.SetActive(true); //Р°РєС‚РёРІР°С†РёСЏ РёРіСЂРѕРІРѕРіРѕ РѕР±СЊРµРєС‚Р°
         this.gameObject.transform.position = _direction;
         BombMovement();
     }

@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using UnityEngine.SceneManagement; //для управления сценами
+using UnityEngine.SceneManagement; //РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ СЃС†РµРЅР°РјРё
 
 public class SaveSerial : MonoBehaviour
 {
@@ -47,19 +47,19 @@ public class SaveSerial : MonoBehaviour
     public int martialReward;
 
     //Settings
-    public bool joystick_settings = false; //Джойстик или кнопки
+    public bool joystick_settings = false; //Р”Р¶РѕР№СЃС‚РёРє РёР»Рё РєРЅРѕРїРєРё
     public bool localization; //Eng/Ru
-    public bool sound = true; //Включен ли звук
-    public bool music = true; //Включена ли музыка
-    public int enemyCheat; //чит на генерацию врагов
-    public static SaveSerial Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+    public bool sound = true; //Р’РєР»СЋС‡РµРЅ Р»Рё Р·РІСѓРє
+    public bool music = true; //Р’РєР»СЋС‡РµРЅР° Р»Рё РјСѓР·С‹РєР°
+    public int enemyCheat; //С‡РёС‚ РЅР° РіРµРЅРµСЂР°С†РёСЋ РІСЂР°РіРѕРІ
+    public static SaveSerial Instance { get; set; } //Р”Р»СЏ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
 
     private void Awake()
     {
         Instance = this;
-        LoadlSetting(); //загрузка данных ранее выставленных настроек игры
+        LoadlSetting(); //Р·Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… СЂР°РЅРµРµ РІС‹СЃС‚Р°РІР»РµРЅРЅС‹С… РЅР°СЃС‚СЂРѕРµРє РёРіСЂС‹
     }
-    //Создадим новый сериализуемый класс SaveData, который будет содержать сохраняемые данные
+    //РЎРѕР·РґР°РґРёРј РЅРѕРІС‹Р№ СЃРµСЂРёР°Р»РёР·СѓРµРјС‹Р№ РєР»Р°СЃСЃ SaveData, РєРѕС‚РѕСЂС‹Р№ Р±СѓРґРµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ СЃРѕС…СЂР°РЅСЏРµРјС‹Рµ РґР°РЅРЅС‹Рµ
     [Serializable]
     class SaveData
     {
@@ -103,31 +103,31 @@ public class SaveSerial : MonoBehaviour
         public float martialSpeed;
         public int martialReward;
     }
-    //Обратите внимание, три переменные в классе SaveData соответствуют переменным из класса SaveSerial.
-    //Для сохранения мы будем передавать значения из SaveSerial в SaveData, а затем сериализовать последний.
+    //РћР±СЂР°С‚РёС‚Рµ РІРЅРёРјР°РЅРёРµ, С‚СЂРё РїРµСЂРµРјРµРЅРЅС‹Рµ РІ РєР»Р°СЃСЃРµ SaveData СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‚ РїРµСЂРµРјРµРЅРЅС‹Рј РёР· РєР»Р°СЃСЃР° SaveSerial.
+    //Р”Р»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РјС‹ Р±СѓРґРµРј РїРµСЂРµРґР°РІР°С‚СЊ Р·РЅР°С‡РµРЅРёСЏ РёР· SaveSerial РІ SaveData, Р° Р·Р°С‚РµРј СЃРµСЂРёР°Р»РёР·РѕРІР°С‚СЊ РїРѕСЃР»РµРґРЅРёР№.
     [Serializable]
     class SaveSettings
     {
         //Settings
-        public bool joystick_settings; //Джойстик или кнопки
+        public bool joystick_settings; //Р”Р¶РѕР№СЃС‚РёРє РёР»Рё РєРЅРѕРїРєРё
         public bool localization; //Eng/Ru
-        public bool sound; //Включен ли звук
-        public bool music; //Включена ли музыка
-        public int enemyCheat; //чит на генерацию врагов
+        public bool sound; //Р’РєР»СЋС‡РµРЅ Р»Рё Р·РІСѓРє
+        public bool music; //Р’РєР»СЋС‡РµРЅР° Р»Рё РјСѓР·С‹РєР°
+        public int enemyCheat; //С‡РёС‚ РЅР° РіРµРЅРµСЂР°С†РёСЋ РІСЂР°РіРѕРІ
     }
 
 
-    //Добавим в класс SaveSerial метод SaveGame:
+    //Р”РѕР±Р°РІРёРј РІ РєР»Р°СЃСЃ SaveSerial РјРµС‚РѕРґ SaveGame:
     public void SaveGame()
     {
-        BinaryFormatter bf = new BinaryFormatter(); //Объект BinaryFormatter предназначен для сериализации и десериализации.
-                                                    //При сериализации он отвечает за преобразование информации в поток бинарных данных (нулей и единиц).
+        BinaryFormatter bf = new BinaryFormatter(); //РћР±СЉРµРєС‚ BinaryFormatter РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅ РґР»СЏ СЃРµСЂРёР°Р»РёР·Р°С†РёРё Рё РґРµСЃРµСЂРёР°Р»РёР·Р°С†РёРё.
+                                                    //РџСЂРё СЃРµСЂРёР°Р»РёР·Р°С†РёРё РѕРЅ РѕС‚РІРµС‡Р°РµС‚ Р·Р° РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё РІ РїРѕС‚РѕРє Р±РёРЅР°СЂРЅС‹С… РґР°РЅРЅС‹С… (РЅСѓР»РµР№ Рё РµРґРёРЅРёС†).
       
-        FileStream file = File.Create(Application.persistentDataPath //FileStream и File нужны для создания файла с расширением .dat.
-                                                                     //Константа Application.persistentDataPath содержит путь к файлам проекта: C:\Users\[user]\AppData\LocalLow\[company name].
+        FileStream file = File.Create(Application.persistentDataPath //FileStream Рё File РЅСѓР¶РЅС‹ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ С„Р°Р№Р»Р° СЃ СЂР°СЃС€РёСЂРµРЅРёРµРј .dat.
+                                                                     //РљРѕРЅСЃС‚Р°РЅС‚Р° Application.persistentDataPath СЃРѕРґРµСЂР¶РёС‚ РїСѓС‚СЊ Рє С„Р°Р№Р»Р°Рј РїСЂРѕРµРєС‚Р°: C:\Users\[user]\AppData\LocalLow\[company name].
           + "/SessionData.dat");
-        SaveData data = new SaveData(); //В методе SaveGame создается новый экземпляр класса SaveData. В него записываются текущие данные из SaveSerial, которые нужно сохранить.
-                                        //BinaryFormatter сериализует эти данные и записывает их в файл, созданный FileStream. Затем файл закрывается, в консоль выводится сообщение об успешном сохранении.
+        SaveData data = new SaveData(); //Р’ РјРµС‚РѕРґРµ SaveGame СЃРѕР·РґР°РµС‚СЃСЏ РЅРѕРІС‹Р№ СЌРєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° SaveData. Р’ РЅРµРіРѕ Р·Р°РїРёСЃС‹РІР°СЋС‚СЃСЏ С‚РµРєСѓС‰РёРµ РґР°РЅРЅС‹Рµ РёР· SaveSerial, РєРѕС‚РѕСЂС‹Рµ РЅСѓР¶РЅРѕ СЃРѕС…СЂР°РЅРёС‚СЊ.
+                                        //BinaryFormatter СЃРµСЂРёР°Р»РёР·СѓРµС‚ СЌС‚Рё РґР°РЅРЅС‹Рµ Рё Р·Р°РїРёСЃС‹РІР°РµС‚ РёС… РІ С„Р°Р№Р», СЃРѕР·РґР°РЅРЅС‹Р№ FileStream. Р—Р°С‚РµРј С„Р°Р№Р» Р·Р°РєСЂС‹РІР°РµС‚СЃСЏ, РІ РєРѕРЅСЃРѕР»СЊ РІС‹РІРѕРґРёС‚СЃСЏ СЃРѕРѕР±С‰РµРЅРёРµ РѕР± СѓСЃРїРµС€РЅРѕРј СЃРѕС…СЂР°РЅРµРЅРёРё.
         
         if (SceneManager.GetActiveScene().name == "startLevel")
         {
@@ -219,14 +219,14 @@ public class SaveSerial : MonoBehaviour
     }
     public void SaveLastGame()
     {
-        BinaryFormatter bf = new BinaryFormatter(); //Объект BinaryFormatter предназначен для сериализации и десериализации.
-                                                    //При сериализации он отвечает за преобразование информации в поток бинарных данных (нулей и единиц).
+        BinaryFormatter bf = new BinaryFormatter(); //РћР±СЉРµРєС‚ BinaryFormatter РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅ РґР»СЏ СЃРµСЂРёР°Р»РёР·Р°С†РёРё Рё РґРµСЃРµСЂРёР°Р»РёР·Р°С†РёРё.
+                                                    //РџСЂРё СЃРµСЂРёР°Р»РёР·Р°С†РёРё РѕРЅ РѕС‚РІРµС‡Р°РµС‚ Р·Р° РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё РІ РїРѕС‚РѕРє Р±РёРЅР°СЂРЅС‹С… РґР°РЅРЅС‹С… (РЅСѓР»РµР№ Рё РµРґРёРЅРёС†).
 
-        FileStream file = File.Create(Application.persistentDataPath //FileStream и File нужны для создания файла с расширением .dat.
-                                                                     //Константа Application.persistentDataPath содержит путь к файлам проекта: C:\Users\[user]\AppData\LocalLow\[company name].
+        FileStream file = File.Create(Application.persistentDataPath //FileStream Рё File РЅСѓР¶РЅС‹ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ С„Р°Р№Р»Р° СЃ СЂР°СЃС€РёСЂРµРЅРёРµРј .dat.
+                                                                     //РљРѕРЅСЃС‚Р°РЅС‚Р° Application.persistentDataPath СЃРѕРґРµСЂР¶РёС‚ РїСѓС‚СЊ Рє С„Р°Р№Р»Р°Рј РїСЂРѕРµРєС‚Р°: C:\Users\[user]\AppData\LocalLow\[company name].
           + "/LastSessionData.dat");
-        SaveData data = new SaveData(); //В методе SaveGame создается новый экземпляр класса SaveData. В него записываются текущие данные из SaveSerial, которые нужно сохранить.
-                                        //BinaryFormatter сериализует эти данные и записывает их в файл, созданный FileStream. Затем файл закрывается, в консоль выводится сообщение об успешном сохранении.
+        SaveData data = new SaveData(); //Р’ РјРµС‚РѕРґРµ SaveGame СЃРѕР·РґР°РµС‚СЃСЏ РЅРѕРІС‹Р№ СЌРєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° SaveData. Р’ РЅРµРіРѕ Р·Р°РїРёСЃС‹РІР°СЋС‚СЃСЏ С‚РµРєСѓС‰РёРµ РґР°РЅРЅС‹Рµ РёР· SaveSerial, РєРѕС‚РѕСЂС‹Рµ РЅСѓР¶РЅРѕ СЃРѕС…СЂР°РЅРёС‚СЊ.
+                                        //BinaryFormatter СЃРµСЂРёР°Р»РёР·СѓРµС‚ СЌС‚Рё РґР°РЅРЅС‹Рµ Рё Р·Р°РїРёСЃС‹РІР°РµС‚ РёС… РІ С„Р°Р№Р», СЃРѕР·РґР°РЅРЅС‹Р№ FileStream. Р—Р°С‚РµРј С„Р°Р№Р» Р·Р°РєСЂС‹РІР°РµС‚СЃСЏ, РІ РєРѕРЅСЃРѕР»СЊ РІС‹РІРѕРґРёС‚СЃСЏ СЃРѕРѕР±С‰РµРЅРёРµ РѕР± СѓСЃРїРµС€РЅРѕРј СЃРѕС…СЂР°РЅРµРЅРёРё.
 
         if (SceneManager.GetActiveScene().name == "startLevel")
         {
@@ -318,14 +318,14 @@ public class SaveSerial : MonoBehaviour
     }
     public void SaveSetting()
     {
-        BinaryFormatter bf = new BinaryFormatter(); //Объект BinaryFormatter предназначен для сериализации и десериализации.
-                                                    //При сериализации он отвечает за преобразование информации в поток бинарных данных (нулей и единиц).
+        BinaryFormatter bf = new BinaryFormatter(); //РћР±СЉРµРєС‚ BinaryFormatter РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅ РґР»СЏ СЃРµСЂРёР°Р»РёР·Р°С†РёРё Рё РґРµСЃРµСЂРёР°Р»РёР·Р°С†РёРё.
+                                                    //РџСЂРё СЃРµСЂРёР°Р»РёР·Р°С†РёРё РѕРЅ РѕС‚РІРµС‡Р°РµС‚ Р·Р° РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё РІ РїРѕС‚РѕРє Р±РёРЅР°СЂРЅС‹С… РґР°РЅРЅС‹С… (РЅСѓР»РµР№ Рё РµРґРёРЅРёС†).
 
-        FileStream file = File.Create(Application.persistentDataPath //FileStream и File нужны для создания файла с расширением .dat.
-                                                                     //Константа Application.persistentDataPath содержит путь к файлам проекта: C:\Users\[user]\AppData\LocalLow\[company name].
+        FileStream file = File.Create(Application.persistentDataPath //FileStream Рё File РЅСѓР¶РЅС‹ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ С„Р°Р№Р»Р° СЃ СЂР°СЃС€РёСЂРµРЅРёРµРј .dat.
+                                                                     //РљРѕРЅСЃС‚Р°РЅС‚Р° Application.persistentDataPath СЃРѕРґРµСЂР¶РёС‚ РїСѓС‚СЊ Рє С„Р°Р№Р»Р°Рј РїСЂРѕРµРєС‚Р°: C:\Users\[user]\AppData\LocalLow\[company name].
           + "/SettingsData.dat");
-        SaveSettings data = new SaveSettings(); //В методе SaveGame создается новый экземпляр класса SaveData. В него записываются текущие данные из SaveSerial, которые нужно сохранить.
-                                        //BinaryFormatter сериализует эти данные и записывает их в файл, созданный FileStream. Затем файл закрывается, в консоль выводится сообщение об успешном сохранении.
+        SaveSettings data = new SaveSettings(); //Р’ РјРµС‚РѕРґРµ SaveGame СЃРѕР·РґР°РµС‚СЃСЏ РЅРѕРІС‹Р№ СЌРєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° SaveData. Р’ РЅРµРіРѕ Р·Р°РїРёСЃС‹РІР°СЋС‚СЃСЏ С‚РµРєСѓС‰РёРµ РґР°РЅРЅС‹Рµ РёР· SaveSerial, РєРѕС‚РѕСЂС‹Рµ РЅСѓР¶РЅРѕ СЃРѕС…СЂР°РЅРёС‚СЊ.
+                                        //BinaryFormatter СЃРµСЂРёР°Р»РёР·СѓРµС‚ СЌС‚Рё РґР°РЅРЅС‹Рµ Рё Р·Р°РїРёСЃС‹РІР°РµС‚ РёС… РІ С„Р°Р№Р», СЃРѕР·РґР°РЅРЅС‹Р№ FileStream. Р—Р°С‚РµРј С„Р°Р№Р» Р·Р°РєСЂС‹РІР°РµС‚СЃСЏ, РІ РєРѕРЅСЃРѕР»СЊ РІС‹РІРѕРґРёС‚СЃСЏ СЃРѕРѕР±С‰РµРЅРёРµ РѕР± СѓСЃРїРµС€РЅРѕРј СЃРѕС…СЂР°РЅРµРЅРёРё.
 
         data.joystick_settings = joystick_settings;
         data.localization = localization;
@@ -338,17 +338,17 @@ public class SaveSerial : MonoBehaviour
         file.Close();
         Debug.Log("Settings data saved!");
     }
-    //Метод LoadGame – это, как и раньше, SaveGame наоборот:
+    //РњРµС‚РѕРґ LoadGame вЂ“ СЌС‚Рѕ, РєР°Рє Рё СЂР°РЅСЊС€Рµ, SaveGame РЅР°РѕР±РѕСЂРѕС‚:
     public void LoadGame()
         {
         if (File.Exists(Application.persistentDataPath
-          + "/SessionData.dat")) //Сначала ищем файл с сохраненными данными, который мы создали в методе SaveGame.
+          + "/SessionData.dat")) //РЎРЅР°С‡Р°Р»Р° РёС‰РµРј С„Р°Р№Р» СЃ СЃРѕС…СЂР°РЅРµРЅРЅС‹РјРё РґР°РЅРЅС‹РјРё, РєРѕС‚РѕСЂС‹Р№ РјС‹ СЃРѕР·РґР°Р»Рё РІ РјРµС‚РѕРґРµ SaveGame.
         {
-            BinaryFormatter bf = new BinaryFormatter(); //Если он существует, открываем его и десериализуем с помощью BinaryFormatter.
+            BinaryFormatter bf = new BinaryFormatter(); //Р•СЃР»Рё РѕРЅ СЃСѓС‰РµСЃС‚РІСѓРµС‚, РѕС‚РєСЂС‹РІР°РµРј РµРіРѕ Рё РґРµСЃРµСЂРёР°Р»РёР·СѓРµРј СЃ РїРѕРјРѕС‰СЊСЋ BinaryFormatter.
             FileStream file =
               File.Open(Application.persistentDataPath
               + "/SessionData.dat", FileMode.Open);
-            SaveData data = (SaveData)bf.Deserialize(file); // Передаем записанные в нем значения в переменные класса SaveSerial.
+            SaveData data = (SaveData)bf.Deserialize(file); // РџРµСЂРµРґР°РµРј Р·Р°РїРёСЃР°РЅРЅС‹Рµ РІ РЅРµРј Р·РЅР°С‡РµРЅРёСЏ РІ РїРµСЂРµРјРµРЅРЅС‹Рµ РєР»Р°СЃСЃР° SaveSerial.
             file.Close();
             playerCoin = data.playerCoin;
             playerHP = data.playerHP;
@@ -390,21 +390,21 @@ public class SaveSerial : MonoBehaviour
             martialSpeed = data.martialSpeed;
             martialReward = data.martialReward;
 
-            Debug.Log("Game data loaded!"); //Выводим в отладочную консоль сообщение об успешной загрузке.
+            Debug.Log("Game data loaded!"); //Р’С‹РІРѕРґРёРј РІ РѕС‚Р»Р°РґРѕС‡РЅСѓСЋ РєРѕРЅСЃРѕР»СЊ СЃРѕРѕР±С‰РµРЅРёРµ РѕР± СѓСЃРїРµС€РЅРѕР№ Р·Р°РіСЂСѓР·РєРµ.
         }
         else
-            Debug.LogWarning("There is no save data!"); //Если файла с данными не окажется в папке проекта, выведем в консоль сообщение об ошибке.
+            Debug.LogWarning("There is no save data!"); //Р•СЃР»Рё С„Р°Р№Р»Р° СЃ РґР°РЅРЅС‹РјРё РЅРµ РѕРєР°Р¶РµС‚СЃСЏ РІ РїР°РїРєРµ РїСЂРѕРµРєС‚Р°, РІС‹РІРµРґРµРј РІ РєРѕРЅСЃРѕР»СЊ СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ.
         }
     public void LoadlLastGame()
     {
         if (File.Exists(Application.persistentDataPath
-          + "/LastSessionData.dat")) //Сначала ищем файл с сохраненными данными, который мы создали в методе SaveGame.
+          + "/LastSessionData.dat")) //РЎРЅР°С‡Р°Р»Р° РёС‰РµРј С„Р°Р№Р» СЃ СЃРѕС…СЂР°РЅРµРЅРЅС‹РјРё РґР°РЅРЅС‹РјРё, РєРѕС‚РѕСЂС‹Р№ РјС‹ СЃРѕР·РґР°Р»Рё РІ РјРµС‚РѕРґРµ SaveGame.
         {
-            BinaryFormatter bf = new BinaryFormatter(); //Если он существует, открываем его и десериализуем с помощью BinaryFormatter.
+            BinaryFormatter bf = new BinaryFormatter(); //Р•СЃР»Рё РѕРЅ СЃСѓС‰РµСЃС‚РІСѓРµС‚, РѕС‚РєСЂС‹РІР°РµРј РµРіРѕ Рё РґРµСЃРµСЂРёР°Р»РёР·СѓРµРј СЃ РїРѕРјРѕС‰СЊСЋ BinaryFormatter.
             FileStream file =
               File.Open(Application.persistentDataPath
               + "/LastSessionData.dat", FileMode.Open);
-            SaveData data = (SaveData)bf.Deserialize(file); // Передаем записанные в нем значения в переменные класса SaveSerial.
+            SaveData data = (SaveData)bf.Deserialize(file); // РџРµСЂРµРґР°РµРј Р·Р°РїРёСЃР°РЅРЅС‹Рµ РІ РЅРµРј Р·РЅР°С‡РµРЅРёСЏ РІ РїРµСЂРµРјРµРЅРЅС‹Рµ РєР»Р°СЃСЃР° SaveSerial.
             file.Close();
             playerCoin = data.playerCoin;
             playerHP = data.playerHP;
@@ -446,21 +446,21 @@ public class SaveSerial : MonoBehaviour
             martialSpeed = data.martialSpeed;
             martialReward = data.martialReward;
 
-            Debug.Log("Game data loaded!"); //Выводим в отладочную консоль сообщение об успешной загрузке.
+            Debug.Log("Game data loaded!"); //Р’С‹РІРѕРґРёРј РІ РѕС‚Р»Р°РґРѕС‡РЅСѓСЋ РєРѕРЅСЃРѕР»СЊ СЃРѕРѕР±С‰РµРЅРёРµ РѕР± СѓСЃРїРµС€РЅРѕР№ Р·Р°РіСЂСѓР·РєРµ.
         }
         else
-            Debug.LogWarning("There is no save data!"); //Если файла с данными не окажется в папке проекта, выведем в консоль сообщение об ошибке.
+            Debug.LogWarning("There is no save data!"); //Р•СЃР»Рё С„Р°Р№Р»Р° СЃ РґР°РЅРЅС‹РјРё РЅРµ РѕРєР°Р¶РµС‚СЃСЏ РІ РїР°РїРєРµ РїСЂРѕРµРєС‚Р°, РІС‹РІРµРґРµРј РІ РєРѕРЅСЃРѕР»СЊ СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ.
     }
     public void LoadlSetting()
     {
         if (File.Exists(Application.persistentDataPath
-          + "/SettingsData.dat")) //Сначала ищем файл с сохраненными данными, который мы создали в методе SaveGame.
+          + "/SettingsData.dat")) //РЎРЅР°С‡Р°Р»Р° РёС‰РµРј С„Р°Р№Р» СЃ СЃРѕС…СЂР°РЅРµРЅРЅС‹РјРё РґР°РЅРЅС‹РјРё, РєРѕС‚РѕСЂС‹Р№ РјС‹ СЃРѕР·РґР°Р»Рё РІ РјРµС‚РѕРґРµ SaveGame.
         {
-            BinaryFormatter bf = new BinaryFormatter(); //Если он существует, открываем его и десериализуем с помощью BinaryFormatter.
+            BinaryFormatter bf = new BinaryFormatter(); //Р•СЃР»Рё РѕРЅ СЃСѓС‰РµСЃС‚РІСѓРµС‚, РѕС‚РєСЂС‹РІР°РµРј РµРіРѕ Рё РґРµСЃРµСЂРёР°Р»РёР·СѓРµРј СЃ РїРѕРјРѕС‰СЊСЋ BinaryFormatter.
             FileStream file =
               File.Open(Application.persistentDataPath
               + "/SettingsData.dat", FileMode.Open);
-            SaveSettings data = (SaveSettings)bf.Deserialize(file); // Передаем записанные в нем значения в переменные класса SaveSerial.
+            SaveSettings data = (SaveSettings)bf.Deserialize(file); // РџРµСЂРµРґР°РµРј Р·Р°РїРёСЃР°РЅРЅС‹Рµ РІ РЅРµРј Р·РЅР°С‡РµРЅРёСЏ РІ РїРµСЂРµРјРµРЅРЅС‹Рµ РєР»Р°СЃСЃР° SaveSerial.
             file.Close();
             
             joystick_settings = data.joystick_settings;
@@ -469,24 +469,24 @@ public class SaveSerial : MonoBehaviour
             music = data.music;
             enemyCheat = data.enemyCheat;
 
-            Debug.Log("Settings loaded!"); //Выводим в отладочную консоль сообщение об успешной загрузке.
+            Debug.Log("Settings loaded!"); //Р’С‹РІРѕРґРёРј РІ РѕС‚Р»Р°РґРѕС‡РЅСѓСЋ РєРѕРЅСЃРѕР»СЊ СЃРѕРѕР±С‰РµРЅРёРµ РѕР± СѓСЃРїРµС€РЅРѕР№ Р·Р°РіСЂСѓР·РєРµ.
         }
         else
-            Debug.LogWarning("There is no save data!"); //Если файла с данными не окажется в папке проекта, выведем в консоль сообщение об ошибке.
+            Debug.LogWarning("There is no save data!"); //Р•СЃР»Рё С„Р°Р№Р»Р° СЃ РґР°РЅРЅС‹РјРё РЅРµ РѕРєР°Р¶РµС‚СЃСЏ РІ РїР°РїРєРµ РїСЂРѕРµРєС‚Р°, РІС‹РІРµРґРµРј РІ РєРѕРЅСЃРѕР»СЊ СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ.
     }
-    //Сброс
-    //Наконец, реализуем метод для сброса сохранения.Он похож на тот ResetData, который мы написали для очистки PlayerPrefs, но включает в себя пару дополнительных шагов.
+    //РЎР±СЂРѕСЃ
+    //РќР°РєРѕРЅРµС†, СЂРµР°Р»РёР·СѓРµРј РјРµС‚РѕРґ РґР»СЏ СЃР±СЂРѕСЃР° СЃРѕС…СЂР°РЅРµРЅРёСЏ.РћРЅ РїРѕС…РѕР¶ РЅР° С‚РѕС‚ ResetData, РєРѕС‚РѕСЂС‹Р№ РјС‹ РЅР°РїРёСЃР°Р»Рё РґР»СЏ РѕС‡РёСЃС‚РєРё PlayerPrefs, РЅРѕ РІРєР»СЋС‡Р°РµС‚ РІ СЃРµР±СЏ РїР°СЂСѓ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹С… С€Р°РіРѕРІ.
     public void ResetData()
     {
         if (File.Exists(Application.persistentDataPath
-          + "/SessionData.dat")) //Сначала нужно убедиться, что файл, который мы хотим удалить, существует. 
+          + "/SessionData.dat")) //РЎРЅР°С‡Р°Р»Р° РЅСѓР¶РЅРѕ СѓР±РµРґРёС‚СЊСЃСЏ, С‡С‚Рѕ С„Р°Р№Р», РєРѕС‚РѕСЂС‹Р№ РјС‹ С…РѕС‚РёРј СѓРґР°Р»РёС‚СЊ, СЃСѓС‰РµСЃС‚РІСѓРµС‚. 
         {
             File.Delete(Application.persistentDataPath
               + "/SessionData.dat");
             Debug.Log("Data reset complete!");
         }
         else
-            Debug.LogWarning("No save data to delete.");//Если файла нет, выводим сообщение об ошибке.
+            Debug.LogWarning("No save data to delete.");//Р•СЃР»Рё С„Р°Р№Р»Р° РЅРµС‚, РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ.
     }
     public void IncreaseMaxHP()
     {

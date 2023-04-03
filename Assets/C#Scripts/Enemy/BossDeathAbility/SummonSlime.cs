@@ -4,31 +4,31 @@ using UnityEngine;
 public class SummonSlime : MonoBehaviour
 {
     public GameObject[] guards;
-    public float direction;//переменная направления
-    public Rigidbody2D rb; //Физическое тело
-    private Animator anim; //Переменная благодаря которой анимирован обьект
-    public static SummonSlime Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+    public float direction;//РїРµСЂРµРјРµРЅРЅР°В¤ РЅР°РїСЂР°РІР»РµРЅРёВ¤
+    public Rigidbody2D rb; //вЂРёР·РёС‡РµСЃРєРѕРµ С‚РµР»Рѕ
+    private Animator anim; //С•РµСЂРµРјРµРЅРЅР°В¤ Р±Р»Р°РіРѕРґР°СЂВ¤ РєРѕС‚РѕСЂРѕР№ Р°РЅРёРјРёСЂРѕРІР°РЅ РѕР±СЊРµРєС‚
+    public static SummonSlime Instance { get; set; } //Ж’Р»В¤ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
 
     private void Start()
     {
         Instance = this;
-        rb = this.gameObject.GetComponent<Rigidbody2D>(); //Переменная rb получает компонент Rigidbody2D (Физика game.Object) к которому привязан скрипт
-        anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object) к которому привязан скрипт
+        rb = this.gameObject.GetComponent<Rigidbody2D>(); //С•РµСЂРµРјРµРЅРЅР°В¤ rb РїРѕР»СѓС‡Р°РµС‚ РєРѕРјРїРѕРЅРµРЅС‚ Rigidbody2D (вЂРёР·РёРєР° game.Object) Рє РєРѕС‚РѕСЂРѕРјСѓ РїСЂРёРІВ¤Р·Р°РЅ СЃРєСЂРёРїС‚
+        anim = this.gameObject.GetComponent<Animator>(); //С•РµСЂРµРјРµРЅРЅР°В¤ anim РїРѕР»СѓС‡Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ РёР· РєРѕРјРїРѕРЅРµРЅС‚Р° Animator (СРЅРёРјР°С†РёВ¤ game.Object) Рє РєРѕС‚РѕСЂРѕРјСѓ РїСЂРёРІВ¤Р·Р°РЅ СЃРєСЂРёРїС‚
     }
     public void SummonGuards()
     {
         Vector3 pos = transform.position;
-        GameObject guard1 = Instantiate(guards[Random.Range(0, guards.Length)], new Vector3(pos.x + 1.5f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+        GameObject guard1 = Instantiate(guards[Random.Range(0, guards.Length)], new Vector3(pos.x + 1.5f, pos.y, pos.z), Quaternion.identity); //В Р»РѕРЅРёСЂРѕРІР°РЅРёВ¤ РѕР±СЊРµРєС‚Р° (РІСЂР°Рі) Рё РµРіРѕ РєРѕРѕСЂРґРёРЅР°С‚С‹)
         guard1.name = "Enemy" + Random.Range(1, 999);
-        GameObject guard2 = Instantiate(guards[Random.Range(0, guards.Length)], new Vector3(pos.x + 1f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+        GameObject guard2 = Instantiate(guards[Random.Range(0, guards.Length)], new Vector3(pos.x + 1f, pos.y, pos.z), Quaternion.identity); //В Р»РѕРЅРёСЂРѕРІР°РЅРёВ¤ РѕР±СЊРµРєС‚Р° (РІСЂР°Рі) Рё РµРіРѕ РєРѕРѕСЂРґРёРЅР°С‚С‹)
         guard2.name = "Enemy" + Random.Range(1, 999);
-        GameObject guard3 = Instantiate(guards[Random.Range(0, guards.Length)], new Vector3(pos.x + 2f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+        GameObject guard3 = Instantiate(guards[Random.Range(0, guards.Length)], new Vector3(pos.x + 2f, pos.y, pos.z), Quaternion.identity); //В Р»РѕРЅРёСЂРѕРІР°РЅРёВ¤ РѕР±СЊРµРєС‚Р° (РІСЂР°Рі) Рё РµРіРѕ РєРѕРѕСЂРґРёРЅР°С‚С‹)
         guard3.name = "Enemy" + Random.Range(1, 999);
 
     }
-    public void SummonDirection(Vector3 _direction)// выбор направления полета 
+    public void SummonDirection(Vector3 _direction)// РІС‹Р±РѕСЂ РЅР°РїСЂР°РІР»РµРЅРёВ¤ РїРѕР»РµС‚Р° 
     {
-        this.gameObject.SetActive(true); //активация игрового обьекта
+        this.gameObject.SetActive(true); //Р°РєС‚РёРІР°С†РёВ¤ РёРіСЂРѕРІРѕРіРѕ РѕР±СЊРµРєС‚Р°
         this.gameObject.transform.position = _direction;
         anim.SetTrigger("summon");
     }

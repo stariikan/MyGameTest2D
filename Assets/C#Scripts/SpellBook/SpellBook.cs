@@ -5,18 +5,18 @@ using UnityEngine;
 public class SpellBook : MonoBehaviour
 {
 
-    private float maxHP = 1; //Максимальные жизни скелета
+    private float maxHP = 1; //РњР°РєСЃРёРјР°Р»СЊРЅС‹Рµ Р¶РёР·РЅРё СЃРєРµР»РµС‚Р°
     public float currentHP;
-    public static SpellBook Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+    public static SpellBook Instance { get; set; } //Р”Р»СЏ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
     private Animator anim;
     public bool chestOpen = false;
-    public int rewardForKill = 20;//награда за победу над врагом
-    public enum States //Определения какие бывают состояния, указал названия как в Аниматоре Unity
+    public int rewardForKill = 20;//РЅР°РіСЂР°РґР° Р·Р° РїРѕР±РµРґСѓ РЅР°Рґ РІСЂР°РіРѕРј
+    public enum States //РћРїСЂРµРґРµР»РµРЅРёСЏ РєР°РєРёРµ Р±С‹РІР°СЋС‚ СЃРѕСЃС‚РѕСЏРЅРёСЏ, СѓРєР°Р·Р°Р» РЅР°Р·РІР°РЅРёСЏ РєР°Рє РІ РђРЅРёРјР°С‚РѕСЂРµ Unity
     {
         idle,
         open
     }
-    private States State //Создание стейтмашины, переменная = State. Значение состояния может быть передано или изминено извне благодаря get и set
+    private States State //РЎРѕР·РґР°РЅРёРµ СЃС‚РµР№С‚РјР°С€РёРЅС‹, РїРµСЂРµРјРµРЅРЅР°СЏ = State. Р—РЅР°С‡РµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїРµСЂРµРґР°РЅРѕ РёР»Рё РёР·РјРёРЅРµРЅРѕ РёР·РІРЅРµ Р±Р»Р°РіРѕРґР°СЂСЏ get Рё set
     {
         get { return (States)anim.GetInteger("State"); }
         set { anim.SetInteger("State", (int)value); }
@@ -26,14 +26,14 @@ public class SpellBook : MonoBehaviour
         currentHP = maxHP;
         Instance = this;
         chestOpen = false;
-        anim = GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
-                                         //к которому привязан скрипт
+        anim = GetComponent<Animator>(); //РџРµСЂРµРјРµРЅРЅР°СЏ anim РїРѕР»СѓС‡Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ РёР· РєРѕРјРїРѕРЅРµРЅС‚Р° Animator (РђРЅРёРјР°С†РёСЏ game.Object)
+                                         //Рє РєРѕС‚РѕСЂРѕРјСѓ РїСЂРёРІСЏР·Р°РЅ СЃРєСЂРёРїС‚
     }
-    public void TakeDamage(float dmg) //Метод для получения дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
+    public void TakeDamage(float dmg) //РњРµС‚РѕРґ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РґР°РјР°РіР° РіРґРµ (int dmg) СЌС‚Рѕ Р·РЅР°С‡РµРЅРёРµ РјРѕР¶РЅРѕ Р±СѓРґРµС‚ РІРІРѕРґРёС‚СЊ РїСЂРё РІС‹Р·РѕРІРµ РјРµС‚РѕРґР° (С‚Рѕ РµСЃС‚СЊ С‚СѓРґР° РјРѕР¶РЅРѕ Р±СѓРґРµС‚ РІРїРёСЃР°С‚СЊ СѓСЂРѕРЅ)
     {
         if (currentHP > 0)
         {
-            anim.SetTrigger("open");//анимация получения демейджа
+            anim.SetTrigger("open");//Р°РЅРёРјР°С†РёСЏ РїРѕР»СѓС‡РµРЅРёСЏ РґРµРјРµР№РґР¶Р°
             currentHP -= dmg;
             Debug.Log(currentHP + " " + gameObject.name);
         }
@@ -44,14 +44,14 @@ public class SpellBook : MonoBehaviour
 
         if (currentHP <= 0)
         {
-            LvLGeneration.Instance.PlusCoin(rewardForKill); //вызов метода для увелечения очков
-            anim.SetTrigger("open");//анимация смерти
+            LvLGeneration.Instance.PlusCoin(rewardForKill); //РІС‹Р·РѕРІ РјРµС‚РѕРґР° РґР»СЏ СѓРІРµР»РµС‡РµРЅРёСЏ РѕС‡РєРѕРІ
+            anim.SetTrigger("open");//Р°РЅРёРјР°С†РёСЏ СЃРјРµСЂС‚Рё
             chestOpen = true;
             Debug.Log("Open" + gameObject.name);
         }
     }
-    public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти
+    public virtual void Die() //РњРµС‚РѕРґ СѓРґР°Р»СЏРµС‚ СЌС‚РѕС‚ РёРіСЂРѕРІРѕР№ РѕР±СЊРµРєС‚, РІС‹Р·С‹РІР°РµС‚СЃСЏ С‡РµСЂРµР· Р°РЅРёРјР°С‚РѕСЂ СЃСЂР°Р·Сѓ РїРѕСЃР»Рµ Р·Р°РІРµСЂС€РµРЅРёСЏ Р°РЅРёРјР°С†РёРё СЃРјРµСЂС‚Рё
     {
-        Destroy(this.gameObject); ;//уничтожить этот игровой обьект
+        Destroy(this.gameObject); ;//СѓРЅРёС‡С‚РѕР¶РёС‚СЊ СЌС‚РѕС‚ РёРіСЂРѕРІРѕР№ РѕР±СЊРµРєС‚
     }
 }

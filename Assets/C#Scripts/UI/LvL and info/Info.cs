@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;//для UI
+using UnityEngine.UI;//РґР»СЏ UI
 
 public class Info : MonoBehaviour
 {
-    public static Info Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    string text; // текст который будет вводиться
+    public static Info Instance { get; set; } //Р”Р»СЏ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
+    string text; // С‚РµРєСЃС‚ РєРѕС‚РѕСЂС‹Р№ Р±СѓРґРµС‚ РІРІРѕРґРёС‚СЊСЃСЏ
     private float CooldownTimer = Mathf.Infinity;
     // Start is called before the first frame update
     void Start()
     {
-        Instance = this; //'this' - это ключевое слово, обозначающее класс, в котором выполняется код.
+        Instance = this; //'this' - СЌС‚Рѕ РєР»СЋС‡РµРІРѕРµ СЃР»РѕРІРѕ, РѕР±РѕР·РЅР°С‡Р°СЋС‰РµРµ РєР»Р°СЃСЃ, РІ РєРѕС‚РѕСЂРѕРј РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ РєРѕРґ.
     }
     public void infoNeedKey() 
     {

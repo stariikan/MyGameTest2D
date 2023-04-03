@@ -5,9 +5,9 @@ using UnityEngine;
 public class JoystickPosition : MonoBehaviour
 {
     private Vector3 originalPos;
-    public bool joystick_settings; //Джойстик или кнопки
+    public bool joystick_settings; //Р”Р¶РѕР№СЃС‚РёРє РёР»Рё РєРЅРѕРїРєРё
 
-    public static JoystickPosition Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+    public static JoystickPosition Instance { get; set; } //Р”Р»СЏ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
 
     private void Start()
     {

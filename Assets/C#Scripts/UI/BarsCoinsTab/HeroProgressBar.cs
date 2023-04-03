@@ -1,13 +1,13 @@
 using UnityEngine;
-using UnityEngine.UI;//для UI
+using UnityEngine.UI;//РґР»В¤ UI
 
 public class HeroProgressBar : MonoBehaviour
 {
-    public Image progressBar; //картинка прогресс бара
-    public float maxProgress; //100% заполнености прогресс бара
-    private float currentProgress; //хп в реальном времени
+    public Image progressBar; //РєР°СЂС‚РёРЅРєР° РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂР°
+    public float maxProgress; //100% Р·Р°РїРѕР»РЅРµРЅРѕСЃС‚Рё РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂР°
+    private float currentProgress; //С…Рї РІ СЂРµР°Р»СЊРЅРѕРј РІСЂРµРјРµРЅРё
 
-    void Update() //Обновление значения происходит при обновлении каждого кадра
+    void Update() //СњР±РЅРѕРІР»РµРЅРёРµ Р·РЅР°С‡РµРЅРёВ¤ РїСЂРѕРёСЃС…РѕРґРёС‚ РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё РєР°Р¶РґРѕРіРѕ РєР°РґСЂР°
     {
         if (gameObject.name == "HP") UpdateHPProgressBar();
         if (gameObject.name == "MP") UpdateMPProgressBar();
@@ -16,15 +16,15 @@ public class HeroProgressBar : MonoBehaviour
     public void UpdateHPProgressBar()
     {
         maxProgress = Hero.Instance.maxHP;
-        currentProgress = Hero.Instance.curentHP; //смотрим какое сейчас кол-во хп
-        if (progressBar == null) // проверка на то, выбрана картинка прогресс бара или нет
+        currentProgress = Hero.Instance.curentHP; //СЃРјРѕС‚СЂРёРј РєР°РєРѕРµ СЃРµР№С‡Р°СЃ РєРѕР»-РІРѕ С…Рї
+        if (progressBar == null) // РїСЂРѕРІРµСЂРєР° РЅР° С‚Рѕ, РІС‹Р±СЂР°РЅР° РєР°СЂС‚РёРЅРєР° РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂР° РёР»Рё РЅРµС‚
         {
             Debug.LogError("progressBarMP is not set!");
             return;
         }
         else
         {
-            progressBar.fillAmount = currentProgress / maxProgress; //уменьшаем погрессбар (не забываем в юнити выставить настройки у изображения fillAmount (пример 90 хп/100 хп =0,9 полоска уменьшиться на 10%
+            progressBar.fillAmount = currentProgress / maxProgress; //СѓРјРµРЅСЊС€Р°РµРј РїРѕРіСЂРµСЃСЃР±Р°СЂ (РЅРµ Р·Р°Р±С‹РІР°РµРј РІ СЋРЅРёС‚Рё РІС‹СЃС‚Р°РІРёС‚СЊ РЅР°СЃС‚СЂРѕР№РєРё Сѓ РёР·РѕР±СЂР°Р¶РµРЅРёВ¤ fillAmount (РїСЂРёРјРµСЂ 90 С…Рї/100 С…Рї =0,9 РїРѕР»РѕСЃРєР° СѓРјРµРЅСЊС€РёС‚СЊСЃВ¤ РЅР° 10%
         }
     }
     public void UpdateMPProgressBar()

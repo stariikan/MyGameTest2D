@@ -10,6 +10,6 @@ public class Blood : MonoBehaviour
     void Update()
     {
         cooldown += Time.deltaTime;
-        //if(cooldown > 50) Destroy(this.gameObject);//уничтожить этот игровой обьект
+        //if(cooldown > 50) Destroy(this.gameObject);//СѓРЅРёС‡С‚РѕР¶РёС‚СЊ СЌС‚РѕС‚ РёРіСЂРѕРІРѕР№ РѕР±СЊРµРєС‚
     }
 }
