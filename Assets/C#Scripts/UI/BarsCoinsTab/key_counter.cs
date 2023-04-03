@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;//для UI
+using UnityEngine.UI;//РґР»СЏ UI
 
 public class key_counter : MonoBehaviour
 {
-    bool key_ui; //тут сделали переменную чтобы она потом собирала значение переменной hp из скрипта Hero
+    bool key_ui; //С‚СѓС‚ СЃРґРµР»Р°Р»Рё РїРµСЂРµРјРµРЅРЅСѓСЋ С‡С‚РѕР±С‹ РѕРЅР° РїРѕС‚РѕРј СЃРѕР±РёСЂР°Р»Р° Р·РЅР°С‡РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ hp РёР· СЃРєСЂРёРїС‚Р° Hero
     private void ShowKey()
     {
         if (key_ui == true)
@@ -17,9 +17,9 @@ public class key_counter : MonoBehaviour
             this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
-    void Update() //Обновление значения происходит при обновлении каждого кадра
+    void Update() //РћР±РЅРѕРІР»РµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ РїСЂРѕРёСЃС…РѕРґРёС‚ РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё РєР°Р¶РґРѕРіРѕ РєР°РґСЂР°
     {
-        key_ui = LvLGeneration.Instance.key;//тут переменная hp_ui начинает быть равной тому обьекту
+        key_ui = LvLGeneration.Instance.key;//С‚СѓС‚ РїРµСЂРµРјРµРЅРЅР°СЏ hp_ui РЅР°С‡РёРЅР°РµС‚ Р±С‹С‚СЊ СЂР°РІРЅРѕР№ С‚РѕРјСѓ РѕР±СЊРµРєС‚Сѓ
         ShowKey();
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;//для UI
+using UnityEngine.UI;//РґР»СЏ UI
 
 public class MeleeDMG_counter : MonoBehaviour
 {

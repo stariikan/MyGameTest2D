@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour
 {
-    public static MeleeWeapon Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    public float direction;//переменная направления
+    public static MeleeWeapon Instance { get; set; } //Р”Р»СЏ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
+    public float direction;//РїРµСЂРµРјРµРЅРЅР°СЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
 
-    private BoxCollider2D boxCollider; //Коллайдер удара
+    private BoxCollider2D boxCollider; //РљРѕР»Р»Р°Р№РґРµСЂ СѓРґР°СЂР°
 
     public float AttackDamage = 15;
     public string TargetName;
     public GameObject target;
 
 
-    private void Awake() //Действие выполняется до старта игры и 1 раз
+    private void Awake() //Р”РµР№СЃС‚РІРёРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ РґРѕ СЃС‚Р°СЂС‚Р° РёРіСЂС‹ Рё 1 СЂР°Р·
     {
-        //anim = GetComponent<Animator>(); // вытаскиваем информацию из компанента аниматор
-        boxCollider = GetComponent<BoxCollider2D>(); // вытаскиваем информацию из компанента бокс колайдер
+        //anim = GetComponent<Animator>(); // РІС‹С‚Р°СЃРєРёРІР°РµРј РёРЅС„РѕСЂРјР°С†РёСЋ РёР· РєРѕРјРїР°РЅРµРЅС‚Р° Р°РЅРёРјР°С‚РѕСЂ
+        boxCollider = GetComponent<BoxCollider2D>(); // РІС‹С‚Р°СЃРєРёРІР°РµРј РёРЅС„РѕСЂРјР°С†РёСЋ РёР· РєРѕРјРїР°РЅРµРЅС‚Р° Р±РѕРєСЃ РєРѕР»Р°Р№РґРµСЂ
         Instance = this;
     }
     private void Start()
@@ -33,16 +33,16 @@ public class MeleeWeapon : MonoBehaviour
         target = GameObject.Find(TargetName);
         //Debug.Log(target);
         if (target.CompareTag("SpellBook")) target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
-        if (target !=null && target.layer == 7) target.GetComponent<Entity_Enemy>().TakeDamage(AttackDamage); //7 это EnemyLayer
+        if (target !=null && target.layer == 7) target.GetComponent<Entity_Enemy>().TakeDamage(AttackDamage); //7 СЌС‚Рѕ EnemyLayer
     }
-    public void WeaponOff() //отключения обьекта бомбы
+    public void WeaponOff() //РѕС‚РєР»СЋС‡РµРЅРёСЏ РѕР±СЊРµРєС‚Р° Р±РѕРјР±С‹
     {
         this.gameObject.SetActive(false);
     }
-    public void MeleeDirection(Vector3 _direction)// выбор направления полета 
+    public void MeleeDirection(Vector3 _direction)// РІС‹Р±РѕСЂ РЅР°РїСЂР°РІР»РµРЅРёСЏ РїРѕР»РµС‚Р° 
     {
-        gameObject.SetActive(true); //активация игрового обьекта
+        gameObject.SetActive(true); //Р°РєС‚РёРІР°С†РёСЏ РёРіСЂРѕРІРѕРіРѕ РѕР±СЊРµРєС‚Р°
         this.gameObject.transform.position = _direction;
-        boxCollider.enabled = true; //активация коллайдера
+        boxCollider.enabled = true; //Р°РєС‚РёРІР°С†РёСЏ РєРѕР»Р»Р°Р№РґРµСЂР°
     }
 }

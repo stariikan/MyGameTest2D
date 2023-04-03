@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; //для управления сценами
+using UnityEngine.SceneManagement; //РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ СЃС†РµРЅР°РјРё
 
 public class UI_Transform_Position : MonoBehaviour
 {

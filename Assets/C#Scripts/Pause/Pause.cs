@@ -1,15 +1,15 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; //для управления сценами
+using UnityEngine.SceneManagement; //РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ СЃС†РµРЅР°РјРё
 public class Pause : MonoBehaviour
 {
     public float timer;
     public bool ispause;
 
     public bool guipuse;
-    public Texture BoxTexture; //текустуру устаналиваем сами в эдиторе
+    public Texture BoxTexture; //С‚РµРєСѓСЃС‚СѓСЂСѓ СѓСЃС‚Р°РЅР°Р»РёРІР°РµРј СЃР°РјРё РІ СЌРґРёС‚РѕСЂРµ
 
-    public static Pause Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    // Характеристики указанные в BOX
+    public static Pause Instance { get; set; } //Р”Р»СЏ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
+    // РҐР°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё СѓРєР°Р·Р°РЅРЅС‹Рµ РІ BOX
     private float infoPlayerAttackDamage;
     private float infoPlayerMageDamage;
     private float infoPassedLvl;
@@ -133,7 +133,7 @@ public class Pause : MonoBehaviour
     {
         if (guipuse == true)
         {
-            Cursor.visible = true;// включаем отображение курсора
+            Cursor.visible = true;// РІРєР»СЋС‡Р°РµРј РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РєСѓСЂСЃРѕСЂР°
             Settings.Instance.Settings_menu_ON();
 
             if (platform == 1)

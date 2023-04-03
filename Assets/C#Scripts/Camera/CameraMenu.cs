@@ -15,7 +15,7 @@ public class CameraMenu : MonoBehaviour
         ChangeDirection();
         CameraMove();
     }
-    private void ChangeDirection() //смена направленеие когда до конца картин доходит камера
+    private void ChangeDirection() //СЃРјРµРЅР° РЅР°РїСЂР°РІР»РµРЅРµРёРµ РєРѕРіРґР° РґРѕ РєРѕРЅС†Р° РєР°СЂС‚РёРЅ РґРѕС…РѕРґРёС‚ РєР°РјРµСЂР°
     {
         if (transform.position.x < 222)
         {
@@ -26,7 +26,7 @@ public class CameraMenu : MonoBehaviour
             right = true;
         }
     }
-    private void CameraMove() //движение камеры
+    private void CameraMove() //РґРІРёР¶РµРЅРёРµ РєР°РјРµСЂС‹
     {
         Vector3 targetRight = new Vector3()
         {

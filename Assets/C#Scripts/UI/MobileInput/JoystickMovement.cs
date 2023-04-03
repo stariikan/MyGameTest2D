@@ -7,15 +7,15 @@ public class JoystickMovement : MonoBehaviour, IPointerUpHandler, IDragHandler, 
 {
     private RectTransform joystickTransform;
 
-    [SerializeField] private float dragTreshold = 0.3f; /// Если переместиться джойстик больше чем на 0,6 в любом из направлений, то скрипт поймет что игрок хочет пойти в этом направлении
+    [SerializeField] private float dragTreshold = 0.3f; /// Р•СЃР»Рё РїРµСЂРµРјРµСЃС‚РёС‚СЊСЃСЏ РґР¶РѕР№СЃС‚РёРє Р±РѕР»СЊС€Рµ С‡РµРј РЅР° 0,6 РІ Р»СЋР±РѕРј РёР· РЅР°РїСЂР°РІР»РµРЅРёР№, С‚Рѕ СЃРєСЂРёРїС‚ РїРѕР№РјРµС‚ С‡С‚Рѕ РёРіСЂРѕРє С…РѕС‡РµС‚ РїРѕР№С‚Рё РІ СЌС‚РѕРј РЅР°РїСЂР°РІР»РµРЅРёРё
     [SerializeField] private int dragMovementDistance = 5; 
-    [SerializeField] private int dragOffsetDistance = 30; //дистанция 
+    [SerializeField] private int dragOffsetDistance = 30; //РґРёСЃС‚Р°РЅС†РёСЏ 
 
-    public event Action<Vector2> onMove; //двигается или нет джойстик
-    public Vector2 offset; //вектор по х и у при передвижении 
+    public event Action<Vector2> onMove; //РґРІРёРіР°РµС‚СЃСЏ РёР»Рё РЅРµС‚ РґР¶РѕР№СЃС‚РёРє
+    public Vector2 offset; //РІРµРєС‚РѕСЂ РїРѕ С… Рё Сѓ РїСЂРё РїРµСЂРµРґРІРёР¶РµРЅРёРё 
     public float moveX;
     public float moveY; 
-    public Camera MainCamera; //выбор камеры
+    public Camera MainCamera; //РІС‹Р±РѕСЂ РєР°РјРµСЂС‹
 
     public static JoystickMovement Instance { get; set; }
 
@@ -24,7 +24,7 @@ public class JoystickMovement : MonoBehaviour, IPointerUpHandler, IDragHandler, 
         Instance = this;
     }
 
-    public void OnDrag(PointerEventData eventData) //метод при движении пальца нажатим по экрану
+    public void OnDrag(PointerEventData eventData) //РјРµС‚РѕРґ РїСЂРё РґРІРёР¶РµРЅРёРё РїР°Р»СЊС†Р° РЅР°Р¶Р°С‚РёРј РїРѕ СЌРєСЂР°РЅСѓ
     {
         RectTransformUtility.ScreenPointToLocalPointInRectangle(joystickTransform, eventData.position, MainCamera, out offset);
         offset = Vector2.ClampMagnitude(offset, dragOffsetDistance) / dragOffsetDistance; // (-1) - 1
@@ -41,12 +41,12 @@ public class JoystickMovement : MonoBehaviour, IPointerUpHandler, IDragHandler, 
         return new Vector2(moveX, moveY);
     }
 
-    public void OnPointerDown(PointerEventData eventData) //метод при нажатии на экран
+    public void OnPointerDown(PointerEventData eventData) //РјРµС‚РѕРґ РїСЂРё РЅР°Р¶Р°С‚РёРё РЅР° СЌРєСЂР°РЅ
     {
 
     }
 
-    public void OnPointerUp(PointerEventData eventData) //возврат джойстика
+    public void OnPointerUp(PointerEventData eventData) //РІРѕР·РІСЂР°С‚ РґР¶РѕР№СЃС‚РёРєР°
     {
         joystickTransform.anchoredPosition = Vector2.zero;
         moveX = 0;

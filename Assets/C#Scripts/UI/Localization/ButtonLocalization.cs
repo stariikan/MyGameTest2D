@@ -10,11 +10,11 @@ public class ButtonLocalization : MonoBehaviour
     public string[] textArray;
     private string currentText = "";
 
-    public bool joystick_settings; //Джойстик или кнопки
+    public bool joystick_settings; //Ж’Р¶РѕР№СЃС‚РёРє РёР»Рё РєРЅРѕРїРєРё
     public bool localization; //Eng/Ru
-    public bool sound; //Включен ли звук
-    public bool music; //Включена ли музыка
-    public int enemyCheat; //Чит на генерацию врагов
+    public bool sound; //В¬РєР»СЋС‡РµРЅ Р»Рё Р·РІСѓРє
+    public bool music; //В¬РєР»СЋС‡РµРЅР° Р»Рё РјСѓР·С‹РєР°
+    public int enemyCheat; //вЂћРёС‚ РЅР° РіРµРЅРµСЂР°С†РёСЋ РІСЂР°РіРѕРІ
     // Start is called before the first frame update
     void Start()
     {
@@ -62,7 +62,7 @@ public class ButtonLocalization : MonoBehaviour
         EnemyCheatButton();
     }
 
-    // Кнопки в Меню
+    // В РЅРѕРїРєРё РІ С›РµРЅСЋ
     private void StartButton()
     {
         if (buttonName.name == "Start")
@@ -150,8 +150,8 @@ public class ButtonLocalization : MonoBehaviour
             if (localization)
             {
                 currentText = textArray[1];
-                if (sound) textUI.text = currentText + " вкл";
-                if (!sound) textUI.text = currentText + " выкл";
+                if (sound) textUI.text = currentText + " РІРєР»";
+                if (!sound) textUI.text = currentText + " РІС‹РєР»";
                 textUI.fontSize = 20;
             }
         }
@@ -170,8 +170,8 @@ public class ButtonLocalization : MonoBehaviour
             if (localization)
             {
                 currentText = textArray[1];
-                if (music) textUI.text = currentText + " вкл";
-                if (!music) textUI.text = currentText + " выкл";
+                if (music) textUI.text = currentText + " РІРєР»";
+                if (!music) textUI.text = currentText + " РІС‹РєР»";
                 textUI.fontSize = 20;
             }
         }
@@ -190,8 +190,8 @@ public class ButtonLocalization : MonoBehaviour
             if (localization)
             {
                 currentText = textArray[1];
-                if (joystick_settings) textUI.text = currentText + " вкл";
-                if (!joystick_settings) textUI.text = currentText + " выкл";
+                if (joystick_settings) textUI.text = currentText + " РІРєР»";
+                if (!joystick_settings) textUI.text = currentText + " РІС‹РєР»";
                 textUI.fontSize = 20;
             }
         }
@@ -251,7 +251,7 @@ public class ButtonLocalization : MonoBehaviour
         }
     }
     
-    //Кнопки в при паузе внутри игры и экран смерти
+    //В РЅРѕРїРєРё РІ РїСЂРё РїР°СѓР·Рµ РІРЅСѓС‚СЂРё РёРіСЂС‹ Рё СЌРєСЂР°РЅ СЃРјРµСЂС‚Рё
     private void ContinueButton()
     {
         if (buttonName.name == "Continue")

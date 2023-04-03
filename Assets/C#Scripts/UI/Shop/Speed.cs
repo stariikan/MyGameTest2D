@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;//для UI
+using UnityEngine.UI;//РґР»СЏ UI
 
 public class Speed : MonoBehaviour
 {
-    float speed_ui; //тут сделали переменную чтобы она потом собирала значение переменной hp из скрипта Hero
+    float speed_ui; //С‚СѓС‚ СЃРґРµР»Р°Р»Рё РїРµСЂРµРјРµРЅРЅСѓСЋ С‡С‚РѕР±С‹ РѕРЅР° РїРѕС‚РѕРј СЃРѕР±РёСЂР°Р»Р° Р·РЅР°С‡РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ hp РёР· СЃРєСЂРёРїС‚Р° Hero
 
     // Start is called before the first frame update
     void Start()

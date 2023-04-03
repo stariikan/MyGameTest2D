@@ -1,65 +1,65 @@
 using UnityEngine;
 
-public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то есть методы которые используются в Entity будут применены и к этому обьекту)
+public class Enemy_Behavior : MonoBehaviour //РЅР°СЃР»РµРґРѕРІР°РЅРёРµ РєР»Р°СЃСЃР° СЃСѓС‰РЅРѕСЃС‚Рё (С‚Рѕ РµСЃС‚СЊ РјРµС‚РѕРґС‹ РєРѕС‚РѕСЂС‹Рµ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ РІ Entity Р±СѓРґСѓС‚ РїСЂРёРјРµРЅРµРЅС‹ Рё Рє СЌС‚РѕРјСѓ РѕР±СЊРµРєС‚Сѓ)
 {
-    //Параметры Скелета
-    public float skeletonSpeed = 2f;//скорость Скелета
-    private float blockCooldown; //кулдаун блока
+    //РџР°СЂР°РјРµС‚СЂС‹ РЎРєРµР»РµС‚Р°
+    public float skeletonSpeed = 2f;//СЃРєРѕСЂРѕСЃС‚СЊ РЎРєРµР»РµС‚Р°
+    private float blockCooldown; //РєСѓР»РґР°СѓРЅ Р±Р»РѕРєР°
 
-    //Параметры Гриба
-    public float moushroomSpeed = 2f;//скорость Гриба
+    //РџР°СЂР°РјРµС‚СЂС‹ Р“СЂРёР±Р°
+    public float moushroomSpeed = 2f;//СЃРєРѕСЂРѕСЃС‚СЊ Р“СЂРёР±Р°
 
-    //Параметры Летающего Глаза
-    public float flyingEyeSpeed = 2f;//скорость Глаза
-    private int countOfCopy; // изначально 0, когда происходит вызов становить 3, как копии умирают 
+    //РџР°СЂР°РјРµС‚СЂС‹ Р›РµС‚Р°СЋС‰РµРіРѕ Р“Р»Р°Р·Р°
+    public float flyingEyeSpeed = 2f;//СЃРєРѕСЂРѕСЃС‚СЊ Р“Р»Р°Р·Р°
+    private int countOfCopy; // РёР·РЅР°С‡Р°Р»СЊРЅРѕ 0, РєРѕРіРґР° РїСЂРѕРёСЃС…РѕРґРёС‚ РІС‹Р·РѕРІ СЃС‚Р°РЅРѕРІРёС‚СЊ 3, РєР°Рє РєРѕРїРёРё СѓРјРёСЂР°СЋС‚ 
 
-    //Параметры Гоблина
-    public float goblinSpeed = 3f;//скорость Гоблина
-    public int remainingBombs = 3; //всего 3 бомб
+    //РџР°СЂР°РјРµС‚СЂС‹ Р“РѕР±Р»РёРЅР°
+    public float goblinSpeed = 3f;//СЃРєРѕСЂРѕСЃС‚СЊ Р“РѕР±Р»РёРЅР°
+    public int remainingBombs = 3; //РІСЃРµРіРѕ 3 Р±РѕРјР±
     private bool jump = false;
 
-    //Параметры Злого мага
-    public float wizardSpeed = 2f;//скорость Гоблина
-    private bool stuned = false; //стан обьекта
-    public float stunCooldown; //кулдаун стана
+    //РџР°СЂР°РјРµС‚СЂС‹ Р—Р»РѕРіРѕ РјР°РіР°
+    public float wizardSpeed = 2f;//СЃРєРѕСЂРѕСЃС‚СЊ Р“РѕР±Р»РёРЅР°
+    private bool stuned = false; //СЃС‚Р°РЅ РѕР±СЊРµРєС‚Р°
+    public float stunCooldown; //РєСѓР»РґР°СѓРЅ СЃС‚Р°РЅР°
                                
-    //Параметры Самурай мага
-    public float martialSpeed = 4f;//скорость Гоблина
+    //РџР°СЂР°РјРµС‚СЂС‹ РЎР°РјСѓСЂР°Р№ РјР°РіР°
+    public float martialSpeed = 4f;//СЃРєРѕСЂРѕСЃС‚СЊ Р“РѕР±Р»РёРЅР°
 
-    //Параметры Слайма
-    public float slimeSpeed = 2f;//скорость Слайма
+    //РџР°СЂР°РјРµС‚СЂС‹ РЎР»Р°Р№РјР°
+    public float slimeSpeed = 2f;//СЃРєРѕСЂРѕСЃС‚СЊ РЎР»Р°Р№РјР°
 
-    //Параметры Босс Смерть
-    public float deathSpeed = 2f;//скорость Смерти
+    //РџР°СЂР°РјРµС‚СЂС‹ Р‘РѕСЃСЃ РЎРјРµСЂС‚СЊ
+    public float deathSpeed = 2f;//СЃРєРѕСЂРѕСЃС‚СЊ РЎРјРµСЂС‚Рё
 
-    //Перемменая для записи разницы координат между игроком и врагом
+    //РџРµСЂРµРјРјРµРЅР°СЏ РґР»СЏ Р·Р°РїРёСЃРё СЂР°Р·РЅРёС†С‹ РєРѕРѕСЂРґРёРЅР°С‚ РјРµР¶РґСѓ РёРіСЂРѕРєРѕРј Рё РІСЂР°РіРѕРј
     public float directionX;
     public float directionY;
 
-    //Снаряды для атаки врагов
+    //РЎРЅР°СЂСЏРґС‹ РґР»СЏ Р°С‚Р°РєРё РІСЂР°РіРѕРІ
     [SerializeField] private GameObject[] ammo;
 
-    //Общие параметры
-    private float jumpCooldown; //кулдаун на отскок и прыжок
-    private float physicCooldown = Mathf.Infinity; //кулдаун на физ атаку
-    private float magicCooldown = Mathf.Infinity; //кулдаун на маг атаку
+    //РћР±С‰РёРµ РїР°СЂР°РјРµС‚СЂС‹
+    private float jumpCooldown; //РєСѓР»РґР°СѓРЅ РЅР° РѕС‚СЃРєРѕРє Рё РїСЂС‹Р¶РѕРє
+    private float physicCooldown = Mathf.Infinity; //РєСѓР»РґР°СѓРЅ РЅР° С„РёР· Р°С‚Р°РєСѓ
+    private float magicCooldown = Mathf.Infinity; //РєСѓР»РґР°СѓРЅ РЅР° РјР°Рі Р°С‚Р°РєСѓ
 
     
     public bool block;
-    public bool copy; //этот обьект копия или нет?
-    private bool movement = false; //моб не приследует игрока
-    private bool playerIsAttack; //Атакует ли игрок?
-    private bool isAttack; //Атакует ли обьект (враг)
-    private float speedRecovery;//нужно для восстановление скорости 
-    private int currentAttack = 0; //Кулдаун на атаку обьекта
-    private float timeSinceAttack = 0.0f;//время с прошлой атаки нужно для комбо анимации атаки
-    private int level; //проверка какой уровень проходит игрок, нужно для подключения способностей
+    public bool copy; //СЌС‚РѕС‚ РѕР±СЊРµРєС‚ РєРѕРїРёСЏ РёР»Рё РЅРµС‚?
+    private bool movement = false; //РјРѕР± РЅРµ РїСЂРёСЃР»РµРґСѓРµС‚ РёРіСЂРѕРєР°
+    private bool playerIsAttack; //РђС‚Р°РєСѓРµС‚ Р»Рё РёРіСЂРѕРє?
+    private bool isAttack; //РђС‚Р°РєСѓРµС‚ Р»Рё РѕР±СЊРµРєС‚ (РІСЂР°Рі)
+    private float speedRecovery;//РЅСѓР¶РЅРѕ РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё 
+    private int currentAttack = 0; //РљСѓР»РґР°СѓРЅ РЅР° Р°С‚Р°РєСѓ РѕР±СЊРµРєС‚Р°
+    private float timeSinceAttack = 0.0f;//РІСЂРµРјСЏ СЃ РїСЂРѕС€Р»РѕР№ Р°С‚Р°РєРё РЅСѓР¶РЅРѕ РґР»СЏ РєРѕРјР±Рѕ Р°РЅРёРјР°С†РёРё Р°С‚Р°РєРё
+    private int level; //РїСЂРѕРІРµСЂРєР° РєР°РєРѕР№ СѓСЂРѕРІРµРЅСЊ РїСЂРѕС…РѕРґРёС‚ РёРіСЂРѕРє, РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёСЏ СЃРїРѕСЃРѕР±РЅРѕСЃС‚РµР№
 
-    public GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
-    public Rigidbody2D rb; //Физическое тело
-    private Animator anim; //Переменная благодаря которой анимирован обьект
+    public GameObject player; //РіРµР№РјРѕР±СЊРµРєС‚ РёРіСЂРѕРє Рё РЅРёР¶Рµ Р±СѓРґРµС‚ РјРµС‚РѕРґ РєР°Рє РѕРЅ РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ Рё РїСЂРёСЃРІР°РёРІР°РµС‚СЃСЏ СЌС‚РѕР№ РїРµСЂРµРјРµРЅРЅРѕР№
+    public Rigidbody2D rb; //Р¤РёР·РёС‡РµСЃРєРѕРµ С‚РµР»Рѕ
+    private Animator anim; //РџРµСЂРµРјРµРЅРЅР°СЏ Р±Р»Р°РіРѕРґР°СЂСЏ РєРѕС‚РѕСЂРѕР№ Р°РЅРёРјРёСЂРѕРІР°РЅ РѕР±СЊРµРєС‚
     private float e_delayToIdle = 0.0f;
-    new string tag; // к этой переменной присваивается тэг обьекта на старте
+    new string tag; // Рє СЌС‚РѕР№ РїРµСЂРµРјРµРЅРЅРѕР№ РїСЂРёСЃРІР°РёРІР°РµС‚СЃСЏ С‚СЌРі РѕР±СЊРµРєС‚Р° РЅР° СЃС‚Р°СЂС‚Рµ
 
 
 
@@ -73,13 +73,13 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     public GameObject shieldHitSound;
     public GameObject shieldHitAttackSound;
     public GameObject rollSound;
-    public static Enemy_Behavior Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+    public static Enemy_Behavior Instance { get; set; } //Р”Р»СЏ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
 
     private void Start()
     {
         Instance = this;
-        rb = this.gameObject.GetComponent<Rigidbody2D>(); //Переменная rb получает компонент Rigidbody2D (Физика game.Object) к которому привязан скрипт
-        anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object) к которому привязан скрипт
+        rb = this.gameObject.GetComponent<Rigidbody2D>(); //РџРµСЂРµРјРµРЅРЅР°СЏ rb РїРѕР»СѓС‡Р°РµС‚ РєРѕРјРїРѕРЅРµРЅС‚ Rigidbody2D (Р¤РёР·РёРєР° game.Object) Рє РєРѕС‚РѕСЂРѕРјСѓ РїСЂРёРІСЏР·Р°РЅ СЃРєСЂРёРїС‚
+        anim = this.gameObject.GetComponent<Animator>(); //РџРµСЂРµРјРµРЅРЅР°СЏ anim РїРѕР»СѓС‡Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ РёР· РєРѕРјРїРѕРЅРµРЅС‚Р° Animator (РђРЅРёРјР°С†РёСЏ game.Object) Рє РєРѕС‚РѕСЂРѕРјСѓ РїСЂРёРІСЏР·Р°РЅ СЃРєСЂРёРїС‚
         tag = this.gameObject.transform.tag;
         level = LvLGeneration.Instance.Level;
 
@@ -121,16 +121,16 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     }
     void Update()
     {
-        timeSinceAttack += Time.deltaTime; //КД Атаки
-        blockCooldown += Time.deltaTime; //КД Блока
-        jumpCooldown += Time.deltaTime; //КД Прыжка
-        magicCooldown += Time.deltaTime; //КД Маг умения
-        physicCooldown += Time.deltaTime; //КД Физ умения
-        stunCooldown += Time.deltaTime; //КД Стана
+        timeSinceAttack += Time.deltaTime; //РљР” РђС‚Р°РєРё
+        blockCooldown += Time.deltaTime; //РљР” Р‘Р»РѕРєР°
+        jumpCooldown += Time.deltaTime; //РљР” РџСЂС‹Р¶РєР°
+        magicCooldown += Time.deltaTime; //РљР” РњР°Рі СѓРјРµРЅРёСЏ
+        physicCooldown += Time.deltaTime; //РљР” Р¤РёР· СѓРјРµРЅРёСЏ
+        stunCooldown += Time.deltaTime; //РљР” РЎС‚Р°РЅР°
 
         if (this.gameObject.GetComponent<Entity_Enemy>().currentHP > 0) EnemyBehavior(); 
     }
-    //Метод описывающий разное поведение для разных врагов. Выбор поведения завист от тега Обьекта
+    //РњРµС‚РѕРґ РѕРїРёСЃС‹РІР°СЋС‰РёР№ СЂР°Р·РЅРѕРµ РїРѕРІРµРґРµРЅРёРµ РґР»СЏ СЂР°Р·РЅС‹С… РІСЂР°РіРѕРІ. Р’С‹Р±РѕСЂ РїРѕРІРµРґРµРЅРёСЏ Р·Р°РІРёСЃС‚ РѕС‚ С‚РµРіР° РћР±СЊРµРєС‚Р°
     public void EnemyBehavior()
     {
         AnimState();
@@ -178,13 +178,13 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         }
     }
     
-    //Общие методы и поведения
-    public enum States //Определения какие бывают состояния, указал названия как в Аниматоре Unity
+    //РћР±С‰РёРµ РјРµС‚РѕРґС‹ Рё РїРѕРІРµРґРµРЅРёСЏ
+    public enum States //РћРїСЂРµРґРµР»РµРЅРёСЏ РєР°РєРёРµ Р±С‹РІР°СЋС‚ СЃРѕСЃС‚РѕСЏРЅРёСЏ, СѓРєР°Р·Р°Р» РЅР°Р·РІР°РЅРёСЏ РєР°Рє РІ РђРЅРёРјР°С‚РѕСЂРµ Unity
     {
         idle,
         run
     }
-    public void AnimState()//Метод для определения стейта анимации
+    public void AnimState()//РњРµС‚РѕРґ РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ СЃС‚РµР№С‚Р° Р°РЅРёРјР°С†РёРё
     {
         if (movement == true)
         {
@@ -199,7 +199,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             runSound.GetComponent<SoundOfObject>().StopSound();
         }
     }
-    private void MeleeAttack() //Базовый метод атаки с двумя и более анимациями
+    private void MeleeAttack() //Р‘Р°Р·РѕРІС‹Р№ РјРµС‚РѕРґ Р°С‚Р°РєРё СЃ РґРІСѓРјСЏ Рё Р±РѕР»РµРµ Р°РЅРёРјР°С†РёСЏРјРё
     {
         //Damage Deal
         currentAttack++;
@@ -214,19 +214,19 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         // Reset timer
         timeSinceAttack = 0.0f;
     }
-    public void BoostEnemySpeed() //метод для усиления скорости врагов
+    public void BoostEnemySpeed() //РјРµС‚РѕРґ РґР»СЏ СѓСЃРёР»РµРЅРёСЏ СЃРєРѕСЂРѕСЃС‚Рё РІСЂР°РіРѕРІ
     {
         skeletonSpeed *= 1.1f;
         moushroomSpeed *= 1.1f;
         goblinSpeed *= 1.1f;
     }
-    public void Flip() //Тут мы создаем метод Flip при вызове которого спрайт меняет направление
+    public void Flip() //РўСѓС‚ РјС‹ СЃРѕР·РґР°РµРј РјРµС‚РѕРґ Flip РїСЂРё РІС‹Р·РѕРІРµ РєРѕС‚РѕСЂРѕРіРѕ СЃРїСЂР°Р№С‚ РјРµРЅСЏРµС‚ РЅР°РїСЂР°РІР»РµРЅРёРµ
     {
-        Vector3 theScale = transform.localScale; //получение масштаб объекта
-        theScale.x *= -1;//тут происходит переворот изображения например 140 меняется на -140 тем самым полностью измени направление спрайта (картинка отзеркаливается)
-        transform.localScale = theScale; //Масштаб преобразования относительно родительского объекта GameObjects
+        Vector3 theScale = transform.localScale; //РїРѕР»СѓС‡РµРЅРёРµ РјР°СЃС€С‚Р°Р± РѕР±СЉРµРєС‚Р°
+        theScale.x *= -1;//С‚СѓС‚ РїСЂРѕРёСЃС…РѕРґРёС‚ РїРµСЂРµРІРѕСЂРѕС‚ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РЅР°РїСЂРёРјРµСЂ 140 РјРµРЅСЏРµС‚СЃСЏ РЅР° -140 С‚РµРј СЃР°РјС‹Рј РїРѕР»РЅРѕСЃС‚СЊСЋ РёР·РјРµРЅРё РЅР°РїСЂР°РІР»РµРЅРёРµ СЃРїСЂР°Р№С‚Р° (РєР°СЂС‚РёРЅРєР° РѕС‚Р·РµСЂРєР°Р»РёРІР°РµС‚СЃСЏ)
+        transform.localScale = theScale; //РњР°СЃС€С‚Р°Р± РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРіРѕ РѕР±СЉРµРєС‚Р° GameObjects
     }
-    public void PushFromPlayer() // отскок от игрока
+    public void PushFromPlayer() // РѕС‚СЃРєРѕРє РѕС‚ РёРіСЂРѕРєР°
     {
         if (Mathf.Abs(directionX) < 1f)
         {
@@ -242,22 +242,22 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         stuned = true;
         anim.SetBool("stun", true);
     }
-    public void JumpToPlayer() //прыжок к игроку (Гриб / Слайм / Летающий глаз)
+    public void JumpToPlayer() //РїСЂС‹Р¶РѕРє Рє РёРіСЂРѕРєСѓ (Р“СЂРёР± / РЎР»Р°Р№Рј / Р›РµС‚Р°СЋС‰РёР№ РіР»Р°Р·)
     {
-        if (level >= 1) //способность активируется на 3 уровне
+        if (level >= 1) //СЃРїРѕСЃРѕР±РЅРѕСЃС‚СЊ Р°РєС‚РёРІРёСЂСѓРµС‚СЃСЏ РЅР° 3 СѓСЂРѕРІРЅРµ
         {
             jumpCooldown = 0;
             Vector3 theScale = transform.localScale;
             transform.localScale = theScale;
             if (directionX > 0)
             {
-                if (theScale.x < 0) Flip();//если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+                if (theScale.x < 0) Flip();//РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight =РЅРµ true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
                 jumpSound.GetComponent<SoundOfObject>().PlaySound();
                 rb.AddForce(new Vector2(10, 2.5f), ForceMode2D.Impulse);
             }
             if (directionX < 0)
             {
-                if (theScale.x > 0) Flip();//если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+                if (theScale.x > 0) Flip();//РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight =РЅРµ true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
                 rb.AddForce(new Vector2(-10, 2.5f), ForceMode2D.Impulse);
                 jumpSound.GetComponent<SoundOfObject>().PlaySound();
             }
@@ -265,8 +265,8 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     }
 
 
-    //Особые скилы у мобов
-    public void Block() // Использование щита (Скелет)
+    //РћСЃРѕР±С‹Рµ СЃРєРёР»С‹ Сѓ РјРѕР±РѕРІ
+    public void Block() // РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ С‰РёС‚Р° (РЎРєРµР»РµС‚)
     {
         playerIsAttack = Hero.Instance.isAttack;
         if (playerIsAttack == true && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2 && blockCooldown > 2)
@@ -283,31 +283,31 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             anim.SetBool("Block", false);
         }
     }
-    public void MushroomSpores() //создает облако спор которая дамажит игрока (Гриб)
+    public void MushroomSpores() //СЃРѕР·РґР°РµС‚ РѕР±Р»Р°РєРѕ СЃРїРѕСЂ РєРѕС‚РѕСЂР°СЏ РґР°РјР°Р¶РёС‚ РёРіСЂРѕРєР° (Р“СЂРёР±)
     {
         if (level > 4)
         {
-            magicCooldown = 0; // сброс таймера спор
-            Vector3 MoushroomScale = transform.localScale; //взятие параметра поворота спрайта грибочка
-            transform.localScale = MoushroomScale; //взятие параметра поворота спрайта грибочка
-            Vector3 sporeSpawnPosition = this.gameObject.transform.position; //взятие позиции грибочка
-            GameObject newSpore = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(sporeSpawnPosition.x, sporeSpawnPosition.y, sporeSpawnPosition.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            magicCooldown = 0; // СЃР±СЂРѕСЃ С‚Р°Р№РјРµСЂР° СЃРїРѕСЂ
+            Vector3 MoushroomScale = transform.localScale; //РІР·СЏС‚РёРµ РїР°СЂР°РјРµС‚СЂР° РїРѕРІРѕСЂРѕС‚Р° СЃРїСЂР°Р№С‚Р° РіСЂРёР±РѕС‡РєР°
+            transform.localScale = MoushroomScale; //РІР·СЏС‚РёРµ РїР°СЂР°РјРµС‚СЂР° РїРѕРІРѕСЂРѕС‚Р° СЃРїСЂР°Р№С‚Р° РіСЂРёР±РѕС‡РєР°
+            Vector3 sporeSpawnPosition = this.gameObject.transform.position; //РІР·СЏС‚РёРµ РїРѕР·РёС†РёРё РіСЂРёР±РѕС‡РєР°
+            GameObject newSpore = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(sporeSpawnPosition.x, sporeSpawnPosition.y, sporeSpawnPosition.z), Quaternion.identity); //РљР»РѕРЅРёСЂРѕРІР°РЅРёСЏ РѕР±СЊРµРєС‚Р° (РІСЂР°Рі) Рё РµРіРѕ РєРѕРѕСЂРґРёРЅР°С‚С‹)
             newSpore.name = "spore" + Random.Range(1, 999);
-            if (MoushroomScale.x < 0) sporeSpawnPosition.x -= 0.8f; //перемещения сбор вперед грибочка в зависимости от поворота спрайта
-            if (MoushroomScale.x > 0) sporeSpawnPosition.x += 0.8f; //перемещения сбор вперед грибочка в зависимости от поворота спрайта
-            newSpore.GetComponent<Spore>().sporeDirection(sporeSpawnPosition); //передача координаты для спавна облака спор
+            if (MoushroomScale.x < 0) sporeSpawnPosition.x -= 0.8f; //РїРµСЂРµРјРµС‰РµРЅРёСЏ СЃР±РѕСЂ РІРїРµСЂРµРґ РіСЂРёР±РѕС‡РєР° РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РїРѕРІРѕСЂРѕС‚Р° СЃРїСЂР°Р№С‚Р°
+            if (MoushroomScale.x > 0) sporeSpawnPosition.x += 0.8f; //РїРµСЂРµРјРµС‰РµРЅРёСЏ СЃР±РѕСЂ РІРїРµСЂРµРґ РіСЂРёР±РѕС‡РєР° РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РїРѕРІРѕСЂРѕС‚Р° СЃРїСЂР°Р№С‚Р°
+            newSpore.GetComponent<Spore>().sporeDirection(sporeSpawnPosition); //РїРµСЂРµРґР°С‡Р° РєРѕРѕСЂРґРёРЅР°С‚С‹ РґР»СЏ СЃРїР°РІРЅР° РѕР±Р»Р°РєР° СЃРїРѕСЂ
         }
     }
-    public void SummonCopy() //создает копии Летающего глаза
+    public void SummonCopy() //СЃРѕР·РґР°РµС‚ РєРѕРїРёРё Р›РµС‚Р°СЋС‰РµРіРѕ РіР»Р°Р·Р°
     {
         if (level > 4 && countOfCopy < 1)
         {
             magicCooldown = 0;
             Vector3 pos = transform.position;
-            GameObject guard1 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x - 1.5f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            GameObject guard1 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x - 1.5f, pos.y, pos.z), Quaternion.identity); //РљР»РѕРЅРёСЂРѕРІР°РЅРёСЏ РѕР±СЊРµРєС‚Р° (РІСЂР°Рі) Рё РµРіРѕ РєРѕРѕСЂРґРёРЅР°С‚С‹)
             guard1.name = "Enemy" + Random.Range(1, 999);
             guard1.GetComponent<Entity_Enemy>().GetNameOfObject(this.gameObject);
-            GameObject guard2 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x - 1f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            GameObject guard2 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x - 1f, pos.y, pos.z), Quaternion.identity); //РљР»РѕРЅРёСЂРѕРІР°РЅРёСЏ РѕР±СЊРµРєС‚Р° (РІСЂР°Рі) Рё РµРіРѕ РєРѕРѕСЂРґРёРЅР°С‚С‹)
             guard2.name = "Enemy" + Random.Range(1, 999);
             guard2.GetComponent<Entity_Enemy>().GetNameOfObject(this.gameObject);
             countOfCopy = 2;
@@ -319,18 +319,18 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     {
         countOfCopy -= 1;
     }
-    public void GoblinJumpToPlayer() //прыжок к игроку (Гоблин)
+    public void GoblinJumpToPlayer() //РїСЂС‹Р¶РѕРє Рє РёРіСЂРѕРєСѓ (Р“РѕР±Р»РёРЅ)
     {
-        if (level >= 1) //способность активируется на 3 уровне
+        if (level >= 1) //СЃРїРѕСЃРѕР±РЅРѕСЃС‚СЊ Р°РєС‚РёРІРёСЂСѓРµС‚СЃСЏ РЅР° 3 СѓСЂРѕРІРЅРµ
         {
             jumpCooldown = 0;
             if (directionX > 0) rb.AddForce(new Vector2(10, 2.5f), ForceMode2D.Impulse);
             if (directionX < 0) rb.AddForce(new Vector2(-10, 2.5f), ForceMode2D.Impulse);
         }
     }
-    public void GoblinJumpFromPlayer() // отскок от игрока (Гоблин)
+    public void GoblinJumpFromPlayer() // РѕС‚СЃРєРѕРє РѕС‚ РёРіСЂРѕРєР° (Р“РѕР±Р»РёРЅ)
     {
-        if (level >= 1) //способность активируется на 3 уровне
+        if (level >= 1) //СЃРїРѕСЃРѕР±РЅРѕСЃС‚СЊ Р°РєС‚РёРІРёСЂСѓРµС‚СЃСЏ РЅР° 3 СѓСЂРѕРІРЅРµ
         {
             jumpCooldown = 0;
             if (directionX > 0)
@@ -347,18 +347,18 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             }
         }
     }
-    public void GoblinBomb() //бросок бомбы (Гоблин)
+    public void GoblinBomb() //Р±СЂРѕСЃРѕРє Р±РѕРјР±С‹ (Р“РѕР±Р»РёРЅ)
     {
         if (level >= 5 && remainingBombs >= 1)
         {
             remainingBombs -= 1;
-            magicCooldown = 0; // сброс таймера бомб
-            Vector3 goblinScale = transform.localScale; //взятие параметра поворота спрайта гоблина
-            transform.localScale = goblinScale; //взятие параметра поворота спрайта гоблина
-            Vector3 bombSpawnPosition = this.gameObject.transform.position; //взятие позиции гоблина
-            GameObject bombBall = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(bombSpawnPosition.x, bombSpawnPosition.y, bombSpawnPosition.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            magicCooldown = 0; // СЃР±СЂРѕСЃ С‚Р°Р№РјРµСЂР° Р±РѕРјР±
+            Vector3 goblinScale = transform.localScale; //РІР·СЏС‚РёРµ РїР°СЂР°РјРµС‚СЂР° РїРѕРІРѕСЂРѕС‚Р° СЃРїСЂР°Р№С‚Р° РіРѕР±Р»РёРЅР°
+            transform.localScale = goblinScale; //РІР·СЏС‚РёРµ РїР°СЂР°РјРµС‚СЂР° РїРѕРІРѕСЂРѕС‚Р° СЃРїСЂР°Р№С‚Р° РіРѕР±Р»РёРЅР°
+            Vector3 bombSpawnPosition = this.gameObject.transform.position; //РІР·СЏС‚РёРµ РїРѕР·РёС†РёРё РіРѕР±Р»РёРЅР°
+            GameObject bombBall = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(bombSpawnPosition.x, bombSpawnPosition.y, bombSpawnPosition.z), Quaternion.identity); //РљР»РѕРЅРёСЂРѕРІР°РЅРёСЏ РѕР±СЊРµРєС‚Р° (РІСЂР°Рі) Рё РµРіРѕ РєРѕРѕСЂРґРёРЅР°С‚С‹)
             bombBall.name = "Bomb" + Random.Range(1, 999);
-            if (goblinScale.x < 0) bombSpawnPosition.x -= 1f; //перемещения бомбы вперед гоблина в зависимости от поворота спрайта
+            if (goblinScale.x < 0) bombSpawnPosition.x -= 1f; //РїРµСЂРµРјРµС‰РµРЅРёСЏ Р±РѕРјР±С‹ РІРїРµСЂРµРґ РіРѕР±Р»РёРЅР° РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РїРѕРІРѕСЂРѕС‚Р° СЃРїСЂР°Р№С‚Р°
             if (goblinScale.x > 0) bombSpawnPosition.x += 1f;
             bombBall.GetComponent<Bomb>().GetEnemyName(this.gameObject.name);
             bombBall.GetComponent<Bomb>().bombDirection(bombSpawnPosition);  
@@ -380,122 +380,122 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             shootingDirection = new Vector3(-1, 0, 109);
             pos.x -= 1;
         }
-        GameObject fireBall = Instantiate(ammo[0], new Vector3(pos.x, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+        GameObject fireBall = Instantiate(ammo[0], new Vector3(pos.x, pos.y, pos.z), Quaternion.identity); //РљР»РѕРЅРёСЂРѕРІР°РЅРёСЏ РѕР±СЊРµРєС‚Р° (РІСЂР°Рі) Рё РµРіРѕ РєРѕРѕСЂРґРёРЅР°С‚С‹)
         fireBall.name = "fireball" + Random.Range(1, 999);
 
         fireBall.GetComponent<FireBall>().SetDirection(shootingDirection);
     }
-    public void DeathSummonMinioins() //призыв Слаймов (Босс Смерть)
+    public void DeathSummonMinioins() //РїСЂРёР·С‹РІ РЎР»Р°Р№РјРѕРІ (Р‘РѕСЃСЃ РЎРјРµСЂС‚СЊ)
     {
         if (physicCooldown >= 8)
         {
-            physicCooldown = 0; // сброс таймера
+            physicCooldown = 0; // СЃР±СЂРѕСЃ С‚Р°Р№РјРµСЂР°
             anim.SetTrigger("cast1");
-            Vector3 spellSpawnPosition = this.gameObject.transform.position; //взятие позиции Игрока
+            Vector3 spellSpawnPosition = this.gameObject.transform.position; //РІР·СЏС‚РёРµ РїРѕР·РёС†РёРё РРіСЂРѕРєР°
             spellSpawnPosition.x -= 2f;
-            SummonSlime.Instance.SummonDirection(spellSpawnPosition); //передача координаты для спавна магии
+            SummonSlime.Instance.SummonDirection(spellSpawnPosition); //РїРµСЂРµРґР°С‡Р° РєРѕРѕСЂРґРёРЅР°С‚С‹ РґР»СЏ СЃРїР°РІРЅР° РјР°РіРёРё
         }
     }
-    public void SpellDrainHP() //исользования магии Кража жизней (Босс Смерть)
+    public void SpellDrainHP() //РёСЃРѕР»СЊР·РѕРІР°РЅРёСЏ РјР°РіРёРё РљСЂР°Р¶Р° Р¶РёР·РЅРµР№ (Р‘РѕСЃСЃ РЎРјРµСЂС‚СЊ)
     {
         if (magicCooldown >= 3)
         {
-            magicCooldown = 0; // сброс таймера
+            magicCooldown = 0; // СЃР±СЂРѕСЃ С‚Р°Р№РјРµСЂР°
             anim.SetTrigger("cast1");
-            Vector3 spellSpawnPosition = player.transform.position; //взятие позиции Игрока
-            spellSpawnPosition.y += 1.7f; // нужно чтобы магия спавнилась чуть выше игрока
-            DrainHP.Instance.DrainHPDirection(spellSpawnPosition); //передача координаты для спавна магии
+            Vector3 spellSpawnPosition = player.transform.position; //РІР·СЏС‚РёРµ РїРѕР·РёС†РёРё РРіСЂРѕРєР°
+            spellSpawnPosition.y += 1.7f; // РЅСѓР¶РЅРѕ С‡С‚РѕР±С‹ РјР°РіРёСЏ СЃРїР°РІРЅРёР»Р°СЃСЊ С‡СѓС‚СЊ РІС‹С€Рµ РёРіСЂРѕРєР°
+            DrainHP.Instance.DrainHPDirection(spellSpawnPosition); //РїРµСЂРµРґР°С‡Р° РєРѕРѕСЂРґРёРЅР°С‚С‹ РґР»СЏ СЃРїР°РІРЅР° РјР°РіРёРё
         }
     }
 
-    //Методы передвижения у разных врагов
+    //РњРµС‚РѕРґС‹ РїРµСЂРµРґРІРёР¶РµРЅРёСЏ Сѓ СЂР°Р·РЅС‹С… РІСЂР°РіРѕРІ
     public void EnemyMovement()
     {
-        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
-        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
-        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1.3f && Mathf.Abs(directionY) < 2) && !block && !isAttack && !stuned || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack && !stuned || copy) //следует за игроком если маленькое растояние или получил урон
+        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё С… - РїРѕР·РёС†РёСЏ СЃРєРµР»РµС‚Р° РїРѕ РѕСЃРё С…
+        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё y - РїРѕР·РёС†РёСЏ СЃРєРµР»РµС‚Р° РїРѕ РѕСЃРё y
+        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1.3f && Mathf.Abs(directionY) < 2) && !block && !isAttack && !stuned || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack && !stuned || copy) //СЃР»РµРґСѓРµС‚ Р·Р° РёРіСЂРѕРєРѕРј РµСЃР»Рё РјР°Р»РµРЅСЊРєРѕРµ СЂР°СЃС‚РѕСЏРЅРёРµ РёР»Рё РїРѕР»СѓС‡РёР» СѓСЂРѕРЅ
         {
-            Vector3 pos = transform.position; //позиция обьекта
-            Vector3 theScale = transform.localScale; //нужно для понимания направления
-            transform.localScale = theScale; //нужно для понимания направления
+            Vector3 pos = transform.position; //РїРѕР·РёС†РёСЏ РѕР±СЊРµРєС‚Р°
+            Vector3 theScale = transform.localScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            transform.localScale = theScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
             float playerFollowSpeed = Mathf.Sign(directionX) * Time.deltaTime;
-            if (tag == "Skeleton") playerFollowSpeed = Mathf.Sign(directionX) * skeletonSpeed * Time.deltaTime; //вычесление направления
-            if (tag == "Mushroom") playerFollowSpeed = Mathf.Sign(directionX) * moushroomSpeed * Time.deltaTime; //вычесление направления
-            if (tag == "FlyingEye") playerFollowSpeed = Mathf.Sign(directionX) * flyingEyeSpeed * Time.deltaTime; //вычесление направления
-            if (tag == "Martial") playerFollowSpeed = Mathf.Sign(directionX) * martialSpeed * Time.deltaTime; //вычесление направления
-            if (tag == "Slime") playerFollowSpeed = Mathf.Sign(directionX) * slimeSpeed * Time.deltaTime; //вычесление направления
-            if (tag == "Death") playerFollowSpeed = Mathf.Sign(directionX) * deathSpeed * Time.deltaTime; //вычесление направления
-            pos.x += playerFollowSpeed; //вычесление позиции по оси х
-            transform.position = pos; //применение позиции
+            if (tag == "Skeleton") playerFollowSpeed = Mathf.Sign(directionX) * skeletonSpeed * Time.deltaTime; //РІС‹С‡РµСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            if (tag == "Mushroom") playerFollowSpeed = Mathf.Sign(directionX) * moushroomSpeed * Time.deltaTime; //РІС‹С‡РµСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            if (tag == "FlyingEye") playerFollowSpeed = Mathf.Sign(directionX) * flyingEyeSpeed * Time.deltaTime; //РІС‹С‡РµСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            if (tag == "Martial") playerFollowSpeed = Mathf.Sign(directionX) * martialSpeed * Time.deltaTime; //РІС‹С‡РµСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            if (tag == "Slime") playerFollowSpeed = Mathf.Sign(directionX) * slimeSpeed * Time.deltaTime; //РІС‹С‡РµСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            if (tag == "Death") playerFollowSpeed = Mathf.Sign(directionX) * deathSpeed * Time.deltaTime; //РІС‹С‡РµСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            pos.x += playerFollowSpeed; //РІС‹С‡РµСЃР»РµРЅРёРµ РїРѕР·РёС†РёРё РїРѕ РѕСЃРё С…
+            transform.position = pos; //РїСЂРёРјРµРЅРµРЅРёРµ РїРѕР·РёС†РёРё
             movement = true;
-            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();//если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
-            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();//если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();//РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight =РЅРµ true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
+            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();//РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight = true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
         }
         else movement = false;
     }
     public void GoblinMovement()
     {
-        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
-        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
-        if ((Mathf.Abs(directionX) < 4f && Mathf.Abs(directionX) > 3f && Mathf.Abs(directionY) < 2) && remainingBombs < 1 || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 5f) //следует за игроком если маленькое растояние или получил урон
+        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё С… - РїРѕР·РёС†РёСЏ СЃРєРµР»РµС‚Р° РїРѕ РѕСЃРё С…
+        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё y - РїРѕР·РёС†РёСЏ СЃРєРµР»РµС‚Р° РїРѕ РѕСЃРё y
+        if ((Mathf.Abs(directionX) < 4f && Mathf.Abs(directionX) > 3f && Mathf.Abs(directionY) < 2) && remainingBombs < 1 || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 5f) //СЃР»РµРґСѓРµС‚ Р·Р° РёРіСЂРѕРєРѕРј РµСЃР»Рё РјР°Р»РµРЅСЊРєРѕРµ СЂР°СЃС‚РѕСЏРЅРёРµ РёР»Рё РїРѕР»СѓС‡РёР» СѓСЂРѕРЅ
         {
-            Vector3 pos = transform.position; //позиция обьекта
-            Vector3 theScale = transform.localScale; //нужно для понимания направления
-            transform.localScale = theScale; //нужно для понимания направления
-            float playerFollowSpeed = Mathf.Sign(directionX) * goblinSpeed * Time.deltaTime; //вычесление направления
-            pos.x += playerFollowSpeed; //вычесление позиции по оси х
-            transform.position = pos; //применение позиции
+            Vector3 pos = transform.position; //РїРѕР·РёС†РёСЏ РѕР±СЊРµРєС‚Р°
+            Vector3 theScale = transform.localScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            transform.localScale = theScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            float playerFollowSpeed = Mathf.Sign(directionX) * goblinSpeed * Time.deltaTime; //РІС‹С‡РµСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            pos.x += playerFollowSpeed; //РІС‹С‡РµСЃР»РµРЅРёРµ РїРѕР·РёС†РёРё РїРѕ РѕСЃРё С…
+            transform.position = pos; //РїСЂРёРјРµРЅРµРЅРёРµ РїРѕР·РёС†РёРё
             movement = true;
-            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();//если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
-            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();//если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();//РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight =РЅРµ true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
+            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();//РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight = true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
         }
         else movement = false;
     }
     public void DeathMovement()
     {
-        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
-        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
-        if ((Mathf.Abs(directionX) < 4f && Mathf.Abs(directionX) > 1.3f && Mathf.Abs(directionY) < 2) || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 5f) //следует за игроком если маленькое растояние или получил урон
+        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё С… - РїРѕР·РёС†РёСЏ СЃРєРµР»РµС‚Р° РїРѕ РѕСЃРё С…
+        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё y - РїРѕР·РёС†РёСЏ СЃРєРµР»РµС‚Р° РїРѕ РѕСЃРё y
+        if ((Mathf.Abs(directionX) < 4f && Mathf.Abs(directionX) > 1.3f && Mathf.Abs(directionY) < 2) || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 5f) //СЃР»РµРґСѓРµС‚ Р·Р° РёРіСЂРѕРєРѕРј РµСЃР»Рё РјР°Р»РµРЅСЊРєРѕРµ СЂР°СЃС‚РѕСЏРЅРёРµ РёР»Рё РїРѕР»СѓС‡РёР» СѓСЂРѕРЅ
         {
-            Vector3 pos = transform.position; //позиция обьекта
-            Vector3 theScale = transform.localScale; //нужно для понимания направления
-            transform.localScale = theScale; //нужно для понимания направления
-            float playerFollowSpeed = Mathf.Sign(directionX) * deathSpeed * Time.deltaTime; //вычесление направления
-            pos.x -= playerFollowSpeed; //вычесление позиции по оси х
-            transform.position = pos; //применение позиции
+            Vector3 pos = transform.position; //РїРѕР·РёС†РёСЏ РѕР±СЊРµРєС‚Р°
+            Vector3 theScale = transform.localScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            transform.localScale = theScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            float playerFollowSpeed = Mathf.Sign(directionX) * deathSpeed * Time.deltaTime; //РІС‹С‡РµСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            pos.x -= playerFollowSpeed; //РІС‹С‡РµСЃР»РµРЅРёРµ РїРѕР·РёС†РёРё РїРѕ РѕСЃРё С…
+            transform.position = pos; //РїСЂРёРјРµРЅРµРЅРёРµ РїРѕР·РёС†РёРё
             movement = true;
-            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();//если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
-            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();//если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();//РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight =РЅРµ true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
+            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();//РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight = true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
         }
         else movement = false;
     }
     public void SlimeMovement()
     {
-        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
-        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
-        if (Mathf.Abs(directionX) > 1f && !block && !isAttack || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack) //следует за игроком если маленькое растояние или получил урон
+        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё С… - РїРѕР·РёС†РёСЏ СЃРєРµР»РµС‚Р° РїРѕ РѕСЃРё С…
+        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё y - РїРѕР·РёС†РёСЏ СЃРєРµР»РµС‚Р° РїРѕ РѕСЃРё y
+        if (Mathf.Abs(directionX) > 1f && !block && !isAttack || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack) //СЃР»РµРґСѓРµС‚ Р·Р° РёРіСЂРѕРєРѕРј РµСЃР»Рё РјР°Р»РµРЅСЊРєРѕРµ СЂР°СЃС‚РѕСЏРЅРёРµ РёР»Рё РїРѕР»СѓС‡РёР» СѓСЂРѕРЅ
         {
-            Vector3 pos = transform.position; //позиция обьекта
-            Vector3 theScale = transform.localScale; //нужно для понимания направления
-            transform.localScale = theScale; //нужно для понимания направления
+            Vector3 pos = transform.position; //РїРѕР·РёС†РёСЏ РѕР±СЊРµРєС‚Р°
+            Vector3 theScale = transform.localScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            transform.localScale = theScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
             float playerFollowSpeed = Mathf.Sign(directionX) * Time.deltaTime;
-            if (tag == "Skeleton") playerFollowSpeed = Mathf.Sign(directionX) * skeletonSpeed * Time.deltaTime; //вычесление направления
-            if (tag == "Mushroom") playerFollowSpeed = Mathf.Sign(directionX) * moushroomSpeed * Time.deltaTime; //вычесление направления
-            if (tag == "Slime") playerFollowSpeed = Mathf.Sign(directionX) * slimeSpeed * Time.deltaTime; //вычесление направления
-            pos.x += playerFollowSpeed; //вычесление позиции по оси х
-            transform.position = pos; //применение позиции
+            if (tag == "Skeleton") playerFollowSpeed = Mathf.Sign(directionX) * skeletonSpeed * Time.deltaTime; //РІС‹С‡РµСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            if (tag == "Mushroom") playerFollowSpeed = Mathf.Sign(directionX) * moushroomSpeed * Time.deltaTime; //РІС‹С‡РµСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            if (tag == "Slime") playerFollowSpeed = Mathf.Sign(directionX) * slimeSpeed * Time.deltaTime; //РІС‹С‡РµСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            pos.x += playerFollowSpeed; //РІС‹С‡РµСЃР»РµРЅРёРµ РїРѕР·РёС†РёРё РїРѕ РѕСЃРё С…
+            transform.position = pos; //РїСЂРёРјРµРЅРµРЅРёРµ РїРѕР·РёС†РёРё
             movement = true;
-            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();//если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
-            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();//если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();//РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight =РЅРµ true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
+            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();//РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight = true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
         }
         else movement = false;
     }
-    //Методы атаки у разных мобов
+    //РњРµС‚РѕРґС‹ Р°С‚Р°РєРё Сѓ СЂР°Р·РЅС‹С… РјРѕР±РѕРІ
 
     public void MushroomAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if (stunCooldown > 3f) //выход из стана
+        if (stunCooldown > 3f) //РІС‹С…РѕРґ РёР· СЃС‚Р°РЅР°
         {
             stuned = false;
         }
@@ -510,7 +510,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     public void FlyingEyeAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if (stunCooldown > 3f) //выход из стана
+        if (stunCooldown > 3f) //РІС‹С…РѕРґ РёР· СЃС‚Р°РЅР°
         {
             stuned = false;
         }
@@ -538,14 +538,14 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         if ((Mathf.Abs(directionX)) < 2f && (Mathf.Abs(directionX)) > 1f && jumpCooldown >= 2 && Mathf.Abs(directionY) < 2 && remainingBombs >= 1) GoblinJumpFromPlayer();
         if ((Mathf.Abs(directionX)) < 4.5 && magicCooldown > 3 && !jump && remainingBombs >= 1 || this.gameObject.GetComponent<Entity_Enemy>().enemyTakeDamage == true && magicCooldown > 3 && !jump && remainingBombs >= 1)
         {
-            Vector3 theScale = transform.localScale; //нужно для понимания направления
-            transform.localScale = theScale; //нужно для понимания направления
-            if (directionX < 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+            Vector3 theScale = transform.localScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            transform.localScale = theScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            if (directionX < 0) //РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight =РЅРµ true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
             {
                 if (theScale.x > 0) Flip();
                 GoblinBomb();
             }
-            else if (directionX > 0) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+            else if (directionX > 0) //РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight = true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
             {
                 if (theScale.x < 0) Flip();
                 GoblinBomb();
@@ -561,7 +561,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     public void EvilWizardAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if (stunCooldown > 3f) //выход из стана
+        if (stunCooldown > 3f) //РІС‹С…РѕРґ РёР· СЃС‚Р°РЅР°
         {
             stuned = false;
             anim.SetBool("stun", false);
@@ -572,14 +572,14 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             anim.SetTrigger("attack1");
             magicSound.GetComponent<SoundOfObject>().ContinueSound();
             timeSinceAttack = 0.0f;
-            Vector3 theScale = transform.localScale; //нужно для понимания направления
-            transform.localScale = theScale; //нужно для понимания направления
-            if (directionX < 0) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+            Vector3 theScale = transform.localScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            transform.localScale = theScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            if (directionX < 0) //РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight =РЅРµ true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
             {
                 if (theScale.x > 0) Flip();
                 MagicAttack();
             }
-            else if (directionX > 0) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+            else if (directionX > 0) //РµСЃР»Рё РґРІРёР¶РµРЅРёРµ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ Рё РїСЂРѕРёР·С€Р»Рѕ flipRight = true С‚Рѕ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ Flip (РїРѕРІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р°)
             {
                 if (theScale.x < 0) Flip();
                 MagicAttack();
@@ -592,10 +592,10 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             //attackSound.GetComponent<SoundOfObject>().StopSound();
             attackSound.GetComponent<SoundOfObject>().ContinueSound();
             timeSinceAttack = 0.0f;
-            Vector3 theScale = transform.localScale; //нужно для понимания направления
-            transform.localScale = theScale; //нужно для понимания направления
-            float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
-            float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиции тумана по оси y
+            Vector3 theScale = transform.localScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            transform.localScale = theScale; //РЅСѓР¶РЅРѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+            float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё С… - РїРѕР·РёС†РёРё С‚СѓРјР°РЅР° РїРѕ РѕСЃРё С…
+            float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ СЌС‚Рѕ РџРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РїРѕ РѕСЃРё y - РїРѕР·РёС†РёРё С‚СѓРјР°РЅР° РїРѕ РѕСЃРё y
             if ((Mathf.Abs(directionX) < 2f && Mathf.Abs(directionY) < 2f) && magicCooldown > 0.5 && playerHP > 0)
             {
                 if (directionX < 0 && theScale.x > 0) Flip();
@@ -610,7 +610,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     public void MartialAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if (stunCooldown > 2f) //выход из стана
+        if (stunCooldown > 2f) //РІС‹С…РѕРґ РёР· СЃС‚Р°РЅР°
         {
             stuned = false;
         }
@@ -649,7 +649,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         }
     }
     
-    //Sound Звук смерти и нанесения урона привязан к Анимации (пока), звуки нанесения урона и прыжка привязаны к коду в методах выше
+    //Sound Р—РІСѓРє СЃРјРµСЂС‚Рё Рё РЅР°РЅРµСЃРµРЅРёСЏ СѓСЂРѕРЅР° РїСЂРёРІСЏР·Р°РЅ Рє РђРЅРёРјР°С†РёРё (РїРѕРєР°), Р·РІСѓРєРё РЅР°РЅРµСЃРµРЅРёСЏ СѓСЂРѕРЅР° Рё РїСЂС‹Р¶РєР° РїСЂРёРІСЏР·Р°РЅС‹ Рє РєРѕРґСѓ РІ РјРµС‚РѕРґР°С… РІС‹С€Рµ
 
     public void DieSound()
     {

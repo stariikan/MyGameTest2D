@@ -4,37 +4,37 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour
 {
-    public static Shield Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    public float direction;//переменная направления
-    [SerializeField] private float lifetime; //длительность жизни снаряда
+    public static Shield Instance { get; set; } //Р”Р»СЏ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
+    public float direction;//РїРµСЂРµРјРµРЅРЅР°СЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+    [SerializeField] private float lifetime; //РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ Р¶РёР·РЅРё СЃРЅР°СЂСЏРґР°
 
-    private BoxCollider2D boxCollider; //Коллайдер удара
+    private BoxCollider2D boxCollider; //РљРѕР»Р»Р°Р№РґРµСЂ СѓРґР°СЂР°
 
     public string TargetName;
     public GameObject target;
 
 
-    private void Awake() //Действие выполняется до старта игры и 1 раз
+    private void Awake() //Р”РµР№СЃС‚РІРёРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ РґРѕ СЃС‚Р°СЂС‚Р° РёРіСЂС‹ Рё 1 СЂР°Р·
     {
-        //anim = GetComponent<Animator>(); // вытаскиваем информацию из компанента аниматор
-        boxCollider = GetComponent<BoxCollider2D>(); // вытаскиваем информацию из компанента бокс колайдер
+        //anim = GetComponent<Animator>(); // РІС‹С‚Р°СЃРєРёРІР°РµРј РёРЅС„РѕСЂРјР°С†РёСЋ РёР· РєРѕРјРїР°РЅРµРЅС‚Р° Р°РЅРёРјР°С‚РѕСЂ
+        boxCollider = GetComponent<BoxCollider2D>(); // РІС‹С‚Р°СЃРєРёРІР°РµРј РёРЅС„РѕСЂРјР°С†РёСЋ РёР· РєРѕРјРїР°РЅРµРЅС‚Р° Р±РѕРєСЃ РєРѕР»Р°Р№РґРµСЂ
         Instance = this;
     }
 
     private void Update()
     {
-        lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
+        lifetime += Time.deltaTime; //СѓРІРµР»РµС‡РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ lifetime РєР°Р¶РґСѓСЋ СЃРµРє +1
         if (lifetime > 1.5f)
         {
-            this.gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
+            this.gameObject.SetActive(false);//РєРѕРіРґР° РїРµСЂРµРјРµРЅРЅР°СЏ РґРѕСЃС‚РёРіР°РµС‚ 1.5, РєРѕР»Р»Р°Р№РґРµСЂ Р°С‚Р°РєРё РёСЃС‡РµР·Р°РµС‚
         }
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         TargetName = collision.gameObject.name;
-        boxCollider.enabled = false; //отключаем коллайдер
-        this.gameObject.SetActive(false);//когда переменная достигает 1.5, коллайдер атаки исчезает
+        boxCollider.enabled = false; //РѕС‚РєР»СЋС‡Р°РµРј РєРѕР»Р»Р°Р№РґРµСЂ
+        this.gameObject.SetActive(false);//РєРѕРіРґР° РїРµСЂРµРјРµРЅРЅР°СЏ РґРѕСЃС‚РёРіР°РµС‚ 1.5, РєРѕР»Р»Р°Р№РґРµСЂ Р°С‚Р°РєРё РёСЃС‡РµР·Р°РµС‚
         target = GameObject.Find(TargetName);
         Debug.Log(target);
         if (target.CompareTag("Bomb")) target.GetComponent<Bomb>().PushFromPlayer();
@@ -43,11 +43,11 @@ public class Shield : MonoBehaviour
         if (target.CompareTag("Martial")) target.GetComponent<Enemy_Behavior>().Stun();
         if (target != null && target.layer == 7) target.GetComponent<Enemy_Behavior>().PushFromPlayer();
     }
-    public void MeleeDirection(Vector3 _direction)// выбор направления полета 
+    public void MeleeDirection(Vector3 _direction)// РІС‹Р±РѕСЂ РЅР°РїСЂР°РІР»РµРЅРёСЏ РїРѕР»РµС‚Р° 
     {
         lifetime = 0;
-        gameObject.SetActive(true); //активация игрового обьекта
+        gameObject.SetActive(true); //Р°РєС‚РёРІР°С†РёСЏ РёРіСЂРѕРІРѕРіРѕ РѕР±СЊРµРєС‚Р°
         this.gameObject.transform.position = _direction;
-        boxCollider.enabled = true; //активация коллайдера
+        boxCollider.enabled = true; //Р°РєС‚РёРІР°С†РёСЏ РєРѕР»Р»Р°Р№РґРµСЂР°
     }
 }

@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
-    public int trapDmg = 30;//Урон ловушки
-    private float cooldownTimer = Mathf.Infinity; //Если мы поставим тут 0, то игрок никогда не сможет аттаковать потому-что он будет меньше attackCooldown.
-    private float AttackCooldown = 1.5f;//кулдаун Атаки
+    public int trapDmg = 30;//РЈСЂРѕРЅ Р»РѕРІСѓС€РєРё
+    private float cooldownTimer = Mathf.Infinity; //Р•СЃР»Рё РјС‹ РїРѕСЃС‚Р°РІРёРј С‚СѓС‚ 0, С‚Рѕ РёРіСЂРѕРє РЅРёРєРѕРіРґР° РЅРµ СЃРјРѕР¶РµС‚ Р°С‚С‚Р°РєРѕРІР°С‚СЊ РїРѕС‚РѕРјСѓ-С‡С‚Рѕ РѕРЅ Р±СѓРґРµС‚ РјРµРЅСЊС€Рµ attackCooldown.
+    private float AttackCooldown = 1.5f;//РєСѓР»РґР°СѓРЅ РђС‚Р°РєРё
     private bool canAttack = false;
-    private void OnCollisionEnter2D(Collision2D collision) //Если происходит соприкосновение тел
+    private void OnCollisionEnter2D(Collision2D collision) //Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ СЃРѕРїСЂРёРєРѕСЃРЅРѕРІРµРЅРёРµ С‚РµР»
     {
-        if (collision.gameObject == Hero.Instance.gameObject)//Если ловушка соприкасается именно с героем (тут получается ссылка на скрипт Hero и оттуда берется gameObject)
+        if (collision.gameObject == Hero.Instance.gameObject)//Р•СЃР»Рё Р»РѕРІСѓС€РєР° СЃРѕРїСЂРёРєР°СЃР°РµС‚СЃСЏ РёРјРµРЅРЅРѕ СЃ РіРµСЂРѕРµРј (С‚СѓС‚ РїРѕР»СѓС‡Р°РµС‚СЃСЏ СЃСЃС‹Р»РєР° РЅР° СЃРєСЂРёРїС‚ Hero Рё РѕС‚С‚СѓРґР° Р±РµСЂРµС‚СЃСЏ gameObject)
         {
             canAttack = true;
         }
         
     }
-    void OnCollisionExit2D(Collision2D collision) //Передается, когда коллайдер другого объекта перестает соприкасаться с коллайдером этого объекта (только 2D физика).
+    void OnCollisionExit2D(Collision2D collision) //РџРµСЂРµРґР°РµС‚СЃСЏ, РєРѕРіРґР° РєРѕР»Р»Р°Р№РґРµСЂ РґСЂСѓРіРѕРіРѕ РѕР±СЉРµРєС‚Р° РїРµСЂРµСЃС‚Р°РµС‚ СЃРѕРїСЂРёРєР°СЃР°С‚СЊСЃСЏ СЃ РєРѕР»Р»Р°Р№РґРµСЂРѕРј СЌС‚РѕРіРѕ РѕР±СЉРµРєС‚Р° (С‚РѕР»СЊРєРѕ 2D С„РёР·РёРєР°).
     {
         canAttack = false;
     }
-    private void trapAttack()//Метод для атаки ловушки
+    private void trapAttack()//РњРµС‚РѕРґ РґР»СЏ Р°С‚Р°РєРё Р»РѕРІСѓС€РєРё
     {
-        if (cooldownTimer > AttackCooldown & canAttack) //тут нужен кулдаун у ловушки, чтобы оно не убивало персонажа за 1 сек
+        if (cooldownTimer > AttackCooldown & canAttack) //С‚СѓС‚ РЅСѓР¶РµРЅ РєСѓР»РґР°СѓРЅ Сѓ Р»РѕРІСѓС€РєРё, С‡С‚РѕР±С‹ РѕРЅРѕ РЅРµ СѓР±РёРІР°Р»Рѕ РїРµСЂСЃРѕРЅР°Р¶Р° Р·Р° 1 СЃРµРє
         {
             cooldownTimer = 0;
-            Hero.Instance.GetDamage(trapDmg); // Атака ловушки
+            Hero.Instance.GetDamage(trapDmg); // РђС‚Р°РєР° Р»РѕРІСѓС€РєРё
         }
     }
     private void Update()
     {
-        cooldownTimer += Time.deltaTime; //прибавление время к таймеру
+        cooldownTimer += Time.deltaTime; //РїСЂРёР±Р°РІР»РµРЅРёРµ РІСЂРµРјСЏ Рє С‚Р°Р№РјРµСЂСѓ
         trapAttack();
     }
 }

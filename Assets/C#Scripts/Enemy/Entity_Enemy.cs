@@ -2,74 +2,74 @@ using UnityEngine;
 
 public class Entity_Enemy : MonoBehaviour
 {
-    //Параметры Скелета
-    public float skeletonMaxHP = 70; //Максимальные жизни скелета
-    public float skeletonAttackDamage = 10; // Урон от физ атаки
-    public int skeletonReward = 2;//награда за победу над врагом
-    private bool isBlock; //проверка поставлен ли блок
+    //РџР°СЂР°РјРµС‚СЂС‹ РЎРєРµР»РµС‚Р°
+    public float skeletonMaxHP = 70; //РњР°РєСЃРёРјР°Р»СЊРЅС‹Рµ Р¶РёР·РЅРё СЃРєРµР»РµС‚Р°
+    public float skeletonAttackDamage = 10; // РЈСЂРѕРЅ РѕС‚ С„РёР· Р°С‚Р°РєРё
+    public int skeletonReward = 2;//РЅР°РіСЂР°РґР° Р·Р° РїРѕР±РµРґСѓ РЅР°Рґ РІСЂР°РіРѕРј
+    private bool isBlock; //РїСЂРѕРІРµСЂРєР° РїРѕСЃС‚Р°РІР»РµРЅ Р»Рё Р±Р»РѕРє
     private float blockDMG;
 
-    //Параметры Гриба
-    public float mushroomMaxHP = 70; //Максимальные жизни Гриба
-    public float mushroomAttackDamage = 10; // Урон от физ атаки
-    public int mushroomReward = 2;//награда за победу над врагом
+    //РџР°СЂР°РјРµС‚СЂС‹ Р“СЂРёР±Р°
+    public float mushroomMaxHP = 70; //РњР°РєСЃРёРјР°Р»СЊРЅС‹Рµ Р¶РёР·РЅРё Р“СЂРёР±Р°
+    public float mushroomAttackDamage = 10; // РЈСЂРѕРЅ РѕС‚ С„РёР· Р°С‚Р°РєРё
+    public int mushroomReward = 2;//РЅР°РіСЂР°РґР° Р·Р° РїРѕР±РµРґСѓ РЅР°Рґ РІСЂР°РіРѕРј
 
-    //Параметры Летающего глаза
-    public float flyingEyeMaxHP = 70; //Максимальные жизни Летающего глаза
-    public float flyingEyeAttackDamage = 10; // Урон от физ атаки
-    public int flyingEyeReward = 2;//награда за победу над врагом
-    private GameObject masterEnemy; //тут будет склыдваться ссылка на мастера глаза который призывает других глах
+    //РџР°СЂР°РјРµС‚СЂС‹ Р›РµС‚Р°СЋС‰РµРіРѕ РіР»Р°Р·Р°
+    public float flyingEyeMaxHP = 70; //РњР°РєСЃРёРјР°Р»СЊРЅС‹Рµ Р¶РёР·РЅРё Р›РµС‚Р°СЋС‰РµРіРѕ РіР»Р°Р·Р°
+    public float flyingEyeAttackDamage = 10; // РЈСЂРѕРЅ РѕС‚ С„РёР· Р°С‚Р°РєРё
+    public int flyingEyeReward = 2;//РЅР°РіСЂР°РґР° Р·Р° РїРѕР±РµРґСѓ РЅР°Рґ РІСЂР°РіРѕРј
+    private GameObject masterEnemy; //С‚СѓС‚ Р±СѓРґРµС‚ СЃРєР»С‹РґРІР°С‚СЊСЃСЏ СЃСЃС‹Р»РєР° РЅР° РјР°СЃС‚РµСЂР° РіР»Р°Р·Р° РєРѕС‚РѕСЂС‹Р№ РїСЂРёР·С‹РІР°РµС‚ РґСЂСѓРіРёС… РіР»Р°С…
 
-    //Параметры Гоблина
-    public float goblinMaxHP = 50; //Максимальные жизни Гоблина
-    public float goblinAttackDamage = 15; // Урон от физ атаки
-    public int goblinReward = 2;//награда за победу над врагом
+    //РџР°СЂР°РјРµС‚СЂС‹ Р“РѕР±Р»РёРЅР°
+    public float goblinMaxHP = 50; //РњР°РєСЃРёРјР°Р»СЊРЅС‹Рµ Р¶РёР·РЅРё Р“РѕР±Р»РёРЅР°
+    public float goblinAttackDamage = 15; // РЈСЂРѕРЅ РѕС‚ С„РёР· Р°С‚Р°РєРё
+    public int goblinReward = 2;//РЅР°РіСЂР°РґР° Р·Р° РїРѕР±РµРґСѓ РЅР°Рґ РІСЂР°РіРѕРј
 
-    //Параметры Злого мага
-    public float wizardMaxHP = 50; //Максимальные жизни Гоблина
-    public float wizardAttackDamage = 10; // Урон от физ атаки
-    public int wizardReward = 2;//награда за победу над врагом
+    //РџР°СЂР°РјРµС‚СЂС‹ Р—Р»РѕРіРѕ РјР°РіР°
+    public float wizardMaxHP = 50; //РњР°РєСЃРёРјР°Р»СЊРЅС‹Рµ Р¶РёР·РЅРё Р“РѕР±Р»РёРЅР°
+    public float wizardAttackDamage = 10; // РЈСЂРѕРЅ РѕС‚ С„РёР· Р°С‚Р°РєРё
+    public int wizardReward = 2;//РЅР°РіСЂР°РґР° Р·Р° РїРѕР±РµРґСѓ РЅР°Рґ РІСЂР°РіРѕРј
 
-    //Параметры Самурая
-    public float martialMaxHP = 75; //Максимальные жизни Гоблина
-    public float martialAttackDamage = 20; // Урон от физ атаки
-    public int martialReward = 2;//награда за победу над врагом
+    //РџР°СЂР°РјРµС‚СЂС‹ РЎР°РјСѓСЂР°СЏ
+    public float martialMaxHP = 75; //РњР°РєСЃРёРјР°Р»СЊРЅС‹Рµ Р¶РёР·РЅРё Р“РѕР±Р»РёРЅР°
+    public float martialAttackDamage = 20; // РЈСЂРѕРЅ РѕС‚ С„РёР· Р°С‚Р°РєРё
+    public int martialReward = 2;//РЅР°РіСЂР°РґР° Р·Р° РїРѕР±РµРґСѓ РЅР°Рґ РІСЂР°РіРѕРј
 
-    //Параметры Слайма
-    public float slimeMaxHP = 40;//Максимальные жизни Слайма
-    public float slimeAttackDamage = 15; // Урон от физ атаки
-    public int slimeReward = 1;//награда за победу над врагом
+    //РџР°СЂР°РјРµС‚СЂС‹ РЎР»Р°Р№РјР°
+    public float slimeMaxHP = 40;//РњР°РєСЃРёРјР°Р»СЊРЅС‹Рµ Р¶РёР·РЅРё РЎР»Р°Р№РјР°
+    public float slimeAttackDamage = 15; // РЈСЂРѕРЅ РѕС‚ С„РёР· Р°С‚Р°РєРё
+    public int slimeReward = 1;//РЅР°РіСЂР°РґР° Р·Р° РїРѕР±РµРґСѓ РЅР°Рґ РІСЂР°РіРѕРј
 
-    //Параметры Босс Смерть
-    public float deathMaxHP = 900;//Максимальные жизни Слайма
-    public float deathAttackDamage = 25; // Урон от физ атаки
-    public int deathReward = 40;//награда за победу над врагом
+    //РџР°СЂР°РјРµС‚СЂС‹ Р‘РѕСЃСЃ РЎРјРµСЂС‚СЊ
+    public float deathMaxHP = 900;//РњР°РєСЃРёРјР°Р»СЊРЅС‹Рµ Р¶РёР·РЅРё РЎР»Р°Р№РјР°
+    public float deathAttackDamage = 25; // РЈСЂРѕРЅ РѕС‚ С„РёР· Р°С‚Р°РєРё
+    public int deathReward = 40;//РЅР°РіСЂР°РґР° Р·Р° РїРѕР±РµРґСѓ РЅР°Рґ РІСЂР°РіРѕРј
 
-    //Перемменая для записи разницы координат между игроком и врагом
+    //РџРµСЂРµРјРјРµРЅР°СЏ РґР»СЏ Р·Р°РїРёСЃРё СЂР°Р·РЅРёС†С‹ РєРѕРѕСЂРґРёРЅР°С‚ РјРµР¶РґСѓ РёРіСЂРѕРєРѕРј Рё РІСЂР°РіРѕРј
     private float directionY; 
     private float directionX;
 
-    //Общие параметры
-    public float currentHP; //Хп обьекта
-    public float takedDamage; //разница между макс хп и полученным уроном
-    public float enemyAttackRange = 1.2f; //Дальность физ атаки
-    public bool enemyDead = false; //Мертвый ли обьект
-    public bool enemyTakeDamage = false; //Получил ли обьект урон
+    //РћР±С‰РёРµ РїР°СЂР°РјРµС‚СЂС‹
+    public float currentHP; //РҐРї РѕР±СЊРµРєС‚Р°
+    public float takedDamage; //СЂР°Р·РЅРёС†Р° РјРµР¶РґСѓ РјР°РєСЃ С…Рї Рё РїРѕР»СѓС‡РµРЅРЅС‹Рј СѓСЂРѕРЅРѕРј
+    public float enemyAttackRange = 1.2f; //Р”Р°Р»СЊРЅРѕСЃС‚СЊ С„РёР· Р°С‚Р°РєРё
+    public bool enemyDead = false; //РњРµСЂС‚РІС‹Р№ Р»Рё РѕР±СЊРµРєС‚
+    public bool enemyTakeDamage = false; //РџРѕР»СѓС‡РёР» Р»Рё РѕР±СЊРµРєС‚ СѓСЂРѕРЅ
 
-    [SerializeField] private Transform firePoint; //Позиция из которых будет выпущены снаряди
-    [SerializeField] private GameObject[] blood; //кровь
+    [SerializeField] private Transform firePoint; //РџРѕР·РёС†РёСЏ РёР· РєРѕС‚РѕСЂС‹С… Р±СѓРґРµС‚ РІС‹РїСѓС‰РµРЅС‹ СЃРЅР°СЂСЏРґРё
+    [SerializeField] private GameObject[] blood; //РєСЂРѕРІСЊ
     public Vector3 lossyScale;
     public Vector3 thisObjectPosition;
     private Rigidbody2D e_rb;
     private CapsuleCollider2D capsuleCollider;
     private Animator anim;
-    new string tag; // к этой переменной присваивается тэг на старте
-    public static Entity_Enemy Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+    new string tag; // Рє СЌС‚РѕР№ РїРµСЂРµРјРµРЅРЅРѕР№ РїСЂРёСЃРІР°РёРІР°РµС‚СЃСЏ С‚СЌРі РЅР° СЃС‚Р°СЂС‚Рµ
+    public static Entity_Enemy Instance { get; set; } //Р”Р»СЏ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
 
     private void Start()
     {
         Instance = this;
-        anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
+        anim = this.gameObject.GetComponent<Animator>(); //РџРµСЂРµРјРµРЅРЅР°СЏ anim РїРѕР»СѓС‡Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ РёР· РєРѕРјРїРѕРЅРµРЅС‚Р° Animator (РђРЅРёРјР°С†РёСЏ game.Object)
         e_rb = this.gameObject.GetComponent<Rigidbody2D>();
         capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
         tag = this.gameObject.transform.tag;
@@ -135,7 +135,7 @@ public class Entity_Enemy : MonoBehaviour
             if (deathAttackDamage == 0) deathAttackDamage = 25;
         }
     }
-    //Секция где идет уселение характеристик врагов, если добавляется новый враг, тут нужно добавить его характеристики
+    //РЎРµРєС†РёСЏ РіРґРµ РёРґРµС‚ СѓСЃРµР»РµРЅРёРµ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРє РІСЂР°РіРѕРІ, РµСЃР»Рё РґРѕР±Р°РІР»СЏРµС‚СЃСЏ РЅРѕРІС‹Р№ РІСЂР°Рі, С‚СѓС‚ РЅСѓР¶РЅРѕ РґРѕР±Р°РІРёС‚СЊ РµРіРѕ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё
     public void BoostEnemyHP() 
     {
         skeletonMaxHP *= 1.2f;
@@ -145,7 +145,7 @@ public class Entity_Enemy : MonoBehaviour
         martialMaxHP *= 1.2f;
         flyingEyeMaxHP *= 1.2f;
     }
-    public void BoostEnemyAttackDamage() //тут усиливыем урон
+    public void BoostEnemyAttackDamage() //С‚СѓС‚ СѓСЃРёР»РёРІС‹РµРј СѓСЂРѕРЅ
     {
         skeletonAttackDamage *= 1.2f;
         mushroomAttackDamage *= 1.2f;
@@ -154,7 +154,7 @@ public class Entity_Enemy : MonoBehaviour
         martialAttackDamage *= 1.2f;
         flyingEyeAttackDamage *= 1.2f;
     }
-    public void BoostEnemyReward() //тут увеличиваем награду за убийство
+    public void BoostEnemyReward() //С‚СѓС‚ СѓРІРµР»РёС‡РёРІР°РµРј РЅР°РіСЂР°РґСѓ Р·Р° СѓР±РёР№СЃС‚РІРѕ
     {
         skeletonReward += 2;
         mushroomReward += 2;
@@ -164,22 +164,22 @@ public class Entity_Enemy : MonoBehaviour
         flyingEyeReward += 2;
     }
 
-    //Общие методы и поведения
-    public void GetNameOfObject(GameObject gameObjectName) //получить ссылку на игровой обьект, для суммонов, чтобы они могли обращаться к мастеру кто их призвал
+    //РћР±С‰РёРµ РјРµС‚РѕРґС‹ Рё РїРѕРІРµРґРµРЅРёСЏ
+    public void GetNameOfObject(GameObject gameObjectName) //РїРѕР»СѓС‡РёС‚СЊ СЃСЃС‹Р»РєСѓ РЅР° РёРіСЂРѕРІРѕР№ РѕР±СЊРµРєС‚, РґР»СЏ СЃСѓРјРјРѕРЅРѕРІ, С‡С‚РѕР±С‹ РѕРЅРё РјРѕРіР»Рё РѕР±СЂР°С‰Р°С‚СЊСЃСЏ Рє РјР°СЃС‚РµСЂСѓ РєС‚Рѕ РёС… РїСЂРёР·РІР°Р»
     {
         masterEnemy = gameObjectName;
     }
-    public void DamageDeealToPlayer() // Метод для нанесения урона Игроку
+    public void DamageDeealToPlayer() // РњРµС‚РѕРґ РґР»СЏ РЅР°РЅРµСЃРµРЅРёСЏ СѓСЂРѕРЅР° РРіСЂРѕРєСѓ
     {
         directionX = Enemy_Behavior.Instance.directionX;
         directionY = Enemy_Behavior.Instance.directionY;
         if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Skeleton")
         {
-            Hero.Instance.GetDamage(skeletonAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage
-            float heal = skeletonAttackDamage * 0.5f; //Скелет ворует половину урона который наносит скелет игроку к себе в хп
+            Hero.Instance.GetDamage(skeletonAttackDamage);//С‚СѓС‚ РјС‹ РїРѕР»СѓС‡Р°РµРј РґРѕСЃС‚СѓРї Рє СЃРєСЂРёРїС‚Сѓ РёРіСЂРѕРєР° Рё Р°РєС‚РёРІРёСЂСѓРµРј РѕС‚С‚СѓРґР° С„СѓРЅРєС†РёСЋ GetDamage
+            float heal = skeletonAttackDamage * 0.5f; //РЎРєРµР»РµС‚ РІРѕСЂСѓРµС‚ РїРѕР»РѕРІРёРЅСѓ СѓСЂРѕРЅР° РєРѕС‚РѕСЂС‹Р№ РЅР°РЅРѕСЃРёС‚ СЃРєРµР»РµС‚ РёРіСЂРѕРєСѓ Рє СЃРµР±Рµ РІ С…Рї
             currentHP += heal;
-            float healBar = heal / (float)skeletonMaxHP; //на сколько надо увеличить прогресс бар
-            if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
+            float healBar = heal / (float)skeletonMaxHP; //РЅР° СЃРєРѕР»СЊРєРѕ РЅР°РґРѕ СѓРІРµР»РёС‡РёС‚СЊ РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂ
+            if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//РѕР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂР°
         }
         if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Mushroom") Hero.Instance.GetDamage(mushroomAttackDamage);
         if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "FlyingEye") Hero.Instance.GetDamage(mushroomAttackDamage);
@@ -189,18 +189,18 @@ public class Entity_Enemy : MonoBehaviour
         if (directionX < 1.8f && currentHP > 0 && directionY < 1f && tag == "Death")
         {
             Hero.Instance.GetDamage(deathAttackDamage);
-            float heal = deathAttackDamage * 0.5f; //Смерть ворует половину урона который наносит скелет игроку к себе в хп
+            float heal = deathAttackDamage * 0.5f; //РЎРјРµСЂС‚СЊ РІРѕСЂСѓРµС‚ РїРѕР»РѕРІРёРЅСѓ СѓСЂРѕРЅР° РєРѕС‚РѕСЂС‹Р№ РЅР°РЅРѕСЃРёС‚ СЃРєРµР»РµС‚ РёРіСЂРѕРєСѓ Рє СЃРµР±Рµ РІ С…Рї
             currentHP += heal;
-            float healBar = heal / (float)deathMaxHP; //на сколько надо увеличить прогресс бар
-            this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
+            float healBar = heal / (float)deathMaxHP; //РЅР° СЃРєРѕР»СЊРєРѕ РЅР°РґРѕ СѓРІРµР»РёС‡РёС‚СЊ РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂ
+            this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//РѕР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂР°
         }
     }
-    public void Push() //Метод для отталкивания тела
+    public void Push() //РњРµС‚РѕРґ РґР»СЏ РѕС‚С‚Р°Р»РєРёРІР°РЅРёСЏ С‚РµР»Р°
     {
         if (transform.lossyScale.x < 0) this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(-0.5f, e_rb.velocity.y), ForceMode2D.Impulse);
         else this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(0.5f, e_rb.velocity.y), ForceMode2D.Impulse);
     }
-    public void TakeDamage(float dmg) //Получение урона (в dmg указывается значение, в Hero скрипте при вызове метода TakeDamage в dmg записывается переменная дамага от оружия ) 
+    public void TakeDamage(float dmg) //РџРѕР»СѓС‡РµРЅРёРµ СѓСЂРѕРЅР° (РІ dmg СѓРєР°Р·С‹РІР°РµС‚СЃСЏ Р·РЅР°С‡РµРЅРёРµ, РІ Hero СЃРєСЂРёРїС‚Рµ РїСЂРё РІС‹Р·РѕРІРµ РјРµС‚РѕРґР° TakeDamage РІ dmg Р·Р°РїРёСЃС‹РІР°РµС‚СЃСЏ РїРµСЂРµРјРµРЅРЅР°СЏ РґР°РјР°РіР° РѕС‚ РѕСЂСѓР¶РёСЏ ) 
     {
         float maxHP = 1;
         if (tag == "Skeleton") maxHP = skeletonMaxHP;
@@ -218,28 +218,28 @@ public class Entity_Enemy : MonoBehaviour
         {
             if (tag != "Skeleton")
             {
-                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Клонирования обьекта
+                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //РљР»РѕРЅРёСЂРѕРІР°РЅРёСЏ РѕР±СЊРµРєС‚Р°
                 bloodSpawn.gameObject.SetActive(true);
             }
             
             currentHP -= dmg;
             enemyTakeDamage = true;
-            takedDamage = (float)dmg / maxHP; //на сколько надо уменьшаить прогресс бар
-            anim.SetTrigger("damage");//анимация получения демейджа
+            takedDamage = (float)dmg / maxHP; //РЅР° СЃРєРѕР»СЊРєРѕ РЅР°РґРѕ СѓРјРµРЅСЊС€Р°РёС‚СЊ РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂ
+            anim.SetTrigger("damage");//Р°РЅРёРјР°С†РёСЏ РїРѕР»СѓС‡РµРЅРёСЏ РґРµРјРµР№РґР¶Р°
             Enemy_Behavior.Instance.TakeDamageSound();
-            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
+            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//РѕР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂР°
         }
         if (currentHP > 0 && isBlock)
         {
             int level = LvLGeneration.Instance.Level;
-            if (level <= 4) blockDMG = dmg * 0.5f;//если Игрок ниже 5 уровня то 50% блокирования урона
-            if (level >= 5) blockDMG = dmg * 0.1f;//если Игрок выше чем 4 уровеня то 90% блокирования урона
+            if (level <= 4) blockDMG = dmg * 0.5f;//РµСЃР»Рё РРіСЂРѕРє РЅРёР¶Рµ 5 СѓСЂРѕРІРЅСЏ С‚Рѕ 50% Р±Р»РѕРєРёСЂРѕРІР°РЅРёСЏ СѓСЂРѕРЅР°
+            if (level >= 5) blockDMG = dmg * 0.1f;//РµСЃР»Рё РРіСЂРѕРє РІС‹С€Рµ С‡РµРј 4 СѓСЂРѕРІРµРЅСЏ С‚Рѕ 90% Р±Р»РѕРєРёСЂРѕРІР°РЅРёСЏ СѓСЂРѕРЅР°
             currentHP -= blockDMG;
             Debug.Log(blockDMG);
             Enemy_Behavior.Instance.ShieldDamageSound();
             enemyTakeDamage = true;
-            takedDamage = blockDMG / maxHP; //на сколько надо уменьшаить прогресс бар
-            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара
+            takedDamage = blockDMG / maxHP; //РЅР° СЃРєРѕР»СЊРєРѕ РЅР°РґРѕ СѓРјРµРЅСЊС€Р°РёС‚СЊ РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂ
+            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//РѕР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂР°
         }
         if (currentHP <= 0)
         {
@@ -251,27 +251,27 @@ public class Entity_Enemy : MonoBehaviour
             if (tag == "Martial") reward = martialReward;
             if (tag == "Slime") reward = 1;
             if (tag == "Death") reward = 40;
-            LvLGeneration.Instance.PlusCoin(reward);//вызов метода для увелечения очков
+            LvLGeneration.Instance.PlusCoin(reward);//РІС‹Р·РѕРІ РјРµС‚РѕРґР° РґР»СЏ СѓРІРµР»РµС‡РµРЅРёСЏ РѕС‡РєРѕРІ
             e_rb.gravityScale = 0;
             e_rb.velocity = Vector2.zero;
             capsuleCollider.enabled = false;
             anim.StopPlayback();
             anim.SetBool("dead", true);
-            anim.SetTrigger("m_death");//анимация смерти
+            anim.SetTrigger("m_death");//Р°РЅРёРјР°С†РёСЏ СЃРјРµСЂС‚Рё
             enemyDead = true;
         }
     }
-    public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти
+    public virtual void Die() //РњРµС‚РѕРґ СѓРґР°Р»СЏРµС‚ СЌС‚РѕС‚ РёРіСЂРѕРІРѕР№ РѕР±СЊРµРєС‚, РІС‹Р·С‹РІР°РµС‚СЃСЏ С‡РµСЂРµР· Р°РЅРёРјР°С‚РѕСЂ СЃСЂР°Р·Сѓ РїРѕСЃР»Рµ Р·Р°РІРµСЂС€РµРЅРёСЏ Р°РЅРёРјР°С†РёРё СЃРјРµСЂС‚Рё
     {
         bool copy = this.gameObject.GetComponent<Enemy_Behavior>().copy;
-        Destroy(this.gameObject);//уничтожить этот игровой обьект
-        if (tag == "Skeleton") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
-        if (tag == "Mushroom") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
-        if (tag == "FlyingEye" && !copy) LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
-        if (tag == "FlyingEye" && copy && masterEnemy != null) masterEnemy.GetComponent<Enemy_Behavior>().CopyCounter();//при уничтожении копии уменьшаяется каунтер копий, что позволяет вызвать доп копию.
-        if (tag == "Goblin") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
-        if (tag == "EvilWizard") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
-        if (tag == "Martial") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
+        Destroy(this.gameObject);//СѓРЅРёС‡С‚РѕР¶РёС‚СЊ СЌС‚РѕС‚ РёРіСЂРѕРІРѕР№ РѕР±СЊРµРєС‚
+        if (tag == "Skeleton") LvLGeneration.Instance.FindKey();//РІС‹Р·РѕРІ РјРµС‚РѕРґР° РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РєР»СЋС‡РµР№
+        if (tag == "Mushroom") LvLGeneration.Instance.FindKey();//РІС‹Р·РѕРІ РјРµС‚РѕРґР° РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РєР»СЋС‡РµР№
+        if (tag == "FlyingEye" && !copy) LvLGeneration.Instance.FindKey();//РІС‹Р·РѕРІ РјРµС‚РѕРґР° РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РєР»СЋС‡РµР№
+        if (tag == "FlyingEye" && copy && masterEnemy != null) masterEnemy.GetComponent<Enemy_Behavior>().CopyCounter();//РїСЂРё СѓРЅРёС‡С‚РѕР¶РµРЅРёРё РєРѕРїРёРё СѓРјРµРЅСЊС€Р°СЏРµС‚СЃСЏ РєР°СѓРЅС‚РµСЂ РєРѕРїРёР№, С‡С‚Рѕ РїРѕР·РІРѕР»СЏРµС‚ РІС‹Р·РІР°С‚СЊ РґРѕРї РєРѕРїРёСЋ.
+        if (tag == "Goblin") LvLGeneration.Instance.FindKey();//РІС‹Р·РѕРІ РјРµС‚РѕРґР° РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РєР»СЋС‡РµР№
+        if (tag == "EvilWizard") LvLGeneration.Instance.FindKey();//РІС‹Р·РѕРІ РјРµС‚РѕРґР° РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РєР»СЋС‡РµР№
+        if (tag == "Martial") LvLGeneration.Instance.FindKey();//РІС‹Р·РѕРІ РјРµС‚РѕРґР° РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РєР»СЋС‡РµР№
         if (tag == "Slime")
         {
             GameObject[] deathObjects = GameObject.FindGameObjectsWithTag("Death");
@@ -283,22 +283,22 @@ public class Entity_Enemy : MonoBehaviour
                 }
             }
         }
-        if (tag == "Death") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
+        if (tag == "Death") LvLGeneration.Instance.FindKey();//РІС‹Р·РѕРІ РјРµС‚РѕРґР° РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РєР»СЋС‡РµР№
     }
 
-    //Методы атаки у разных мобов
+    //РњРµС‚РѕРґС‹ Р°С‚Р°РєРё Сѓ СЂР°Р·РЅС‹С… РјРѕР±РѕРІ
     public void BossDeathHeal(float heal)
     {
         currentHP += heal;
-        float healBar = heal / deathMaxHP; //на сколько надо увеличить прогресс бар
-        if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
+        float healBar = heal / deathMaxHP; //РЅР° СЃРєРѕР»СЊРєРѕ РЅР°РґРѕ СѓРІРµР»РёС‡РёС‚СЊ РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂ
+        if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//РѕР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂР°
     }
     public void BossDeathDamage(float dmg)
     {
         currentHP -= dmg;
         enemyTakeDamage = true;
-        takedDamage = dmg / deathMaxHP; //на сколько надо уменьшаить прогресс бар
-        if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара
+        takedDamage = dmg / deathMaxHP; //РЅР° СЃРєРѕР»СЊРєРѕ РЅР°РґРѕ СѓРјРµРЅСЊС€Р°РёС‚СЊ РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂ
+        if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//РѕР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕРіСЂРµСЃСЃ Р±Р°СЂР°
     }
 
 }

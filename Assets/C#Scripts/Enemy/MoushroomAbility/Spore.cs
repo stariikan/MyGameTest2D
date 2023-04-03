@@ -4,63 +4,63 @@ using UnityEngine;
 
 public class Spore : MonoBehaviour
 {
-    public static Spore Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    public float direction;//переменная направления
-    [SerializeField] private float lifetime; //длительность жизни снаряда
-    private float playerHP; //переменная метки попал ли во что-то снаряд
+    public static Spore Instance { get; set; } //Ж’Р»В¤ СЃР±РѕСЂР° Рё РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёР· СЌС‚РѕРіРѕ СЃРєСЂРёРїС‚Р°
+    public float direction;//РїРµСЂРµРјРµРЅРЅР°В¤ РЅР°РїСЂР°РІР»РµРЅРёВ¤
+    [SerializeField] private float lifetime; //РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ Р¶РёР·РЅРё СЃРЅР°СЂВ¤РґР°
+    private float playerHP; //РїРµСЂРµРјРµРЅРЅР°В¤ РјРµС‚РєРё РїРѕРїР°Р» Р»Рё РІРѕ С‡С‚Рѕ-С‚Рѕ СЃРЅР°СЂВ¤Рґ
 
-    private CircleCollider2D circleCollider; //Коллайдер удара
+    private CircleCollider2D circleCollider; //В РѕР»Р»Р°Р№РґРµСЂ СѓРґР°СЂР°
 
     private float sporeDamage = 20;
     private float sporeCooldownDmg;
     private float sporeSpeed = 1f;
-    GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
+    GameObject player; //РіРµР№РјРѕР±СЊРµРєС‚ РёРіСЂРѕРє Рё РЅРёР¶Рµ Р±СѓРґРµС‚ РјРµС‚РѕРґ РєР°Рє РѕРЅ РѕРїСЂРµРґРµР»В¤РµС‚СЃВ¤ Рё РїСЂРёСЃРІР°РёРІР°РµС‚СЃВ¤ СЌС‚РѕР№ РїРµСЂРµРјРµРЅРЅРѕР№
 
-    private void Start() //Действие выполняется до старта игры и 1 раз
+    private void Start() //Ж’РµР№СЃС‚РІРёРµ РІС‹РїРѕР»РЅВ¤РµС‚СЃВ¤ РґРѕ СЃС‚Р°СЂС‚Р° РёРіСЂС‹ Рё 1 СЂР°Р·
     {
         player = GameObject.FindWithTag("PlayerCharacter");
-        circleCollider = GetComponent<CircleCollider2D>(); // вытаскиваем информацию из компанента бокс колайдер
+        circleCollider = GetComponent<CircleCollider2D>(); // РІС‹С‚Р°СЃРєРёРІР°РµРј РёРЅС„РѕСЂРјР°С†РёСЋ РёР· РєРѕРјРїР°РЅРµРЅС‚Р° Р±РѕРєСЃ РєРѕР»Р°Р№РґРµСЂ
         Instance = this;
         playerHP = Hero.Instance.curentHP;
     }
     private void Update()
     {
-        lifetime += Time.deltaTime; //увелечение переменной lifetime каждую сек +1
-        sporeCooldownDmg += Time.deltaTime;//кулдаун атаки спор
+        lifetime += Time.deltaTime; //СѓРІРµР»РµС‡РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ lifetime РєР°Р¶РґСѓСЋ СЃРµРє +1
+        sporeCooldownDmg += Time.deltaTime;//РєСѓР»РґР°СѓРЅ Р°С‚Р°РєРё СЃРїРѕСЂ
         playerHP = Hero.Instance.curentHP;
         SporeDmg();
         SporeMovement();
-        if (lifetime > 5) Destroy(this.gameObject);//уничтожить этот игровой обьект
+        if (lifetime > 5) Destroy(this.gameObject);//СѓРЅРёС‡С‚РѕР¶РёС‚СЊ СЌС‚РѕС‚ РёРіСЂРѕРІРѕР№ РѕР±СЊРµРєС‚
 
     }
     private void SporeMovement()
     {
-        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
+        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёВ¤ СЌС‚Рѕ С•РѕР·РёС†РёВ¤ РёРіСЂРѕРєР° РїРѕ РѕСЃРё С… - РїРѕР·РёС†РёРё С‚СѓРјР°РЅР° РїРѕ РѕСЃРё С…
         //int level = LvLGeneration.Instance.Level;
         if (playerHP > 0)
         {
-            Vector3 pos = transform.position; //позиция обьекта
-            Vector3 theScale = transform.localScale; //нужно для понимания направления
-            transform.localScale = theScale; //нужно для понимания направления
-            float playerFollowSpeed = Mathf.Sign(directionX) * sporeSpeed * Time.deltaTime; //вычесление направления
-            pos.x += playerFollowSpeed; //вычесление позиции по оси х
-            transform.position = pos; //применение позиции
+            Vector3 pos = transform.position; //РїРѕР·РёС†РёВ¤ РѕР±СЊРµРєС‚Р°
+            Vector3 theScale = transform.localScale; //РЅСѓР¶РЅРѕ РґР»В¤ РїРѕРЅРёРјР°РЅРёВ¤ РЅР°РїСЂР°РІР»РµРЅРёВ¤
+            transform.localScale = theScale; //РЅСѓР¶РЅРѕ РґР»В¤ РїРѕРЅРёРјР°РЅРёВ¤ РЅР°РїСЂР°РІР»РµРЅРёВ¤
+            float playerFollowSpeed = Mathf.Sign(directionX) * sporeSpeed * Time.deltaTime; //РІС‹С‡РµСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёВ¤
+            pos.x += playerFollowSpeed; //РІС‹С‡РµСЃР»РµРЅРёРµ РїРѕР·РёС†РёРё РїРѕ РѕСЃРё С…
+            transform.position = pos; //РїСЂРёРјРµРЅРµРЅРёРµ РїРѕР·РёС†РёРё
         }
     }
     private void SporeDmg()
     {
-       float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиции тумана по оси х
-       float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиции тумана по оси y
+       float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёВ¤ СЌС‚Рѕ С•РѕР·РёС†РёВ¤ РёРіСЂРѕРєР° РїРѕ РѕСЃРё С… - РїРѕР·РёС†РёРё С‚СѓРјР°РЅР° РїРѕ РѕСЃРё С…
+       float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //РІС‹С‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёВ¤ СЌС‚Рѕ С•РѕР·РёС†РёВ¤ РёРіСЂРѕРєР° РїРѕ РѕСЃРё y - РїРѕР·РёС†РёРё С‚СѓРјР°РЅР° РїРѕ РѕСЃРё y
         if ((Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 2f) && sporeCooldownDmg > 1 && playerHP > 0)
        {
             sporeCooldownDmg = 0;
             Hero.Instance.GetDamage(sporeDamage);
        }
     }
-    public void sporeDirection(Vector3 _direction)// выбор направления полета 
+    public void sporeDirection(Vector3 _direction)// РІС‹Р±РѕСЂ РЅР°РїСЂР°РІР»РµРЅРёВ¤ РїРѕР»РµС‚Р° 
     {
         lifetime = 0;
-        this.gameObject.SetActive(true); //активация игрового обьекта
+        this.gameObject.SetActive(true); //Р°РєС‚РёРІР°С†РёВ¤ РёРіСЂРѕРІРѕРіРѕ РѕР±СЊРµРєС‚Р°
         this.gameObject.transform.position = _direction;
     }
 }
