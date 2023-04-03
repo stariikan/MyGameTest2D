@@ -14,6 +14,7 @@ public class ButtonLocalization : MonoBehaviour
     public bool localization; //Eng/Ru
     public bool sound; //¬ключен ли звук
     public bool music; //¬ключена ли музыка
+    public int enemyCheat; //„ит на генерацию врагов
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class ButtonLocalization : MonoBehaviour
         localization = SaveSerial.Instance.localization;
         sound = SaveSerial.Instance.sound;
         music = SaveSerial.Instance.music;
+        enemyCheat = SaveSerial.Instance.enemyCheat;
 
         StartButton();
         SettingsButton();
@@ -43,6 +45,7 @@ public class ButtonLocalization : MonoBehaviour
         localization = SaveSerial.Instance.localization;
         sound = SaveSerial.Instance.sound;
         music = SaveSerial.Instance.music;
+        enemyCheat = SaveSerial.Instance.enemyCheat;
 
         StartButton();
         SettingsButton();
@@ -56,6 +59,7 @@ public class ButtonLocalization : MonoBehaviour
         BackButton();
         ContinueButton();
         RestartButton();
+        EnemyCheatButton();
     }
 
     //  нопки в ћеню
@@ -280,6 +284,24 @@ public class ButtonLocalization : MonoBehaviour
             {
                 currentText = textArray[1];
                 textUI.text = currentText;
+                textUI.fontSize = 20;
+            }
+        }
+    }
+    private void EnemyCheatButton()
+    {
+        if (buttonName.name == "EnemyCheat")
+        {
+            if (!localization)
+            {
+                currentText = textArray[0];
+                textUI.text = currentText + " " + enemyCheat;
+                textUI.fontSize = 25;
+            }
+            if (localization)
+            {
+                currentText = textArray[1];
+                textUI.text = currentText + " " + enemyCheat;
                 textUI.fontSize = 20;
             }
         }

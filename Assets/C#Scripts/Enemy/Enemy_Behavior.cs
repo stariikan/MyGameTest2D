@@ -9,8 +9,9 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     //Параметры Гриба
     public float moushroomSpeed = 2f;//скорость Гриба
 
-    //Параметры Гриба
-    public float flyingEyeSpeed = 2f;//скорость Гриба
+    //Параметры Летающего Глаза
+    public float flyingEyeSpeed = 2f;//скорость Глаза
+    private int countOfCopy; // изначально 0, когда происходит вызов становить 3, как копии умирают 
 
     //Параметры Гоблина
     public float goblinSpeed = 3f;//скорость Гоблина
@@ -59,6 +60,8 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     private Animator anim; //Переменная благодаря которой анимирован обьект
     private float e_delayToIdle = 0.0f;
     new string tag; // к этой переменной присваивается тэг обьекта на старте
+
+
 
     //Sounds
     public GameObject attackSound;
@@ -151,7 +154,6 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
         {
             GoblinMovement();
             GoblinAttack();
-            Block();
         }
         if (tag == "EvilWizard")
         {
@@ -261,19 +263,20 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             }
         }
     }
-    
+
+
     //Особые скилы у мобов
     public void Block() // Использование щита (Скелет)
     {
         playerIsAttack = Hero.Instance.isAttack;
-        if (playerIsAttack == true && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2)
+        if (playerIsAttack == true && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2 && blockCooldown > 2)
         {
             blockCooldown = 0;
             skeletonSpeed = 0;
             block = true;
             anim.SetBool("Block", true);
         }
-        if (blockCooldown > 2f)
+        if (blockCooldown > 0.8f)
         {
             skeletonSpeed = speedRecovery;
             block = false;
@@ -297,19 +300,24 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
     }
     public void SummonCopy() //создает копии Летающего глаза
     {
-        if (level > 4 && !copy)
+        if (level > 4 && countOfCopy < 1)
         {
             magicCooldown = 0;
             Vector3 pos = transform.position;
             GameObject guard1 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x - 1.5f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
             guard1.name = "Enemy" + Random.Range(1, 999);
+            guard1.GetComponent<Entity_Enemy>().GetNameOfObject(this.gameObject);
             GameObject guard2 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x - 1f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
             guard2.name = "Enemy" + Random.Range(1, 999);
-            GameObject guard3 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x - 2f, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
-            guard3.name = "Enemy" + Random.Range(1, 999);
+            guard2.GetComponent<Entity_Enemy>().GetNameOfObject(this.gameObject);
+            countOfCopy = 2;
         }
         else return;
 
+    }
+    public void CopyCounter()
+    {
+        countOfCopy -= 1;
     }
     public void GoblinJumpToPlayer() //прыжок к игроку (Гоблин)
     {
@@ -507,7 +515,7 @@ public class Enemy_Behavior : MonoBehaviour //наследование класса сущности (то е
             stuned = false;
         }
         if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned) JumpToPlayer();
-        if ((Mathf.Abs(directionX)) < 5f && magicCooldown > 5) SummonCopy(); 
+        if ((Mathf.Abs(directionX)) < 5f && magicCooldown > 5 && !copy) SummonCopy(); 
         if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1)
         {
             MeleeAttack();

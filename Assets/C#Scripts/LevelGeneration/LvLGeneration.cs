@@ -23,12 +23,15 @@ public class LvLGeneration : MonoBehaviour
     public int Level = 1; // Добавим одну числовую переменную completeLevels, с помощью которой будем указывать количество пройденных уровней.
     public int coin; // кол-во очков
     public bool key = false;
+    private int enemyCheat; //Чит для генерации врагов
 
     private void Start() // В методе Start мы будем запускать генерацию уровня во время старта игры.
     {
         SaveSerial.Instance.LoadGame();
         coin = SaveSerial.Instance.playerCoin;
         Level = SaveSerial.Instance.passedLvl;
+        enemyCheat = SaveSerial.Instance.enemyCheat;
+
         if (Level == 0)
         {
             Level = 1;
@@ -62,12 +65,10 @@ public class LvLGeneration : MonoBehaviour
 
         int count = this.Level; // Числовая переменная count будет указывать какое кол - во промежуточных блоков необходимо построить, это число будет зависеть от количества пройденных уровней и, чтобы их изначально не было слишком мало на первых уровнях, еще пяти(5) дополнительных блоков.
 
-        if (Level != 10 && Level != 20 && Level != 30 && Level != 40)
+        if (Level != 10 && Level != 20 && Level != 30 && Level != 40 && enemyCheat == 0)
         {
             for (int i = 0; i < count; i++)
             {
-
-
                 position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
                 position.y = 2; //позиция по Y, рандомная
                 position.z = 110;
@@ -83,6 +84,127 @@ public class LvLGeneration : MonoBehaviour
                 yield return new WaitForEndOfFrame(); //ожидания установки блоков
             }
         }
+
+        if (Level != 10 && Level != 20 && Level != 30 && Level != 40 && enemyCheat == 1)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
+                position.y = 2; //позиция по Y, рандомная
+                position.z = 110;
+                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+                newMidBlock.name = "Middle block" + Random.Range(1, 999);
+                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+                GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
+
+                GameObject enemy = Instantiate(enemyForGeneration[0], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.gameObject.SetActive(true);
+
+                yield return new WaitForEndOfFrame(); //ожидания установки блоков
+            }
+        }
+
+        if (Level != 10 && Level != 20 && Level != 30 && Level != 40 && enemyCheat == 2)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
+                position.y = 2; //позиция по Y, рандомная
+                position.z = 110;
+                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+                newMidBlock.name = "Middle block" + Random.Range(1, 999);
+                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+                GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
+
+                GameObject enemy = Instantiate(enemyForGeneration[1], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.gameObject.SetActive(true);
+
+                yield return new WaitForEndOfFrame(); //ожидания установки блоков
+            }
+        }
+
+        if (Level != 10 && Level != 20 && Level != 30 && Level != 40 && enemyCheat == 3)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
+                position.y = 2; //позиция по Y, рандомная
+                position.z = 110;
+                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+                newMidBlock.name = "Middle block" + Random.Range(1, 999);
+                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+                GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
+
+                GameObject enemy = Instantiate(enemyForGeneration[2], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.gameObject.SetActive(true);
+
+                yield return new WaitForEndOfFrame(); //ожидания установки блоков
+            }
+        }
+
+        if (Level != 10 && Level != 20 && Level != 30 && Level != 40 && enemyCheat == 4)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
+                position.y = 2; //позиция по Y, рандомная
+                position.z = 110;
+                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+                newMidBlock.name = "Middle block" + Random.Range(1, 999);
+                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+                GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
+
+                GameObject enemy = Instantiate(enemyForGeneration[3], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.gameObject.SetActive(true);
+
+                yield return new WaitForEndOfFrame(); //ожидания установки блоков
+            }
+        }
+
+        if (Level != 10 && Level != 20 && Level != 30 && Level != 40 && enemyCheat == 5)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
+                position.y = 2; //позиция по Y, рандомная
+                position.z = 110;
+                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+                newMidBlock.name = "Middle block" + Random.Range(1, 999);
+                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+                GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
+
+                GameObject enemy = Instantiate(enemyForGeneration[4], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.gameObject.SetActive(true);
+
+                yield return new WaitForEndOfFrame(); //ожидания установки блоков
+            }
+        }
+
+        if (Level != 10 && Level != 20 && Level != 30 && Level != 40 && enemyCheat == 6)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
+                position.y = 2; //позиция по Y, рандомная
+                position.z = 110;
+                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+                newMidBlock.name = "Middle block" + Random.Range(1, 999);
+                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+                GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
+
+                GameObject enemy = Instantiate(enemyForGeneration[5], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.gameObject.SetActive(true);
+
+                yield return new WaitForEndOfFrame(); //ожидания установки блоков
+            }
+        }
+
         if (Level == 10 || Level == 20 || Level == 30 || Level == 40) //Боссы
         {
             position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
