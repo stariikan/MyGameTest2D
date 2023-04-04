@@ -7,7 +7,7 @@ public class door : MonoBehaviour
     public int how_many_key_need;
     public bool door_open = false;
     bool player_key;
-    public static door Instance { get; set; } //ƒл¤ сбора и отправки данных из этого скрипта
+    public static door Instance { get; set; } //to collect and send data from this script
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +24,7 @@ public class door : MonoBehaviour
         TryToOpen();
         OpenDoor();
     }
-    public void TryToOpen() //ћетод дл¤ получени¤ дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
+    public void TryToOpen() //method for getting the damage where (int dmg) this value can be entered when the method is called (i.e. damage can be entered there)
     {
         if (player_key == true)
         {

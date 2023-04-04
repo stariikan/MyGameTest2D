@@ -9,7 +9,7 @@ public class SoundOfObject : MonoBehaviour
     private bool sound_settings;
     private float volume;
 
-    public static SoundOfObject Instance { get; set; } //ƒл¤ сбора и отправки данных из этого скрипта
+    public static SoundOfObject Instance { get; set; } //to collect and send data from this script
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();

@@ -5,18 +5,18 @@ using UnityEngine;
 public class SpellBook : MonoBehaviour
 {
 
-    private float maxHP = 1; //Максимальные жизни скелета
+    private float maxHP = 1; //Maximum lives
     public float currentHP;
-    public static SpellBook Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+    public static SpellBook Instance { get; set; } // To collect and send data from this script
     private Animator anim;
     public bool chestOpen = false;
-    public int rewardForKill = 20;//награда за победу над врагом
-    public enum States //Определения какие бывают состояния, указал названия как в Аниматоре Unity
+    public int rewardForKill = 20;// reward for defeating the enemy
+    public enum States //Defining what states there are, named as in Unity Animator
     {
         idle,
         open
     }
-    private States State //Создание стейтмашины, переменная = State. Значение состояния может быть передано или изминено извне благодаря get и set
+    private States State //State machine creation, variable = State. State value can be passed or changed externally via get and set
     {
         get { return (States)anim.GetInteger("State"); }
         set { anim.SetInteger("State", (int)value); }
@@ -26,14 +26,14 @@ public class SpellBook : MonoBehaviour
         currentHP = maxHP;
         Instance = this;
         chestOpen = false;
-        anim = GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
-                                         //к которому привязан скрипт
+        anim = GetComponent<Animator>(); //The anim variable takes information from the Animator component (Animator.Object)
+                                         //to which the script is bound
     }
-    public void TakeDamage(float dmg) //Метод для получения дамага где (int dmg) это значение можно будет вводить при вызове метода (то есть туда можно будет вписать урон)
+    public void TakeDamage(float dmg) //Method for receiving damage where (int dmg) this value can be entered when the method is called (i.e. damage can be entered there)
     {
         if (currentHP > 0)
         {
-            anim.SetTrigger("open");//анимация получения демейджа
+            anim.SetTrigger("open");// damage animation
             currentHP -= dmg;
             Debug.Log(currentHP + " " + gameObject.name);
         }
@@ -44,14 +44,14 @@ public class SpellBook : MonoBehaviour
 
         if (currentHP <= 0)
         {
-            LvLGeneration.Instance.PlusCoin(rewardForKill); //вызов метода для увелечения очков
-            anim.SetTrigger("open");//анимация смерти
+            LvLGeneration.Instance.PlusCoin(rewardForKill); //call for a method to increase points
+            anim.SetTrigger("open");//death animation
             chestOpen = true;
             Debug.Log("Open" + gameObject.name);
         }
     }
-    public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти
+    public virtual void Die() //Method removes this game object, called by the animator immediately after the death animation ends
     {
-        Destroy(this.gameObject); ;//уничтожить этот игровой обьект
+        Destroy(this.gameObject); ;//destroy this game object
     }
 }

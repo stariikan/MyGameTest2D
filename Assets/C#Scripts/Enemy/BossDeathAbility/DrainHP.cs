@@ -5,22 +5,22 @@ using UnityEngine;
 public class DrainHP : MonoBehaviour
 {
     
-    public float direction;//переменная направления
-    private float playerHP; //переменная метки попал ли во что-то снаряд
+    public float direction;//directional variable
+    private float playerHP; // a variable marking whether a projectile has hit something
 
     private float drainHPDamage = 15f;
 
-    GameObject player; //геймобьект игрок и ниже будет метод как он определяется и присваивается этой переменной
-    public Rigidbody2D rb; //Физическое тело
-    private Animator anim; //Переменная благодаря которой анимирован обьект
-    private BoxCollider2D boxCollider; //Коллайдер магии
-    public static DrainHP Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+    GameObject player; // the player game object and below is a method of how it is defined and assigned to this variable
+    public Rigidbody2D rb; //Physical body
+    private Animator anim; //Variable by which the object is animated
+    private BoxCollider2D boxCollider; // Magic Collider
+    public static DrainHP Instance { get; set; } // To collect and send data from this script
     private void Start()
     {
         Instance = this;
         player = GameObject.FindWithTag("PlayerCharacter");
-        rb = this.gameObject.GetComponent<Rigidbody2D>(); //Переменная rb получает компонент Rigidbody2D (Физика game.Object) к которому привязан скрипт
-        anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object) к которому привязан скрипт
+        rb = this.gameObject.GetComponent<Rigidbody2D>(); // The rb variable gets the Rigidbody2D component (physics.Object) to which the script is bound
+        anim = this.gameObject.GetComponent<Animator>(); // The anim variable gets information from the Animator component (animation.Object) to which the script is bound
         boxCollider = GetComponent<BoxCollider2D>();
         playerHP = Hero.Instance.curentHP;
     }
@@ -30,8 +30,8 @@ public class DrainHP : MonoBehaviour
     }
     public void DrainHPDmg()
     {
-        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //вычисление направление движения это Позиция игрока по оси х - позиция скелета по оси х
-        float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //вычисление направление движения это Позиция игрока по оси y - позиция скелета по оси y
+        float directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; //calculate direction of movement is Player position on the x-axis - Skeleton position on the x-axis
+        float directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //calculate direction of movement is Player position on the y-axis - Skeleton position on the y-axis
         if (Mathf.Abs(directionX) < 1f && Mathf.Abs(directionY) < 2f && playerHP > 0) 
         {
             Hero.Instance.GetDamage(drainHPDamage);
@@ -45,9 +45,9 @@ public class DrainHP : MonoBehaviour
             }
         }
     }
-    public void DrainHPDirection(Vector3 _direction)// выбор направления полета 
+    public void DrainHPDirection(Vector3 _direction)// selecting a flight direction 
     {
-        this.gameObject.SetActive(true); //активация игрового обьекта
+        this.gameObject.SetActive(true); //activate the game object
         this.gameObject.transform.position = _direction;
         anim.SetTrigger("drain_hp");
     }

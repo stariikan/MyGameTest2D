@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;//для UI
+using UnityEngine.UI;//for UI
 
 public class enemyProgressBar : MonoBehaviour
 {
