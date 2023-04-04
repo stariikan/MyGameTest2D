@@ -42,11 +42,11 @@ public class Hero : MonoBehaviour {
     public bool isPush = false;
 
 
-    public bool playerDead = false; //мертв игрок или нет, пока нужно для того чтобы при смерти игрока делать рестарт
+    public bool playerDead = false; // whether the player is dead or not, for now, to make a restart when the player dies
     private CapsuleCollider2D capsuleCollider;
     private BoxCollider2D boxCollider;
 
-    //Таймеры
+    //Timers
     private float cooldownTimer = Mathf.Infinity;
     private float MagicCooldownTimer = Mathf.Infinity;
 
@@ -55,12 +55,12 @@ public class Hero : MonoBehaviour {
     public bool move_Left = false;
 
     //Attack parameters
-    public GameObject[] magicProjectile; //Снаряды снарядов
-    public GameObject meleeAttackArea; // Физ оружее
-    public GameObject shieldArea; // Щит
-    private float magicAttackCooldown = 2;//кулдаун запуска снаряда (магии)
-    public Transform firePointRight; //Позиция из которых будет выпущены снаряди
-    public Transform firePointLeft; //Позиция из которых будет выпущены снаряди
+    public GameObject[] magicProjectile; //Snapshots
+    public GameObject meleeAttackArea; // Physical Weapons
+    public GameObject shieldArea; // The Shield
+    private float magicAttackCooldown = 2;//cooldown projectile launch (magic)
+    public Transform firePointRight; //The position from which the shells will be fired
+    public Transform firePointLeft; //The position from which the shells will be fired
 
     //Sounds
     public GameObject attackSound;
@@ -73,7 +73,7 @@ public class Hero : MonoBehaviour {
     public GameObject shieldHitAttackSound;
     public GameObject rollSound;
 
-    public static Hero Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+    public static Hero Instance { get; set; } // To collect and send data from this script
 
     // Use this for initialization
     void Awake()
@@ -159,19 +159,19 @@ public class Hero : MonoBehaviour {
         m_isWallSliding = (m_wallSensorR1.State() && m_wallSensorR2.State()) || (m_wallSensorL1.State() && m_wallSensorL2.State());
         m_animator.SetBool("WallSlide", m_isWallSliding);
        //old
-        cooldownTimer += Time.deltaTime; //прибавление по 1 секунде к cooldownTimer
+        cooldownTimer += Time.deltaTime; // add 1 second to cooldownTimer
         m_JumpCooldownTime += Time.deltaTime;
 
-        MagicCooldownTimer += Time.deltaTime; //прибавление по 1 секунде к MagicCooldownTimer после его обнуления при выполенении метода magicAttack.
-        AttackControl();//атака с помощью мышки
+        MagicCooldownTimer += Time.deltaTime; //add 1 second to MagicCooldownTimer after resetting it to zero when magicAttack is executed.
+        AttackControl();
         StaminaRecovery();
 
         Jostick_Settings_Controll();
 
         if (curentHP > 0)
         {
-            PlayerMovement();//Метод для движения и поворота спрайта персонажа
-            CheckBlock(); //Проверка блока
+            PlayerMovement();//Method for moving and rotating a character sprite
+            CheckBlock(); //Checking the block
             PlayerSpeedMode();
             if (Input.GetKey(KeyCode.LeftControl)) MeeleAtack();
             if (cooldownTimer > 1f)  capsuleCollider.enabled = true;
@@ -211,15 +211,15 @@ public class Hero : MonoBehaviour {
             dust.transform.localScale = new Vector3(m_facingDirection, 1, 1);
         }
     }
-    public void Push() //Метод для отталкивания тела во время получения урона
+    public void Push() //Method for pushing the body away while taking damage
     {
-        if (transform.lossyScale.x < 0) //смотрим в трансформе в какую сторону повернут по х обьект 
+        if (transform.lossyScale.x < 0) //see which way the object is rotated in x direction in the transformer 
         {
-            m_body2d.AddForce(new Vector2(0.5f, m_body2d.velocity.y), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
+            m_body2d.AddForce(new Vector2(0.5f, m_body2d.velocity.y), ForceMode2D.Impulse);//Impulse means that the force will only be applied once
         }
         else
         {
-            m_body2d.AddForce(new Vector2(-0.5f, m_body2d.velocity.y), ForceMode2D.Impulse);//Импульс это значит что сила приложиться всего 1 раз
+            m_body2d.AddForce(new Vector2(-0.5f, m_body2d.velocity.y), ForceMode2D.Impulse);//Impulse means that the force will only be applied once
         }
     }
     private void PlayerSpeedMode()
@@ -248,11 +248,11 @@ public class Hero : MonoBehaviour {
             m_animator.SetBool("IdleBlock", false);
         }
     }
-    public void GetDamage(float dmg) //Мы создаем новый метод GetDamage() 
+    public void GetDamage(float dmg) //We create a new GetDamage() method 
     {
         if (block == false && !m_rolling)
         {
-            curentHP -= dmg;//Отнимает dmg из переменной hp (жизни).
+            curentHP -= dmg;//Takes dmg from the hp (life) variable.
             takeDamageSound.GetComponent<SoundOfObject>().StopSound();
             takeDamageSound.GetComponent<SoundOfObject>().PlaySound();
             m_animator.SetTrigger("Hurt");
@@ -260,14 +260,14 @@ public class Hero : MonoBehaviour {
         }
         if (block == true && !m_rolling)
         {
-            curentHP -= dmg * 0.15f;//Отнимает int из переменной hp (жизни) и при активном блоке уменьшает урон в 3 раза
+            curentHP -= dmg * 0.15f;//Takes int from the hp (life) variable and reduces damage by a factor of 3 when the unit is active
             DecreaseStamina(20);
             m_animator.SetTrigger("Hurt");
             shieldHitSound.GetComponent<SoundOfObject>().StopSound();
             shieldHitSound.GetComponent<SoundOfObject>().PlaySound();
             //Push();
         }
-        if (curentHP <= 0 && !m_rolling) //Если жизней меньше 0
+        if (curentHP <= 0 && !m_rolling) //If lives are less than 0
         {
             m_curentSpeed = 0;
             m_body2d.gravityScale = 0;
@@ -282,10 +282,10 @@ public class Hero : MonoBehaviour {
     }
     public void Jump()
     {
-            if (currentStamina > 10 && m_JumpCooldownTime > 1 && m_grounded && !m_rolling && !block)// если происходит нажатие и отпускания (GetKeyDown, а не просто GetKey) кнопки Space и если isGrounded = true 
-            {
+            if (currentStamina > 10 && m_JumpCooldownTime > 1 && m_grounded && !m_rolling && !block)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
+        {
                 m_JumpCooldownTime = 0;
-                m_body2d.gravityScale = 1; //включение гравитации    
+                m_body2d.gravityScale = 1; //engage gravity    
                 DecreaseStamina(10);
                 m_animator.SetTrigger("Jump");
                 jumpSound.GetComponent<SoundOfObject>().StopSound();
@@ -298,7 +298,7 @@ public class Hero : MonoBehaviour {
     }
     public void Roll()
     {
-        if (currentStamina > 5 && cooldownTimer > 0.5f && !block && m_grounded) //кувырок
+        if (currentStamina > 5 && cooldownTimer > 0.5f && !block && m_grounded)
         {
             cooldownTimer = 0;
             DecreaseStamina(5);            
@@ -323,7 +323,7 @@ public class Hero : MonoBehaviour {
         //Keyboard controll
         if (platform == 1 || platform == 0)
         {
-            float move = Input.GetAxis("Horizontal");//Используем Float потому-что значение 0.111..., тут берется ввод по Горизонтали (стрелки и A D)
+            float move = Input.GetAxis("Horizontal");//We use Float because the value is 0.111..., here the input is horizontal (arrows and A D)
             float vertical = Input.GetAxis("Vertical");
             if (move > 0f)
             {
@@ -411,11 +411,11 @@ public class Hero : MonoBehaviour {
         }
 
         //Flip
-        if (m_facingDirection == 1) //если движение больше нуля и произшло flipRight =не true то нужно вызвать метод Flip (поворот спрайта)
+        if (m_facingDirection == 1) // if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
         {
             GetComponent<SpriteRenderer>().flipX = false;
         }
-        else if (m_facingDirection == -1) //если движение больше нуля и произшло flipRight = true то нужно вызвать метод Flip (поворот спрайта)
+        else if (m_facingDirection == -1) // if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
         {
             GetComponent<SpriteRenderer>().flipX = true;
         }
@@ -448,7 +448,7 @@ public class Hero : MonoBehaviour {
             block = false;
         }
     }
-    public void DecreaseStamina(float cost) //Метод для уменьшения стамины за различные действия
+    public void DecreaseStamina(float cost) //Method for reducing stamina for various actions
     {
         currentStamina -= cost;
     }
@@ -498,7 +498,7 @@ public class Hero : MonoBehaviour {
     {
         if (m_facingDirection > 0)
         {
-            meleeAttackArea.transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
+            meleeAttackArea.transform.position = firePointRight.position; //With each attack we will change projectile positions and give it a firing point position to receive the component from the projectile and send it in the direction of the player
             meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePointRight.position);
         }
         else if (m_facingDirection < 0)
@@ -507,7 +507,7 @@ public class Hero : MonoBehaviour {
             meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePointLeft.position);
         }
     }
-    public void MeleeWeaponOff() //отключения обьекта бомбы
+    public void MeleeWeaponOff() // deactivate the weapon object
     {
         MeleeWeapon.Instance.WeaponOff();
     }
@@ -516,11 +516,11 @@ public class Hero : MonoBehaviour {
         if (MagicCooldownTimer > magicAttackCooldown && currentMP >= 20)
         {
             currentMP -= 20;
-            MagicCooldownTimer = 0; //сброс кулдауна приминения магии для того чтобы работа формула при атаке которой она смотрит на кулдаун и если он наступил, то можно вновь атаковать
+            MagicCooldownTimer = 0; // resetting the magic application kuldun so that the formula works when attacking it looks at the kuldun and if it has come, you can attack again.
 
             Vector3 shootingDirection = new Vector3(1, 0, 109);
             Vector3 pos = firePointRight.position;
-            GameObject fireBall = Instantiate(magicProjectile[Random.Range(0, magicProjectile.Length)], new Vector3(pos.x, pos.y, pos.z), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            GameObject fireBall = Instantiate(magicProjectile[Random.Range(0, magicProjectile.Length)], new Vector3(pos.x, pos.y, pos.z), Quaternion.identity); //Clone an object (enemy) and its coordinates)
             fireBall.name = "Enemy" + Random.Range(1, 999);
             magicSound.GetComponent<SoundOfObject>().StopSound();
             magicSound.GetComponent<SoundOfObject>().PlaySound();
@@ -541,9 +541,9 @@ public class Hero : MonoBehaviour {
         {
             Block();
         }
-        if (Input.GetKey(KeyCode.LeftAlt) && currentMP >= 15) //если нажать на левую кнопку мыши и кулдаун таймер > чем значение MagicAttackCooldown, то можно производить атаку
+        if (Input.GetKey(KeyCode.LeftAlt) && currentMP >= 15) //if the left mouse button is clicked and the timer times out > than the MagicAttackCooldown value, then the attack can be performed
         {
-            MagicAttack(); // выполнения маг атаки
+            MagicAttack(); // performing a mag attack
         }
     }
     public void Enemy_Push_by_BLOCK()
@@ -551,7 +551,7 @@ public class Hero : MonoBehaviour {
         currentStamina -= 10;
         if (m_facingDirection > 0)
         {
-            shieldArea.transform.position = firePointRight.position; //При каждой атаки мы будем менять положения снаряда и задавать ей положение огневой точки получить компонент из снаряда и отправить его в направление в котором находиться игрок
+            shieldArea.transform.position = firePointRight.position; //With each attack we will change projectile positions and give it a firing point position to receive the component from the projectile and send it in the direction of the player
             shieldArea.GetComponent<Shield>().MeleeDirection(firePointRight.position);
         }
         else if (m_facingDirection < 0)
@@ -560,7 +560,7 @@ public class Hero : MonoBehaviour {
             shieldArea.GetComponent<Shield>().MeleeDirection(firePointLeft.position);
         }
     }
-    private void Deactivate() //деактивация игрока после завершения анимации смерти (благодоря метки в аниматоре выполняется этот метод
+    private void Deactivate() //deactivate the player after finishing the death animation (thanks to the label in the animator this method is executed
     {
         playerDead = true;
     }

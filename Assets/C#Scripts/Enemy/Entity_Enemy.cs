@@ -2,74 +2,74 @@ using UnityEngine;
 
 public class Entity_Enemy : MonoBehaviour
 {
-    //Параметры Скелета
-    public float skeletonMaxHP = 70; //Максимальные жизни скелета
-    public float skeletonAttackDamage = 10; // Урон от физ атаки
-    public int skeletonReward = 2;//награда за победу над врагом
-    private bool isBlock; //проверка поставлен ли блок
+    //Skeleton parameters
+    public float skeletonMaxHP = 70; // Maximum skeleton lives
+    public float skeletonAttackDamage = 10; // Damage from physical attack
+    public int skeletonReward = 2;// reward for defeating the enemy
+    private bool isBlock; //check whether the block is set
     private float blockDMG;
 
-    //Параметры Гриба
-    public float mushroomMaxHP = 70; //Максимальные жизни Гриба
-    public float mushroomAttackDamage = 10; // Урон от физ атаки
-    public int mushroomReward = 2;//награда за победу над врагом
+    //Mushroom parameters
+    public float mushroomMaxHP = 70; //Maximum lives of the Mushroom
+    public float mushroomAttackDamage = 10; // Damage from physical attack
+    public int mushroomReward = 2;// reward for defeating the enemy
 
-    //Параметры Летающего глаза
-    public float flyingEyeMaxHP = 70; //Максимальные жизни Летающего глаза
-    public float flyingEyeAttackDamage = 10; // Урон от физ атаки
-    public int flyingEyeReward = 2;//награда за победу над врагом
-    private GameObject masterEnemy; //тут будет склыдваться ссылка на мастера глаза который призывает других глах
+    //Flying Eye parameters
+    public float flyingEyeMaxHP = 70; //Maximum Flying Eye lives
+    public float flyingEyeAttackDamage = 10; // Damage from physical attack
+    public int flyingEyeReward = 2;// reward for defeating the enemy
+    private GameObject masterEnemy; //this will link to the eye wizard who calls on the other eyes
 
-    //Параметры Гоблина
-    public float goblinMaxHP = 50; //Максимальные жизни Гоблина
-    public float goblinAttackDamage = 15; // Урон от физ атаки
-    public int goblinReward = 2;//награда за победу над врагом
+    //Goblin Parameters
+    public float goblinMaxHP = 50;  //Maximum Goblin Lives
+    public float goblinAttackDamage = 15; // Damage from physical attack
+    public int goblinReward = 2;// reward for defeating the enemy
 
-    //Параметры Злого мага
-    public float wizardMaxHP = 50; //Максимальные жизни Гоблина
-    public float wizardAttackDamage = 10; // Урон от физ атаки
-    public int wizardReward = 2;//награда за победу над врагом
+    //The Mage parameters
+    public float wizardMaxHP = 50; //Maximum Wizard Lives
+    public float wizardAttackDamage = 10; // Damage from physical attack
+    public int wizardReward = 2;// reward for defeating the enemy
 
-    //Параметры Самурая
-    public float martialMaxHP = 75; //Максимальные жизни Гоблина
-    public float martialAttackDamage = 20; // Урон от физ атаки
-    public int martialReward = 2;//награда за победу над врагом
+    //Samurai Parameters
+    public float martialMaxHP = 75; //Maximum Samurai Lives
+    public float martialAttackDamage = 20; // Damage from physical attack
+    public int martialReward = 2;// reward for defeating the enemy
 
-    //Параметры Слайма
-    public float slimeMaxHP = 40;//Максимальные жизни Слайма
-    public float slimeAttackDamage = 15; // Урон от физ атаки
-    public int slimeReward = 1;//награда за победу над врагом
+    //Slime parameters
+    public float slimeMaxHP = 40;//Maximum Slime lives
+    public float slimeAttackDamage = 15; // Damage from physical attack
+    public int slimeReward = 1;// reward for defeating the enemy
 
-    //Параметры Босс Смерть
-    public float deathMaxHP = 900;//Максимальные жизни Слайма
-    public float deathAttackDamage = 25; // Урон от физ атаки
-    public int deathReward = 40;//награда за победу над врагом
+    //Boss Death Parameters
+    public float deathMaxHP = 900;//Maximum Death lives
+    public float deathAttackDamage = 25; // Damage from physical attack
+    public int deathReward = 40;// reward for defeating the enemy
 
-    //Перемменая для записи разницы координат между игроком и врагом
+    //Replacement to record the coordinate difference between player and enemy
     private float directionY; 
     private float directionX;
 
-    //Общие параметры
-    public float currentHP; //Хп обьекта
-    public float takedDamage; //разница между макс хп и полученным уроном
-    public float enemyAttackRange = 1.2f; //Дальность физ атаки
-    public bool enemyDead = false; //Мертвый ли обьект
-    public bool enemyTakeDamage = false; //Получил ли обьект урон
+    //General parameters
+    public float currentHP; // current of Hp the object
+    public float takedDamage; // Damage caused to the object
+    public float enemyAttackRange = 1.2f; //Range of physical attack
+    public bool enemyDead = false; // Is the object dead
+    public bool enemyTakeDamage = false; //If the object has sustained damage
 
-    [SerializeField] private Transform firePoint; //Позиция из которых будет выпущены снаряди
-    [SerializeField] private GameObject[] blood; //кровь
+    [SerializeField] private Transform firePoint; //The position from which the shells will be fired
+    [SerializeField] private GameObject[] blood; //blood
     public Vector3 lossyScale;
     public Vector3 thisObjectPosition;
     private Rigidbody2D e_rb;
     private CapsuleCollider2D capsuleCollider;
     private Animator anim;
-    new string tag; // к этой переменной присваивается тэг на старте
-    public static Entity_Enemy Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+    new string tag; // to this variable is assigned a tag at the start
+    public static Entity_Enemy Instance { get; set; } // To collect and send data from this script
 
     private void Start()
     {
         Instance = this;
-        anim = this.gameObject.GetComponent<Animator>(); //Переменная anim получает информацию из компонента Animator (Анимация game.Object)
+        anim = this.gameObject.GetComponent<Animator>(); // Variable anim receives information from the Animator component (Animator.Object)
         e_rb = this.gameObject.GetComponent<Rigidbody2D>();
         capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
         tag = this.gameObject.transform.tag;
@@ -135,7 +135,7 @@ public class Entity_Enemy : MonoBehaviour
             if (deathAttackDamage == 0) deathAttackDamage = 25;
         }
     }
-    //Секция где идет уселение характеристик врагов, если добавляется новый враг, тут нужно добавить его характеристики
+    //The section where enemy characteristics are increased, if a new enemy is added, its characteristics should be added here
     public void BoostEnemyHP() 
     {
         skeletonMaxHP *= 1.2f;
@@ -145,7 +145,7 @@ public class Entity_Enemy : MonoBehaviour
         martialMaxHP *= 1.2f;
         flyingEyeMaxHP *= 1.2f;
     }
-    public void BoostEnemyAttackDamage() //тут усиливыем урон
+    public void BoostEnemyAttackDamage() //thereby increasing the damage
     {
         skeletonAttackDamage *= 1.2f;
         mushroomAttackDamage *= 1.2f;
@@ -154,7 +154,7 @@ public class Entity_Enemy : MonoBehaviour
         martialAttackDamage *= 1.2f;
         flyingEyeAttackDamage *= 1.2f;
     }
-    public void BoostEnemyReward() //тут увеличиваем награду за убийство
+    public void BoostEnemyReward() //there we increase the reward for the kill
     {
         skeletonReward += 2;
         mushroomReward += 2;
@@ -164,22 +164,22 @@ public class Entity_Enemy : MonoBehaviour
         flyingEyeReward += 2;
     }
 
-    //Общие методы и поведения
-    public void GetNameOfObject(GameObject gameObjectName) //получить ссылку на игровой обьект, для суммонов, чтобы они могли обращаться к мастеру кто их призвал
+    //General methods and behaviour
+    public void GetNameOfObject(GameObject gameObjectName) //Get a link to the game object, for summonses, so they can contact the master who summoned them
     {
         masterEnemy = gameObjectName;
     }
-    public void DamageDeealToPlayer() // Метод для нанесения урона Игроку
+    public void DamageDeealToPlayer() // A method for dealing damage to the Player
     {
         directionX = Enemy_Behavior.Instance.directionX;
         directionY = Enemy_Behavior.Instance.directionY;
         if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Skeleton")
         {
-            Hero.Instance.GetDamage(skeletonAttackDamage);//тут мы получаем доступ к скрипту игрока и активируем оттуда функцию GetDamage
-            float heal = skeletonAttackDamage * 0.5f; //Скелет ворует половину урона который наносит скелет игроку к себе в хп
+            Hero.Instance.GetDamage(skeletonAttackDamage);// here we access the player's script and activate the GetDamage function from there
+            float heal = skeletonAttackDamage * 0.5f; //The skeleton steals half of the damage the skeleton does to the player's xp
             currentHP += heal;
-            float healBar = heal / (float)skeletonMaxHP; //на сколько надо увеличить прогресс бар
-            if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
+            float healBar = heal / (float)skeletonMaxHP; // how much to increase the progress bar
+            if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//refresh progress bar
         }
         if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Mushroom") Hero.Instance.GetDamage(mushroomAttackDamage);
         if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "FlyingEye") Hero.Instance.GetDamage(mushroomAttackDamage);
@@ -189,18 +189,18 @@ public class Entity_Enemy : MonoBehaviour
         if (directionX < 1.8f && currentHP > 0 && directionY < 1f && tag == "Death")
         {
             Hero.Instance.GetDamage(deathAttackDamage);
-            float heal = deathAttackDamage * 0.5f; //Смерть ворует половину урона который наносит скелет игроку к себе в хп
+            float heal = deathAttackDamage * 0.5f; //Death steals half the damage a skeleton does to the player's xp
             currentHP += heal;
-            float healBar = heal / (float)deathMaxHP; //на сколько надо увеличить прогресс бар
-            this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
+            float healBar = heal / (float)deathMaxHP; // how much to increase the progress bar
+            this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);  //refresh progress bar
         }
     }
-    public void Push() //Метод для отталкивания тела
+    public void Push() //Method for repelling the body
     {
         if (transform.lossyScale.x < 0) this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(-0.5f, e_rb.velocity.y), ForceMode2D.Impulse);
         else this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(0.5f, e_rb.velocity.y), ForceMode2D.Impulse);
     }
-    public void TakeDamage(float dmg) //Получение урона (в dmg указывается значение, в Hero скрипте при вызове метода TakeDamage в dmg записывается переменная дамага от оружия ) 
+    public void TakeDamage(float dmg) //Damage (in dmg a value is specified, in the Hero script when the TakeDamage method is called, a variable of weapon damage is written to dmg ) 
     {
         float maxHP = 1;
         if (tag == "Skeleton") maxHP = skeletonMaxHP;
@@ -218,28 +218,28 @@ public class Entity_Enemy : MonoBehaviour
         {
             if (tag != "Skeleton")
             {
-                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Клонирования обьекта
+                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Cloning an object
                 bloodSpawn.gameObject.SetActive(true);
             }
             
             currentHP -= dmg;
             enemyTakeDamage = true;
-            takedDamage = (float)dmg / maxHP; //на сколько надо уменьшаить прогресс бар
-            anim.SetTrigger("damage");//анимация получения демейджа
+            takedDamage = (float)dmg / maxHP; //how much you need to reduce the progress bar
+            anim.SetTrigger("damage");// animation of getting a demage
             Enemy_Behavior.Instance.TakeDamageSound();
-            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage) ;//обновление прогресс бара
+            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
         }
         if (currentHP > 0 && isBlock)
         {
             int level = LvLGeneration.Instance.Level;
-            if (level <= 4) blockDMG = dmg * 0.5f;//если Игрок ниже 5 уровня то 50% блокирования урона
-            if (level >= 5) blockDMG = dmg * 0.1f;//если Игрок выше чем 4 уровеня то 90% блокирования урона
+            if (level <= 4) blockDMG = dmg * 0.5f;//if the Player is below level 5 then 50% damage blocking
+            if (level >= 5) blockDMG = dmg * 0.1f;//if the Player is higher than level 4 then 90% damage blocking
             currentHP -= blockDMG;
             Debug.Log(blockDMG);
             Enemy_Behavior.Instance.ShieldDamageSound();
             enemyTakeDamage = true;
-            takedDamage = blockDMG / maxHP; //на сколько надо уменьшаить прогресс бар
-            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара
+            takedDamage = blockDMG / maxHP; //how much you need to reduce the progress bar
+            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
         }
         if (currentHP <= 0)
         {
@@ -251,27 +251,27 @@ public class Entity_Enemy : MonoBehaviour
             if (tag == "Martial") reward = martialReward;
             if (tag == "Slime") reward = 1;
             if (tag == "Death") reward = 40;
-            LvLGeneration.Instance.PlusCoin(reward);//вызов метода для увелечения очков
+            LvLGeneration.Instance.PlusCoin(reward);//call for a method to increase points
             e_rb.gravityScale = 0;
             e_rb.velocity = Vector2.zero;
             capsuleCollider.enabled = false;
             anim.StopPlayback();
             anim.SetBool("dead", true);
-            anim.SetTrigger("m_death");//анимация смерти
+            anim.SetTrigger("m_death");//death animation
             enemyDead = true;
         }
     }
-    public virtual void Die() //Метод удаляет этот игровой обьект, вызывается через аниматор сразу после завершения анимации смерти
+    public virtual void Die() //Method removes this game object, called by the animator immediately after the death animation ends
     {
         bool copy = this.gameObject.GetComponent<Enemy_Behavior>().copy;
-        Destroy(this.gameObject);//уничтожить этот игровой обьект
-        if (tag == "Skeleton") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
-        if (tag == "Mushroom") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
-        if (tag == "FlyingEye" && !copy) LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
-        if (tag == "FlyingEye" && copy && masterEnemy != null) masterEnemy.GetComponent<Enemy_Behavior>().CopyCounter();//при уничтожении копии уменьшаяется каунтер копий, что позволяет вызвать доп копию.
-        if (tag == "Goblin") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
-        if (tag == "EvilWizard") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
-        if (tag == "Martial") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
+        Destroy(this.gameObject);//destroy this game object
+        if (tag == "Skeleton") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+        if (tag == "Mushroom") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+        if (tag == "FlyingEye" && !copy) LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+        if (tag == "FlyingEye" && copy && masterEnemy != null) masterEnemy.GetComponent<Enemy_Behavior>().CopyCounter();// copy destroying decreases the copy count, allowing you to call an extra copy.
+        if (tag == "Goblin") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+        if (tag == "EvilWizard") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+        if (tag == "Martial") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
         if (tag == "Slime")
         {
             GameObject[] deathObjects = GameObject.FindGameObjectsWithTag("Death");
@@ -283,23 +283,22 @@ public class Entity_Enemy : MonoBehaviour
                 }
             }
         }
-        if (tag == "Death") LvLGeneration.Instance.FindKey();//вызов метода для получения ключей
+        if (tag == "Death") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
     }
 
-    //Методы атаки у разных мобов
+    //Attack methods for different mobs
     public void BossDeathHeal(float heal)
     {
         currentHP += heal;
-        float healBar = heal / deathMaxHP; //на сколько надо увеличить прогресс бар
-        if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//обновление прогресс бара
+        float healBar = heal / deathMaxHP; // how much to increase the progress bar
+        if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//refresh progress bar
     }
     public void BossDeathDamage(float dmg)
     {
         currentHP -= dmg;
         enemyTakeDamage = true;
-        takedDamage = dmg / deathMaxHP; //на сколько надо уменьшаить прогресс бар
-        if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//обновление прогресс бара
+        takedDamage = dmg / deathMaxHP; //how much you need to reduce the progress bar
+        if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
     }
-
 }
 

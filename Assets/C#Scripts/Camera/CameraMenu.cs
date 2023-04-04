@@ -15,7 +15,7 @@ public class CameraMenu : MonoBehaviour
         ChangeDirection();
         CameraMove();
     }
-    private void ChangeDirection() //смена направленеие когда до конца картин доходит камера
+    private void ChangeDirection() //change direction when the camera reaches the end of the pictures
     {
         if (transform.position.x < 222)
         {
@@ -26,7 +26,7 @@ public class CameraMenu : MonoBehaviour
             right = true;
         }
     }
-    private void CameraMove() //движение камеры
+    private void CameraMove() // camera movement
     {
         Vector3 targetRight = new Vector3()
         {

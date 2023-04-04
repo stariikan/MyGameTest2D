@@ -1,15 +1,15 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; //для управления сценами
+using UnityEngine.SceneManagement; // for scene management
 public class Pause : MonoBehaviour
 {
     public float timer;
     public bool ispause;
 
     public bool guipuse;
-    public Texture BoxTexture; //текустуру устаналиваем сами в эдиторе
+    public Texture BoxTexture; //we set the texture ourselves in the editor
 
-    public static Pause Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    // Характеристики указанные в BOX
+    public static Pause Instance { get; set; } // To collect and send data from this script
+    // Characteristics specified in the BOX
     private float infoPlayerAttackDamage;
     private float infoPlayerMageDamage;
     private float infoPassedLvl;
@@ -133,7 +133,7 @@ public class Pause : MonoBehaviour
     {
         if (guipuse == true)
         {
-            Cursor.visible = true;// включаем отображение курсора
+            Cursor.visible = true;// switch on the cursor display
             Settings.Instance.Settings_menu_ON();
 
             if (platform == 1)

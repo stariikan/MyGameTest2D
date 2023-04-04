@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour
 {
-    public static MeleeWeapon Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-    public float direction;//переменная направления
+    public static MeleeWeapon Instance { get; set; } // To collect and send data from this script
+    public float direction;//directional variable
 
-    private BoxCollider2D boxCollider; //Коллайдер удара
+    private BoxCollider2D boxCollider; //Strike collider
 
     public float AttackDamage = 15;
     public string TargetName;
     public GameObject target;
 
 
-    private void Awake() //Действие выполняется до старта игры и 1 раз
+    private void Awake() //The action is performed before the start of the game and 1 time
     {
         //anim = GetComponent<Animator>(); // вытаскиваем информацию из компанента аниматор
-        boxCollider = GetComponent<BoxCollider2D>(); // вытаскиваем информацию из компанента бокс колайдер
+        boxCollider = GetComponent<BoxCollider2D>(); // pull information from the box colider component
         Instance = this;
     }
     private void Start()
@@ -33,16 +33,16 @@ public class MeleeWeapon : MonoBehaviour
         target = GameObject.Find(TargetName);
         //Debug.Log(target);
         if (target.CompareTag("SpellBook")) target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
-        if (target !=null && target.layer == 7) target.GetComponent<Entity_Enemy>().TakeDamage(AttackDamage); //7 это EnemyLayer
+        if (target !=null && target.layer == 7) target.GetComponent<Entity_Enemy>().TakeDamage(AttackDamage); //7 this is the EnemyLayer
     }
-    public void WeaponOff() //отключения обьекта бомбы
+    public void WeaponOff() // deactivating the bomb object
     {
         this.gameObject.SetActive(false);
     }
-    public void MeleeDirection(Vector3 _direction)// выбор направления полета 
+    public void MeleeDirection(Vector3 _direction)// selecting a flight direction 
     {
-        gameObject.SetActive(true); //активация игрового обьекта
+        gameObject.SetActive(true); //activate the game object
         this.gameObject.transform.position = _direction;
-        boxCollider.enabled = true; //активация коллайдера
+        boxCollider.enabled = true; //activating the collider
     }
 }

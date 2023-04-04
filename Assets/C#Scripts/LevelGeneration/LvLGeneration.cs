@@ -1,31 +1,31 @@
 using System.Collections;
 using UnityEngine;
 
-//Для возможности работать со сценами
+//For the ability to work with scenes
 using UnityEngine.SceneManagement; 
 
 
 public class LvLGeneration : MonoBehaviour
 {
-    // В эти три переменные занесем каждый спрайт блока по отдельности: стартовый, промежуточный, промежуточный2 и конечный.
-    public GameObject[] startBlock; //стартовая картина
-    public GameObject[] startBorder; //стартовая рамка картини
-    public GameObject[] midBlock; //мидл картины где генерятся враги
-    public GameObject[] borderMid; //мидл рамка картины где генерятся враги
-    public GameObject[] endBlock; //картина с сундуком
-    public GameObject[] endBorder; // рамка картины с сундуком
+    // These three variables are used to record each block sprite individually: start, intermediate, intermediate2 and end.
+    public GameObject[] startBlock; //start picture
+    public GameObject[] startBorder; //start picture frame
+    public GameObject[] midBlock; //midle pictures where enemies are generated
+    public GameObject[] borderMid; //middle picture frame where enemies are generated
+    public GameObject[] endBlock; // painting with a book
+    public GameObject[] endBorder; // picture frame with chest
     public GameObject[] enemyForGeneration;
     public GameObject[] bossForGeneration;
     public GameObject[] chestForGeneration;
     public GameObject[] powerUpForGeneration;
-    public static LvLGeneration Instance { get; set; } //Для сбора и отправки данных из этого скрипта
+    public static LvLGeneration Instance { get; set; } // To collect and send data from this script
 
-    public int Level = 1; // Добавим одну числовую переменную completeLevels, с помощью которой будем указывать количество пройденных уровней.
-    public int coin; // кол-во очков
+    public int Level = 1; // Let's add a numeric variable completeLevels, which will be used to specify the number of levels completed.
+    public int coin; // number of points
     public bool key = false;
-    private int enemyCheat; //Чит для генерации врагов
+    private int enemyCheat; // Cheat to generate enemies
 
-    private void Start() // В методе Start мы будем запускать генерацию уровня во время старта игры.
+    private void Start() // In the Start method we will run the level generation at the start of the game.
     {
         SaveSerial.Instance.LoadGame();
         coin = SaveSerial.Instance.playerCoin;
@@ -36,7 +36,7 @@ public class LvLGeneration : MonoBehaviour
         {
             Level = 1;
         }
-        StartCoroutine(OnGeneratingRoutine()); //процесс генерации уровня
+        StartCoroutine(OnGeneratingRoutine()); // level generation process
     }
     private void Update()
     {
@@ -49,39 +49,39 @@ public class LvLGeneration : MonoBehaviour
             CompleteLevel();
         }
     }
-    private IEnumerator OnGeneratingRoutine() //В методе OnGeneratingRoutine, будем выполнять сам процесс генерации уровня. Так как уровни у нас могут быть как большими, так и маленькими и генерироваться разное количество времени, процесс генерации мы поместим в корутину, чтобы игра не “зависала” во время работы “генератора”
+    private IEnumerator OnGeneratingRoutine() // In the OnGeneratingRoutine method, we will perform the level generation process itself. Since the levels can be both large and small and can be generated for different amounts of time, we will place the generation process in a coroutine, so that the game does not "freeze" while the "generator" is running
     {
         Vector3 position = new Vector3(0, 2, 110);
-        position.x = 0; //позиция по X, чтобы всегда была чуть дальше чем прошлый
-        position.y = 2; //позиция по Y
+        position.x = 0; // position by X so that it is always slightly further than the last one
+        position.y = 2; //Y position
         position.z = 110;
 
-        GameObject newstartBlock = Instantiate(startBlock[Random.Range(0, startBlock.Length)]); //герация перовой картины
-        newstartBlock.name = "Start block";// создаем новый обьект
-        newstartBlock.transform.position = new Vector3(position.x, position.y, position.z);// присваиваем позицию новомоу обьекту
-        newstartBlock.layer = LayerMask.NameToLayer("Ground"); //Добавление слоя Земля к созданному блоку
+        GameObject newstartBlock = Instantiate(startBlock[Random.Range(0, startBlock.Length)]); //Graduation of the feather picture
+        newstartBlock.name = "Start block";// create a new object
+        newstartBlock.transform.position = new Vector3(position.x, position.y, position.z);//assign a position to a new object
+        newstartBlock.layer = LayerMask.NameToLayer("Ground"); //Adding the Earth layer to the created block
         GameObject newBorderStart = Instantiate(startBorder[Random.Range(0, startBorder.Length)], new Vector3(position.x, position.y, position.z - 5), Quaternion.identity);
 
 
-        int count = this.Level; // Числовая переменная count будет указывать какое кол - во промежуточных блоков необходимо построить, это число будет зависеть от количества пройденных уровней и, чтобы их изначально не было слишком мало на первых уровнях, еще пяти(5) дополнительных блоков.
+        int count = this.Level; // the numeric variable count will indicate how many intermediate blocks need to be built, this number will depend on the number of levels completed and, so that they are not too few at first, an additional five(5) blocks.
 
         if (Level != 10 && Level != 20 && Level != 30 && Level != 40 && enemyCheat == 0)
         {
             for (int i = 0; i < count; i++)
             {
-                position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
-                position.y = 2; //позиция по Y, рандомная
+                position.x += 9.8f; // position by X so that it is always slightly further than the last one
+                position.y = 2; // Y position, random
                 position.z = 110;
-                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // create a new object
                 newMidBlock.name = "Middle block" + Random.Range(1, 999);
-                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                GameObject enemy = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
-                yield return new WaitForEndOfFrame(); //ожидания установки блоков
+                yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
             }
         }
 
@@ -89,19 +89,19 @@ public class LvLGeneration : MonoBehaviour
         {
             for (int i = 0; i < count; i++)
             {
-                position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
-                position.y = 2; //позиция по Y, рандомная
+                position.x += 9.8f; // position by X so that it is always slightly further than the last one
+                position.y = 2; // Y position, random
                 position.z = 110;
-                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // create a new object
                 newMidBlock.name = "Middle block" + Random.Range(1, 999);
-                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[0], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                GameObject enemy = Instantiate(enemyForGeneration[0], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
-                yield return new WaitForEndOfFrame(); //ожидания установки блоков
+                yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
             }
         }
 
@@ -109,19 +109,19 @@ public class LvLGeneration : MonoBehaviour
         {
             for (int i = 0; i < count; i++)
             {
-                position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
-                position.y = 2; //позиция по Y, рандомная
+                position.x += 9.8f; // position by X so that it is always slightly further than the last one
+                position.y = 2; // Y position, random
                 position.z = 110;
-                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // create a new object
                 newMidBlock.name = "Middle block" + Random.Range(1, 999);
-                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[1], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                GameObject enemy = Instantiate(enemyForGeneration[1], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
-                yield return new WaitForEndOfFrame(); //ожидания установки блоков
+                yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
             }
         }
 
@@ -129,19 +129,19 @@ public class LvLGeneration : MonoBehaviour
         {
             for (int i = 0; i < count; i++)
             {
-                position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
-                position.y = 2; //позиция по Y, рандомная
+                position.x += 9.8f; // position by X so that it is always slightly further than the last one
+                position.y = 2; // Y position, random
                 position.z = 110;
-                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // create a new object
                 newMidBlock.name = "Middle block" + Random.Range(1, 999);
-                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[2], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                GameObject enemy = Instantiate(enemyForGeneration[2], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
-                yield return new WaitForEndOfFrame(); //ожидания установки блоков
+                yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
             }
         }
 
@@ -149,19 +149,19 @@ public class LvLGeneration : MonoBehaviour
         {
             for (int i = 0; i < count; i++)
             {
-                position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
-                position.y = 2; //позиция по Y, рандомная
+                position.x += 9.8f; // position by X so that it is always slightly further than the last one
+                position.y = 2; // Y position, random
                 position.z = 110;
-                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // create a new object
                 newMidBlock.name = "Middle block" + Random.Range(1, 999);
-                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[3], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                GameObject enemy = Instantiate(enemyForGeneration[3], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
-                yield return new WaitForEndOfFrame(); //ожидания установки блоков
+                yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
             }
         }
 
@@ -169,19 +169,19 @@ public class LvLGeneration : MonoBehaviour
         {
             for (int i = 0; i < count; i++)
             {
-                position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
-                position.y = 2; //позиция по Y, рандомная
+                position.x += 9.8f; // position by X so that it is always slightly further than the last one
+                position.y = 2; // Y position, random
                 position.z = 110;
-                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // create a new object
                 newMidBlock.name = "Middle block" + Random.Range(1, 999);
-                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[4], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                GameObject enemy = Instantiate(enemyForGeneration[4], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
-                yield return new WaitForEndOfFrame(); //ожидания установки блоков
+                yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
             }
         }
 
@@ -189,57 +189,57 @@ public class LvLGeneration : MonoBehaviour
         {
             for (int i = 0; i < count; i++)
             {
-                position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
-                position.y = 2; //позиция по Y, рандомная
+                position.x += 9.8f; // position by X so that it is always slightly further than the last one
+                position.y = 2; // Y position, random
                 position.z = 110;
-                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+                GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // create a new object
                 newMidBlock.name = "Middle block" + Random.Range(1, 999);
-                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+                newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[5], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+                GameObject enemy = Instantiate(enemyForGeneration[5], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
-                yield return new WaitForEndOfFrame(); //ожидания установки блоков
+                yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
             }
         }
 
         if (Level == 10 || Level == 20 || Level == 30 || Level == 40) //Боссы
         {
-            position.x += 9.8f; //позиция по X, чтобы всегда была чуть дальше чем прошлый
-            position.y = 2; //позиция по Y, рандомная
+            position.x += 9.8f; // position by X so that it is always slightly further than the last one
+            position.y = 2; // Y position, random
             position.z = 110;
-            GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // создаем новый обьект
+            GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // create a new object
             newMidBlock.name = "Middle block" + Random.Range(1, 999);
-            newMidBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
+            newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
             GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-            GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Клонирования обьекта (враг) и его координаты)
+            GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
             enemy.name = "Enemy" + Random.Range(1, 999);
             enemy.gameObject.SetActive(true);
 
-            yield return new WaitForEndOfFrame(); //ожидания установки блоков
+            yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
         }
 
             GameObject newEndBlock = Instantiate(endBlock[Random.Range(0, endBlock.Length)], new Vector3(position.x + 9.8f, position.y, 110), Quaternion.identity);
-        newEndBlock.layer = LayerMask.NameToLayer("Ground");//Добавление слоя Земля к созданному блоку
-        newEndBlock.name = "End block";// создаем новый обьект
+        newEndBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created blockу
+        newEndBlock.name = "End block";// create a new object
         GameObject newBorderEnd = Instantiate(endBorder[Random.Range(0, endBorder.Length)], new Vector3(position.x + 9.8f, position.y, 105), Quaternion.identity);
 
         GameObject newChest = Instantiate(chestForGeneration[Random.Range(0, chestForGeneration.Length)], new Vector3(position.x + 9.8f, position.y, position.z - 2), Quaternion.identity);
 
-        yield return new WaitForEndOfFrame(); //ожидания установки блоков
+        yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
     }
-    public void PlusCoin(int count) //сколько будем плюсовать монеток
+    public void PlusCoin(int count) // how many coins will be added
     {
         coin += count;
     }
-    public void coin_Counter() //Метод который просто вызывает значение переменной Coin, нужен мне был для передачи этого числа в скрипт с каунтером жизней
+    public void coin_Counter() //Method which simply calls the Coin variable, I needed to pass this number to the life counter script
     {
         Debug.Log(coin);
     }
-    public void FindKey() //сколько будем плюсовать ключей
+    public void FindKey() // how many keys to add
     {
         key = true;
     }
@@ -247,7 +247,7 @@ public class LvLGeneration : MonoBehaviour
     {
         key = false;        
     }
-    public void key_Counter() //Метод который просто вызывает значение переменной Coin, нужен мне был для передачи этого числа в скрипт с каунтером жизней
+    public void key_Counter() //Method which simply calls the Coin variable, I needed to pass this number to the life counter script
     {
         Debug.Log(key);
     }
@@ -274,7 +274,7 @@ public class LvLGeneration : MonoBehaviour
         Enemy_Behavior.Instance.BoostEnemySpeed();
         if (Level == 5 || Level == 10 || Level == 15 || Level == 20 || Level == 30 || Level == 35 || Level == 40) Entity_Enemy.Instance.BoostEnemyReward();
     }
-    public void CompleteLevel() // Добавим метод CompleteLevel, который будет увеличивать переменную completeLevels на одну единицу каждый раз, когда игрок пройдет очередной уровень.
+    public void CompleteLevel() // Let's add a CompleteLevel method that will increase the completeLevels variable by one unit each time the player completes another level.
     {
         this.Level += 1;
         Boost_Enemy();
