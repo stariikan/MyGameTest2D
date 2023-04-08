@@ -1,4 +1,4 @@
-﻿== CmExistingCertificateChanged ==
+ï»¿== CmExistingCertificateChanged ==
 
 WARNING: the certificate of this host doesn't match the one you have in the key 
 store. It may mean that the identity of the server has been compromised or a 

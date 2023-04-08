@@ -1,4 +1,4 @@
-﻿== AddNotAllowedPathIsFreeByTransformerRule ==
+ï»¿== AddNotAllowedPathIsFreeByTransformerRule ==
 The item '{0}' cannot be added. The path '{0}' is already in use in the server but it's free on the client because of the transformer rule '{1}'.
 
 == AddedItemCannotBeLocked ==
@@ -199,7 +199,7 @@ Changeset {0} doesn't exist in repository {1}.
 Comment
 
 == CompMethodError ==
-{0} isn´t a valid comparison method
+{0} isnÂ´t a valid comparison method
 
 == ContentMustBeUndoCheckedout ==
 To perform the undo checkout operation on directory '{0}' its content must be included in the operation.

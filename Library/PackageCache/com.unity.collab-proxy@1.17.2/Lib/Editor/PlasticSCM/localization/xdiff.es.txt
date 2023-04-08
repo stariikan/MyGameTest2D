@@ -1,14 +1,14 @@
-﻿== SemanticOutline ==
-Diferencias Semánticas
+ï»¿== SemanticOutline ==
+Diferencias SemÃ¡nticas
 
 == ExpandSemanticOutlineTooltip ==
-Expandir el panel de diferencias semánticas
+Expandir el panel de diferencias semÃ¡nticas
 
 == CollapseSemanticOutlineTooltip ==
-Colapsar el panel de diferencias semánticas
+Colapsar el panel de diferencias semÃ¡nticas
 
 == MacSemanticOutlineToggleButtonTooltip ==
-Oculta o muestra el panel de diferencias semánticas
+Oculta o muestra el panel de diferencias semÃ¡nticas
 
 == NoDifferences ==
 No hay diferencias
@@ -17,7 +17,7 @@ No hay diferencias
 {0} - {1} elemento(s)
 
 == DifferencesTreeViewCategoryAdded ==
-Añadido
+AÃ±adido
 
 == DifferencesTreeViewCategoryMultifileMoved ==
 Movido multifichero
@@ -35,34 +35,34 @@ Borrado
 Renombrado
 
 == SemanticDiffsNotEditable ==
-Las diferencias semánticas no son editables. Cambie a diff de texto si desea editar.
+Las diferencias semÃ¡nticas no son editables. Cambie a diff de texto si desea editar.
 
 == UnableCalculateSemanticDiffs ==
-No es posible calcular las diferencias semánticas, se muestran las diferencias basadas en texto.
+No es posible calcular las diferencias semÃ¡nticas, se muestran las diferencias basadas en texto.
 
 == SemanticDiffButton ==
-Diff semántico
+Diff semÃ¡ntico
 
 == SemanticDiffButtonTooltip ==
-Diff semántico integrado: mostrar las diferencias en modo semántico
+Diff semÃ¡ntico integrado: mostrar las diferencias en modo semÃ¡ntico
 
 == VisualDiffButton ==
 Diff visual
 
 == VisualDiffButtonTooltip ==
-Mostrar las diferencias semánticas en modo visual
+Mostrar las diferencias semÃ¡nticas en modo visual
 
 == SkipFormatChangesButton ==
 Ignorar cambios de formato
 
 == SkipFormatChangesButtonTooltip ==
-Ignorar cambios de indentaciones y saltos de línea cuando las diferencias semánticas son calculadas
+Ignorar cambios de indentaciones y saltos de lÃ­nea cuando las diferencias semÃ¡nticas son calculadas
 
 == ReformatButton ==
 Formatear
 
 == ReformatButtonTooltip ==
-Formatear el código fuente
+Formatear el cÃ³digo fuente
 
 == TextDiffButton ==
 Diff de texto
@@ -74,10 +74,10 @@ Mostrar las diferencias basadas en texto
 Copiar al portapapeles
 
 == FileEditedSaveChanges ==
-Ha editado el fichero seleccionado, ¿desea guardar los cambios?
+Ha editado el fichero seleccionado, Â¿desea guardar los cambios?
 
 == Days ==
-{0} días
+{0} dÃ­as
 
 == Hours ==
 {0} horas

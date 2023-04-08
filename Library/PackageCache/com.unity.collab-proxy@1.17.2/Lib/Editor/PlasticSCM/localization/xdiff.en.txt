@@ -1,4 +1,4 @@
-﻿== SemanticOutline ==
+ï»¿== SemanticOutline ==
 Semantic Outline
 
 == ExpandSemanticOutlineTooltip ==

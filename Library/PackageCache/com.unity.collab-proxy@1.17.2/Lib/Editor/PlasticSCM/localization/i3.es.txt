@@ -1,32 +1,32 @@
-﻿== FontPreviewSampleTest ==
-El veloz murciélago hindú comía feliz cardillo y kiwi
+ï»¿== FontPreviewSampleTest ==
+El veloz murciÃ©lago hindÃº comÃ­a feliz cardillo y kiwi
 
 == FontPreviewLabelFont ==
 Fuente: {0}
 
 == StrikeoutFontNotSupportedMessage ==
-La fuente {0} no soporta el estilo tachado, utilizado por la aplicación. Por favor, seleccione otra fuente.
+La fuente {0} no soporta el estilo tachado, utilizado por la aplicaciÃ³n. Por favor, seleccione otra fuente.
 
 == StrikeoutFontNotSupportedCaption ==
-Fuente no válida
+Fuente no vÃ¡lida
 
 == CloseTab ==
-Cerrar pestaña
+Cerrar pestaÃ±a
 
 == CloseAllTabs ==
-Cerrar todas las pestañas
+Cerrar todas las pestaÃ±as
 
 == CloseAllTabsButThis ==
-Cerrar las demás pestañas
+Cerrar las demÃ¡s pestaÃ±as
 
 == CloseTabsToTheRight ==
-Cerrar todas las pestañas a la derecha
+Cerrar todas las pestaÃ±as a la derecha
 
 == CopyTitle ==
-Copiar título
+Copiar tÃ­tulo
 
 == ListOpenedTabs ==
-Listar pestañas abiertas
+Listar pestaÃ±as abiertas
 
 == Abort ==
 Abortar
@@ -44,7 +44,7 @@ Aceptar
 Cancelar
 
 == Yes ==
-Sí
+SÃ­
 
 == No ==
 No
@@ -68,7 +68,7 @@ Cambiar...
 &Cancelar
 
 == YesAmp ==
-&Sí
+&SÃ­
 
 == NoAmp ==
 &No

@@ -1,4 +1,4 @@
-﻿== WrongRevFormat3D ==
+ï»¿== WrongRevFormat3D ==
 The revision format specified is not valid
 
 == AcceptResults ==

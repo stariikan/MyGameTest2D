@@ -1,4 +1,4 @@
-﻿== Error ==
+ï»¿== Error ==
 Error
 
 == NoResultFileSelected ==
