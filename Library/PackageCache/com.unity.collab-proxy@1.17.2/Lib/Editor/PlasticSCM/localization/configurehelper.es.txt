@@ -1,8 +1,8 @@
-﻿== ConfiguringLanguage ==
-Configurando el idioma. Éstos son los idiomas disponibles
+ï»¿== ConfiguringLanguage ==
+Configurando el idioma. Ã‰stos son los idiomas disponibles
 
 == ChooseLanguage ==
-Seleccione un idioma (teclee un número)
+Seleccione un idioma (teclee un nÃºmero)
 
 == YesAnswers ==
 si|s
@@ -14,16 +14,16 @@ si|s
 [s/N]
 
 == ConfiguringEdition ==
-Plastic SCM tiene dos ediciones: Enterprise para equipos grandes que necesitan escalabilidad, y Team para grupos de hasta 15 desarrolladores. Puede obtener más información acerca de las ediciones en plasticscm.com
+Plastic SCM tiene dos ediciones: Enterprise para equipos grandes que necesitan escalabilidad, y Team para grupos de hasta 15 desarrolladores. Puede obtener mÃ¡s informaciÃ³n acerca de las ediciones en plasticscm.com
 
 == ChooseEdition ==
-Seleccione la edición a instalar (type a number)
+Seleccione la ediciÃ³n a instalar (type a number)
 
 == ConfiguringWorkingMode ==
-Configurando el modo de seguridad/usuarios. Éstos son los modos disponibles
+Configurando el modo de seguridad/usuarios. Ã‰stos son los modos disponibles
 
 == ChooseWorkingMode ==
-Seleccione un modo (teclee un número)
+Seleccione un modo (teclee un nÃºmero)
 
 == NameWorkingMode ==
 Nombre
@@ -38,19 +38,19 @@ Active Directory
 LDAP
 
 == UpWorkingMode ==
-Usuario y contraseña
+Usuario y contraseÃ±a
 
 == SSOWorkingMode ==
 Single Sign On
 
 == ConfiguringLdap ==
-Configurando la conexión con LDAP ...
+Configurando la conexiÃ³n con LDAP ...
 
 == ConfiguringUp ==
 Configure sus credenciales:
 
 == ConfiguringLicenseToken ==
-Configurando autorenovación para licencias de suscripción
+Configurando autorenovaciÃ³n para licencias de suscripciÃ³n
 
 == LicenseToken ==
 Token de licencia [Pulse ENTER para omitir]
@@ -59,7 +59,7 @@ Token de licencia [Pulse ENTER para omitir]
 Usuario
 
 == UpPassword ==
-Constraseña
+ConstraseÃ±a
 
 == LdapServer ==
 Servidor LDAP
@@ -74,7 +74,7 @@ Dominio LDAP
 Nombre de usuario LDAP
 
 == LdapPassword ==
-Contraseña LDAP
+ContraseÃ±a LDAP
 
 == MsgError ==
 Error: 
@@ -83,31 +83,31 @@ Error:
 Tipos de servidor LDAP disponibles
 
 == ChooseType ==
-Seleccione su tipo de servidor (teclee un número)
+Seleccione su tipo de servidor (teclee un nÃºmero)
 
 == InvalidOption ==
-Opción no válida. 
+OpciÃ³n no vÃ¡lida. 
 
 == InvalidValue ==
-Valor no válido. 
+Valor no vÃ¡lido. 
 
 == InvalidParameter ==
-Parámetro no válido: {0}
+ParÃ¡metro no vÃ¡lido: {0}
 
 == InvalidLanguage ==
-Idioma no válido: {0}
+Idioma no vÃ¡lido: {0}
 
 == InvalidWorkingModeConf ==
-Modo de seguridad/usuarios no válido: {0}
+Modo de seguridad/usuarios no vÃ¡lido: {0}
 
 == InvalidLdapType ==
-Tipo de servidor LDAP no válido: {0}
+Tipo de servidor LDAP no vÃ¡lido: {0}
 
 == ParameterNotPresent ==
-El parámetro {0} no se ha especificado o no es válido
+El parÃ¡metro {0} no se ha especificado o no es vÃ¡lido
 
 == NoPortInRemotingFile ==
-No hay ningún puerto especificado en el fichero de configuración de remoting
+No hay ningÃºn puerto especificado en el fichero de configuraciÃ³n de remoting
 
 == InvalidPortNumber ==
-Número de puerto no válido: {0}
+NÃºmero de puerto no vÃ¡lido: {0}

@@ -36,6 +36,6 @@ public class SoundOfObject : MonoBehaviour
     }
     public void StopSound()
     {
-        _audioSource.Stop();
+        if (_audioSource.isPlaying) _audioSource.Stop();
     }
 }

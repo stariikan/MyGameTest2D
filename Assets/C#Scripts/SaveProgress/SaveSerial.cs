@@ -140,35 +140,35 @@ public class SaveSerial : MonoBehaviour
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
 
-            mushroomHP = Entity_Enemy.Instance.mushroomMaxHP;
-            mushroomDamage = Entity_Enemy.Instance.mushroomAttackDamage;
+            mushroomHP = Enemy_Behavior.Instance.mushroomMaxHP;
+            mushroomDamage = Enemy_Behavior.Instance.mushroomAttackDamage;
             mushroomSpeed = Enemy_Behavior.Instance.moushroomSpeed;
-            mushroomReward = Entity_Enemy.Instance.mushroomReward;
+            mushroomReward = Enemy_Behavior.Instance.mushroomReward;
 
-            flyingEyeHP = Entity_Enemy.Instance.flyingEyeMaxHP;
-            flyingEyeDamage = Entity_Enemy.Instance.flyingEyeAttackDamage;
+            flyingEyeHP = Enemy_Behavior.Instance.flyingEyeMaxHP;
+            flyingEyeDamage = Enemy_Behavior.Instance.flyingEyeAttackDamage;
             flyingEyeSpeed = Enemy_Behavior.Instance.flyingEyeSpeed;
-            flyingEyeReward = Entity_Enemy.Instance.flyingEyeReward;
+            flyingEyeReward = Enemy_Behavior.Instance.flyingEyeReward;
 
-            skeletonHP = Entity_Enemy.Instance.skeletonMaxHP;
-            skeletonDamage = Entity_Enemy.Instance.skeletonAttackDamage;
+            skeletonHP = Enemy_Behavior.Instance.skeletonMaxHP;
+            skeletonDamage = Enemy_Behavior.Instance.skeletonAttackDamage;
             skeletonSpeed = Enemy_Behavior.Instance.skeletonSpeed;
-            skeletonReward = Entity_Enemy.Instance.skeletonReward;
+            skeletonReward = Enemy_Behavior.Instance.skeletonReward;
 
-            goblinHP = Entity_Enemy.Instance.goblinMaxHP;
-            goblinDamage = Entity_Enemy.Instance.goblinAttackDamage;
+            goblinHP = Enemy_Behavior.Instance.goblinMaxHP;
+            goblinDamage = Enemy_Behavior.Instance.goblinAttackDamage;
             goblinSpeed = Enemy_Behavior.Instance.goblinSpeed;
-            goblinReward = Entity_Enemy.Instance.goblinReward;
+            goblinReward = Enemy_Behavior.Instance.goblinReward;
 
-            wizardHP = Entity_Enemy.Instance.wizardMaxHP;
-            wizardDamage = Entity_Enemy.Instance.wizardAttackDamage;
+            wizardHP = Enemy_Behavior.Instance.wizardMaxHP;
+            wizardDamage = Enemy_Behavior.Instance.wizardAttackDamage;
             wizardSpeed = Enemy_Behavior.Instance.wizardSpeed;
-            wizardReward = Entity_Enemy.Instance.wizardReward;
+            wizardReward = Enemy_Behavior.Instance.wizardReward;
 
-            martialHP = Entity_Enemy.Instance.martialMaxHP;
-            martialDamage = Entity_Enemy.Instance.martialAttackDamage;
+            martialHP = Enemy_Behavior.Instance.martialMaxHP;
+            martialDamage = Enemy_Behavior.Instance.martialAttackDamage;
             martialSpeed = Enemy_Behavior.Instance.martialSpeed;
-            martialReward = Entity_Enemy.Instance.martialReward;
+            martialReward = Enemy_Behavior.Instance.martialReward;
         }
         
         data.playerCoin = playerCoin;
@@ -239,35 +239,35 @@ public class SaveSerial : MonoBehaviour
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
 
-            mushroomHP = Entity_Enemy.Instance.mushroomMaxHP;
-            mushroomDamage = Entity_Enemy.Instance.mushroomAttackDamage;
+            mushroomHP = Enemy_Behavior.Instance.mushroomMaxHP;
+            mushroomDamage = Enemy_Behavior.Instance.mushroomAttackDamage;
             mushroomSpeed = Enemy_Behavior.Instance.moushroomSpeed;
-            mushroomReward = Entity_Enemy.Instance.mushroomReward;
+            mushroomReward = Enemy_Behavior.Instance.mushroomReward;
 
-            flyingEyeHP = Entity_Enemy.Instance.flyingEyeMaxHP;
-            flyingEyeDamage = Entity_Enemy.Instance.flyingEyeAttackDamage;
+            flyingEyeHP = Enemy_Behavior.Instance.flyingEyeMaxHP;
+            flyingEyeDamage = Enemy_Behavior.Instance.flyingEyeAttackDamage;
             flyingEyeSpeed = Enemy_Behavior.Instance.flyingEyeSpeed;
-            flyingEyeReward = Entity_Enemy.Instance.flyingEyeReward;
+            flyingEyeReward = Enemy_Behavior.Instance.flyingEyeReward;
 
-            skeletonHP = Entity_Enemy.Instance.skeletonMaxHP;
-            skeletonDamage = Entity_Enemy.Instance.skeletonAttackDamage;
+            skeletonHP = Enemy_Behavior.Instance.skeletonMaxHP;
+            skeletonDamage = Enemy_Behavior.Instance.skeletonAttackDamage;
             skeletonSpeed = Enemy_Behavior.Instance.skeletonSpeed;
-            skeletonReward = Entity_Enemy.Instance.skeletonReward;
+            skeletonReward = Enemy_Behavior.Instance.skeletonReward;
 
-            goblinHP = Entity_Enemy.Instance.goblinMaxHP;
-            goblinDamage = Entity_Enemy.Instance.goblinAttackDamage;
+            goblinHP = Enemy_Behavior.Instance.goblinMaxHP;
+            goblinDamage = Enemy_Behavior.Instance.goblinAttackDamage;
             goblinSpeed = Enemy_Behavior.Instance.goblinSpeed;
-            goblinReward = Entity_Enemy.Instance.goblinReward;
+            goblinReward = Enemy_Behavior.Instance.goblinReward;
 
-            wizardHP = Entity_Enemy.Instance.wizardMaxHP;
-            wizardDamage = Entity_Enemy.Instance.wizardAttackDamage;
+            wizardHP = Enemy_Behavior.Instance.wizardMaxHP;
+            wizardDamage = Enemy_Behavior.Instance.wizardAttackDamage;
             wizardSpeed = Enemy_Behavior.Instance.wizardSpeed;
-            wizardReward = Entity_Enemy.Instance.wizardReward;
+            wizardReward = Enemy_Behavior.Instance.wizardReward;
 
-            martialHP = Entity_Enemy.Instance.martialMaxHP;
-            martialDamage = Entity_Enemy.Instance.martialAttackDamage;
+            martialHP = Enemy_Behavior.Instance.martialMaxHP;
+            martialDamage = Enemy_Behavior.Instance.martialAttackDamage;
             martialSpeed = Enemy_Behavior.Instance.martialSpeed;
-            martialReward = Entity_Enemy.Instance.martialReward;
+            martialReward = Enemy_Behavior.Instance.martialReward;
         }
 
         data.playerCoin = playerCoin;

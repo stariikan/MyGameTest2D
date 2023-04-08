@@ -170,7 +170,7 @@ Add format
 Calculating...
 
 == CopyrightTextFormat ==
-Copyright © 2006-{0} Codice Software S.L. All Rights Reserved.
+Copyright Â© 2006-{0} Codice Software S.L. All Rights Reserved.
 
 == FiltersAndConditionalFormat ==
 Filters & format
@@ -1109,7 +1109,7 @@ Nothing to download
 The merge search has finished; subtractive merge source and destination are not connected.
 
 == MergeAlreadyProcessed ==
-Merge finished. Your changes are displayed ​on the pending changes view. Close this view and you will see them!
+Merge finished. Your changes are displayed â€‹on the pending changes view. Close this view and you will see them!
 
 == FileMergeTitleSingular ==
 1 change to apply
@@ -1918,7 +1918,7 @@ Type a name for the new repo and ensure you will create it on the correct server
 Download a working copy of the repository {0}. It will just contain the files to work, not the entire history. A workspace is just the directory on disk that you use to make changes, edit, build and test locally.
 
 == RenameWorkspaceExplanation ==
-Renaming the workspace won’t modify its path.
+Renaming the workspace wonâ€™t modify its path.
 
 == RenameRepositoryExplanation ==
 Enter a new name for the selected repository
@@ -3203,7 +3203,7 @@ Automatic means that all new files and directories will be downloaded during the
 Directory update mode: Manual
 
 Manual mode is set when not all the children of a directory are selected.
-Manual means new files and directories won’t be automatically downloaded by the update.
+Manual means new files and directories wonâ€™t be automatically downloaded by the update.
 
 == GameUIUsageMessage ==
 
@@ -4704,13 +4704,13 @@ Comments
 Enter a comment for merge-to checkin operation:
 
 == BranchMergeTo ==
-Server side merge – from branch {0} to branch {1}
+Server side merge â€“ from branch {0} to branch {1}
 
 == LabelMergeTo ==
-Server side merge – from label {0} to branch {1}
+Server side merge â€“ from label {0} to branch {1}
 
 == ChangesetMergeTo ==
-Server side merge – from changeset cs:{0} to branch {1}
+Server side merge â€“ from changeset cs:{0} to branch {1}
 
 == CheckinMergeTo ==
 Checkin merge!
@@ -7571,7 +7571,7 @@ Redo
 Find
 
 == EditMenuFindFind ==
-Find…
+Findâ€¦
 
 == EditMenuFindFindNext ==
 Find Next
@@ -7616,13 +7616,13 @@ About PlasticX SCM
 About GluonX
 
 == AppMenuPreferences ==
-Preferences…
+Preferencesâ€¦
 
 == AppMenuPlasticWebsite ==
-Plastic SCM Website…
+Plastic SCM Websiteâ€¦
 
 == AppMenuSemanticMergeWebsite ==
-SemanticMerge Website…
+SemanticMerge Websiteâ€¦
 
 == NoComment ==
 No comment has been set

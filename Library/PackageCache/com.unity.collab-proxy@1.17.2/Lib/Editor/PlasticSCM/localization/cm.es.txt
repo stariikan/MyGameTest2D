@@ -1,31 +1,31 @@
-﻿== CmInvalidCertificateHostname ==
-ATENCIÓN: el nombre de host que aparece en el certificado del 
+ï»¿== CmInvalidCertificateHostname ==
+ATENCIÃ“N: el nombre de host que aparece en el certificado del 
 servidor no coincide con el nombre de host del servidor. Esto significa que el 
-certificado no ha sido generado para ese nombre de host o que existe algún 
-problema de configuración en el host al que se está conectando.
+certificado no ha sido generado para ese nombre de host o que existe algÃºn 
+problema de configuraciÃ³n en el host al que se estÃ¡ conectando.
 
 - Nombre en el certificado: {0}
 - Nombre del servidor: {1}
 
-Para continuar conectando con este host, elegir 'Yes'. El proceso de validación
-  del certificado continuará (no se recomienda).
-Para abandonar la conexión, elegir 'No' (recomendado).
+Para continuar conectando con este host, elegir 'Yes'. El proceso de validaciÃ³n
+  del certificado continuarÃ¡ (no se recomienda).
+Para abandonar la conexiÃ³n, elegir 'No' (recomendado).
         
 
 == CmInvalidCertificateHostnamePrompt ==
 Opciones disponibles: (Y)es, (N)o (pulsando Intro selecciona 'No'): 
 
 == CmInvalidCertuiResponse ==
-(!) La opción indicada no es válida.
+(!) La opciÃ³n indicada no es vÃ¡lida.
 
 == CmdListCommandsCommandTypes ==
 
-      Está viendo una lista reducida de los comandos disponibles. Puede teclear:
+      EstÃ¡ viendo una lista reducida de los comandos disponibles. Puede teclear:
       cm showcommands --essential para ver comandos esenciales (default)
       cm showcommands --additional para ver comandos adicionales
-      cm showcommands --administrative para ver comandos de administración
-      cm showcommands --security para ver comandos de manipulación de seguridad
-      cm showcommands --automation para ver comandos de automatización
+      cm showcommands --administrative para ver comandos de administraciÃ³n
+      cm showcommands --security para ver comandos de manipulaciÃ³n de seguridad
+      cm showcommands --automation para ver comandos de automatizaciÃ³n
       cm showcommands --all para ver la lista completa de comandos
     
 
@@ -42,13 +42,13 @@ Opciones disponibles: (Y)es, (N)o (pulsando Intro selecciona 'No'):
       cm help nombre_comando
       cm nombre_comando --help
 
-Para aprender más sobre la línea de comandos:
+Para aprender mÃ¡s sobre la lÃ­nea de comandos:
 https://www.plasticscm.com/documentation/cli/plastic-scm-version-control-cli-guide.shtml
 
 Para aprender sobre cm find y el sistema de queries:
 https://www.plasticscm.com/documentation/cmfind/plastic-scm-version-control-query-system-guide.shtml
 
-Sobre cómo automatizar cm:
+Sobre cÃ³mo automatizar cm:
 https://www.plasticscm.com/documentation/cmdrunner/plastic-scm-version-control-cmdrunner-guide.shtml
       
     
@@ -60,16 +60,16 @@ Comandos esenciales:
 Comandos adicionales:
 
 == CmdListCommandsAdministrativeHeader ==
-Comandos de administración:
+Comandos de administraciÃ³n:
 
 == CmdListCommandsSecurityHeader ==
 Comandos de seguridad:
 
 == CmdListCommandsAutomationHeader ==
-Comandos de automatización:
+Comandos de automatizaciÃ³n:
 
 == Description ==
-Descripción
+DescripciÃ³n
 
 == LongName ==
 Comando
@@ -87,7 +87,7 @@ Error grave: No hay comandos definidos
 Nombre corto  
 
 == WkUpgradeFinished ==
-Comprobación de workspaces finalizada.
+ComprobaciÃ³n de workspaces finalizada.
 
 == WkUpgradeStarted ==
 Comprobando contenido de los workspaces...
@@ -99,13 +99,13 @@ Introduzca credenciales para conectar al servidor [{0}]
 Usuario: 
 
 == EnterPassword ==
-Contraseña: 
+ContraseÃ±a: 
 
 == SsocliSelectProviderForOrganization ==
-Seleccione el sistema que desea usar para acceder a su organización: {0}
+Seleccione el sistema que desea usar para acceder a su organizaciÃ³n: {0}
 
 == SsocliSelectYourProviderToSignin ==
-Seleccione un sistema de autenticación [{0}-{1}] 
+Seleccione un sistema de autenticaciÃ³n [{0}-{1}] 
 
 == SsocliOpenThisUrlInYourBrowser ==
 Abra la siguiente URL en su navegador:

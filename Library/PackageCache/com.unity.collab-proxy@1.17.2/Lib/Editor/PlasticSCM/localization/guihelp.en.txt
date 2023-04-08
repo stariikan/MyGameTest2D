@@ -1,4 +1,4 @@
-﻿== PlasticWkExplFullEmpty ==
+ï»¿== PlasticWkExplFullEmpty ==
 [title]Your workspace is empty and your repo is empty too[/title]
 
 [bold]Do you want to add an existing project?[/bold]
@@ -658,7 +658,7 @@ We believe every task must be [link:https://www.plasticscm.com/book/#_review_eac
 Learn all about how to checkin changes keeping reviewers in mind [link:https://www.plasticscm.com/book/#_checkin_often_and_keep_reviewers_in_mind]here[/link].
 
 [bold]How to add comments/Questions/Request Changes[/bold]
-In the right side of the diff panel, you can find a clickable vertical bar with a '+' icon. Click it and voilá.
+In the right side of the diff panel, you can find a clickable vertical bar with a '+' icon. Click it and voilÃ¡.
 
 == CodeReviewWindowNewComment ==
 [title]Request changes, ask questions[/title]

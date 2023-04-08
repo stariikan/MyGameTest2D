@@ -72,7 +72,7 @@ public class Projectile : MonoBehaviour
         //Debug.Log(magicTargetName);
         target = GameObject.Find(magicTargetName);
         Debug.Log(target);
-        if (target != null && target.layer == 7) target.GetComponent<Entity_Enemy>().TakeDamage(magicAttackDamage);
+        if (target != null && target.layer == 7) target.GetComponent<Enemy_Behavior>().TakeDamage(magicAttackDamage);
     }
     public void SetDirection(Vector3 shootingDirection)// selecting a flight direction 
     {

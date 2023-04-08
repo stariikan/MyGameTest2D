@@ -1,4 +1,4 @@
-﻿== Error ==
+ï»¿== Error ==
 Error
 
 == NoResultFileSelected ==
@@ -40,7 +40,7 @@ Se necesitan dos ficheros para hacer diferencias
 Tipo de ficheros no soportado para obtener diferencias
 
 == SaveChanges ==
-¿Desea guardar los cambios en el fichero resultado?
+Â¿Desea guardar los cambios en el fichero resultado?
 
 == ExitPrompt ==
 Salir...

@@ -40,7 +40,7 @@ public class DrainHP : MonoBehaviour
             {
                 if (obj.name != "BossDeath")
                 {
-                    obj.GetComponent<Entity_Enemy>().BossDeathHeal(50);
+                    obj.GetComponent<Enemy_Behavior>().BossDeathHeal(50);
                 }
             }
         }

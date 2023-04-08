@@ -19,6 +19,8 @@ TagManager:
   - EvilWizard
   - Martial
   - FlyingEye
+  - MeleeWeapon
+  - Shield
   layers:
   - Default
   - TransparentFX

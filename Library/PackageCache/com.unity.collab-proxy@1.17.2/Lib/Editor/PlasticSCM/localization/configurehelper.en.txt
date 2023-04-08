@@ -1,4 +1,4 @@
-﻿== ConfiguringLanguage ==
+ï»¿== ConfiguringLanguage ==
 Configuring language. These are the available languages
 
 == ChooseLanguage ==
