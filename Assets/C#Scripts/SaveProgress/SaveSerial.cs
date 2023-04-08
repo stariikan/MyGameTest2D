@@ -136,7 +136,7 @@ public class SaveSerial : MonoBehaviour
             playerMP = Hero.Instance.maxMP;
             playerStamina = Hero.Instance.stamina;
             playerSpeed = Hero.Instance.m_speed;
-            playerAttackDamage = MeleeWeapon.Instance.AttackDamage;
+            playerAttackDamage = Hero.Instance.playerAttackDamage;
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
 
@@ -235,7 +235,7 @@ public class SaveSerial : MonoBehaviour
             playerMP = Hero.Instance.maxMP;
             playerStamina = Hero.Instance.stamina;
             playerSpeed = Hero.Instance.m_curentSpeed;
-            playerAttackDamage = MeleeWeapon.Instance.AttackDamage;
+            playerAttackDamage = Hero.Instance.playerAttackDamage;
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
 
@@ -564,7 +564,7 @@ public class SaveSerial : MonoBehaviour
     }
     public void EnemyCheatSetting()
     {
-        if (enemyCheat == 6)
+        if (enemyCheat == 7)
         {
            enemyCheat = -1;
         }

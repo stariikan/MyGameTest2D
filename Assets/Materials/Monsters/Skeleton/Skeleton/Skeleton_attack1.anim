@@ -94,7 +94,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.41666666
-    functionName: DamageDeealToPlayer
+    functionName: EnemyAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -102,6 +102,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.41666666
     functionName: AttackSound
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5833333
+    functionName: MeleeWeaponOff
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

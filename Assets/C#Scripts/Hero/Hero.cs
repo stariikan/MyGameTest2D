@@ -35,6 +35,7 @@ public class Hero : MonoBehaviour {
     public float staminaSpeedRecovery = 10f;
     public float m_speed;
     public float m_curentSpeed;
+    public float playerAttackDamage;
     public float mageAttackDamage;
 
     public bool block = false;
@@ -93,34 +94,25 @@ public class Hero : MonoBehaviour {
         SaveSerial.Instance.LoadGame();
         maxHP = SaveSerial.Instance.playerHP;
         platform = Joystick.Instance.platform;
-        if (maxHP == 0)
-        {
-            maxHP = 100;
-        }
+        if (maxHP == 0) maxHP = 100;
         curentHP = maxHP;
+
+        playerAttackDamage = SaveSerial.Instance.playerAttackDamage;
+        if (playerAttackDamage == 0) playerAttackDamage = 8;
+
         mageAttackDamage = SaveSerial.Instance.playerMageDamage;
-        if (mageAttackDamage == 0)
-        {
-            mageAttackDamage = 30;
-        }
+        if (mageAttackDamage == 0) mageAttackDamage = 30;
+
         m_speed = SaveSerial.Instance.playerSpeed;
-        if (m_speed == 0)
-        {
-            m_speed = 4;
-        }
+        if (m_speed == 0) m_speed = 4;
         m_curentSpeed = m_speed;
+
         maxMP = SaveSerial.Instance.playerMP;
-        if (maxMP == 0)
-        {
-            maxMP = 100;
-        }
+        if (maxMP == 0) maxMP = 100;
         currentMP = maxMP;
 
         stamina = SaveSerial.Instance.playerStamina;
-        if (stamina == 0)
-        {
-            stamina = 100;
-        }
+        if (stamina == 0) stamina = 100;
         currentStamina = stamina;
     }
     // Update is called once per frame
@@ -161,19 +153,17 @@ public class Hero : MonoBehaviour {
        //old
         cooldownTimer += Time.deltaTime; // add 1 second to cooldownTimer
         m_JumpCooldownTime += Time.deltaTime;
-
         MagicCooldownTimer += Time.deltaTime; //add 1 second to MagicCooldownTimer after resetting it to zero when magicAttack is executed.
-        AttackControl();
-        StaminaRecovery();
-
-        Jostick_Settings_Controll();
 
         if (curentHP > 0)
         {
             PlayerMovement();//Method for moving and rotating a character sprite
             CheckBlock(); //Checking the block
             PlayerSpeedMode();
-            if (Input.GetKey(KeyCode.LeftControl)) MeeleAtack();
+            AttackControl();
+            StaminaRecovery();
+            Jostick_Settings_Controll();
+
             if (cooldownTimer > 1f)  capsuleCollider.enabled = true;
         }
     }
@@ -184,11 +174,15 @@ public class Hero : MonoBehaviour {
         {
             JoystickPosition.Instance.Joystick_OFF();
             Movement_buttons.Instance.MovementButtons_ON();
+            HideUpButton.Instance.Buttons_ON();
+            HideRollButton.Instance.Buttons_ON();
         }
         if (joystick)
         {
             JoystickPosition.Instance.Joystick_ON();
             Movement_buttons.Instance.MovementButtons_OFF();
+            HideUpButton.Instance.Buttons_OFF();
+            HideRollButton.Instance.Buttons_OFF();
         }
     }
 
@@ -351,6 +345,8 @@ public class Hero : MonoBehaviour {
             {
                 Roll();
             }
+            if (!block && Input.GetKey(KeyCode.LeftShift)) Block();
+            if (block && !Input.GetKey(KeyCode.LeftShift)) Block();
         }
         //Joystick controll
         if (platform == 2 || platform == 0)
@@ -377,6 +373,11 @@ public class Hero : MonoBehaviour {
             if (joystickMoveY > 0)
             {
                 Jump();
+            }
+            //Roll
+            if (joystickMoveY < 0)
+            {
+                Roll();
             }
         }
         //TouchScreen Button
@@ -465,15 +466,15 @@ public class Hero : MonoBehaviour {
     }
     public void MeeleAtack()
     {
-        if (!m_rolling && block && m_timeSinceAttack > 0.5f && !m_rolling && currentStamina > 10f)
-        {
-            m_timeSinceAttack = 0.0f;
-            m_animator.SetTrigger("BlockAttack");
-            shieldHitAttackSound.GetComponent<SoundOfObject>().StopSound();
-            shieldHitAttackSound.GetComponent<SoundOfObject>().PlaySound();
-            Enemy_Push_by_BLOCK();
-        }
-        if (!m_rolling && !block && m_timeSinceAttack > 0.25f && !m_rolling && currentStamina > 15f) 
+        //if (!m_rolling && block && m_timeSinceAttack > 0.5f && !m_rolling && currentStamina > 10f)
+        //{
+        //    m_timeSinceAttack = 0.0f;
+        //    m_animator.SetTrigger("BlockAttack");
+        //    shieldHitAttackSound.GetComponent<SoundOfObject>().StopSound();
+        //    shieldHitAttackSound.GetComponent<SoundOfObject>().PlaySound();
+        //    Enemy_Push_by_BLOCK();
+        //}
+        if (m_timeSinceAttack > 0.25f && !m_rolling && currentStamina > 15f) 
         {
             isAttack = true;
             cooldownTimer = 0;
@@ -500,16 +501,18 @@ public class Hero : MonoBehaviour {
         {
             meleeAttackArea.transform.position = firePointRight.position; //With each attack we will change projectile positions and give it a firing point position to receive the component from the projectile and send it in the direction of the player
             meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePointRight.position);
+            MeleeWeapon.Instance.GetAttackDamageInfo(playerAttackDamage);
         }
         else if (m_facingDirection < 0)
         {
             meleeAttackArea.transform.position = firePointLeft.position;
             meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePointLeft.position);
+            MeleeWeapon.Instance.GetAttackDamageInfo(playerAttackDamage);
         }
     }
     public void MeleeWeaponOff() // deactivate the weapon object
     {
-        MeleeWeapon.Instance.WeaponOff();
+        this.gameObject.GetComponentInChildren<MeleeWeapon>().WeaponOff();
     }
     public void MagicAttack()
     {
@@ -537,14 +540,8 @@ public class Hero : MonoBehaviour {
     }
     private void AttackControl()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            Block();
-        }
-        if (Input.GetKey(KeyCode.LeftAlt) && currentMP >= 15) //if the left mouse button is clicked and the timer times out > than the MagicAttackCooldown value, then the attack can be performed
-        {
-            MagicAttack(); // performing a mag attack
-        }
+        if (Input.GetKey(KeyCode.LeftControl)) MeeleAtack(); // performing a melee attack
+        if (Input.GetKey(KeyCode.LeftAlt) && currentMP >= 15) MagicAttack(); // performing a mag attack
     }
     public void Enemy_Push_by_BLOCK()
     {
