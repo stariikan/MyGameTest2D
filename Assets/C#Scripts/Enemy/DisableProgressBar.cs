@@ -11,27 +11,27 @@ public class DisableProgressBar : MonoBehaviour
         string parentTag = transform.parent.tag;
         if (parentTag == "Skeleton")
         {
-            enemyDead = this.gameObject.GetComponentInParent<Entity_Enemy>().enemyDead;
+            enemyDead = this.gameObject.GetComponentInParent<Enemy_Behavior>().enemyDead;
         }
         if (parentTag == "Mushroom")
         {
-            enemyDead = this.gameObject.GetComponentInParent<Entity_Enemy>().enemyDead;
+            enemyDead = this.gameObject.GetComponentInParent<Enemy_Behavior>().enemyDead;
         }
         if (parentTag == "Goblin")
         {
-            enemyDead = this.gameObject.GetComponentInParent<Entity_Enemy>().enemyDead;
+            enemyDead = this.gameObject.GetComponentInParent<Enemy_Behavior>().enemyDead;
         }
         if (parentTag == "EvilWizard")
         {
-            enemyDead = this.gameObject.GetComponentInParent<Entity_Enemy>().enemyDead;
+            enemyDead = this.gameObject.GetComponentInParent<Enemy_Behavior>().enemyDead;
         }
         if (parentTag == "Slime")
         {
-            enemyDead = this.gameObject.GetComponentInParent<Entity_Enemy>().enemyDead;
+            enemyDead = this.gameObject.GetComponentInParent<Enemy_Behavior>().enemyDead;
         }
         if (parentTag == "Death")
         {
-            enemyDead = this.gameObject.GetComponentInParent<Entity_Enemy>().enemyDead;
+            enemyDead = this.gameObject.GetComponentInParent<Enemy_Behavior>().enemyDead;
         }
         if (enemyDead == true)
         {

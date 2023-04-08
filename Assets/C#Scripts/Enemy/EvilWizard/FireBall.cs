@@ -42,7 +42,7 @@ public class FireBall : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        float magicDamage = Entity_Enemy.Instance.wizardAttackDamage;
+        float magicDamage = Enemy_Behavior.Instance.wizardAttackDamage;
         magicTargetName = collision.gameObject.name;
         hit = true; // here we indicate that a collision has occurred
         boxCollider.enabled = false; //disconnect the collider

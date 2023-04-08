@@ -53,7 +53,7 @@ public class Bomb : MonoBehaviour
         {
             Hero.Instance.GetDamage(bombDamage);
         }
-        if (Mathf.Abs(enemyDirectionX) < 2f) enemy.GetComponent<Entity_Enemy>().TakeDamage(bombDamage/1.5f);
+        if (Mathf.Abs(enemyDirectionX) < 2f) enemy.GetComponent<Enemy_Behavior>().TakeDamage(bombDamage / 1.5f);
     }
     public void PushFromPlayer() // отскок от игрока
     {

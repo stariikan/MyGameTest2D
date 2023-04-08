@@ -33,7 +33,7 @@ public class MeleeWeapon : MonoBehaviour
         target = GameObject.Find(TargetName);
         //Debug.Log(target);
         if (target.CompareTag("SpellBook")) target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
-        if (target !=null && target.layer == 7) target.GetComponent<Entity_Enemy>().TakeDamage(AttackDamage); //7 this is the EnemyLayer
+        if (target != null && target.layer == 7) target.GetComponent<Enemy_Behavior>().TakeDamage(AttackDamage); //7 this is the EnemyLayer
     }
     public void WeaponOff() // deactivating the bomb object
     {
