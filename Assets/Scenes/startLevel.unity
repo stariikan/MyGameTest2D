@@ -4040,9 +4040,9 @@ GameObject:
   - component: {fileID: 325288041}
   - component: {fileID: 325288040}
   - component: {fileID: 325288042}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: shieldArea
-  m_TagString: PlayerCharacter
+  m_TagString: Shield
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5887,9 +5887,9 @@ GameObject:
   - component: {fileID: 452900231}
   - component: {fileID: 452900230}
   - component: {fileID: 452900229}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: attackArea
-  m_TagString: PlayerCharacter
+  m_TagString: MeleeWeapon
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8417,9 +8417,9 @@ GameObject:
   - component: {fileID: 679882837}
   - component: {fileID: 679882836}
   - component: {fileID: 679882835}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: attackArea
-  m_TagString: PlayerCharacter
+  m_TagString: MeleeWeapon
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9717,9 +9717,9 @@ GameObject:
   - component: {fileID: 786419499}
   - component: {fileID: 786419498}
   - component: {fileID: 786419497}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: attackArea
-  m_TagString: PlayerCharacter
+  m_TagString: MeleeWeapon
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12905,9 +12905,9 @@ GameObject:
   - component: {fileID: 1206751630}
   - component: {fileID: 1206751629}
   - component: {fileID: 1206751628}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: attackArea
-  m_TagString: PlayerCharacter
+  m_TagString: MeleeWeapon
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15278,9 +15278,9 @@ GameObject:
   - component: {fileID: 1429586735}
   - component: {fileID: 1429586734}
   - component: {fileID: 1429586733}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: attackArea
-  m_TagString: PlayerCharacter
+  m_TagString: MeleeWeapon
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22791,9 +22791,9 @@ GameObject:
   - component: {fileID: 1632393459}
   - component: {fileID: 1632393458}
   - component: {fileID: 1632393457}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: attackArea
-  m_TagString: PlayerCharacter
+  m_TagString: MeleeWeapon
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23197,9 +23197,9 @@ GameObject:
   - component: {fileID: 1662315525}
   - component: {fileID: 1662315524}
   - component: {fileID: 1662315523}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: attackArea
-  m_TagString: PlayerCharacter
+  m_TagString: MeleeWeapon
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30746,9 +30746,9 @@ GameObject:
   - component: {fileID: 1909642844}
   - component: {fileID: 1909642843}
   - component: {fileID: 1909642842}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: attackArea
-  m_TagString: PlayerCharacter
+  m_TagString: MeleeWeapon
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30846,7 +30846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1918445911
 Transform:
   m_ObjectHideFlags: 0
@@ -32003,9 +32003,9 @@ GameObject:
   - component: {fileID: 2077632607}
   - component: {fileID: 2077632606}
   - component: {fileID: 2077632605}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: attackArea
-  m_TagString: PlayerCharacter
+  m_TagString: MeleeWeapon
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

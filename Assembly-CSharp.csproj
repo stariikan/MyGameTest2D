@@ -71,6 +71,7 @@
     <Compile Include="Assets\C#Scripts\UI\Main menu\Main_menu.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\DisableProgressBar.cs" />
     <Compile Include="Assets\C#Scripts\UI\MobileInput\Joystick.cs" />
+    <Compile Include="Assets\C#Scripts\Hero\BodyFront.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Sensor_HeroKnight.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Weapon\MeleeWeapon.cs" />
     <Compile Include="Assets\C#Scripts\UI\Shop\Mana.cs" />
@@ -122,7 +123,6 @@
     <Compile Include="Assets\C#Scripts\UI\Shop\HP.cs" />
     <Compile Include="Assets\C#Scripts\UI\Localization\ButtonLocalization.cs" />
     <Compile Include="Assets\C#Scripts\UI\Main menu\Collectables.cs" />
-    <Compile Include="Assets\C#Scripts\Hero\BodyFront.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Cainos\Pixel Art Platformer - Village Props\Changelog.txt" />

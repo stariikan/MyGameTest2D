@@ -31,8 +31,8 @@ TagManager:
   - Ground
   - EnemyLayers
   - playerLayers
-  - Enemy_Mushroom
-  - 
+  - EnemyWeapon
+  - PlayerShield
   - 
   - 
   - 

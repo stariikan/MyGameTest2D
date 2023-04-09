@@ -37,10 +37,16 @@ public class Shield : MonoBehaviour
         this.gameObject.SetActive(false);// when the variable reaches 1.5, the attack collider disappears
         target = GameObject.Find(TargetName);
         Debug.Log(target);
-        if (target.CompareTag("Bomb")) target.GetComponent<Bomb>().PushFromPlayer();
-        if (target.CompareTag("EvilWizard")) target.GetComponent<Enemy_Behavior>().Stun();
-        if (target.CompareTag("Mushroom")) target.GetComponent<Enemy_Behavior>().Stun();
-        if (target.CompareTag("Martial")) target.GetComponent<Enemy_Behavior>().Stun();
+        if (target.CompareTag("Bomb"))
+        {
+            target.GetComponent<Bomb>().PushFromPlayer();
+        }
+        if (target.CompareTag("MeleeWeapon"))
+        {
+            target.GetComponentInParent<Enemy_Behavior>().Stun();
+            Hero.Instance.BlockAttack();
+            Debug.Log("STUN");
+        }
         if (target != null && target.layer == 7) target.GetComponent<Enemy_Behavior>().PushFromPlayer();
     }
     public void MeleeDirection(Vector3 _direction)// selecting a flight direction 
