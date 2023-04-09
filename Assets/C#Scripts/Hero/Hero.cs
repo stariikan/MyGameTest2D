@@ -451,16 +451,15 @@ public class Hero : MonoBehaviour {
             block = false;
         }
     }
+    public void BlockAttack()
+    {
+        m_animator.SetTrigger("BlockAttack");
+        shieldHitAttackSound.GetComponent<SoundOfObject>().StopSound();
+        shieldHitAttackSound.GetComponent<SoundOfObject>().PlaySound();
+        Enemy_Push_by_BLOCK();
+    }
     public void MeeleAtack()
     {
-        //if (!m_rolling && block && m_timeSinceAttack > 0.5f && !m_rolling && currentStamina > 10f)
-        //{
-        //    m_timeSinceAttack = 0.0f;
-        //    m_animator.SetTrigger("BlockAttack");
-        //    shieldHitAttackSound.GetComponent<SoundOfObject>().StopSound();
-        //    shieldHitAttackSound.GetComponent<SoundOfObject>().PlaySound();
-        //    Enemy_Push_by_BLOCK();
-        //}
         if (m_timeSinceAttack > 0.25f && !m_rolling && currentStamina > 15f) 
         {
             isAttack = true;
@@ -536,7 +535,6 @@ public class Hero : MonoBehaviour {
     }
     public void Enemy_Push_by_BLOCK()
     {
-        currentStamina -= 10;
         if (m_facingDirection > 0)
         {
             shieldArea.transform.position = firePointRight.position; //With each attack we will change projectile positions and give it a firing point position to receive the component from the projectile and send it in the direction of the player

@@ -26,7 +26,7 @@ public class MeleeWeapon : MonoBehaviour
         Debug.Log(target);
         if (masterOfWeapon.layer == 8 &&target.CompareTag("SpellBook")) target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
         if (masterOfWeapon.layer == 8 && target != null && target.layer == 7) target.GetComponent<Enemy_Behavior>().TakeDamage(AttackDamage); //7 this is the EnemyLayer
-        if (masterOfWeapon.layer == 7 && target != null && target.layer == 8) target.GetComponent<Hero>().GetDamage(AttackDamage); //8 this is the PlayerLayer
+        if (masterOfWeapon.layer == 7 && target != null && target.layer == 8) target.GetComponentInParent<Hero>().GetDamage(AttackDamage); //8 this is the PlayerLayer
     }
     public void GetAttackDamageInfo(float damageInfo) //Getting a damage score from an object
     {
