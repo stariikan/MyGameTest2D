@@ -3,7 +3,7 @@ using UnityEngine;
 public class Enemy_Behavior : MonoBehaviour
 {
     //Skeleton parameters
-    public float skeletonMaxHP = 70; // Maximum skeleton lives
+    public float skeletonMaxHP = 48; // Maximum skeleton lives
     public float skeletonAttackDamage = 10; // Damage from physical attack
     public int skeletonReward = 2;// reward for defeating the enemy
     private bool isBlock; //check whether the block is set
@@ -12,13 +12,13 @@ public class Enemy_Behavior : MonoBehaviour
     private float blockCooldown; //сooldown block
 
     //Mushroom parameters
-    public float mushroomMaxHP = 70; //Maximum lives of the Mushroom
+    public float mushroomMaxHP = 80; //Maximum lives of the Mushroom
     public float mushroomAttackDamage = 10; // Damage from physical attack
     public int mushroomReward = 2;// reward for defeating the enemy
     public float moushroomSpeed = 2f;//Mushroom's speed
 
     //Flying Eye parameters
-    public float flyingEyeMaxHP = 70; //Maximum Flying Eye lives
+    public float flyingEyeMaxHP = 24; //Maximum Flying Eye lives
     public float flyingEyeAttackDamage = 10; // Damage from physical attack
     public int flyingEyeReward = 2;// reward for defeating the enemy
     private GameObject masterEnemy; //this will link to the eye wizard who calls on the other eyes
@@ -26,7 +26,7 @@ public class Enemy_Behavior : MonoBehaviour
     private int countOfCopy; // initially 0, when the call occurs become 3, as copies die 
 
     //Goblin Parameters
-    public float goblinMaxHP = 50;  //Maximum Goblin Lives
+    public float goblinMaxHP = 32;  //Maximum Goblin Lives
     public float goblinAttackDamage = 15; // Damage from physical attack
     public int goblinReward = 2;// reward for defeating the enemy
     public float goblinSpeed = 3f;//Goblin Speed
@@ -34,19 +34,19 @@ public class Enemy_Behavior : MonoBehaviour
     private bool jump = false;
 
     // Wizard parameters
-    public float wizardMaxHP = 50; //Maximum Wizard Lives
+    public float wizardMaxHP = 32; //Maximum Wizard Lives
     public float wizardAttackDamage = 10; // Damage from physical attack
     public int wizardReward = 2;// reward for defeating the enemy
     public float wizardSpeed = 2f;//Wizard Speed
 
     //Samurai Parameters
-    public float martialMaxHP = 75; //Maximum Samurai Lives
+    public float martialMaxHP = 300; //Maximum Samurai Lives
     public float martialAttackDamage = 20; // Damage from physical attack
     public int martialReward = 2;// reward for defeating the enemy
     public float martialSpeed = 4f;//Martial Speed
 
     //Slime parameters
-    public float slimeMaxHP = 40;//Maximum Slime lives
+    public float slimeMaxHP = 8;//Maximum Slime lives
     public float slimeAttackDamage = 15; // Damage from physical attack
     public int slimeReward = 1;// reward for defeating the enemy
     public float slimeSpeed = 2f;//Slime speed
@@ -70,9 +70,10 @@ public class Enemy_Behavior : MonoBehaviour
     private float magicCooldown = Mathf.Infinity; //cooldown on mage attack
     public float stunCooldown; //stun recovery
 
-    public float currentHP; // current of Hp the object
+    public float currentHP; // current Hp of the object
     public float takedDamage; // Damage caused to the object
     public float enemyAttackRange = 1.2f; //Range of physical attack
+    public float currentAttackDamage; //current damage of the object
     public bool enemyDead = false; // Is the object dead
     public bool enemyTakeDamage = false; //If the object has sustained damage
     private bool stuned = false; //state of stun
@@ -87,6 +88,7 @@ public class Enemy_Behavior : MonoBehaviour
     private int level; //check what level the player is at, to connect abilities
 
     public GameObject player; //For identifying the player on the scene
+    public GameObject meleeAttackArea; // Physical Weapons
     public Rigidbody2D rb; //Physical body
     private Animator anim; //Variable by which the object is animated
     private float e_delayToIdle = 0.0f;
@@ -123,11 +125,12 @@ public class Enemy_Behavior : MonoBehaviour
         if (tag == "Skeleton")
         {
             skeletonMaxHP = SaveSerial.Instance.skeletonHP;
-            if (skeletonMaxHP == 0) skeletonMaxHP = 70;
+            if (skeletonMaxHP == 0) skeletonMaxHP = 48;
             currentHP = skeletonMaxHP;
 
             skeletonAttackDamage = SaveSerial.Instance.skeletonDamage;
             if (skeletonAttackDamage == 0) skeletonAttackDamage = 10;
+            currentAttackDamage = skeletonAttackDamage;
 
             skeletonSpeed = SaveSerial.Instance.skeletonSpeed;
             if (skeletonSpeed < 2f) skeletonSpeed = 2f;
@@ -137,11 +140,12 @@ public class Enemy_Behavior : MonoBehaviour
         if (tag == "Mushroom")
         {
             mushroomMaxHP = SaveSerial.Instance.mushroomHP;
-            if (mushroomMaxHP == 0) mushroomMaxHP = 70;
+            if (mushroomMaxHP == 0) mushroomMaxHP = 80;
             currentHP = mushroomMaxHP;
 
             mushroomAttackDamage = SaveSerial.Instance.mushroomDamage;
             if (mushroomAttackDamage == 0) mushroomAttackDamage = 10;
+            currentAttackDamage = mushroomAttackDamage;
 
             moushroomSpeed = SaveSerial.Instance.mushroomSpeed;
             if (moushroomSpeed < 2f) moushroomSpeed = 2f;
@@ -150,11 +154,12 @@ public class Enemy_Behavior : MonoBehaviour
         if (tag == "FlyingEye")
         {
             flyingEyeMaxHP = SaveSerial.Instance.mushroomHP;
-            if (flyingEyeMaxHP == 0) flyingEyeMaxHP = 70;
+            if (flyingEyeMaxHP == 0) flyingEyeMaxHP = 24;
             currentHP = flyingEyeMaxHP;
 
             flyingEyeAttackDamage = SaveSerial.Instance.flyingEyeDamage;
             if (flyingEyeAttackDamage == 0) flyingEyeAttackDamage = 10;
+            currentAttackDamage = flyingEyeAttackDamage;
 
             flyingEyeSpeed = SaveSerial.Instance.flyingEyeSpeed;
             if (flyingEyeSpeed < 2f) flyingEyeSpeed = 2f;
@@ -163,11 +168,12 @@ public class Enemy_Behavior : MonoBehaviour
         if (tag == "Goblin")
         {
             goblinMaxHP = SaveSerial.Instance.goblinHP;
-            if (goblinMaxHP == 0) goblinMaxHP = 50;
+            if (goblinMaxHP == 0) goblinMaxHP = 32;
             currentHP = goblinMaxHP;
 
             goblinAttackDamage = SaveSerial.Instance.goblinDamage;
             if (goblinAttackDamage == 0) goblinAttackDamage = 15;
+            currentAttackDamage = goblinAttackDamage;
 
             goblinSpeed = SaveSerial.Instance.goblinSpeed;
             if (goblinSpeed < 2f) goblinSpeed = 2f;
@@ -176,11 +182,12 @@ public class Enemy_Behavior : MonoBehaviour
         if (tag == "EvilWizard")
         {
             wizardMaxHP = SaveSerial.Instance.wizardHP;
-            if (wizardMaxHP == 0) wizardMaxHP = 50;
+            if (wizardMaxHP == 0) wizardMaxHP = 32;
             currentHP = wizardMaxHP;
 
             wizardAttackDamage = SaveSerial.Instance.wizardDamage;
             if (wizardAttackDamage == 0) wizardAttackDamage = 10;
+            currentAttackDamage = wizardAttackDamage;
 
             wizardSpeed = SaveSerial.Instance.wizardSpeed;
             if (wizardSpeed < 2f) wizardSpeed = 2f;
@@ -189,11 +196,12 @@ public class Enemy_Behavior : MonoBehaviour
         if (tag == "Martial")
         {
             martialMaxHP = SaveSerial.Instance.martialHP;
-            if (martialMaxHP == 0) martialMaxHP = 75;
+            if (martialMaxHP == 0) martialMaxHP = 300;
             currentHP = martialMaxHP;
 
             martialAttackDamage = SaveSerial.Instance.martialDamage;
             if (martialAttackDamage == 0) martialAttackDamage = 20;
+            currentAttackDamage = martialAttackDamage;
 
             martialSpeed = SaveSerial.Instance.martialSpeed;
             if (martialSpeed < 4f) martialSpeed = 4f;
@@ -201,10 +209,11 @@ public class Enemy_Behavior : MonoBehaviour
         }
         if (tag == "Slime")
         {
-            if (slimeMaxHP == 0) slimeMaxHP = 40;
+            if (slimeMaxHP == 0) slimeMaxHP = 8;
             currentHP = slimeMaxHP;
 
             if (slimeAttackDamage == 0) slimeAttackDamage = 15;
+            currentAttackDamage = slimeAttackDamage;
 
             if (slimeSpeed < 2f) slimeSpeed = 2f;
             speedRecovery = slimeSpeed;
@@ -215,6 +224,7 @@ public class Enemy_Behavior : MonoBehaviour
             currentHP = deathMaxHP;
 
             if (deathAttackDamage == 0) deathAttackDamage = 25;
+            currentAttackDamage = deathAttackDamage;
 
             if (deathSpeed < 2f) deathSpeed = 2f;
             speedRecovery = deathSpeed;
@@ -243,8 +253,8 @@ public class Enemy_Behavior : MonoBehaviour
         }
         if (tag == "Mushroom")
         {
-            EnemyMovement();
-            MushroomAttack();
+            //EnemyMovement();
+            //MushroomAttack();
         }
         if (tag == "FlyingEye")
         {
@@ -273,8 +283,8 @@ public class Enemy_Behavior : MonoBehaviour
         }
         if (tag == "Death")
         {
-            //DeathMovement();
-            EnemyMovement();
+            DeathMovement();
+            //EnemyMovement();
             DeathAttack();
         }
     }
@@ -314,6 +324,16 @@ public class Enemy_Behavior : MonoBehaviour
 
         // Reset timer
         timeSinceAttack = 0.0f;
+    }
+    public void EnemyAttack()
+    {
+        meleeAttackArea.transform.position = firePoint.position; //With each attack we will change projectile positions and give it a firing point position to receive the component from the projectile and send it in the direction of the player
+        meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePoint.position);
+        meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(currentAttackDamage);
+    }
+    public void MeleeWeaponOff() // deactivate the weapon object
+    {
+        meleeAttackArea.GetComponent<MeleeWeapon>().WeaponOff();
     }
     public void BoostEnemySpeed() //method to increase the speed of enemies
     {
@@ -364,7 +384,108 @@ public class Enemy_Behavior : MonoBehaviour
             }
         }
     }
+    public void GetNameOfObject(GameObject gameObjectName) //Get a link to the game object, for summonses, so they can contact the master who summoned them
+    {
+        masterEnemy = gameObjectName;
+    }
+    public void LifeSteal() // Lifesteal from player
+    {
+        Hero.Instance.GetDamage(skeletonAttackDamage);// here we access the player's script and activate the GetDamage function from there
+        float heal = skeletonAttackDamage * 0.5f; //The skeleton steals half of the damage the skeleton does to the player's xp
+        currentHP += heal;
+        float healBar = heal / (float)skeletonMaxHP; // how much to increase the progress bar
+        if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//refresh progress bar
+    }
+    public void Push() //Method for repelling the body
+    {
+        if (transform.lossyScale.x < 0) this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(-0.5f, rb.velocity.y), ForceMode2D.Impulse);
+        else this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(0.5f, rb.velocity.y), ForceMode2D.Impulse);
+    }
+    public void TakeDamage(float dmg) //Damage (in dmg a value is specified, in the Hero script when the TakeDamage method is called, a variable of weapon damage is written to dmg ) 
+    {
+        float maxHP = 1;
+        if (tag == "Skeleton") maxHP = skeletonMaxHP;
+        if (tag == "Mushroom") maxHP = mushroomMaxHP;
+        if (tag == "FlyingEye") maxHP = flyingEyeMaxHP;
+        if (tag == "Goblin") maxHP = goblinMaxHP;
+        if (tag == "EvilWizard") maxHP = wizardMaxHP;
+        if (tag == "Martial") maxHP = martialMaxHP;
+        if (tag == "Slime") maxHP = slimeMaxHP;
+        if (tag == "Death") maxHP = deathMaxHP;
 
+        isBlock = this.gameObject.GetComponent<Enemy_Behavior>().block;
+        //Debug.Log(isBlock);
+        if (currentHP > 0 && !isBlock)
+        {
+            if (tag != "Skeleton")
+            {
+                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Cloning an object
+                bloodSpawn.gameObject.SetActive(true);
+            }
+
+            currentHP -= dmg;
+            enemyTakeDamage = true;
+            takedDamage = (float)dmg / maxHP; //how much you need to reduce the progress bar
+            anim.SetTrigger("damage");// animation of getting a demage
+            Enemy_Behavior.Instance.TakeDamageSound();
+            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
+        }
+        if (currentHP > 0 && isBlock)
+        {
+            int level = LvLGeneration.Instance.Level;
+            if (level <= 4) blockDMG = dmg * 0.5f;//if the Player is below level 5 then 50% damage blocking
+            if (level >= 5) blockDMG = dmg * 0.1f;//if the Player is higher than level 4 then 90% damage blocking
+            currentHP -= blockDMG;
+            Debug.Log(blockDMG);
+            Enemy_Behavior.Instance.ShieldDamageSound();
+            enemyTakeDamage = true;
+            takedDamage = blockDMG / maxHP; //how much you need to reduce the progress bar
+            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
+        }
+        if (currentHP <= 0)
+        {
+            int reward = 2;
+            if (tag == "Skeleton") reward = skeletonReward;
+            if (tag == "Mushroom") reward = mushroomReward;
+            if (tag == "FlyingEye") reward = mushroomReward;
+            if (tag == "Goblin") reward = goblinReward;
+            if (tag == "Martial") reward = martialReward;
+            if (tag == "Slime") reward = 1;
+            if (tag == "Death") reward = 40;
+            LvLGeneration.Instance.PlusCoin(reward);//call for a method to increase points
+            rb.gravityScale = 0;
+            rb.velocity = Vector2.zero;
+            capsuleCollider.enabled = false;
+            anim.StopPlayback();
+            anim.SetBool("dead", true);
+            anim.SetTrigger("m_death");//death animation
+            enemyDead = true;
+        }
+    }
+    public virtual void Die() //Method removes this game object, called by the animator immediately after the death animation ends
+    {
+        bool copy = this.gameObject.GetComponent<Enemy_Behavior>().copy;
+        Destroy(this.gameObject);//destroy this game object
+        if (tag == "Skeleton") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+        if (tag == "Mushroom") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+        if (tag == "FlyingEye" && !copy) LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+        if (tag == "FlyingEye" && copy && masterEnemy != null) masterEnemy.GetComponent<Enemy_Behavior>().CopyCounter();// copy destroying decreases the copy count, allowing you to call an extra copy.
+        if (tag == "Goblin") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+        if (tag == "EvilWizard") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+        if (tag == "Martial") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+        if (tag == "Slime")
+        {
+            GameObject[] deathObjects = GameObject.FindGameObjectsWithTag("Death");
+            foreach (GameObject obj in deathObjects)
+            {
+                if (obj.name != "BossDeath")
+                {
+                    obj.GetComponent<Enemy_Behavior>().BossDeathDamage(50);
+                }
+            }
+        }
+        if (tag == "Death") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+    }
 
     //Special skins on mobs
     public void Block() // Using a shield (Skeleton)
@@ -386,7 +507,7 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void MushroomSpores() //creates a cloud of spore that damasks the player (Mushroom)
     {
-        if (level > 4)
+        if (level > 0)
         {
             magicCooldown = 0; // reset timer
             Vector3 MoushroomScale = transform.localScale; //take the mushroom sprite rotation parameter
@@ -401,7 +522,7 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void SummonCopy() //creates copies of the Flying Eye
     {
-        if (level > 4 && countOfCopy < 1)
+        if (level > 0 && countOfCopy < 1)
         {
             magicCooldown = 0;
             Vector3 pos = transform.position;
@@ -450,7 +571,7 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void GoblinBomb() // Bomb Throw (Goblin)
     {
-        if (level >= 5 && remainingBombs >= 1)
+        if (level >= 0 && remainingBombs >= 1)
         {
             remainingBombs -= 1;
             magicCooldown = 0; // reset timer
@@ -565,8 +686,6 @@ public class Enemy_Behavior : MonoBehaviour
             pos.x -= playerFollowSpeed; //Calculating the position along the x-axis
             transform.position = pos; //applying the position
             movement = true;
-            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
         }
         else movement = false;
     }
@@ -668,7 +787,7 @@ public class Enemy_Behavior : MonoBehaviour
             anim.SetBool("stun", false);
         }
 
-        if (playerHP > 0 && Mathf.Abs(directionX) < 6f && (Mathf.Abs(directionX)) > 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !stuned && level >= 5)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 6f && (Mathf.Abs(directionX)) > 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !stuned && level >= 1)
         {
             anim.SetTrigger("attack1");
             magicSound.GetComponent<SoundOfObject>().ContinueSound();
@@ -777,128 +896,6 @@ public class Enemy_Behavior : MonoBehaviour
         wizardReward += 2;
         martialReward += 2;
         flyingEyeReward += 2;
-    }
-
-    //General methods and behaviour
-    public void GetNameOfObject(GameObject gameObjectName) //Get a link to the game object, for summonses, so they can contact the master who summoned them
-    {
-        masterEnemy = gameObjectName;
-    }
-    public void DamageDeealToPlayer() // A method for dealing damage to the Player
-    {
-        directionX = Enemy_Behavior.Instance.directionX;
-        directionY = Enemy_Behavior.Instance.directionY;
-        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Skeleton")
-        {
-            Hero.Instance.GetDamage(skeletonAttackDamage);// here we access the player's script and activate the GetDamage function from there
-            float heal = skeletonAttackDamage * 0.5f; //The skeleton steals half of the damage the skeleton does to the player's xp
-            currentHP += heal;
-            float healBar = heal / (float)skeletonMaxHP; // how much to increase the progress bar
-            if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//refresh progress bar
-        }
-        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Mushroom") Hero.Instance.GetDamage(mushroomAttackDamage);
-        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "FlyingEye") Hero.Instance.GetDamage(mushroomAttackDamage);
-        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Goblin") Hero.Instance.GetDamage(goblinAttackDamage);
-        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Slime") Hero.Instance.GetDamage(slimeAttackDamage);
-        if (directionX < 1.5f && currentHP > 0 && directionY < 1f && tag == "Martial") Hero.Instance.GetDamage(martialAttackDamage);
-        if (directionX < 1.8f && currentHP > 0 && directionY < 1f && tag == "Death")
-        {
-            Hero.Instance.GetDamage(deathAttackDamage);
-            float heal = deathAttackDamage * 0.5f; //Death steals half the damage a skeleton does to the player's xp
-            currentHP += heal;
-            float healBar = heal / (float)deathMaxHP; // how much to increase the progress bar
-            this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);  //refresh progress bar
-        }
-    }
-    public void Push() //Method for repelling the body
-    {
-        if (transform.lossyScale.x < 0) this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(-0.5f, rb.velocity.y), ForceMode2D.Impulse);
-        else this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(0.5f, rb.velocity.y), ForceMode2D.Impulse);
-    }
-    public void TakeDamage(float dmg) //Damage (in dmg a value is specified, in the Hero script when the TakeDamage method is called, a variable of weapon damage is written to dmg ) 
-    {
-        float maxHP = 1;
-        if (tag == "Skeleton") maxHP = skeletonMaxHP;
-        if (tag == "Mushroom") maxHP = mushroomMaxHP;
-        if (tag == "FlyingEye") maxHP = flyingEyeMaxHP;
-        if (tag == "Goblin") maxHP = goblinMaxHP;
-        if (tag == "EvilWizard") maxHP = wizardMaxHP;
-        if (tag == "Martial") maxHP = martialMaxHP;
-        if (tag == "Slime") maxHP = slimeMaxHP;
-        if (tag == "Death") maxHP = deathMaxHP;
-
-        isBlock = this.gameObject.GetComponent<Enemy_Behavior>().block;
-        //Debug.Log(isBlock);
-        if (currentHP > 0 && !isBlock)
-        {
-            if (tag != "Skeleton")
-            {
-                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Cloning an object
-                bloodSpawn.gameObject.SetActive(true);
-            }
-
-            currentHP -= dmg;
-            enemyTakeDamage = true;
-            takedDamage = (float)dmg / maxHP; //how much you need to reduce the progress bar
-            anim.SetTrigger("damage");// animation of getting a demage
-            Enemy_Behavior.Instance.TakeDamageSound();
-            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
-        }
-        if (currentHP > 0 && isBlock)
-        {
-            int level = LvLGeneration.Instance.Level;
-            if (level <= 4) blockDMG = dmg * 0.5f;//if the Player is below level 5 then 50% damage blocking
-            if (level >= 5) blockDMG = dmg * 0.1f;//if the Player is higher than level 4 then 90% damage blocking
-            currentHP -= blockDMG;
-            Debug.Log(blockDMG);
-            Enemy_Behavior.Instance.ShieldDamageSound();
-            enemyTakeDamage = true;
-            takedDamage = blockDMG / maxHP; //how much you need to reduce the progress bar
-            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
-        }
-        if (currentHP <= 0)
-        {
-            int reward = 2;
-            if (tag == "Skeleton") reward = skeletonReward;
-            if (tag == "Mushroom") reward = mushroomReward;
-            if (tag == "FlyingEye") reward = mushroomReward;
-            if (tag == "Goblin") reward = goblinReward;
-            if (tag == "Martial") reward = martialReward;
-            if (tag == "Slime") reward = 1;
-            if (tag == "Death") reward = 40;
-            LvLGeneration.Instance.PlusCoin(reward);//call for a method to increase points
-            rb.gravityScale = 0;
-            rb.velocity = Vector2.zero;
-            capsuleCollider.enabled = false;
-            anim.StopPlayback();
-            anim.SetBool("dead", true);
-            anim.SetTrigger("m_death");//death animation
-            enemyDead = true;
-        }
-    }
-    public virtual void Die() //Method removes this game object, called by the animator immediately after the death animation ends
-    {
-        bool copy = this.gameObject.GetComponent<Enemy_Behavior>().copy;
-        Destroy(this.gameObject);//destroy this game object
-        if (tag == "Skeleton") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-        if (tag == "Mushroom") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-        if (tag == "FlyingEye" && !copy) LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-        if (tag == "FlyingEye" && copy && masterEnemy != null) masterEnemy.GetComponent<Enemy_Behavior>().CopyCounter();// copy destroying decreases the copy count, allowing you to call an extra copy.
-        if (tag == "Goblin") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-        if (tag == "EvilWizard") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-        if (tag == "Martial") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-        if (tag == "Slime")
-        {
-            GameObject[] deathObjects = GameObject.FindGameObjectsWithTag("Death");
-            foreach (GameObject obj in deathObjects)
-            {
-                if (obj.name != "BossDeath")
-                {
-                    obj.GetComponent<Enemy_Behavior>().BossDeathDamage(50);
-                }
-            }
-        }
-        if (tag == "Death") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
     }
 
     //Attack methods for different mobs

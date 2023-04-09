@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/DeadScreen.unity
+- path: Assets/Scenes/startLevel.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

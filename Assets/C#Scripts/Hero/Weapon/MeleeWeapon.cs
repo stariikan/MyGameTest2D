@@ -7,9 +7,10 @@ public class MeleeWeapon : MonoBehaviour
 
     private BoxCollider2D boxCollider; //Strike collider
 
-    public float AttackDamage = 15;
+    public float AttackDamage;
     public string TargetName;
     public GameObject target;
+    public GameObject masterOfWeapon;
 
 
     private void Awake() //The action is performed before the start of the game and 1 time
@@ -18,22 +19,18 @@ public class MeleeWeapon : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>(); // pull information from the box colider component
         Instance = this;
     }
-    private void Start()
-    {
-        SaveSerial.Instance.LoadGame();
-        AttackDamage = SaveSerial.Instance.playerAttackDamage;
-        if (AttackDamage == 0)
-        {
-            AttackDamage = 15;
-        }
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         TargetName = collision.gameObject.name;
         target = GameObject.Find(TargetName);
-        //Debug.Log(target);
-        if (target.CompareTag("SpellBook")) target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
-        if (target != null && target.layer == 7) target.GetComponent<Enemy_Behavior>().TakeDamage(AttackDamage); //7 this is the EnemyLayer
+        Debug.Log(target);
+        if (masterOfWeapon.layer == 8 &&target.CompareTag("SpellBook")) target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
+        if (masterOfWeapon.layer == 8 && target != null && target.layer == 7) target.GetComponent<Enemy_Behavior>().TakeDamage(AttackDamage); //7 this is the EnemyLayer
+        if (masterOfWeapon.layer == 7 && target != null && target.layer == 8) target.GetComponent<Hero>().GetDamage(AttackDamage); //8 this is the PlayerLayer
+    }
+    public void GetAttackDamageInfo(float damageInfo) //Getting a damage score from an object
+    {
+        AttackDamage = damageInfo;
     }
     public void WeaponOff() // deactivating the bomb object
     {

@@ -7,7 +7,8 @@ public class JoystickMovement : MonoBehaviour, IPointerUpHandler, IDragHandler, 
 {
     private RectTransform joystickTransform;
 
-    [SerializeField] private float dragTreshold = 0.3f; /// Если переместиться джойстик больше чем на 0,6 в любом из направлений, то скрипт поймет что игрок хочет пойти в этом направлении
+    [SerializeField] private float dragTresholdX  = 0.05f; /// Если переместиться джойстик больше чем на 0,6 в любом из направлений, то скрипт поймет что игрок хочет пойти в этом направлении
+    [SerializeField] private float dragTresholdY = 0.3f;
     [SerializeField] private int dragMovementDistance = 5; 
     [SerializeField] private int dragOffsetDistance = 30; //дистанция 
 
@@ -36,8 +37,8 @@ public class JoystickMovement : MonoBehaviour, IPointerUpHandler, IDragHandler, 
 
     private Vector2 ColculateMovementInput(Vector2 offset)
     {
-        moveX = Mathf.Abs(offset.x) > dragTreshold ? offset.x : 0;
-        moveY = Mathf.Abs(offset.y) > dragTreshold ? offset.y : 0;
+        moveX = Mathf.Abs(offset.x) > dragTresholdX ? offset.x : 0;
+        moveY = Mathf.Abs(offset.y) > dragTresholdY ? offset.y : 0;
         return new Vector2(moveX, moveY);
     }
 
