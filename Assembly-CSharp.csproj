@@ -75,6 +75,7 @@
     <Compile Include="Assets\C#Scripts\Hero\Weapon\MeleeWeapon.cs" />
     <Compile Include="Assets\C#Scripts\UI\Shop\Mana.cs" />
     <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\Button_zone.cs" />
+    <Compile Include="Assets\C#Scripts\UI\MobileInput\HideRollButton.cs" />
     <Compile Include="Assets\C#Scripts\UI\LvL and info\Info.cs" />
     <Compile Include="Assets\C#Scripts\UI\Shop\Shop.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Magic\Projectile.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Assets\C#Scripts\Enemy\EvilWizard\FireBall.cs" />
     <Compile Include="Assets\C#Scripts\Blood\Blood.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Weapon\Shield.cs" />
+    <Compile Include="Assets\C#Scripts\UI\MobileInput\HideUpButton.cs" />
     <Compile Include="Assets\C#Scripts\LevelGeneration\LvLGeneration.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\enemyProgressBar.cs" />
     <Compile Include="Assets\C#Scripts\Camera\CameraMenu.cs" />
@@ -120,8 +122,7 @@
     <Compile Include="Assets\C#Scripts\UI\Shop\HP.cs" />
     <Compile Include="Assets\C#Scripts\UI\Localization\ButtonLocalization.cs" />
     <Compile Include="Assets\C#Scripts\UI\Main menu\Collectables.cs" />
-    <Compile Include="Assets\C#Scripts\UI\MobileInput\HideUpButton.cs" />
-    <Compile Include="Assets\C#Scripts\UI\MobileInput\HideRollButton.cs" />
+    <Compile Include="Assets\C#Scripts\Hero\BodyFront.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Cainos\Pixel Art Platformer - Village Props\Changelog.txt" />

@@ -253,8 +253,8 @@ public class Enemy_Behavior : MonoBehaviour
         }
         if (tag == "Mushroom")
         {
-            EnemyMovement();
-            MushroomAttack();
+            //EnemyMovement();
+            //MushroomAttack();
         }
         if (tag == "FlyingEye")
         {

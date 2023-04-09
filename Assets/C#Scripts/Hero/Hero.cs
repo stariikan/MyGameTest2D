@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Hero : MonoBehaviour {
     public int platform;
@@ -41,11 +42,7 @@ public class Hero : MonoBehaviour {
     public bool block = false;
     public bool isAttack = false;
     public bool isPush = false;
-
-
     public bool playerDead = false; // whether the player is dead or not, for now, to make a restart when the player dies
-    private CapsuleCollider2D capsuleCollider;
-    private BoxCollider2D boxCollider;
 
     //Timers
     private float cooldownTimer = Mathf.Infinity;
@@ -59,6 +56,7 @@ public class Hero : MonoBehaviour {
     public GameObject[] magicProjectile; //Snapshots
     public GameObject meleeAttackArea; // Physical Weapons
     public GameObject shieldArea; // The Shield
+    public GameObject bodyFront; // bodyFront
     private float magicAttackCooldown = 2;//cooldown projectile launch (magic)
     public Transform firePointRight; //The position from which the shells will be fired
     public Transform firePointLeft; //The position from which the shells will be fired
@@ -85,7 +83,6 @@ public class Hero : MonoBehaviour {
     {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
         m_wallSensorR1 = transform.Find("WallSensor_R1").GetComponent<Sensor_HeroKnight>();
         m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
@@ -163,8 +160,6 @@ public class Hero : MonoBehaviour {
             AttackControl();
             StaminaRecovery();
             Jostick_Settings_Controll();
-
-            if (cooldownTimer > 1f)  capsuleCollider.enabled = true;
         }
     }
     private void Jostick_Settings_Controll()
@@ -209,11 +204,11 @@ public class Hero : MonoBehaviour {
     {
         if (transform.lossyScale.x < 0) //see which way the object is rotated in x direction in the transformer 
         {
-            m_body2d.AddForce(new Vector2(0.5f, m_body2d.velocity.y), ForceMode2D.Impulse);//Impulse means that the force will only be applied once
+            m_body2d.AddForce(new Vector2(1f, m_body2d.velocity.y), ForceMode2D.Impulse);//Impulse means that the force will only be applied once
         }
         else
         {
-            m_body2d.AddForce(new Vector2(-0.5f, m_body2d.velocity.y), ForceMode2D.Impulse);//Impulse means that the force will only be applied once
+            m_body2d.AddForce(new Vector2(-1f, m_body2d.velocity.y), ForceMode2D.Impulse);//Impulse means that the force will only be applied once
         }
     }
     private void PlayerSpeedMode()
@@ -303,14 +298,6 @@ public class Hero : MonoBehaviour {
             rollSound.GetComponent<SoundOfObject>().StopSound();
             rollSound.GetComponent<SoundOfObject>().PlaySound();
         }
-    }
-    public void GravityAndColliderOFF()
-    {
-        capsuleCollider.enabled = false;
-    }
-    public void GravityAndCooliderON()
-    {
-        //capsuleCollider.enabled = true;
     }
     public void PlayerMovement()
     {
@@ -509,6 +496,10 @@ public class Hero : MonoBehaviour {
             meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePointLeft.position);
             MeleeWeapon.Instance.GetAttackDamageInfo(playerAttackDamage);
         }
+    }
+    public void CapsuleColliderOFF()
+    {
+        bodyFront.GetComponent<BodyFront>().ColliderOFF();
     }
     public void MeleeWeaponOff() // deactivate the weapon object
     {
