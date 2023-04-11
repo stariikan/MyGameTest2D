@@ -310,7 +310,9 @@ public class Hero : MonoBehaviour {
             {
                 if (!m_rolling)
                 {
-                    m_body2d.velocity = new Vector2(move * m_curentSpeed, m_body2d.velocity.y);
+                    Vector3 position = transform.position;
+                    position.x += move * m_curentSpeed * Time.deltaTime;
+                    transform.position = position;
                     m_facingDirection = 1;
                 }
             }
@@ -318,7 +320,9 @@ public class Hero : MonoBehaviour {
             {
                 if (!m_rolling)
                 {
-                    m_body2d.velocity = new Vector2(move * m_curentSpeed, m_body2d.velocity.y);
+                    Vector3 position = transform.position;
+                    position.x += move * m_curentSpeed * Time.deltaTime;
+                    transform.position = position;
                     m_facingDirection = -1;
                 }
             }
@@ -344,7 +348,9 @@ public class Hero : MonoBehaviour {
             {
                 if (!m_rolling)
                 {
-                    m_body2d.velocity = new Vector2(joystickMoveX * m_curentSpeed, m_body2d.velocity.y);
+                    Vector3 position = transform.position;
+                    position.x += 1 * m_curentSpeed * Time.deltaTime;
+                    transform.position = position;
                     m_facingDirection = 1;
                 }
             }
@@ -352,7 +358,9 @@ public class Hero : MonoBehaviour {
             {
                 if (!m_rolling)
                 {
-                    m_body2d.velocity = new Vector2(joystickMoveX * m_curentSpeed, m_body2d.velocity.y);
+                    Vector3 position = transform.position;
+                    position.x += -1 * m_curentSpeed * Time.deltaTime;
+                    transform.position = position;
                     m_facingDirection = -1;
                 }
             }
