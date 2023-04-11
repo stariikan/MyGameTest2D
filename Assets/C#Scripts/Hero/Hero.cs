@@ -41,7 +41,8 @@ public class Hero : MonoBehaviour {
 
     public bool block = false;
     public bool isAttack = false;
-    public bool isPush = false;
+    public bool isMovingPC = false;
+    public bool isMovingMobile = false;
     public bool playerDead = false; // whether the player is dead or not, for now, to make a restart when the player dies
 
     //Timers
@@ -314,6 +315,7 @@ public class Hero : MonoBehaviour {
                     position.x += move * m_curentSpeed * Time.deltaTime;
                     transform.position = position;
                     m_facingDirection = 1;
+                    isMovingPC = true;
                 }
             }
             if (move < 0f)
@@ -324,8 +326,11 @@ public class Hero : MonoBehaviour {
                     position.x += move * m_curentSpeed * Time.deltaTime;
                     transform.position = position;
                     m_facingDirection = -1;
+                    isMovingPC = true;
                 }
             }
+            if (move == 0f) isMovingPC = false;
+
             //Jump
             if (vertical > 0)
             {
@@ -352,6 +357,7 @@ public class Hero : MonoBehaviour {
                     position.x += 1 * m_curentSpeed * Time.deltaTime;
                     transform.position = position;
                     m_facingDirection = 1;
+                    isMovingMobile = true;
                 }
             }
             if (joystickMoveX < 0f)
@@ -362,8 +368,11 @@ public class Hero : MonoBehaviour {
                     position.x += -1 * m_curentSpeed * Time.deltaTime;
                     transform.position = position;
                     m_facingDirection = -1;
+                    isMovingMobile = true;
                 }
             }
+            if (joystickMoveX == 0f) isMovingMobile = false;
+
             //Jump
             if (joystickMoveY > 0)
             {
@@ -393,7 +402,7 @@ public class Hero : MonoBehaviour {
             }
         }
         //player state
-        if (m_body2d.velocity != Vector2.zero)
+        if (isMovingMobile || isMovingPC || m_body2d.velocity.x != 0)
         {
             if (!m_rolling && m_grounded)runSound.GetComponent<SoundOfObject>().ContinueSound();
             if (m_rolling) runSound.GetComponent<SoundOfObject>().StopSound();
