@@ -275,16 +275,16 @@ public class Hero : MonoBehaviour {
     {
             if (currentStamina > 10 && m_JumpCooldownTime > 1 && m_grounded && !m_rolling && !block)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
         {
-                m_JumpCooldownTime = 0;
-                DecreaseStamina(10);
-                m_animator.SetTrigger("Jump");
-                jumpSound.GetComponent<SoundOfObject>().StopSound();
-                jumpSound.GetComponent<SoundOfObject>().PlaySound();
-                m_grounded = false;
-                m_animator.SetBool("Grounded", m_grounded);
-                transform.position = new Vector3(transform.position.x, transform.position.y + m_jumpForce, 109f);
-                m_groundSensor.Disable(0.2f);
-            }
+            m_JumpCooldownTime = 0;
+            DecreaseStamina(10);
+            m_animator.SetTrigger("Jump");
+            jumpSound.GetComponent<SoundOfObject>().StopSound();
+            jumpSound.GetComponent<SoundOfObject>().PlaySound();
+            m_grounded = false;
+            m_animator.SetBool("Grounded", m_grounded);
+            m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
+            m_groundSensor.Disable(0.2f);
+        }
     }
     public void Roll()
     {
