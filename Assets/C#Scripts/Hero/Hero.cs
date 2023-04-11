@@ -4,7 +4,7 @@ using static UnityEngine.GraphicsBuffer;
 public class Hero : MonoBehaviour {
     public int platform;
 
-    [SerializeField] float      m_jumpForce = 7.5f;
+    [SerializeField] float      m_jumpForce = 2.5f;
     [SerializeField] float      m_rollForce = 7.5f;
     [SerializeField] bool       m_noBlood = false;
     [SerializeField] GameObject m_slideDust;
@@ -41,7 +41,9 @@ public class Hero : MonoBehaviour {
 
     public bool block = false;
     public bool isAttack = false;
-    public bool isPush = false;
+    public bool isMovingPC = false;
+    public bool isMovingJoystick = false;
+    public bool isMovingButton = false;
     public bool playerDead = false; // whether the player is dead or not, for now, to make a restart when the player dies
 
     //Timers
@@ -273,26 +275,23 @@ public class Hero : MonoBehaviour {
     {
             if (currentStamina > 10 && m_JumpCooldownTime > 1 && m_grounded && !m_rolling && !block)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
         {
-                m_JumpCooldownTime = 0;
-                m_body2d.gravityScale = 1; //engage gravity    
-                DecreaseStamina(10);
-                m_animator.SetTrigger("Jump");
-                jumpSound.GetComponent<SoundOfObject>().StopSound();
-                jumpSound.GetComponent<SoundOfObject>().PlaySound();
-                m_grounded = false;
-                m_animator.SetBool("Grounded", m_grounded);
-                m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
-                m_groundSensor.Disable(0.2f);
-            }
+            m_JumpCooldownTime = 0;
+            DecreaseStamina(10);
+            m_animator.SetTrigger("Jump");
+            jumpSound.GetComponent<SoundOfObject>().StopSound();
+            jumpSound.GetComponent<SoundOfObject>().PlaySound();
+            m_grounded = false;
+            m_animator.SetBool("Grounded", m_grounded);
+            m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
+            m_groundSensor.Disable(0.2f);
+        }
     }
     public void Roll()
     {
         if (currentStamina > 5 && cooldownTimer > 0.5f && !block && m_grounded)
         {
             cooldownTimer = 0;
-            DecreaseStamina(5);            
-            if (m_body2d.velocity != Vector2.zero) m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
-            if (m_body2d.velocity == Vector2.zero) m_body2d.velocity = new Vector2((m_facingDirection * m_rollForce) * -1, m_body2d.velocity.y);
+            DecreaseStamina(5);
             m_rolling = true;
             m_animator.SetTrigger("Roll");
             rollSound.GetComponent<SoundOfObject>().StopSound();
@@ -308,20 +307,22 @@ public class Hero : MonoBehaviour {
             float vertical = Input.GetAxis("Vertical");
             if (move > 0f)
             {
-                if (!m_rolling)
-                {
-                    m_body2d.velocity = new Vector2(move * m_curentSpeed, m_body2d.velocity.y);
+                    Vector3 position = transform.position;
+                    position.x += move * m_curentSpeed * Time.deltaTime;
+                    transform.position = position;
                     m_facingDirection = 1;
-                }
+                    isMovingPC = true;
             }
             if (move < 0f)
             {
-                if (!m_rolling)
-                {
-                    m_body2d.velocity = new Vector2(move * m_curentSpeed, m_body2d.velocity.y);
+                    Vector3 position = transform.position;
+                    position.x += move * m_curentSpeed * Time.deltaTime;
+                    transform.position = position;
                     m_facingDirection = -1;
-                }
+                    isMovingPC = true;
             }
+            if (move == 0f) isMovingPC = false;
+
             //Jump
             if (vertical > 0)
             {
@@ -342,20 +343,22 @@ public class Hero : MonoBehaviour {
             float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
             if (joystickMoveX > 0f)
             {
-                if (!m_rolling)
-                {
-                    m_body2d.velocity = new Vector2(joystickMoveX * m_curentSpeed, m_body2d.velocity.y);
-                    m_facingDirection = 1;
-                }
+                 Vector3 position = transform.position;
+                 position.x += 1 * m_curentSpeed * Time.deltaTime;
+                 transform.position = position;
+                 m_facingDirection = 1;
+                 isMovingJoystick = true;
             }
             if (joystickMoveX < 0f)
             {
-                if (!m_rolling)
-                {
-                    m_body2d.velocity = new Vector2(joystickMoveX * m_curentSpeed, m_body2d.velocity.y);
+                    Vector3 position = transform.position;
+                    position.x += -1 * m_curentSpeed * Time.deltaTime;
+                    transform.position = position;
                     m_facingDirection = -1;
-                }
+                    isMovingJoystick = true;
             }
+            if (joystickMoveX == 0f) isMovingJoystick = false;
+
             //Jump
             if (joystickMoveY > 0)
             {
@@ -370,22 +373,23 @@ public class Hero : MonoBehaviour {
         //TouchScreen Button
         if (move_Right == true && platform == 2 || move_Right == true && platform == 0)
         {
-            if (!m_rolling)
-            {
-                m_body2d.velocity = new Vector2(1 * m_curentSpeed, m_body2d.velocity.y);
+                Vector3 position = transform.position;
+                position.x += 1 * m_curentSpeed * Time.deltaTime;
+                transform.position = position;
                 m_facingDirection = 1;
-            }
+                isMovingButton = true;
         }
         if (move_Left == true && platform == 2 || move_Left == true && platform == 0)
         {
-            if (!m_rolling)
-            {
-                m_body2d.velocity = new Vector2(-1 * m_curentSpeed, m_body2d.velocity.y);
+                Vector3 position = transform.position;
+                position.x += -1 * m_curentSpeed * Time.deltaTime;
+                transform.position = position;
                 m_facingDirection = -1;
-            }
+                isMovingButton = true;
         }
+        
         //player state
-        if (m_body2d.velocity != Vector2.zero)
+        if (isMovingJoystick || isMovingPC || isMovingButton)
         {
             if (!m_rolling && m_grounded)runSound.GetComponent<SoundOfObject>().ContinueSound();
             if (m_rolling) runSound.GetComponent<SoundOfObject>().StopSound();
@@ -420,6 +424,7 @@ public class Hero : MonoBehaviour {
     {
         move_Right = false;
         move_Left = false;
+        isMovingButton = false;
     }
     private void StaminaRecovery()
     {

@@ -38631,8 +38631,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platform: 0
-  m_jumpForce: 7.5
-  m_rollForce: 6
+  m_jumpForce: 2
+  m_rollForce: 60
   m_noBlood: 0
   m_slideDust: {fileID: 1038168246061390451, guid: 8b8c8cc6774fb074cb9139cc631b108e, type: 3}
   m_facingDirection: 1
@@ -38649,7 +38649,9 @@ MonoBehaviour:
   mageAttackDamage: 0
   block: 0
   isAttack: 0
-  isPush: 0
+  isMovingPC: 0
+  isMovingJoystick: 0
+  isMovingButton: 0
   playerDead: 0
   move_Right: 0
   move_Left: 0
