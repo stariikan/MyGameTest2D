@@ -4,7 +4,7 @@ using static UnityEngine.GraphicsBuffer;
 public class Hero : MonoBehaviour {
     public int platform;
 
-    [SerializeField] float      m_jumpForce = 2.5f;
+    [SerializeField] float      m_jumpForce = 6f;
     [SerializeField] float      m_rollForce = 7.5f;
     [SerializeField] bool       m_noBlood = false;
     [SerializeField] GameObject m_slideDust;
@@ -103,7 +103,7 @@ public class Hero : MonoBehaviour {
         if (mageAttackDamage == 0) mageAttackDamage = 30;
 
         m_speed = SaveSerial.Instance.playerSpeed;
-        if (m_speed == 0) m_speed = 4;
+        if (m_speed == 0) m_speed = 3.2f;
         m_curentSpeed = m_speed;
 
         maxMP = SaveSerial.Instance.playerMP;
