@@ -1,5 +1,5 @@
 # Auto detect text files and perform LF normalization
 [diff "win1252"]
     textconv = "iconv -f windows-1252 -t utf-8"
-*.txt    text working-tree-encoding=windows-1252
+*.txt    text working-tree-encoding=utf-8
 
