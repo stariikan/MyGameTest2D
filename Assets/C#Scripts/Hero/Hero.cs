@@ -23,8 +23,8 @@ public class Hero : MonoBehaviour {
     private int                 m_currentAttack = 0;
     private float               m_timeSinceAttack = 0.0f;
     private float               m_rollDuration = 8.0f / 14.0f;
-    private float               m_rollCurrentTime;
-    private float               m_JumpCooldownTime;
+    private float               m_rollCurrentTime = Mathf.Infinity;
+    private float               m_JumpCooldownTime = Mathf.Infinity;
 
     //Параметры Героя
     public float maxHP;
@@ -273,7 +273,7 @@ public class Hero : MonoBehaviour {
     }
     public void Jump()
     {
-            if (currentStamina > 10 && m_JumpCooldownTime > 1 && m_grounded && !m_rolling && !block)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
+            if (currentStamina > 10 && m_JumpCooldownTime > 1f && m_grounded && !m_rolling && !block)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
         {
             m_JumpCooldownTime = 0;
             DecreaseStamina(10);
