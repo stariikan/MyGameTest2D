@@ -273,7 +273,7 @@ public class Hero : MonoBehaviour {
     }
     public void Jump()
     {
-            if (currentStamina > 10 && m_JumpCooldownTime > 1f && m_grounded && !m_rolling && !block)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
+            if (currentStamina > 10 && m_JumpCooldownTime > 2f && m_grounded && !m_rolling && !block)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
         {
             m_JumpCooldownTime = 0;
             DecreaseStamina(10);
@@ -288,7 +288,7 @@ public class Hero : MonoBehaviour {
     }
     public void Roll()
     {
-        if (currentStamina > 5 && cooldownTimer > 0.5f && !block && m_grounded)
+        if (currentStamina > 5 && cooldownTimer > 2f && !block && m_grounded)
         {
             cooldownTimer = 0;
             DecreaseStamina(5);
