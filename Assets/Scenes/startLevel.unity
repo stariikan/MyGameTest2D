@@ -187,6 +187,9 @@ MonoBehaviour:
   flyingEyeAttackDamage: 10
   flyingEyeReward: 2
   flyingEyeSpeed: 2
+  countOfCopy: 0
+  flyAmplitude: 0
+  LowFlightPoint: 0
   goblinMaxHP: 50
   goblinAttackDamage: 15
   goblinReward: 2
@@ -867,6 +870,9 @@ MonoBehaviour:
   flyingEyeAttackDamage: 10
   flyingEyeReward: 2
   flyingEyeSpeed: 2
+  countOfCopy: 0
+  flyAmplitude: 0
+  LowFlightPoint: 0
   goblinMaxHP: 50
   goblinAttackDamage: 15
   goblinReward: 2
@@ -5393,6 +5399,9 @@ MonoBehaviour:
   flyingEyeAttackDamage: 10
   flyingEyeReward: 2
   flyingEyeSpeed: 2
+  countOfCopy: 0
+  flyAmplitude: 3
+  LowFlightPoint: -1.8
   goblinMaxHP: 50
   goblinAttackDamage: 15
   goblinReward: 2
@@ -5457,8 +5466,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.049624763, y: -0.08619543}
-  m_Size: {x: 0.19451523, y: 0.38217506}
+  m_Offset: {x: 0.049624763, y: -0.03324064}
+  m_Size: {x: 0.19451523, y: 0.20671289}
   m_Direction: 0
 --- !u!50 &397745821
 Rigidbody2D:
@@ -5475,9 +5484,9 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0.35
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -5709,6 +5718,9 @@ MonoBehaviour:
   flyingEyeAttackDamage: 10
   flyingEyeReward: 2
   flyingEyeSpeed: 2
+  countOfCopy: 0
+  flyAmplitude: 0
+  LowFlightPoint: 0
   goblinMaxHP: 50
   goblinAttackDamage: 15
   goblinReward: 2
@@ -6159,6 +6171,9 @@ MonoBehaviour:
   flyingEyeAttackDamage: 10
   flyingEyeReward: 2
   flyingEyeSpeed: 2
+  countOfCopy: 0
+  flyAmplitude: 0
+  LowFlightPoint: 0
   goblinMaxHP: 50
   goblinAttackDamage: 15
   goblinReward: 2
@@ -6363,6 +6378,9 @@ MonoBehaviour:
   flyingEyeAttackDamage: 10
   flyingEyeReward: 2
   flyingEyeSpeed: 2
+  countOfCopy: 0
+  flyAmplitude: 0
+  LowFlightPoint: 0
   goblinMaxHP: 50
   goblinAttackDamage: 15
   goblinReward: 2
@@ -8451,7 +8469,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.370454, y: 0.29324424}
+  m_Offset: {x: 0.5529193, y: -0.16291738}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -8462,7 +8480,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0689546, y: 1.4174907}
+  m_Size: {x: 0.7040239, y: 1.1620402}
   m_EdgeRadius: 0
 --- !u!50 &679882836
 Rigidbody2D:
@@ -12044,6 +12062,7 @@ GameObject:
   - component: {fileID: 1131562466}
   - component: {fileID: 1131562465}
   - component: {fileID: 1131562468}
+  - component: {fileID: 1131562469}
   m_Layer: 5
   m_Name: Up
   m_TagString: Untagged
@@ -12113,19 +12132,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1131562466}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9043920544666573536}
-        m_TargetAssemblyTypeName: Hero, Assembly-CSharp
-        m_MethodName: Jump
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
 --- !u!114 &1131562466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12176,6 +12183,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7cf4df07f6ad442a38bd212abe2aa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1131562469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131562463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 9043920544666573536}
+          m_TargetAssemblyTypeName: Hero, Assembly-CSharp
+          m_MethodName: Jump
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1136826367
 GameObject:
   m_ObjectHideFlags: 0
@@ -12595,6 +12631,9 @@ MonoBehaviour:
   flyingEyeAttackDamage: 10
   flyingEyeReward: 2
   flyingEyeSpeed: 2
+  countOfCopy: 0
+  flyAmplitude: 3
+  LowFlightPoint: -1.8
   goblinMaxHP: 50
   goblinAttackDamage: 15
   goblinReward: 2
@@ -12658,8 +12697,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.049624763, y: -0.08619543}
-  m_Size: {x: 0.19451523, y: 0.38217506}
+  m_Offset: {x: 0.049624763, y: -0.03775875}
+  m_Size: {x: 0.19451523, y: 0.19451523}
   m_Direction: 0
 --- !u!50 &1179914084
 Rigidbody2D:
@@ -12676,7 +12715,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0.35
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -15607,6 +15646,9 @@ MonoBehaviour:
   flyingEyeAttackDamage: 10
   flyingEyeReward: 2
   flyingEyeSpeed: 2
+  countOfCopy: 0
+  flyAmplitude: 0
+  LowFlightPoint: 0
   goblinMaxHP: 50
   goblinAttackDamage: 15
   goblinReward: 2
@@ -15929,6 +15971,9 @@ MonoBehaviour:
   flyingEyeAttackDamage: 10
   flyingEyeReward: 2
   flyingEyeSpeed: 2
+  countOfCopy: 0
+  flyAmplitude: 0
+  LowFlightPoint: 0
   goblinMaxHP: 50
   goblinAttackDamage: 15
   goblinReward: 2
@@ -38594,7 +38639,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0.5
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -38631,7 +38676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platform: 0
-  m_jumpForce: 2
+  m_jumpForce: 6
   m_rollForce: 60
   m_noBlood: 0
   m_slideDust: {fileID: 1038168246061390451, guid: 8b8c8cc6774fb074cb9139cc631b108e, type: 3}

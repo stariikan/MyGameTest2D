@@ -23,7 +23,9 @@ public class Enemy_Behavior : MonoBehaviour
     public int flyingEyeReward = 2;// reward for defeating the enemy
     private GameObject masterEnemy; //this will link to the eye wizard who calls on the other eyes
     public float flyingEyeSpeed = 2f;// Speed of the Eye
-    private int countOfCopy; // initially 0, when the call occurs become 3, as copies die 
+    public int countOfCopy; // initially 0, when the call occurs become 3, as copies die 
+    public float flyAmplitude; // Body Lift Force
+    public float LowFlightPoint; // the height at which the body will be lifted
 
     //Goblin Parameters
     public float goblinMaxHP = 32;  //Maximum Goblin Lives
@@ -262,7 +264,7 @@ public class Enemy_Behavior : MonoBehaviour
         }
         if (tag == "FlyingEye")
         {
-            EnemyMovement();
+            FlyingEyeMovement();
             FlyingEyeAttack();
         }
         if (tag == "Goblin")
@@ -316,6 +318,7 @@ public class Enemy_Behavior : MonoBehaviour
     }
     private void MeleeAttack() //Basic method of attack with two or more animations
     {
+        isAttack = true;
         //Damage Deal
         currentAttack++;
 
@@ -333,7 +336,8 @@ public class Enemy_Behavior : MonoBehaviour
     {
         meleeAttackArea.transform.position = firePoint.position; //With each attack we will change projectile positions and give it a firing point position to receive the component from the projectile and send it in the direction of the player
         meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePoint.position);
-        meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(currentAttackDamage);
+        if (!copy) meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(currentAttackDamage);
+        if (copy) meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(2);
     }
     public void MeleeWeaponOff() // deactivate the weapon object
     {
@@ -659,6 +663,35 @@ public class Enemy_Behavior : MonoBehaviour
         }
         else movement = false;
     }
+    public void FlyingEyeMovement()
+    {
+        directionX = player.transform.position.x - transform.position.x;
+        directionY = player.transform.position.y - transform.position.y;
+
+        Vector2 velocity = rb.velocity;
+
+        if (transform.position.y < (LowFlightPoint - Random.Range(-0.1f, 0.1f)))
+        {
+            float zigzagSpeed = flyAmplitude;
+            velocity.y = zigzagSpeed;
+            rb.velocity = velocity;
+        }
+
+        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1.3f && Mathf.Abs(directionY) < 2) && !block && !isAttack && !stuned || enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack && !stuned || copy)
+        {
+            float playerFollowSpeed = Mathf.Sign(directionX) * flyingEyeSpeed;
+            velocity.x = playerFollowSpeed;
+            rb.velocity = velocity;
+            movement = true;
+
+            if (playerFollowSpeed < 0 && transform.localScale.x > 0) Flip();
+            else if (playerFollowSpeed > 0 && transform.localScale.x < 0) Flip();
+        }
+        else
+        {
+            movement = false;
+        }
+    }
     public void GoblinMovement()
     {
         directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; // calculating the direction of movement is Player position on the x-axis - Enemy position on the x-axis
@@ -730,9 +763,27 @@ public class Enemy_Behavior : MonoBehaviour
     public void FlyingEyeAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned) JumpToPlayer();
+        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && !stuned) 
+        {
+            jumpCooldown = 0;
+            Vector3 theScale = transform.localScale;
+            transform.localScale = theScale;
+            if (directionX > 0)
+            {
+                if (theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+                jumpSound.GetComponent<SoundOfObject>().PlaySound();
+                rb.AddForce(new Vector2(10, 0));
+            }
+            if (directionX < 0)
+            {
+                if (theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+                rb.AddForce(new Vector2(-10, 0));
+                jumpSound.GetComponent<SoundOfObject>().PlaySound();
+            }
+        }
+        
         if ((Mathf.Abs(directionX)) < 5f && magicCooldown > 5 && !copy && !stuned) SummonCopy(); 
-        if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1 && !stuned)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && timeSinceAttack > 1 && !stuned)
         {
             MeleeAttack();
         }

@@ -4,7 +4,7 @@ using static UnityEngine.GraphicsBuffer;
 public class Hero : MonoBehaviour {
     public int platform;
 
-    [SerializeField] float      m_jumpForce = 2.5f;
+    [SerializeField] float      m_jumpForce = 6f;
     [SerializeField] float      m_rollForce = 7.5f;
     [SerializeField] bool       m_noBlood = false;
     [SerializeField] GameObject m_slideDust;
@@ -23,8 +23,8 @@ public class Hero : MonoBehaviour {
     private int                 m_currentAttack = 0;
     private float               m_timeSinceAttack = 0.0f;
     private float               m_rollDuration = 8.0f / 14.0f;
-    private float               m_rollCurrentTime;
-    private float               m_JumpCooldownTime;
+    private float               m_rollCurrentTime = Mathf.Infinity;
+    private float               m_JumpCooldownTime = Mathf.Infinity;
 
     //Параметры Героя
     public float maxHP;
@@ -103,7 +103,7 @@ public class Hero : MonoBehaviour {
         if (mageAttackDamage == 0) mageAttackDamage = 30;
 
         m_speed = SaveSerial.Instance.playerSpeed;
-        if (m_speed == 0) m_speed = 4;
+        if (m_speed == 0) m_speed = 3.2f;
         m_curentSpeed = m_speed;
 
         maxMP = SaveSerial.Instance.playerMP;
@@ -273,7 +273,7 @@ public class Hero : MonoBehaviour {
     }
     public void Jump()
     {
-            if (currentStamina > 10 && m_JumpCooldownTime > 1 && m_grounded && !m_rolling && !block)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
+            if (currentStamina > 10 && m_JumpCooldownTime > 2f && m_grounded && !m_rolling && !block)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
         {
             m_JumpCooldownTime = 0;
             DecreaseStamina(10);
@@ -288,7 +288,7 @@ public class Hero : MonoBehaviour {
     }
     public void Roll()
     {
-        if (currentStamina > 5 && cooldownTimer > 0.5f && !block && m_grounded)
+        if (currentStamina > 5 && cooldownTimer > 2f && !block && m_grounded)
         {
             cooldownTimer = 0;
             DecreaseStamina(5);

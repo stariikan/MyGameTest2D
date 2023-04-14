@@ -77,7 +77,7 @@ public class LvLGeneration : MonoBehaviour
                 newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+                GameObject enemy = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
@@ -97,7 +97,7 @@ public class LvLGeneration : MonoBehaviour
                 newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[0], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+                GameObject enemy = Instantiate(enemyForGeneration[0], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
@@ -117,7 +117,7 @@ public class LvLGeneration : MonoBehaviour
                 newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[1], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+                GameObject enemy = Instantiate(enemyForGeneration[1], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
@@ -137,7 +137,7 @@ public class LvLGeneration : MonoBehaviour
                 newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[2], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+                GameObject enemy = Instantiate(enemyForGeneration[2], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
@@ -157,7 +157,7 @@ public class LvLGeneration : MonoBehaviour
                 newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[3], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+                GameObject enemy = Instantiate(enemyForGeneration[3], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
@@ -177,7 +177,7 @@ public class LvLGeneration : MonoBehaviour
                 newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[4], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+                GameObject enemy = Instantiate(enemyForGeneration[4], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
@@ -197,7 +197,7 @@ public class LvLGeneration : MonoBehaviour
                 newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(enemyForGeneration[5], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+                GameObject enemy = Instantiate(enemyForGeneration[5], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
@@ -216,7 +216,7 @@ public class LvLGeneration : MonoBehaviour
                 newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-                GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+                GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
 
@@ -234,7 +234,7 @@ public class LvLGeneration : MonoBehaviour
             newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
             GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-            GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, position.y, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+            GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
             enemy.name = "Enemy" + Random.Range(1, 999);
             enemy.gameObject.SetActive(true);
 
@@ -246,7 +246,7 @@ public class LvLGeneration : MonoBehaviour
         newEndBlock.name = "End block";// create a new object
         GameObject newBorderEnd = Instantiate(endBorder[Random.Range(0, endBorder.Length)], new Vector3(position.x + 9.8f, position.y, 105), Quaternion.identity);
 
-        GameObject newChest = Instantiate(chestForGeneration[Random.Range(0, chestForGeneration.Length)], new Vector3(position.x + 9.8f, position.y, position.z - 2), Quaternion.identity);
+        GameObject newChest = Instantiate(chestForGeneration[Random.Range(0, chestForGeneration.Length)], new Vector3(position.x + 9.8f, -1, position.z - 2), Quaternion.identity);
 
         yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
     }
