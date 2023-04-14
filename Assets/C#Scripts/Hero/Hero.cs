@@ -41,6 +41,13 @@ public class Hero : MonoBehaviour {
 
     public bool block = false;
     public bool isAttack = false;
+    
+    public bool isJumpPC = false;
+    public bool isJumpMobile = false;
+
+    public bool isRollPC = false;
+    public bool isRollMobile = false;
+    
     public bool isMovingPC = false;
     public bool isMovingJoystick = false;
     public bool isMovingButton = false;
@@ -273,7 +280,7 @@ public class Hero : MonoBehaviour {
     }
     public void Jump()
     {
-            if (currentStamina > 10 && m_JumpCooldownTime > 2f && m_grounded && !m_rolling && !block)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
+            if (currentStamina > 10 && m_JumpCooldownTime > 1f && m_grounded && !m_rolling && !block)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
         {
             m_JumpCooldownTime = 0;
             DecreaseStamina(10);
@@ -288,7 +295,7 @@ public class Hero : MonoBehaviour {
     }
     public void Roll()
     {
-        if (currentStamina > 5 && cooldownTimer > 2f && !block && m_grounded)
+        if (currentStamina > 5 && cooldownTimer > 1f && !block && m_grounded)
         {
             cooldownTimer = 0;
             DecreaseStamina(5);
@@ -324,13 +331,17 @@ public class Hero : MonoBehaviour {
             if (move == 0f) isMovingPC = false;
 
             //Jump
-            if (vertical > 0)
+            if (vertical < 0.5f && isJumpPC) isJumpPC = false;
+            if (vertical > 0 && !isJumpPC)
             {
+                isJumpPC = true;
                 Jump();
             }
             //Roll
-            if (vertical < 0)
+            if (vertical > -0.5f && isRollPC) isRollPC = false;
+            if (vertical < 0 && !isRollPC)
             {
+                isRollPC = true;
                 Roll();
             }
             if (!block && Input.GetKey(KeyCode.LeftShift)) Block();
@@ -360,13 +371,17 @@ public class Hero : MonoBehaviour {
             if (joystickMoveX == 0f) isMovingJoystick = false;
 
             //Jump
-            if (joystickMoveY > 0)
+            if (joystickMoveY < 0.5f && isJumpMobile) isJumpMobile = false;
+            if (joystickMoveY > 0 && !isJumpMobile)
             {
+                isJumpMobile = true;
                 Jump();
             }
             //Roll
-            if (joystickMoveY < 0)
+            if (joystickMoveY > -0.5f && isRollMobile) isRollMobile = false;
+            if (joystickMoveY < 0 && !isRollMobile)
             {
+                isRollMobile = true;
                 Roll();
             }
         }
