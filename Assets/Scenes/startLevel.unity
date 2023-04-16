@@ -181,19 +181,19 @@ MonoBehaviour:
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
-  patrolDistance: 0
-  sightDistance: 0
+  patrolDistance: 1
+  sightDistance: 5
   alarmPause: 0
-  attackDistance: 0
+  attackDistance: 2
   flyAmplitude: 0
   LowFlightPoint: 0
-  stunDuration: 0
-  vulnerableBeforeDamage: 0
-  vulnerableAfterDamage: 0
+  stunDuration: 5
+  vulnerableBeforeDamage: 3
+  vulnerableAfterDamage: 2
   attackPause: 0
   stunAttackPause: 0
   isFlying: 0
-  isBlooded: 0
+  isBlooded: 1
   enemyDead: 0
   enemyTakeDamage: 0
   block: 0
@@ -5364,8 +5364,8 @@ MonoBehaviour:
   flyAmplitude: 3
   LowFlightPoint: -1.8
   stunDuration: 5
-  vulnerableBeforeDamage: 0
-  vulnerableAfterDamage: 0
+  vulnerableBeforeDamage: 2
+  vulnerableAfterDamage: 3
   attackPause: 0
   stunAttackPause: 0
   isFlying: 1
@@ -5658,19 +5658,19 @@ MonoBehaviour:
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
-  patrolDistance: 0
-  sightDistance: 0
+  patrolDistance: 1
+  sightDistance: 5
   alarmPause: 0
-  attackDistance: 0
+  attackDistance: 1.5
   flyAmplitude: 0
   LowFlightPoint: 0
-  stunDuration: 0
-  vulnerableBeforeDamage: 0
-  vulnerableAfterDamage: 0
+  stunDuration: 5
+  vulnerableBeforeDamage: 3
+  vulnerableAfterDamage: 2
   attackPause: 0
   stunAttackPause: 0
   isFlying: 0
-  isBlooded: 0
+  isBlooded: 1
   enemyDead: 0
   enemyTakeDamage: 0
   block: 0
@@ -12524,8 +12524,8 @@ MonoBehaviour:
   flyAmplitude: 3
   LowFlightPoint: -1.8
   stunDuration: 5
-  vulnerableBeforeDamage: 0
-  vulnerableAfterDamage: 0
+  vulnerableBeforeDamage: 2
+  vulnerableAfterDamage: 3
   attackPause: 0
   stunAttackPause: 0
   isFlying: 0
@@ -15514,19 +15514,19 @@ MonoBehaviour:
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
-  patrolDistance: 0
-  sightDistance: 0
-  alarmPause: 0
-  attackDistance: 0
+  patrolDistance: 1
+  sightDistance: 5
+  alarmPause: 3
+  attackDistance: 1.5
   flyAmplitude: 0
   LowFlightPoint: 0
-  stunDuration: 0
-  vulnerableBeforeDamage: 0
-  vulnerableAfterDamage: 0
+  stunDuration: 5
+  vulnerableBeforeDamage: 2
+  vulnerableAfterDamage: 3
   attackPause: 0
   stunAttackPause: 0
   isFlying: 0
-  isBlooded: 0
+  isBlooded: 1
   enemyDead: 0
   enemyTakeDamage: 0
   block: 0
