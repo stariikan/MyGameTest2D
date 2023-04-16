@@ -223,12 +223,17 @@ public class Enemy_Behavior : MonoBehaviour
     private void MeleeAttack() //Basic method of attack with two or more animations
     {
         float playerHP = Hero.Instance.curentHP;
+        
         if (playerHP > 0 && Mathf.Abs(directionX) <= attackDistance && !stuned && !isAttack)
         {
+            if (directionX < 0 && transform.localScale.x > 0) Flip();
+            else if (directionX > 0 && transform.localScale.x < 0) Flip();
             vulnerableAttackTimer = 0;
             isAttack = true;
             anim.SetBool("isAttack", true);
-            currentAttack = Random.Range(1, 2);
+            currentAttack += Random.Range(1, 2);
+            if (currentAttack > 2) currentAttack = 1;
+            Debug.Log(currentAttack);
             anim.SetTrigger("attack" + currentAttack + ".1");
             aState = 1;
         }
@@ -238,11 +243,18 @@ public class Enemy_Behavior : MonoBehaviour
             anim.SetTrigger("attack" + currentAttack + ".2");
             aState = 2;
         }
-        if (playerHP > 0 && vulnerableAttackTimer > vulnerableAfterDamage && isAttack && !stuned && aState == 2)
+        if (playerHP > 0 && vulnerableAttackTimer > vulnerableAfterDamage && isAttack && !stuned && aState == 2 || playerHP > 0 && Mathf.Abs(directionX) > attackDistance)
         {
             isAttack = false;
             anim.SetBool("isAttack", false);
         }
+    }
+    public void EnemyAttack()
+    {
+        meleeAttackArea.transform.position = firePoint.position; //With each attack we will change projectile positions and give it a firing point position to receive the component from the projectile and send it in the direction of the player
+        meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePoint.position);
+        if (!copy) meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(currentAttackDamage);
+        if (copy) meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(2);
     }
     public void Block() // Using a shield (Skeleton)
     {
@@ -275,13 +287,7 @@ public class Enemy_Behavior : MonoBehaviour
     {
         countOfCopy -= 1;
     }
-    public void EnemyAttack()
-    {
-        meleeAttackArea.transform.position = firePoint.position; //With each attack we will change projectile positions and give it a firing point position to receive the component from the projectile and send it in the direction of the player
-        meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePoint.position);
-        if (!copy) meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(currentAttackDamage);
-        if (copy) meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(2);
-    }
+
     public void Stun()
     {
         stunCooldown = 0;
