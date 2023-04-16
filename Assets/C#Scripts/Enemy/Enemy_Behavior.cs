@@ -1,106 +1,82 @@
 using UnityEngine;
+using UnityEngine.XR;
 
 public class Enemy_Behavior : MonoBehaviour
 {
-    //Skeleton parameters
-    public float skeletonMaxHP = 48; // Maximum skeleton lives
-    public float skeletonAttackDamage = 10; // Damage from physical attack
-    public int skeletonReward = 2;// reward for defeating the enemy
-    private bool isBlock; //check whether the block is set
+    //Enemy parameters
+    public float enemyMaxHP = 48; // Maximum skeleton lives
+    public float enemyAttackDamage = 10; // Damage from physical attack
+    public float enemySpeed = 2f;//Skeleton speed
     private float blockDMG;
-    public float skeletonSpeed = 2f;//Skeleton speed
-    private float blockCooldown; //сooldown block
-
-    //Mushroom parameters
-    public float mushroomMaxHP = 80; //Maximum lives of the Mushroom
-    public float mushroomAttackDamage = 10; // Damage from physical attack
-    public int mushroomReward = 2;// reward for defeating the enemy
-    public float moushroomSpeed = 2f;//Mushroom's speed
-
-    //Flying Eye parameters
-    public float flyingEyeMaxHP = 24; //Maximum Flying Eye lives
-    public float flyingEyeAttackDamage = 10; // Damage from physical attack
-    public int flyingEyeReward = 2;// reward for defeating the enemy
-    private GameObject masterEnemy; //this will link to the eye wizard who calls on the other eyes
-    public float flyingEyeSpeed = 2f;// Speed of the Eye
     public int countOfCopy; // initially 0, when the call occurs become 3, as copies die 
+    public int remainingAmmo = 3; // Bombs in stock
+    public int enemyReward = 2;// reward for defeating the enemy
+
+    //Enemy movement and attack configuration
+    public float patrolDistance; // How far the object walks in standby mode. For example, starts from the leftmost point, walks 10 meters to the right, returns to the starting position. Then starts over.
+    public float sightDistance; // How far away the enemy notices the player and triggers movement to the player.
+    public float alarmPause; // The pause between the moment when the skeleton loses sight of the player and returns to standby mode.
+    public float attackDistance; //Range of physical attack
     public float flyAmplitude; // Body Lift Force
     public float LowFlightPoint; // the height at which the body will be lifted
+    public float stunDuration; // Stun duration. How many seconds the object will be stunned.
+    public float vulnerableBeforeDamage; // The time between the swing and the infliction of damage. How many seconds enemy will be vulnerable before attacking.
+    public float vulnerableAfterDamage; // How many seconds the enemy will be vulnerable after taking damage.
 
-    //Goblin Parameters
-    public float goblinMaxHP = 32;  //Maximum Goblin Lives
-    public float goblinAttackDamage = 15; // Damage from physical attack
-    public int goblinReward = 2;// reward for defeating the enemy
-    public float goblinSpeed = 3f;//Goblin Speed
-    public int remainingBombs = 3; // Bombs in stock
+    public float attackPause; // Сколько времени проходит между предыдущим действием и атакой.
+    public float stunAttackPause; // Сколько секунд между тем, как игрок застунился и атакой скелета.
+
+    //Enemy states
+    private bool movement = false; //mob is not chasing the player
+    private bool playerIsAttack = false; //Does the player attack?
+    private bool isAttack = false; //If an object (enemy) is attacking
+    private bool stuned = false; //state of stun
     private bool jump = false;
+    private bool isBlock; //check whether the block is set
 
-    // Wizard parameters
-    public float wizardMaxHP = 32; //Maximum Wizard Lives
-    public float wizardAttackDamage = 10; // Damage from physical attack
-    public int wizardReward = 2;// reward for defeating the enemy
-    public float wizardSpeed = 2f;//Wizard Speed
 
-    //Samurai Parameters
-    public float martialMaxHP = 300; //Maximum Samurai Lives
-    public float martialAttackDamage = 20; // Damage from physical attack
-    public int martialReward = 2;// reward for defeating the enemy
-    public float martialSpeed = 4f;//Martial Speed
+    public bool isFlying; //Flying enemy or not
+    public bool isBlooded; //Does the enemy have blood
+    public bool enemyDead = false; // Is the object dead
+    public bool enemyTakeDamage = false; //If the object has sustained damage
+    public bool block = false; //state of block
+    public bool copy = false; // is this object a copy or not?
 
-    //Slime parameters
-    public float slimeMaxHP = 8;//Maximum Slime lives
-    public float slimeAttackDamage = 15; // Damage from physical attack
-    public int slimeReward = 1;// reward for defeating the enemy
-    public float slimeSpeed = 2f;//Slime speed
+    //Enemy cooldowns
+    private float jumpCooldown; //cooldown on rebound and jump
+    private float physicCooldown = Mathf.Infinity; //cooldown on physical attack
+    private float magicCooldown = Mathf.Infinity; //cooldown on mage attack
+    private float stunCooldown; //stun recovery
+    private float blockCooldown; //сooldown block
+    private float alarmTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
+    public float vulnerableAttackTimer; //timer for switching from one attack state to another attack state
 
-    //Boss Death parameters
-    public float deathMaxHP = 900;//Maximum Death lives
-    public float deathAttackDamage = 25; // Damage from physical attack
-    public int deathReward = 40;// reward for defeating the enemy
-    public float deathSpeed = 2f;//Death speed
+    //Other parameters
+    public float currentHP; // current Hp of the object
+    public float takedDamage; // Damage caused to the object
+    public float currentAttackDamage; //current damage of the object
+    private float speedRecovery;//need to restore speed 
+    private float currentAttack = 0; //cooldown on object attack (animation)
+    private float timeSinceAttack = 0.0f;// time since last attack, needed for combo attack animation
+    private float e_delayToIdle = 0.0f;
+    private int aState; // State of attack need for separate attack animation
+    private int level; //check what level the player is at, to connect abilities
+    new string tag; // the object tag is assigned to this variable at the start
+    public Vector3 lossyScale;
+    public Vector3 thisObjectPosition;
+    public Rigidbody2D rb; //Physical body
+    private CapsuleCollider2D capsuleCollider;
+    private Animator anim; //Variable by which the object is animated
+    private GameObject masterEnemy; //this will link to the eye wizard who calls on the other eyes
+    public GameObject[] ammo; // Enemy attack shells
+    public GameObject[] blood; //blood
+    public GameObject player; //For identifying the player on the scene
+    public GameObject meleeAttackArea; // Physical Weapons
+    public Transform firePoint; //The position from which the shells will be fired
 
     //Variable to record the coordinate difference between player and enemy
     public float directionX;
     public float directionY;
-
-    // Enemy attack shells
-    [SerializeField] private GameObject[] ammo;
-
-    //General parameters
-    private float jumpCooldown; //cooldown on rebound and jump
-    private float physicCooldown = Mathf.Infinity; //cooldown on physical attack
-    private float magicCooldown = Mathf.Infinity; //cooldown on mage attack
-    public float stunCooldown; //stun recovery
-
-    public float currentHP; // current Hp of the object
-    public float takedDamage; // Damage caused to the object
-    public float enemyAttackRange = 1.2f; //Range of physical attack
-    public float currentAttackDamage; //current damage of the object
-    public bool enemyDead = false; // Is the object dead
-    public bool enemyTakeDamage = false; //If the object has sustained damage
-    private bool stuned = false; //state of stun
-    public bool block; //state of block
-    public bool copy; // is this object a copy or not?
-    private bool movement = false; //mob is not chasing the player
-    private bool playerIsAttack; //Does the player attack?
-    private bool isAttack; //If an object (enemy) is attacking
-    private float speedRecovery;//need to restore speed 
-    private int currentAttack = 0; //cooldown on object attack (animation)
-    private float timeSinceAttack = 0.0f;// time since last attack, needed for combo attack animation
-    private int level; //check what level the player is at, to connect abilities
-
-    public GameObject player; //For identifying the player on the scene
-    public GameObject meleeAttackArea; // Physical Weapons
-    public Rigidbody2D rb; //Physical body
-    private Animator anim; //Variable by which the object is animated
-    private float e_delayToIdle = 0.0f;
-    new string tag; // the object tag is assigned to this variable at the start
-
-    [SerializeField] private Transform firePoint; //The position from which the shells will be fired
-    [SerializeField] private GameObject[] blood; //blood
-    public Vector3 lossyScale;
-    public Vector3 thisObjectPosition;
-    private CapsuleCollider2D capsuleCollider;
 
     //Sounds
     public GameObject attackSound;
@@ -112,6 +88,7 @@ public class Enemy_Behavior : MonoBehaviour
     public GameObject shieldHitSound;
     public GameObject shieldHitAttackSound;
     public GameObject rollSound;
+
     public static Enemy_Behavior Instance { get; set; } //Для сбора и отправки данных из этого скрипта
 
     private void Start()
@@ -122,115 +99,10 @@ public class Enemy_Behavior : MonoBehaviour
         capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
         tag = this.gameObject.transform.tag;
         level = LvLGeneration.Instance.Level;
-
-
-        if (tag == "Skeleton")
-        {
-            skeletonMaxHP = SaveSerial.Instance.skeletonHP;
-            if (skeletonMaxHP == 0) skeletonMaxHP = 48;
-            currentHP = skeletonMaxHP;
-
-            skeletonAttackDamage = SaveSerial.Instance.skeletonDamage;
-            if (skeletonAttackDamage == 0) skeletonAttackDamage = 10;
-            currentAttackDamage = skeletonAttackDamage;
-
-            skeletonSpeed = SaveSerial.Instance.skeletonSpeed;
-            if (skeletonSpeed < 2f) skeletonSpeed = 2f;
-            speedRecovery = skeletonSpeed;
-
-        }
-        if (tag == "Mushroom")
-        {
-            mushroomMaxHP = SaveSerial.Instance.mushroomHP;
-            if (mushroomMaxHP == 0) mushroomMaxHP = 80;
-            currentHP = mushroomMaxHP;
-
-            mushroomAttackDamage = SaveSerial.Instance.mushroomDamage;
-            if (mushroomAttackDamage == 0) mushroomAttackDamage = 10;
-            currentAttackDamage = mushroomAttackDamage;
-
-            moushroomSpeed = SaveSerial.Instance.mushroomSpeed;
-            if (moushroomSpeed < 2f) moushroomSpeed = 2f;
-            speedRecovery = moushroomSpeed;
-        }
-        if (tag == "FlyingEye")
-        {
-            flyingEyeMaxHP = SaveSerial.Instance.mushroomHP;
-            if (flyingEyeMaxHP == 0) flyingEyeMaxHP = 24;
-            currentHP = flyingEyeMaxHP;
-
-            flyingEyeAttackDamage = SaveSerial.Instance.flyingEyeDamage;
-            if (flyingEyeAttackDamage == 0) flyingEyeAttackDamage = 10;
-            currentAttackDamage = flyingEyeAttackDamage;
-
-            flyingEyeSpeed = SaveSerial.Instance.flyingEyeSpeed;
-            if (flyingEyeSpeed < 2f) flyingEyeSpeed = 2f;
-            speedRecovery = flyingEyeSpeed;
-        }
-        if (tag == "Goblin")
-        {
-            goblinMaxHP = SaveSerial.Instance.goblinHP;
-            if (goblinMaxHP == 0) goblinMaxHP = 32;
-            currentHP = goblinMaxHP;
-
-            goblinAttackDamage = SaveSerial.Instance.goblinDamage;
-            if (goblinAttackDamage == 0) goblinAttackDamage = 15;
-            currentAttackDamage = goblinAttackDamage;
-
-            goblinSpeed = SaveSerial.Instance.goblinSpeed;
-            if (goblinSpeed < 2f) goblinSpeed = 2f;
-            speedRecovery = goblinSpeed;
-        }
-        if (tag == "EvilWizard")
-        {
-            wizardMaxHP = SaveSerial.Instance.wizardHP;
-            if (wizardMaxHP == 0) wizardMaxHP = 32;
-            currentHP = wizardMaxHP;
-
-            wizardAttackDamage = SaveSerial.Instance.wizardDamage;
-            if (wizardAttackDamage == 0) wizardAttackDamage = 10;
-            currentAttackDamage = wizardAttackDamage;
-
-            wizardSpeed = SaveSerial.Instance.wizardSpeed;
-            if (wizardSpeed < 2f) wizardSpeed = 2f;
-            speedRecovery = wizardSpeed;
-        }
-        if (tag == "Martial")
-        {
-            martialMaxHP = SaveSerial.Instance.martialHP;
-            if (martialMaxHP == 0) martialMaxHP = 300;
-            currentHP = martialMaxHP;
-
-            martialAttackDamage = SaveSerial.Instance.martialDamage;
-            if (martialAttackDamage == 0) martialAttackDamage = 20;
-            currentAttackDamage = martialAttackDamage;
-
-            martialSpeed = SaveSerial.Instance.martialSpeed;
-            if (martialSpeed < 4f) martialSpeed = 4f;
-            speedRecovery = martialSpeed;
-        }
-        if (tag == "Slime")
-        {
-            if (slimeMaxHP == 0) slimeMaxHP = 8;
-            currentHP = slimeMaxHP;
-
-            if (slimeAttackDamage == 0) slimeAttackDamage = 15;
-            currentAttackDamage = slimeAttackDamage;
-
-            if (slimeSpeed < 2f) slimeSpeed = 2f;
-            speedRecovery = slimeSpeed;
-        }
-        if (tag == "Death")
-        {
-            if (deathMaxHP == 0) deathMaxHP = 900;
-            currentHP = deathMaxHP;
-
-            if (deathAttackDamage == 0) deathAttackDamage = 25;
-            currentAttackDamage = deathAttackDamage;
-
-            if (deathSpeed < 2f) deathSpeed = 2f;
-            speedRecovery = deathSpeed;
-        }
+        
+        currentHP = enemyMaxHP;
+        currentAttackDamage = enemyAttackDamage;
+        speedRecovery = enemySpeed;
     }
     void Update()
     {
@@ -240,62 +112,12 @@ public class Enemy_Behavior : MonoBehaviour
         magicCooldown += Time.deltaTime; 
         physicCooldown += Time.deltaTime; 
         stunCooldown += Time.deltaTime;
-        if (stunCooldown > 5f) //exit from stun
-        {
-            stuned = false;
-            //anim.SetBool("stun", false);
-        }
+        alarmTimer += Time.deltaTime;
+        vulnerableAttackTimer += Time.deltaTime;
+        if (stunCooldown > stunDuration) stuned = false;//exit from stun
+        if (jumpCooldown > 1.2f) jump = false;
         if (currentHP > 0) EnemyBehavior(); 
     }
-    //Method to describe different behaviour for different enemies. The choice of behaviour depends on the object tag
-    public void EnemyBehavior()
-    {
-        AnimState();
-        if (tag == "Skeleton")
-        {
-            EnemyMovement();
-            SkeletonAttack();
-            Block();
-        }
-        if (tag == "Mushroom")
-        {
-            EnemyMovement();
-            MushroomAttack();
-        }
-        if (tag == "FlyingEye")
-        {
-            FlyingEyeMovement();
-            FlyingEyeAttack();
-        }
-        if (tag == "Goblin")
-        {
-            GoblinMovement();
-            GoblinAttack();
-        }
-        if (tag == "EvilWizard")
-        {
-            EnemyMovement();
-            EvilWizardAttack();
-        }
-        if (tag == "Martial")
-        {
-            EnemyMovement();
-            MartialAttack();
-        }
-        if (tag == "Slime")
-        {
-            SlimeMovement();
-            SlimeAttack();
-        }
-        if (tag == "Death")
-        {
-            DeathMovement();
-            //EnemyMovement();
-            DeathAttack();
-        }
-    }
-
-    //General methods and behaviour
     public enum States //Defining what states there are, named as in Unity Animator
     {
         idle,
@@ -316,21 +138,142 @@ public class Enemy_Behavior : MonoBehaviour
             runSound.GetComponent<SoundOfObject>().StopSound();
         }
     }
+
+    //Method to describe different behaviour for different enemies. The choice of behaviour depends on the object tag
+    public void EnemyBehavior()
+    {
+        AnimState();
+        EnemyMovement();
+        MeleeAttack();
+
+        if (tag == "Skeleton")
+        {
+            Block();
+        }
+        if (tag == "Mushroom")
+        {
+            MushroomAttack();
+        }
+        if (tag == "FlyingEye")
+        {
+            FlyingEyeAttack();
+        }
+        if (tag == "Goblin")
+        {
+            GoblinAttack();
+        }
+        if (tag == "EvilWizard")
+        {
+            EvilWizardAttack();
+        }
+        if (tag == "Martial")
+        {
+            MartialAttack();
+        }
+        if (tag == "Slime")
+        {
+            SlimeAttack();
+        }
+        if (tag == "Death")
+        {
+            DeathAttack();
+        }
+    }
+
+    //General methods
+    public void EnemyMovement()
+    {
+        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; // calculating the direction of movement is Player position on the x-axis - Enemy position on the x-axis
+        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //calculate direction of movement is Player position on the y-axis - Enemy position on the y-axis
+        bool patrol = false;
+        bool follow = false;
+        Vector2 velocity = rb.velocity;
+
+        if (transform.position.y < (LowFlightPoint - Random.Range(-0.1f, 0.1f)) && isFlying)
+        {
+            float zigzagSpeed = flyAmplitude;
+            velocity.y = zigzagSpeed;
+            rb.velocity = velocity;
+        }
+        if (Mathf.Abs(directionX) > sightDistance && !block && !isAttack && !stuned && !enemyTakeDamage && alarmTimer > alarmPause)
+        {
+            float patrolSpeed = Mathf.Sin(Time.time * (enemySpeed * 0.25f)) * patrolDistance;
+            velocity.x = patrolSpeed;
+            rb.velocity = velocity;
+            patrol = true;
+
+            if (patrolSpeed < 0 && transform.localScale.x > 0) Flip();
+            else if (patrolSpeed > 0 && transform.localScale.x < 0) Flip();
+        }
+        if (Mathf.Abs(directionX) < sightDistance && Mathf.Abs(directionX) >= attackDistance && !block && !isAttack && !stuned && remainingAmmo < 1 || enemyTakeDamage && Mathf.Abs(directionX) > attackDistance && !block && !isAttack && !stuned || copy)
+        {
+            Vector3 pos = transform.position; //object position
+            Vector3 theScale = transform.localScale; // needed to understand the direction
+            transform.localScale = theScale; // needed to understand the direction
+            float playerFollowSpeed = Mathf.Sign(directionX) * enemySpeed * Time.deltaTime; //calculating direction
+            pos.x += playerFollowSpeed; //Calculating the position along the x-axis
+            transform.position = pos; //applying the position
+            follow = true;
+
+            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+        }
+        if (patrol || follow) movement = true; else movement = false;
+    }
     private void MeleeAttack() //Basic method of attack with two or more animations
     {
-        isAttack = true;
-        //Damage Deal
-        currentAttack++;
-
-        // Loop back to one after third attack
-        if (currentAttack > 2) currentAttack = 1;
-
-        // Reset Attack combo if time since last attack is too large
-        if (timeSinceAttack > 2.0f) currentAttack = 1;
-        anim.SetTrigger("attack" + currentAttack);
-
-        // Reset timer
-        timeSinceAttack = 0.0f;
+        float playerHP = Hero.Instance.curentHP;
+        if (playerHP > 0 && Mathf.Abs(directionX) <= attackDistance && !stuned && !isAttack)
+        {
+            vulnerableAttackTimer = 0;
+            isAttack = true;
+            anim.SetBool("isAttack", true);
+            currentAttack = Random.Range(1, 2);
+            anim.SetTrigger("attack" + currentAttack + ".1");
+            aState = 1;
+        }
+        if (playerHP > 0 && vulnerableAttackTimer > vulnerableBeforeDamage && isAttack && !stuned && aState == 1)
+        {
+            vulnerableAttackTimer = 0;
+            anim.SetTrigger("attack" + currentAttack + ".2");
+            aState = 2;
+        }
+        if (playerHP > 0 && vulnerableAttackTimer > vulnerableAfterDamage && isAttack && !stuned && aState == 2)
+        {
+            isAttack = false;
+            anim.SetBool("isAttack", false);
+        }
+    }
+    public void Block() // Using a shield (Skeleton)
+    {
+        playerIsAttack = Hero.Instance.isAttack;
+        if (playerIsAttack == true && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2 && blockCooldown > 2)
+        {
+            blockCooldown = 0;
+            enemySpeed = 0;
+            block = true;
+            anim.SetBool("Block", true);
+        }
+        if (blockCooldown > 0.8f)
+        {
+            enemySpeed = speedRecovery;
+            block = false;
+            anim.SetBool("Block", false);
+        }
+    }
+    public void Flip() //This is where we create the Flip method which, when called, reverses the direction of the sprite
+    {
+        Vector3 theScale = transform.localScale; //receive the scale of the object
+        theScale.x *= -1;//this flips the image e.g. 140 changes to -140, thus completely changing the direction of the sprite (the image is mirrored)
+        transform.localScale = theScale; // scale conversion relative to the parent GameObjects object
+    }
+    public void GetNameOfObject(GameObject gameObjectName) //Get a link to the game object, for summonses, so they can contact the master who summoned them
+    {
+        masterEnemy = gameObjectName;
+    }
+    public void CopyCounter()
+    {
+        countOfCopy -= 1;
     }
     public void EnemyAttack()
     {
@@ -339,21 +282,47 @@ public class Enemy_Behavior : MonoBehaviour
         if (!copy) meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(currentAttackDamage);
         if (copy) meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(2);
     }
+    public void Stun()
+    {
+        stunCooldown = 0;
+        stuned = true;
+    }
     public void MeleeWeaponOff() // deactivate the weapon object
     {
         meleeAttackArea.GetComponent<MeleeWeapon>().WeaponOff();
     }
-    public void BoostEnemySpeed() //method to increase the speed of enemies
+    public void JumpToPlayer() // jump to player (Mushroom / Slime / Flying Eye)
     {
-        skeletonSpeed *= 1.1f;
-        moushroomSpeed *= 1.1f;
-        goblinSpeed *= 1.1f;
+        jumpCooldown = 0;
+        Vector3 theScale = transform.localScale;
+        transform.localScale = theScale;
+        if (directionX > 0)
+        {
+            if (theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+            jumpSound.GetComponent<SoundOfObject>().PlaySound();
+            rb.velocity = Vector2.zero;
+            rb.AddForce(new Vector2(10, 2.5f), ForceMode2D.Impulse);
+        }
+        if (directionX < 0)
+        {
+            if (theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+            rb.velocity = Vector2.zero;
+            rb.AddForce(new Vector2(-10, 2.5f), ForceMode2D.Impulse);
+            jumpSound.GetComponent<SoundOfObject>().PlaySound();
+        }
     }
-    public void Flip() //This is where we create the Flip method which, when called, reverses the direction of the sprite
+    public void Push() //Method for repelling the body
     {
-        Vector3 theScale = transform.localScale; //receive the scale of the object
-        theScale.x *= -1;//this flips the image e.g. 140 changes to -140, thus completely changing the direction of the sprite (the image is mirrored)
-        transform.localScale = theScale; // scale conversion relative to the parent GameObjects object
+        if (transform.lossyScale.x < 0)
+        {
+            rb.velocity = Vector2.zero;
+            this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(-0.5f, rb.velocity.y), ForceMode2D.Impulse);
+        }
+        else
+        {
+            rb.velocity = Vector2.zero;
+            this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(0.5f, rb.velocity.y), ForceMode2D.Impulse);
+        }
     }
     public void PushFromPlayer() // rebound from a player
     {
@@ -361,158 +330,31 @@ public class Enemy_Behavior : MonoBehaviour
         {
             Vector3 theScale = transform.localScale;
             transform.localScale = theScale;
-            if (theScale.x > 0) rb.AddForce(new Vector2(-5, 1.5f), ForceMode2D.Impulse);
-            if (theScale.x < 0) rb.AddForce(new Vector2(5, 1.5f), ForceMode2D.Impulse);
-        }
-    }
-    public void Stun()
-    {
-        stunCooldown = 0;
-        stuned = true;
-        //anim.SetBool("stun", true);
-    }
-    public void JumpToPlayer() // jump to player (Mushroom / Slime / Flying Eye)
-    {
-        if (level >= 1) //the ability is activated at level 3
-        {
-            jumpCooldown = 0;
-            Vector3 theScale = transform.localScale;
-            transform.localScale = theScale;
-            if (directionX > 0)
+            if (theScale.x > 0)
             {
-                if (theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-                jumpSound.GetComponent<SoundOfObject>().PlaySound();
-                rb.AddForce(new Vector2(10, 2.5f), ForceMode2D.Impulse);
+                rb.velocity = Vector2.zero;
+                rb.AddForce(new Vector2(-5, 1.5f), ForceMode2D.Impulse);
             }
-            if (directionX < 0)
+            if (theScale.x < 0)
             {
-                if (theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-                rb.AddForce(new Vector2(-10, 2.5f), ForceMode2D.Impulse);
-                jumpSound.GetComponent<SoundOfObject>().PlaySound();
+                rb.velocity = Vector2.zero;
+                rb.AddForce(new Vector2(5, 1.5f), ForceMode2D.Impulse);
             }
         }
     }
-    public void GetNameOfObject(GameObject gameObjectName) //Get a link to the game object, for summonses, so they can contact the master who summoned them
-    {
-        masterEnemy = gameObjectName;
-    }
+
     public void LifeSteal() // Lifesteal from player
     {
-        Hero.Instance.GetDamage(skeletonAttackDamage);// here we access the player's script and activate the GetDamage function from there
-        float heal = skeletonAttackDamage * 0.5f; //The skeleton steals half of the damage the skeleton does to the player's xp
+        Hero.Instance.GetDamage(enemyAttackDamage);// here we access the player's script and activate the GetDamage function from there
+        float heal = enemyAttackDamage * 0.5f; //The skeleton steals half of the damage the skeleton does to the player's xp
         currentHP += heal;
-        float healBar = heal / (float)skeletonMaxHP; // how much to increase the progress bar
+        float healBar = heal / (float)enemyMaxHP; // how much to increase the progress bar
         if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//refresh progress bar
     }
-    public void Push() //Method for repelling the body
-    {
-        if (transform.lossyScale.x < 0) this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(-0.5f, rb.velocity.y), ForceMode2D.Impulse);
-        else this.gameObject.GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(0.5f, rb.velocity.y), ForceMode2D.Impulse);
-    }
-    public void TakeDamage(float dmg) //Damage (in dmg a value is specified, in the Hero script when the TakeDamage method is called, a variable of weapon damage is written to dmg ) 
-    {
-        float maxHP = 1;
-        if (tag == "Skeleton") maxHP = skeletonMaxHP;
-        if (tag == "Mushroom") maxHP = mushroomMaxHP;
-        if (tag == "FlyingEye") maxHP = flyingEyeMaxHP;
-        if (tag == "Goblin") maxHP = goblinMaxHP;
-        if (tag == "EvilWizard") maxHP = wizardMaxHP;
-        if (tag == "Martial") maxHP = martialMaxHP;
-        if (tag == "Slime") maxHP = slimeMaxHP;
-        if (tag == "Death") maxHP = deathMaxHP;
 
-        isBlock = this.gameObject.GetComponent<Enemy_Behavior>().block;
-        //Debug.Log(isBlock);
-        if (currentHP > 0 && !isBlock)
-        {
-            if (tag != "Skeleton")
-            {
-                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Cloning an object
-                bloodSpawn.gameObject.SetActive(true);
-            }
 
-            currentHP -= dmg;
-            enemyTakeDamage = true;
-            takedDamage = (float)dmg / maxHP; //how much you need to reduce the progress bar
-            anim.SetTrigger("damage");// animation of getting a demage
-            Enemy_Behavior.Instance.TakeDamageSound();
-            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
-        }
-        if (currentHP > 0 && isBlock)
-        {
-            int level = LvLGeneration.Instance.Level;
-            if (level <= 4) blockDMG = dmg * 0.5f;//if the Player is below level 5 then 50% damage blocking
-            if (level >= 5) blockDMG = dmg * 0.1f;//if the Player is higher than level 4 then 90% damage blocking
-            currentHP -= blockDMG;
-            Debug.Log(blockDMG);
-            Enemy_Behavior.Instance.ShieldDamageSound();
-            enemyTakeDamage = true;
-            takedDamage = blockDMG / maxHP; //how much you need to reduce the progress bar
-            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
-        }
-        if (currentHP <= 0)
-        {
-            int reward = 2;
-            if (tag == "Skeleton") reward = skeletonReward;
-            if (tag == "Mushroom") reward = mushroomReward;
-            if (tag == "FlyingEye") reward = mushroomReward;
-            if (tag == "Goblin") reward = goblinReward;
-            if (tag == "Martial") reward = martialReward;
-            if (tag == "Slime") reward = 1;
-            if (tag == "Death") reward = 40;
-            LvLGeneration.Instance.PlusCoin(reward);//call for a method to increase points
-            rb.gravityScale = 0;
-            rb.velocity = Vector2.zero;
-            capsuleCollider.enabled = false;
-            anim.StopPlayback();
-            anim.SetBool("dead", true);
-            anim.SetTrigger("m_death");//death animation
-            enemyDead = true;
-        }
-    }
-    public virtual void Die() //Method removes this game object, called by the animator immediately after the death animation ends
-    {
-        bool copy = this.gameObject.GetComponent<Enemy_Behavior>().copy;
-        Destroy(this.gameObject);//destroy this game object
-        if (tag == "Skeleton") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-        if (tag == "Mushroom") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-        if (tag == "FlyingEye" && !copy) LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-        if (tag == "FlyingEye" && copy && masterEnemy != null) masterEnemy.GetComponent<Enemy_Behavior>().CopyCounter();// copy destroying decreases the copy count, allowing you to call an extra copy.
-        if (tag == "Goblin") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-        if (tag == "EvilWizard") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-        if (tag == "Martial") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-        if (tag == "Slime")
-        {
-            GameObject[] deathObjects = GameObject.FindGameObjectsWithTag("Death");
-            foreach (GameObject obj in deathObjects)
-            {
-                if (obj.name != "BossDeath")
-                {
-                    obj.GetComponent<Enemy_Behavior>().BossDeathDamage(50);
-                }
-            }
-        }
-        if (tag == "Death") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-    }
 
-    //Special skins on mobs
-    public void Block() // Using a shield (Skeleton)
-    {
-        playerIsAttack = Hero.Instance.isAttack;
-        if (playerIsAttack == true && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2 && blockCooldown > 2)
-        {
-            blockCooldown = 0;
-            skeletonSpeed = 0;
-            block = true;
-            anim.SetBool("Block", true);
-        }
-        if (blockCooldown > 0.8f)
-        {
-            skeletonSpeed = speedRecovery;
-            block = false;
-            anim.SetBool("Block", false);
-        }
-    }
+    //Attack methods for different mobs
     public void MushroomSpores() //creates a cloud of spore that damasks the player (Mushroom)
     {
         if (level > 0 && !stuned)
@@ -545,10 +387,6 @@ public class Enemy_Behavior : MonoBehaviour
         else return;
 
     }
-    public void CopyCounter()
-    {
-        countOfCopy -= 1;
-    }
     public void GoblinJumpToPlayer() //jump to player (Goblin)
     {
         if (level >= 1) //the ability is activated at level 2
@@ -579,9 +417,9 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void GoblinBomb() // Bomb Throw (Goblin)
     {
-        if (level >= 0 && remainingBombs >= 1)
+        if (level >= 0 && remainingAmmo >= 1)
         {
-            remainingBombs -= 1;
+            remainingAmmo -= 1;
             magicCooldown = 0; // reset timer
             Vector3 goblinScale = transform.localScale; //take the goblin sprite rotation parameter
             transform.localScale = goblinScale; //take the goblin sprite rotation parameter
@@ -591,9 +429,9 @@ public class Enemy_Behavior : MonoBehaviour
             if (goblinScale.x < 0) bombSpawnPosition.x -= 1f; // move bomb forward goblin depending on sprite rotation
             if (goblinScale.x > 0) bombSpawnPosition.x += 1f;
             bombBall.GetComponent<Bomb>().GetEnemyName(this.gameObject.name);
-            bombBall.GetComponent<Bomb>().bombDirection(bombSpawnPosition);  
+            bombBall.GetComponent<Bomb>().bombDirection(bombSpawnPosition);
         }
-        if (level < 5) remainingBombs = 0;
+        if (level < 5) remainingAmmo = 0;
     }
     public void MagicAttack() // EvilWizard FireBall
     {
@@ -637,128 +475,11 @@ public class Enemy_Behavior : MonoBehaviour
             DrainHP.Instance.DrainHPDirection(spellSpawnPosition); //transmit coordinates for magic spawning
         }
     }
-
-    //Methods of movement in different enemies
-    public void EnemyMovement()
-    {
-        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; // calculating the direction of movement is Player position on the x-axis - Enemy position on the x-axis
-        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //calculate direction of movement is Player position on the y-axis - Enemy position on the y-axis
-        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1.3f && Mathf.Abs(directionY) < 2) && !block && !isAttack && !stuned || enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack && !stuned || copy) 
-        {
-            Vector3 pos = transform.position; //object position
-            Vector3 theScale = transform.localScale; // needed to understand the direction
-            transform.localScale = theScale; // needed to understand the direction
-            float playerFollowSpeed = Mathf.Sign(directionX) * Time.deltaTime; //calculating direction
-            if (tag == "Skeleton") playerFollowSpeed = Mathf.Sign(directionX) * skeletonSpeed * Time.deltaTime; //calculating direction
-            if (tag == "Mushroom") playerFollowSpeed = Mathf.Sign(directionX) * moushroomSpeed * Time.deltaTime; //calculating direction
-            if (tag == "FlyingEye") playerFollowSpeed = Mathf.Sign(directionX) * flyingEyeSpeed * Time.deltaTime; //calculating direction
-            if (tag == "Martial") playerFollowSpeed = Mathf.Sign(directionX) * martialSpeed * Time.deltaTime; //calculating direction
-            if (tag == "Slime") playerFollowSpeed = Mathf.Sign(directionX) * slimeSpeed * Time.deltaTime; //calculating direction
-            if (tag == "Death") playerFollowSpeed = Mathf.Sign(directionX) * deathSpeed * Time.deltaTime; //calculating direction
-            pos.x += playerFollowSpeed; //Calculating the position along the x-axis
-            transform.position = pos; //applying the position
-            movement = true;
-            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-        }
-        else movement = false;
-    }
-    public void FlyingEyeMovement()
-    {
-        directionX = player.transform.position.x - transform.position.x;
-        directionY = player.transform.position.y - transform.position.y;
-
-        Vector2 velocity = rb.velocity;
-
-        if (transform.position.y < (LowFlightPoint - Random.Range(-0.1f, 0.1f)))
-        {
-            float zigzagSpeed = flyAmplitude;
-            velocity.y = zigzagSpeed;
-            rb.velocity = velocity;
-        }
-
-        if ((Mathf.Abs(directionX) < 5 && Mathf.Abs(directionX) > 1.3f && Mathf.Abs(directionY) < 2) && !block && !isAttack && !stuned || enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack && !stuned || copy)
-        {
-            float playerFollowSpeed = Mathf.Sign(directionX) * flyingEyeSpeed;
-            velocity.x = playerFollowSpeed;
-            rb.velocity = velocity;
-            movement = true;
-
-            if (playerFollowSpeed < 0 && transform.localScale.x > 0) Flip();
-            else if (playerFollowSpeed > 0 && transform.localScale.x < 0) Flip();
-        }
-        else
-        {
-            movement = false;
-        }
-    }
-    public void GoblinMovement()
-    {
-        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; // calculating the direction of movement is Player position on the x-axis - Enemy position on the x-axis
-        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //calculate direction of movement is Player position on the y-axis - Enemy position on the y-axis
-        if ((Mathf.Abs(directionX) < 4f && Mathf.Abs(directionX) > 3f && Mathf.Abs(directionY) < 2) && remainingBombs < 1 && !stuned || enemyTakeDamage == true && !stuned && Mathf.Abs(directionX) > 5f) 
-        {
-            Vector3 pos = transform.position; //object position
-            Vector3 theScale = transform.localScale; // needed to understand the direction
-            transform.localScale = theScale; // needed to understand the direction
-            float playerFollowSpeed = Mathf.Sign(directionX) * goblinSpeed * Time.deltaTime; //calculating direction
-            pos.x += playerFollowSpeed; //Calculating the position along the x-axis
-            transform.position = pos; //applying the position
-            movement = true;
-            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-        }
-        else movement = false;
-    }
-    public void DeathMovement()
-    {
-        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; // calculating the direction of movement is Player position on the x-axis - Enemy position on the x-axis
-        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //calculate direction of movement is Player position on the y-axis - Enemy position on the y-axis
-        if ((Mathf.Abs(directionX) < 4f && Mathf.Abs(directionX) > 1.3f && Mathf.Abs(directionY) < 2) && !stuned || enemyTakeDamage == true && Mathf.Abs(directionX) > 5f && !stuned) 
-        {
-            Vector3 pos = transform.position; //object position
-            Vector3 theScale = transform.localScale; // needed to understand the direction
-            transform.localScale = theScale; // needed to understand the direction
-            float playerFollowSpeed = Mathf.Sign(directionX) * deathSpeed * Time.deltaTime; //calculating direction
-            pos.x -= playerFollowSpeed; //Calculating the position along the x-axis
-            transform.position = pos; //applying the position
-            movement = true;
-        }
-        else movement = false;
-    }
-    public void SlimeMovement()
-    {
-        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; // calculating the direction of movement is Player position on the x-axis - Enemy position on the x-axis
-        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //calculate direction of movement is Player position on the y-axis - Enemy position on the y-axis
-        if (Mathf.Abs(directionX) > 1f && !block && !isAttack && !stuned || enemyTakeDamage == true && Mathf.Abs(directionX) > 1f && !block && !isAttack && !stuned) 
-        {
-            Vector3 pos = transform.position; //object position
-            Vector3 theScale = transform.localScale; // needed to understand the direction
-            transform.localScale = theScale; // needed to understand the direction
-            float playerFollowSpeed = Mathf.Sign(directionX) * Time.deltaTime;
-            if (tag == "Skeleton") playerFollowSpeed = Mathf.Sign(directionX) * skeletonSpeed * Time.deltaTime; //calculating direction
-            if (tag == "Mushroom") playerFollowSpeed = Mathf.Sign(directionX) * moushroomSpeed * Time.deltaTime; //calculating direction
-            if (tag == "Slime") playerFollowSpeed = Mathf.Sign(directionX) * slimeSpeed * Time.deltaTime; //calculating direction
-            pos.x += playerFollowSpeed; //Calculating the position along the x-axis
-            transform.position = pos; //applying the position
-            movement = true;
-            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-        }
-        else movement = false;
-    }
-    //Attack methods for different mobs
-
     public void MushroomAttack()
     {
         float playerHP = Hero.Instance.curentHP;
         if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned) JumpToPlayer();
         if ((Mathf.Abs(directionX)) < 0.8f && magicCooldown > 10 && !stuned) MushroomSpores();
-        if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1 && !stuned)
-        {
-            MeleeAttack();
-        }
-        else isAttack = false;
     }
     public void FlyingEyeAttack()
     {
@@ -772,38 +493,24 @@ public class Enemy_Behavior : MonoBehaviour
             {
                 if (theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
                 jumpSound.GetComponent<SoundOfObject>().PlaySound();
+                rb.velocity = Vector3.zero;
                 rb.AddForce(new Vector2(10, 0));
             }
             if (directionX < 0)
             {
                 if (theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+                rb.velocity = Vector3.zero;
                 rb.AddForce(new Vector2(-10, 0));
                 jumpSound.GetComponent<SoundOfObject>().PlaySound();
             }
         }
-        
-        if ((Mathf.Abs(directionX)) < 5f && magicCooldown > 5 && !copy && !stuned) SummonCopy(); 
-        if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && timeSinceAttack > 1 && !stuned)
-        {
-            MeleeAttack();
-        }
-        else isAttack = false;
-    }
-    public void SkeletonAttack()
-    {
-        float playerHP = Hero.Instance.curentHP;
-        if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 1f && !block && timeSinceAttack > 1 && !stuned)
-        {
-            MeleeAttack();
-        }
-        else isAttack = false;
     }
     public void GoblinAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < 5f && (Mathf.Abs(directionX)) > 1f && jumpCooldown >= 2 && Mathf.Abs(directionY) < 2 && remainingBombs < 1 && !stuned) GoblinJumpToPlayer();
-        if ((Mathf.Abs(directionX)) < 2f && (Mathf.Abs(directionX)) > 1f && jumpCooldown >= 2 && Mathf.Abs(directionY) < 2 && remainingBombs >= 1 && !stuned) GoblinJumpFromPlayer();
-        if ((Mathf.Abs(directionX)) < 4.5 && magicCooldown > 3 && !jump && remainingBombs >= 1 && !stuned || enemyTakeDamage == true && magicCooldown > 3 && !jump && remainingBombs >= 1 && !stuned)
+        if ((Mathf.Abs(directionX)) < 5f && (Mathf.Abs(directionX)) > 1f && jumpCooldown >= 2 && Mathf.Abs(directionY) < 2 && remainingAmmo < 1 && !stuned) GoblinJumpToPlayer();
+        if ((Mathf.Abs(directionX)) < 2f && (Mathf.Abs(directionX)) > 1f && jumpCooldown >= 2 && Mathf.Abs(directionY) < 2 && remainingAmmo >= 1 && !stuned) GoblinJumpFromPlayer();
+        if ((Mathf.Abs(directionX)) < 4.5 && magicCooldown > 3 && !jump && remainingAmmo >= 1 && !stuned || enemyTakeDamage == true && magicCooldown > 3 && !jump && remainingAmmo >= 1 && !stuned)
         {
             Vector3 theScale = transform.localScale; // needed to understand the direction
             transform.localScale = theScale; // needed to understand the direction
@@ -819,11 +526,6 @@ public class Enemy_Behavior : MonoBehaviour
             }
         }
         if (jumpCooldown > 1.2f) jump = false;
-        if (playerHP > 0 && Mathf.Abs(directionX) < 1.5f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1 && !stuned)
-        {
-            MeleeAttack();
-        }
-        else isAttack = false;
     }
     public void EvilWizardAttack()
     {
@@ -863,7 +565,7 @@ public class Enemy_Behavior : MonoBehaviour
                 else if (directionX > 0 && theScale.x < 0) Flip();
                 timeSinceAttack = 0.0f;
                 magicCooldown = 0;
-                float fireDMG = 150f * wizardAttackDamage * Time.deltaTime; 
+                float fireDMG = 150f * enemyAttackDamage * Time.deltaTime; 
                 Hero.Instance.GetDamage(fireDMG);
             }
         }
@@ -905,49 +607,82 @@ public class Enemy_Behavior : MonoBehaviour
             DeathSummonMinioins();
         }
     }
-
-    //The section where enemy characteristics are increased, if a new enemy is added, its characteristics should be added here
-    public void BoostEnemyHP()
-    {
-        skeletonMaxHP *= 1.2f;
-        mushroomMaxHP *= 1.2f;
-        goblinMaxHP *= 1.2f;
-        wizardMaxHP *= 1.2f;
-        martialMaxHP *= 1.2f;
-        flyingEyeMaxHP *= 1.2f;
-    }
-    public void BoostEnemyAttackDamage() //thereby increasing the damage
-    {
-        skeletonAttackDamage *= 1.2f;
-        mushroomAttackDamage *= 1.2f;
-        goblinAttackDamage *= 1.2f;
-        wizardAttackDamage *= 1.2f;
-        martialAttackDamage *= 1.2f;
-        flyingEyeAttackDamage *= 1.2f;
-    }
-    public void BoostEnemyReward() //there we increase the reward for the kill
-    {
-        skeletonReward += 2;
-        mushroomReward += 2;
-        goblinReward += 2;
-        wizardReward += 2;
-        martialReward += 2;
-        flyingEyeReward += 2;
-    }
-
-    //Attack methods for different mobs
     public void BossDeathHeal(float heal)
     {
         currentHP += heal;
-        float healBar = heal / deathMaxHP; // how much to increase the progress bar
+        float healBar = heal / enemyMaxHP; // how much to increase the progress bar
         if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//refresh progress bar
     }
     public void BossDeathDamage(float dmg)
     {
         currentHP -= dmg;
         enemyTakeDamage = true;
-        takedDamage = dmg / deathMaxHP; //how much you need to reduce the progress bar
+        takedDamage = dmg / enemyMaxHP; //how much you need to reduce the progress bar
         if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
+    }
+    //Take damage and Die methods
+    public void TakeDamage(float dmg) //Damage (in dmg a value is specified, in the Hero script when the TakeDamage method is called, a variable of weapon damage is written to dmg ) 
+    {
+        float maxHP = enemyMaxHP;
+        isBlock = this.gameObject.GetComponent<Enemy_Behavior>().block;
+        if (currentHP > 0 && !isBlock)
+        {
+            if (isBlooded)
+            {
+                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Cloning an object
+                bloodSpawn.gameObject.SetActive(true);
+            }
+
+            currentHP -= dmg;
+            enemyTakeDamage = true;
+            takedDamage = (float)dmg / maxHP; //how much you need to reduce the progress bar
+            anim.SetTrigger("damage");// animation of getting a demage
+            Enemy_Behavior.Instance.TakeDamageSound();
+            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
+        }
+        if (currentHP > 0 && isBlock)
+        {
+            int level = LvLGeneration.Instance.Level;
+            if (level <= 4) blockDMG = dmg * 0.5f;//if the Player is below level 5 then 50% damage blocking
+            if (level >= 5) blockDMG = dmg * 0.1f;//if the Player is higher than level 4 then 90% damage blocking
+            currentHP -= blockDMG;
+            Debug.Log(blockDMG);
+            Enemy_Behavior.Instance.ShieldDamageSound();
+            enemyTakeDamage = true;
+            takedDamage = blockDMG / maxHP; //how much you need to reduce the progress bar
+            if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
+        }
+        if (currentHP <= 0)
+        {
+            int reward = enemyReward;
+            LvLGeneration.Instance.PlusCoin(reward);//call for a method to increase points
+            rb.gravityScale = 0;
+            rb.velocity = Vector2.zero;
+            capsuleCollider.enabled = false;
+            anim.StopPlayback();
+            anim.SetBool("dead", true);
+            anim.SetTrigger("m_death");//death animation
+            enemyDead = true;
+        }
+    }
+    public virtual void Die() //Method removes this game object, called by the animator immediately after the death animation ends
+    {
+        bool copy = this.gameObject.GetComponent<Enemy_Behavior>().copy;
+        Destroy(this.gameObject);//destroy this game object
+        if (!copy) LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+        if (copy && masterEnemy != null) masterEnemy.GetComponent<Enemy_Behavior>().CopyCounter();// copy destroying decreases the copy count, allowing you to call an extra copy.
+        if (tag == "Slime")
+        {
+            GameObject[] deathObjects = GameObject.FindGameObjectsWithTag("Death");
+            foreach (GameObject obj in deathObjects)
+            {
+                if (obj.name != "BossDeath")
+                {
+                    obj.GetComponent<Enemy_Behavior>().BossDeathDamage(50);
+                }
+            }
+        }
+        if (tag == "Death") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
     }
 
     //Sound Death and damage sounds are tied to Animation (for now), damage and jump sounds are tied to the code in the methods above
