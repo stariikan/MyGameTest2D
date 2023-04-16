@@ -17,14 +17,15 @@ public class Enemy_Behavior : MonoBehaviour
     public float sightDistance; // How far away the enemy notices the player and triggers movement to the player.
     public float alarmPause; // The pause between the moment when the skeleton loses sight of the player and returns to standby mode.
     public float attackDistance; //Range of physical attack
+    public float flipEnemyTimer; //Time to turn Enemy
     public float flyAmplitude; // Body Lift Force
     public float LowFlightPoint; // the height at which the body will be lifted
     public float stunDuration; // Stun duration. How many seconds the object will be stunned.
     public float vulnerableBeforeDamage; // The time between the swing and the infliction of damage. How many seconds enemy will be vulnerable before attacking.
     public float vulnerableAfterDamage; // How many seconds the enemy will be vulnerable after taking damage.
 
-    public float attackPause; // Сколько времени проходит между предыдущим действием и атакой.
-    public float stunAttackPause; // Сколько секунд между тем, как игрок застунился и атакой скелета.
+    //public float attackPause; // Сколько времени проходит между предыдущим действием и атакой.
+    //public float stunAttackPause; // Сколько секунд между тем, как игрок застунился и атакой скелета.
 
     //Enemy states
     private bool movement = false; //mob is not chasing the player
@@ -49,7 +50,8 @@ public class Enemy_Behavior : MonoBehaviour
     private float stunCooldown; //stun recovery
     private float blockCooldown; //сooldown block
     private float alarmTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
-    public float vulnerableAttackTimer; //timer for switching from one attack state to another attack state
+    private float vulnerableAttackTimer; //timer for switching from one attack state to another attack state
+    private float flipEnemyCooldown; //timer for swtiching direction
 
     //Other parameters
     public float currentHP; // current Hp of the object
@@ -114,6 +116,7 @@ public class Enemy_Behavior : MonoBehaviour
         stunCooldown += Time.deltaTime;
         alarmTimer += Time.deltaTime;
         vulnerableAttackTimer += Time.deltaTime;
+        flipEnemyCooldown += Time.deltaTime;
         if (stunCooldown > stunDuration) stuned = false;//exit from stun
         if (jumpCooldown > 1.2f) jump = false;
         if (currentHP > 0) EnemyBehavior(); 
@@ -226,8 +229,9 @@ public class Enemy_Behavior : MonoBehaviour
         
         if (playerHP > 0 && Mathf.Abs(directionX) <= attackDistance && !stuned && !isAttack)
         {
-            if (directionX < 0 && transform.localScale.x > 0) Flip();
-            else if (directionX > 0 && transform.localScale.x < 0) Flip();
+            flipEnemyCooldown = 0;
+            if (directionX < 0 && transform.localScale.x > 0 && flipEnemyCooldown > flipEnemyTimer) Flip();
+            else if (directionX > 0 && transform.localScale.x < 0 && flipEnemyCooldown > flipEnemyTimer) Flip();
             vulnerableAttackTimer = 0;
             isAttack = true;
             anim.SetBool("isAttack", true);
