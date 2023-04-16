@@ -132,9 +132,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2891869}
+  - component: {fileID: 2891870}
   - component: {fileID: 2891873}
   - component: {fileID: 2891872}
-  - component: {fileID: 2891870}
   - component: {fileID: 2891875}
   - component: {fileID: 2891874}
   m_Layer: 7
@@ -175,62 +175,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a1687fce89b4c42ac38dc4baa0d146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonMaxHP: 70
-  skeletonAttackDamage: 10
-  skeletonReward: 2
-  skeletonSpeed: 2
-  mushroomMaxHP: 70
-  mushroomAttackDamage: 10
-  mushroomReward: 2
-  moushroomSpeed: 2
-  flyingEyeMaxHP: 70
-  flyingEyeAttackDamage: 10
-  flyingEyeReward: 2
-  flyingEyeSpeed: 2
+  enemyMaxHP: 48
+  enemyAttackDamage: 10
+  enemySpeed: 2
   countOfCopy: 0
+  remainingAmmo: 3
+  enemyReward: 2
+  patrolDistance: 0
+  sightDistance: 0
+  alarmPause: 0
+  attackDistance: 0
   flyAmplitude: 0
   LowFlightPoint: 0
-  goblinMaxHP: 50
-  goblinAttackDamage: 15
-  goblinReward: 2
-  goblinSpeed: 3
-  remainingBombs: 3
-  wizardMaxHP: 50
-  wizardAttackDamage: 10
-  wizardReward: 2
-  wizardSpeed: 2
-  martialMaxHP: 75
-  martialAttackDamage: 20
-  martialReward: 2
-  martialSpeed: 4
-  slimeMaxHP: 40
-  slimeAttackDamage: 15
-  slimeReward: 1
-  slimeSpeed: 2
-  deathMaxHP: 900
-  deathAttackDamage: 25
-  deathReward: 40
-  deathSpeed: 2
-  directionX: 0
-  directionY: 0
-  ammo: []
-  stunCooldown: 0
-  currentHP: 0
-  takedDamage: 0
-  enemyAttackRange: 1.2
-  currentAttackDamage: 0
+  stunDuration: 0
+  vulnerableBeforeDamage: 0
+  vulnerableAfterDamage: 0
+  attackPause: 0
+  stunAttackPause: 0
+  isFlying: 0
+  isBlooded: 0
   enemyDead: 0
   enemyTakeDamage: 0
   block: 0
   copy: 0
-  player: {fileID: 6323719954861377910}
-  meleeAttackArea: {fileID: 1662315521}
-  rb: {fileID: 0}
-  firePoint: {fileID: 964033023}
-  blood:
-  - {fileID: 1874884316}
+  vulnerableAttackTimer: 0
+  currentHP: 0
+  takedDamage: 0
+  currentAttackDamage: 0
   lossyScale: {x: 0, y: 0, z: 0}
   thisObjectPosition: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
+  ammo: []
+  blood:
+  - {fileID: 1874884316}
+  player: {fileID: 6323719954861377910}
+  meleeAttackArea: {fileID: 1662315521}
+  firePoint: {fileID: 964033023}
+  directionX: 0
+  directionY: 0
   attackSound: {fileID: 1874556541426372885}
   runSound: {fileID: 1874556541302165811}
   takeDamageSound: {fileID: 1874556542545636434}
@@ -708,11 +690,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 28677081}
+  - component: {fileID: 28677082}
   - component: {fileID: 28677080}
   - component: {fileID: 28677079}
   - component: {fileID: 28677078}
   - component: {fileID: 28677077}
-  - component: {fileID: 28677082}
   m_Layer: 7
   m_Name: Slime
   m_TagString: Slime
@@ -844,7 +826,7 @@ Transform:
   - {fileID: 668004062}
   - {fileID: 2091400630}
   m_Father: {fileID: 1031523399}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &28677082
 MonoBehaviour:
@@ -858,62 +840,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a1687fce89b4c42ac38dc4baa0d146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonMaxHP: 70
-  skeletonAttackDamage: 10
-  skeletonReward: 2
-  skeletonSpeed: 2
-  mushroomMaxHP: 70
-  mushroomAttackDamage: 10
-  mushroomReward: 2
-  moushroomSpeed: 2
-  flyingEyeMaxHP: 70
-  flyingEyeAttackDamage: 10
-  flyingEyeReward: 2
-  flyingEyeSpeed: 2
+  enemyMaxHP: 48
+  enemyAttackDamage: 10
+  enemySpeed: 2
   countOfCopy: 0
+  remainingAmmo: 3
+  enemyReward: 2
+  patrolDistance: 0
+  sightDistance: 0
+  alarmPause: 0
+  attackDistance: 0
   flyAmplitude: 0
   LowFlightPoint: 0
-  goblinMaxHP: 50
-  goblinAttackDamage: 15
-  goblinReward: 2
-  goblinSpeed: 3
-  remainingBombs: 3
-  wizardMaxHP: 50
-  wizardAttackDamage: 10
-  wizardReward: 2
-  wizardSpeed: 2
-  martialMaxHP: 75
-  martialAttackDamage: 20
-  martialReward: 2
-  martialSpeed: 4
-  slimeMaxHP: 40
-  slimeAttackDamage: 15
-  slimeReward: 1
-  slimeSpeed: 2
-  deathMaxHP: 900
-  deathAttackDamage: 25
-  deathReward: 40
-  deathSpeed: 2
-  directionX: 0
-  directionY: 0
-  ammo: []
-  stunCooldown: 0
-  currentHP: 0
-  takedDamage: 0
-  enemyAttackRange: 1.2
-  currentAttackDamage: 0
+  stunDuration: 0
+  vulnerableBeforeDamage: 0
+  vulnerableAfterDamage: 0
+  attackPause: 0
+  stunAttackPause: 0
+  isFlying: 0
+  isBlooded: 0
   enemyDead: 0
   enemyTakeDamage: 0
   block: 0
   copy: 0
-  player: {fileID: 6323719954861377910}
-  meleeAttackArea: {fileID: 1206751626}
-  rb: {fileID: 0}
-  firePoint: {fileID: 2017457237}
-  blood:
-  - {fileID: 1522460638}
+  vulnerableAttackTimer: 0
+  currentHP: 0
+  takedDamage: 0
+  currentAttackDamage: 0
   lossyScale: {x: 0, y: 0, z: 0}
   thisObjectPosition: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
+  ammo: []
+  blood:
+  - {fileID: 1522460638}
+  player: {fileID: 6323719954861377910}
+  meleeAttackArea: {fileID: 1206751626}
+  firePoint: {fileID: 2017457237}
+  directionX: 0
+  directionY: 0
   attackSound: {fileID: 1883140088}
   runSound: {fileID: 2125632917}
   takeDamageSound: {fileID: 754368963}
@@ -5274,11 +5238,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 397745817}
+  - component: {fileID: 397745819}
   - component: {fileID: 397745816}
   - component: {fileID: 397745815}
   - component: {fileID: 397745821}
   - component: {fileID: 397745820}
-  - component: {fileID: 397745819}
   m_Layer: 7
   m_Name: FlyingEye
   m_TagString: FlyingEye
@@ -5387,63 +5351,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a1687fce89b4c42ac38dc4baa0d146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonMaxHP: 70
-  skeletonAttackDamage: 10
-  skeletonReward: 2
-  skeletonSpeed: 2
-  mushroomMaxHP: 70
-  mushroomAttackDamage: 10
-  mushroomReward: 2
-  moushroomSpeed: 2
-  flyingEyeMaxHP: 70
-  flyingEyeAttackDamage: 10
-  flyingEyeReward: 2
-  flyingEyeSpeed: 2
-  countOfCopy: 0
+  enemyMaxHP: 48
+  enemyAttackDamage: 10
+  enemySpeed: 2
+  countOfCopy: 2
+  remainingAmmo: 0
+  enemyReward: 2
+  patrolDistance: 1
+  sightDistance: 5
+  alarmPause: 0
+  attackDistance: 1.5
   flyAmplitude: 3
   LowFlightPoint: -1.8
-  goblinMaxHP: 50
-  goblinAttackDamage: 15
-  goblinReward: 2
-  goblinSpeed: 3
-  remainingBombs: 3
-  wizardMaxHP: 50
-  wizardAttackDamage: 10
-  wizardReward: 2
-  wizardSpeed: 2
-  martialMaxHP: 75
-  martialAttackDamage: 20
-  martialReward: 2
-  martialSpeed: 4
-  slimeMaxHP: 40
-  slimeAttackDamage: 15
-  slimeReward: 1
-  slimeSpeed: 2
-  deathMaxHP: 900
-  deathAttackDamage: 25
-  deathReward: 40
-  deathSpeed: 2
-  directionX: 0
-  directionY: 0
-  ammo:
-  - {fileID: 1179914079}
-  stunCooldown: 0
-  currentHP: 0
-  takedDamage: 0
-  enemyAttackRange: 1.2
-  currentAttackDamage: 0
+  stunDuration: 5
+  vulnerableBeforeDamage: 0
+  vulnerableAfterDamage: 0
+  attackPause: 0
+  stunAttackPause: 0
+  isFlying: 1
+  isBlooded: 1
   enemyDead: 0
   enemyTakeDamage: 0
   block: 0
   copy: 0
-  player: {fileID: 6323719954861377910}
-  meleeAttackArea: {fileID: 679882833}
-  rb: {fileID: 0}
-  firePoint: {fileID: 1734179692}
-  blood:
-  - {fileID: 1874884316}
+  vulnerableAttackTimer: 0
+  currentHP: 0
+  takedDamage: 0
+  currentAttackDamage: 0
   lossyScale: {x: 0, y: 0, z: 0}
   thisObjectPosition: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
+  ammo:
+  - {fileID: 1179914079}
+  blood:
+  - {fileID: 1874884316}
+  player: {fileID: 6323719954861377910}
+  meleeAttackArea: {fileID: 679882833}
+  firePoint: {fileID: 1734179692}
+  directionX: 0
+  directionY: 0
   attackSound: {fileID: 2103447661}
   runSound: {fileID: 554105708}
   takeDamageSound: {fileID: 1084828966}
@@ -5556,11 +5502,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 433137802}
+  - component: {fileID: 433137805}
   - component: {fileID: 433137801}
   - component: {fileID: 433137800}
   - component: {fileID: 433137803}
   - component: {fileID: 433137804}
-  - component: {fileID: 433137805}
   m_Layer: 7
   m_Name: Goblin
   m_TagString: Goblin
@@ -5706,63 +5652,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a1687fce89b4c42ac38dc4baa0d146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonMaxHP: 70
-  skeletonAttackDamage: 10
-  skeletonReward: 2
-  skeletonSpeed: 2
-  mushroomMaxHP: 70
-  mushroomAttackDamage: 10
-  mushroomReward: 2
-  moushroomSpeed: 2
-  flyingEyeMaxHP: 70
-  flyingEyeAttackDamage: 10
-  flyingEyeReward: 2
-  flyingEyeSpeed: 2
+  enemyMaxHP: 48
+  enemyAttackDamage: 10
+  enemySpeed: 2
   countOfCopy: 0
+  remainingAmmo: 3
+  enemyReward: 2
+  patrolDistance: 0
+  sightDistance: 0
+  alarmPause: 0
+  attackDistance: 0
   flyAmplitude: 0
   LowFlightPoint: 0
-  goblinMaxHP: 50
-  goblinAttackDamage: 15
-  goblinReward: 2
-  goblinSpeed: 3
-  remainingBombs: 3
-  wizardMaxHP: 50
-  wizardAttackDamage: 10
-  wizardReward: 2
-  wizardSpeed: 2
-  martialMaxHP: 75
-  martialAttackDamage: 20
-  martialReward: 2
-  martialSpeed: 4
-  slimeMaxHP: 40
-  slimeAttackDamage: 15
-  slimeReward: 1
-  slimeSpeed: 2
-  deathMaxHP: 900
-  deathAttackDamage: 25
-  deathReward: 40
-  deathSpeed: 2
-  directionX: 0
-  directionY: 0
-  ammo:
-  - {fileID: 826046344}
-  stunCooldown: 0
-  currentHP: 0
-  takedDamage: 0
-  enemyAttackRange: 1.2
-  currentAttackDamage: 0
+  stunDuration: 0
+  vulnerableBeforeDamage: 0
+  vulnerableAfterDamage: 0
+  attackPause: 0
+  stunAttackPause: 0
+  isFlying: 0
+  isBlooded: 0
   enemyDead: 0
   enemyTakeDamage: 0
   block: 0
   copy: 0
-  player: {fileID: 6323719954861377910}
-  meleeAttackArea: {fileID: 786419495}
-  rb: {fileID: 0}
-  firePoint: {fileID: 905907880}
-  blood:
-  - {fileID: 1874884316}
+  vulnerableAttackTimer: 0
+  currentHP: 0
+  takedDamage: 0
+  currentAttackDamage: 0
   lossyScale: {x: 0, y: 0, z: 0}
   thisObjectPosition: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
+  ammo:
+  - {fileID: 826046344}
+  blood:
+  - {fileID: 1874884316}
+  player: {fileID: 6323719954861377910}
+  meleeAttackArea: {fileID: 786419495}
+  firePoint: {fileID: 905907880}
+  directionX: 0
+  directionY: 0
   attackSound: {fileID: 1532111608}
   runSound: {fileID: 362627157}
   takeDamageSound: {fileID: 1673164440}
@@ -5998,12 +5926,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 455363763}
+  - component: {fileID: 455363767}
   - component: {fileID: 455363762}
   - component: {fileID: 455363761}
   - component: {fileID: 455363765}
   - component: {fileID: 455363764}
   - component: {fileID: 455363768}
-  - component: {fileID: 455363767}
   m_Layer: 7
   m_Name: Skeleton
   m_TagString: Skeleton
@@ -6159,61 +6087,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a1687fce89b4c42ac38dc4baa0d146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonMaxHP: 70
-  skeletonAttackDamage: 10
-  skeletonReward: 2
-  skeletonSpeed: 2
-  mushroomMaxHP: 70
-  mushroomAttackDamage: 10
-  mushroomReward: 2
-  moushroomSpeed: 2
-  flyingEyeMaxHP: 70
-  flyingEyeAttackDamage: 10
-  flyingEyeReward: 2
-  flyingEyeSpeed: 2
+  enemyMaxHP: 48
+  enemyAttackDamage: 10
+  enemySpeed: 2
   countOfCopy: 0
+  remainingAmmo: 0
+  enemyReward: 2
+  patrolDistance: 1
+  sightDistance: 5
+  alarmPause: 3
+  attackDistance: 1.5
   flyAmplitude: 0
   LowFlightPoint: 0
-  goblinMaxHP: 50
-  goblinAttackDamage: 15
-  goblinReward: 2
-  goblinSpeed: 3
-  remainingBombs: 3
-  wizardMaxHP: 50
-  wizardAttackDamage: 10
-  wizardReward: 2
-  wizardSpeed: 2
-  martialMaxHP: 75
-  martialAttackDamage: 20
-  martialReward: 2
-  martialSpeed: 4
-  slimeMaxHP: 40
-  slimeAttackDamage: 15
-  slimeReward: 1
-  slimeSpeed: 2
-  deathMaxHP: 900
-  deathAttackDamage: 25
-  deathReward: 40
-  deathSpeed: 2
-  directionX: 0
-  directionY: 0
-  ammo: []
-  stunCooldown: 0
-  currentHP: 0
-  takedDamage: 0
-  enemyAttackRange: 1.2
-  currentAttackDamage: 0
+  stunDuration: 5
+  vulnerableBeforeDamage: 2
+  vulnerableAfterDamage: 3
+  attackPause: 0
+  stunAttackPause: 0
+  isFlying: 0
+  isBlooded: 0
   enemyDead: 0
   enemyTakeDamage: 0
   block: 0
   copy: 0
-  player: {fileID: 6323719954861377910}
-  meleeAttackArea: {fileID: 1909642840}
-  rb: {fileID: 0}
-  firePoint: {fileID: 746619691}
-  blood: []
+  vulnerableAttackTimer: 0
+  currentHP: 0
+  takedDamage: 0
+  currentAttackDamage: 0
   lossyScale: {x: 0, y: 0, z: 0}
   thisObjectPosition: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
+  ammo: []
+  blood: []
+  player: {fileID: 6323719954861377910}
+  meleeAttackArea: {fileID: 1909642840}
+  firePoint: {fileID: 746619691}
+  directionX: 0
+  directionY: 0
   attackSound: {fileID: 1874556542429371287}
   runSound: {fileID: 1874556542553611185}
   takeDamageSound: {fileID: 1874556541242746576}
@@ -6253,11 +6163,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 487385630}
+  - component: {fileID: 487385632}
   - component: {fileID: 487385629}
   - component: {fileID: 487385628}
   - component: {fileID: 487385634}
   - component: {fileID: 487385633}
-  - component: {fileID: 487385632}
   m_Layer: 7
   m_Name: EvilWizard
   m_TagString: EvilWizard
@@ -6366,63 +6276,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a1687fce89b4c42ac38dc4baa0d146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonMaxHP: 70
-  skeletonAttackDamage: 10
-  skeletonReward: 2
-  skeletonSpeed: 2
-  mushroomMaxHP: 70
-  mushroomAttackDamage: 10
-  mushroomReward: 2
-  moushroomSpeed: 2
-  flyingEyeMaxHP: 70
-  flyingEyeAttackDamage: 10
-  flyingEyeReward: 2
-  flyingEyeSpeed: 2
+  enemyMaxHP: 48
+  enemyAttackDamage: 10
+  enemySpeed: 2
   countOfCopy: 0
+  remainingAmmo: 3
+  enemyReward: 2
+  patrolDistance: 0
+  sightDistance: 0
+  alarmPause: 0
+  attackDistance: 0
   flyAmplitude: 0
   LowFlightPoint: 0
-  goblinMaxHP: 50
-  goblinAttackDamage: 15
-  goblinReward: 2
-  goblinSpeed: 3
-  remainingBombs: 3
-  wizardMaxHP: 50
-  wizardAttackDamage: 10
-  wizardReward: 2
-  wizardSpeed: 2
-  martialMaxHP: 75
-  martialAttackDamage: 20
-  martialReward: 2
-  martialSpeed: 4
-  slimeMaxHP: 40
-  slimeAttackDamage: 15
-  slimeReward: 1
-  slimeSpeed: 2
-  deathMaxHP: 900
-  deathAttackDamage: 25
-  deathReward: 40
-  deathSpeed: 2
-  directionX: 0
-  directionY: 0
-  ammo:
-  - {fileID: 1294059112}
-  stunCooldown: 0
-  currentHP: 0
-  takedDamage: 0
-  enemyAttackRange: 1.2
-  currentAttackDamage: 0
+  stunDuration: 0
+  vulnerableBeforeDamage: 0
+  vulnerableAfterDamage: 0
+  attackPause: 0
+  stunAttackPause: 0
+  isFlying: 0
+  isBlooded: 0
   enemyDead: 0
   enemyTakeDamage: 0
   block: 0
   copy: 0
-  player: {fileID: 6323719954861377910}
-  meleeAttackArea: {fileID: 1632393455}
-  rb: {fileID: 0}
-  firePoint: {fileID: 2021776922}
-  blood:
-  - {fileID: 1874884316}
+  vulnerableAttackTimer: 0
+  currentHP: 0
+  takedDamage: 0
+  currentAttackDamage: 0
   lossyScale: {x: 0, y: 0, z: 0}
   thisObjectPosition: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
+  ammo:
+  - {fileID: 1294059112}
+  blood:
+  - {fileID: 1874884316}
+  player: {fileID: 6323719954861377910}
+  meleeAttackArea: {fileID: 1632393455}
+  firePoint: {fileID: 2021776922}
+  directionX: 0
+  directionY: 0
   attackSound: {fileID: 1874556541388640115}
   runSound: {fileID: 1874556541247622997}
   takeDamageSound: {fileID: 1874556542549848628}
@@ -10163,7 +10055,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 1031523399}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &826046350
 MonoBehaviour:
@@ -10778,7 +10670,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1031523399}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1004281292
 CircleCollider2D:
@@ -11187,9 +11079,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1179914080}
+  - {fileID: 28677081}
   - {fileID: 1004281291}
   - {fileID: 826046349}
-  - {fileID: 28677081}
   - {fileID: 1294059113}
   m_Father: {fileID: 0}
   m_RootOrder: 10
@@ -12576,11 +12468,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1179914080}
+  - component: {fileID: 1179914082}
   - component: {fileID: 1179914086}
   - component: {fileID: 1179914085}
   - component: {fileID: 1179914084}
   - component: {fileID: 1179914083}
-  - component: {fileID: 1179914082}
   m_Layer: 7
   m_Name: FlyingEyeCopy
   m_TagString: FlyingEye
@@ -12619,62 +12511,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a1687fce89b4c42ac38dc4baa0d146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonMaxHP: 70
-  skeletonAttackDamage: 10
-  skeletonReward: 2
-  skeletonSpeed: 2
-  mushroomMaxHP: 70
-  mushroomAttackDamage: 10
-  mushroomReward: 2
-  moushroomSpeed: 2
-  flyingEyeMaxHP: 70
-  flyingEyeAttackDamage: 10
-  flyingEyeReward: 2
-  flyingEyeSpeed: 2
+  enemyMaxHP: 48
+  enemyAttackDamage: 10
+  enemySpeed: 2
   countOfCopy: 0
+  remainingAmmo: 0
+  enemyReward: 0
+  patrolDistance: 1
+  sightDistance: 5
+  alarmPause: 0
+  attackDistance: 1.5
   flyAmplitude: 3
   LowFlightPoint: -1.8
-  goblinMaxHP: 50
-  goblinAttackDamage: 15
-  goblinReward: 2
-  goblinSpeed: 3
-  remainingBombs: 3
-  wizardMaxHP: 50
-  wizardAttackDamage: 10
-  wizardReward: 2
-  wizardSpeed: 2
-  martialMaxHP: 75
-  martialAttackDamage: 20
-  martialReward: 2
-  martialSpeed: 4
-  slimeMaxHP: 40
-  slimeAttackDamage: 15
-  slimeReward: 1
-  slimeSpeed: 2
-  deathMaxHP: 900
-  deathAttackDamage: 25
-  deathReward: 40
-  deathSpeed: 2
-  directionX: 0
-  directionY: 0
-  ammo: []
-  stunCooldown: 0
-  currentHP: 0
-  takedDamage: 0
-  enemyAttackRange: 1.2
-  currentAttackDamage: 0
+  stunDuration: 5
+  vulnerableBeforeDamage: 0
+  vulnerableAfterDamage: 0
+  attackPause: 0
+  stunAttackPause: 0
+  isFlying: 0
+  isBlooded: 0
   enemyDead: 0
   enemyTakeDamage: 0
   block: 0
   copy: 1
-  player: {fileID: 6323719954861377910}
-  meleeAttackArea: {fileID: 452900227}
-  rb: {fileID: 0}
-  firePoint: {fileID: 1742241877}
-  blood:
-  - {fileID: 1874884316}
+  vulnerableAttackTimer: 0
+  currentHP: 0
+  takedDamage: 0
+  currentAttackDamage: 0
   lossyScale: {x: 0, y: 0, z: 0}
   thisObjectPosition: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
+  ammo: []
+  blood:
+  - {fileID: 1874884316}
+  player: {fileID: 6323719954861377910}
+  meleeAttackArea: {fileID: 452900227}
+  firePoint: {fileID: 1742241877}
+  directionX: 0
+  directionY: 0
   attackSound: {fileID: 1173872750}
   runSound: {fileID: 1575149970}
   takeDamageSound: {fileID: 1433206301}
@@ -15473,12 +15347,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1433946431}
+  - component: {fileID: 1433946435}
   - component: {fileID: 1433946430}
   - component: {fileID: 1433946429}
   - component: {fileID: 1433946433}
   - component: {fileID: 1433946432}
   - component: {fileID: 1433946436}
-  - component: {fileID: 1433946435}
   m_Layer: 7
   m_Name: Mushroom
   m_TagString: Mushroom
@@ -15634,63 +15508,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a1687fce89b4c42ac38dc4baa0d146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonMaxHP: 70
-  skeletonAttackDamage: 10
-  skeletonReward: 2
-  skeletonSpeed: 2
-  mushroomMaxHP: 70
-  mushroomAttackDamage: 10
-  mushroomReward: 2
-  moushroomSpeed: 2
-  flyingEyeMaxHP: 70
-  flyingEyeAttackDamage: 10
-  flyingEyeReward: 2
-  flyingEyeSpeed: 2
+  enemyMaxHP: 48
+  enemyAttackDamage: 10
+  enemySpeed: 2
   countOfCopy: 0
+  remainingAmmo: 3
+  enemyReward: 2
+  patrolDistance: 0
+  sightDistance: 0
+  alarmPause: 0
+  attackDistance: 0
   flyAmplitude: 0
   LowFlightPoint: 0
-  goblinMaxHP: 50
-  goblinAttackDamage: 15
-  goblinReward: 2
-  goblinSpeed: 3
-  remainingBombs: 3
-  wizardMaxHP: 50
-  wizardAttackDamage: 10
-  wizardReward: 2
-  wizardSpeed: 2
-  martialMaxHP: 75
-  martialAttackDamage: 20
-  martialReward: 2
-  martialSpeed: 4
-  slimeMaxHP: 40
-  slimeAttackDamage: 15
-  slimeReward: 1
-  slimeSpeed: 2
-  deathMaxHP: 900
-  deathAttackDamage: 25
-  deathReward: 40
-  deathSpeed: 2
-  directionX: 0
-  directionY: 0
-  ammo:
-  - {fileID: 1004281290}
-  stunCooldown: 0
-  currentHP: 0
-  takedDamage: 0
-  enemyAttackRange: 1.2
-  currentAttackDamage: 0
+  stunDuration: 0
+  vulnerableBeforeDamage: 0
+  vulnerableAfterDamage: 0
+  attackPause: 0
+  stunAttackPause: 0
+  isFlying: 0
+  isBlooded: 0
   enemyDead: 0
   enemyTakeDamage: 0
   block: 0
   copy: 0
-  player: {fileID: 6323719954861377910}
-  meleeAttackArea: {fileID: 2077632603}
-  rb: {fileID: 0}
-  firePoint: {fileID: 113079286}
-  blood:
-  - {fileID: 1522460638}
+  vulnerableAttackTimer: 0
+  currentHP: 0
+  takedDamage: 0
+  currentAttackDamage: 0
   lossyScale: {x: 0, y: 0, z: 0}
   thisObjectPosition: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
+  ammo:
+  - {fileID: 1004281290}
+  blood:
+  - {fileID: 1522460638}
+  player: {fileID: 6323719954861377910}
+  meleeAttackArea: {fileID: 2077632603}
+  firePoint: {fileID: 113079286}
+  directionX: 0
+  directionY: 0
   attackSound: {fileID: 1874556541710776733}
   runSound: {fileID: 1874556541586635195}
   takeDamageSound: {fileID: 1874556542762976474}
@@ -15846,9 +15702,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1453525425}
+  - component: {fileID: 1453525426}
   - component: {fileID: 1453525424}
   - component: {fileID: 1453525423}
-  - component: {fileID: 1453525426}
   - component: {fileID: 1453525428}
   - component: {fileID: 1453525429}
   m_Layer: 7
@@ -15959,63 +15815,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a1687fce89b4c42ac38dc4baa0d146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonMaxHP: 70
-  skeletonAttackDamage: 10
-  skeletonReward: 2
-  skeletonSpeed: 2
-  mushroomMaxHP: 70
-  mushroomAttackDamage: 10
-  mushroomReward: 2
-  moushroomSpeed: 2
-  flyingEyeMaxHP: 70
-  flyingEyeAttackDamage: 10
-  flyingEyeReward: 2
-  flyingEyeSpeed: 2
+  enemyMaxHP: 48
+  enemyAttackDamage: 10
+  enemySpeed: 2
   countOfCopy: 0
+  remainingAmmo: 3
+  enemyReward: 2
+  patrolDistance: 0
+  sightDistance: 0
+  alarmPause: 0
+  attackDistance: 0
   flyAmplitude: 0
   LowFlightPoint: 0
-  goblinMaxHP: 50
-  goblinAttackDamage: 15
-  goblinReward: 2
-  goblinSpeed: 3
-  remainingBombs: 3
-  wizardMaxHP: 50
-  wizardAttackDamage: 10
-  wizardReward: 2
-  wizardSpeed: 2
-  martialMaxHP: 75
-  martialAttackDamage: 20
-  martialReward: 2
-  martialSpeed: 4
-  slimeMaxHP: 40
-  slimeAttackDamage: 15
-  slimeReward: 1
-  slimeSpeed: 2
-  deathMaxHP: 900
-  deathAttackDamage: 25
-  deathReward: 40
-  deathSpeed: 2
-  directionX: 0
-  directionY: 0
-  ammo:
-  - {fileID: 28677076}
-  stunCooldown: 0
-  currentHP: 0
-  takedDamage: 0
-  enemyAttackRange: 1.2
-  currentAttackDamage: 0
+  stunDuration: 0
+  vulnerableBeforeDamage: 0
+  vulnerableAfterDamage: 0
+  attackPause: 0
+  stunAttackPause: 0
+  isFlying: 0
+  isBlooded: 0
   enemyDead: 0
   enemyTakeDamage: 0
   block: 0
   copy: 0
-  player: {fileID: 6323719954861377910}
-  meleeAttackArea: {fileID: 1429586731}
-  rb: {fileID: 0}
-  firePoint: {fileID: 1269871322}
-  blood:
-  - {fileID: 1522460638}
+  vulnerableAttackTimer: 0
+  currentHP: 0
+  takedDamage: 0
+  currentAttackDamage: 0
   lossyScale: {x: 0, y: 0, z: 0}
   thisObjectPosition: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
+  ammo:
+  - {fileID: 28677076}
+  blood:
+  - {fileID: 1522460638}
+  player: {fileID: 6323719954861377910}
+  meleeAttackArea: {fileID: 1429586731}
+  firePoint: {fileID: 1269871322}
+  directionX: 0
+  directionY: 0
   attackSound: {fileID: 612158248}
   runSound: {fileID: 607728624}
   takeDamageSound: {fileID: 1509627692}
@@ -30891,7 +30729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1918445911
 Transform:
   m_ObjectHideFlags: 0
@@ -38694,6 +38532,10 @@ MonoBehaviour:
   mageAttackDamage: 0
   block: 0
   isAttack: 0
+  isJumpPC: 0
+  isJumpMobile: 0
+  isRollPC: 0
+  isRollMobile: 0
   isMovingPC: 0
   isMovingJoystick: 0
   isMovingButton: 0

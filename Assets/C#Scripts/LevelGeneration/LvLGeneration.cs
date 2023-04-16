@@ -286,17 +286,9 @@ public class LvLGeneration : MonoBehaviour
         SaveSerial.Instance.ResetData();
         SceneManager.LoadScene("DeadScreen", LoadSceneMode.Single);
     }
-    public void Boost_Enemy()
-    {
-        Enemy_Behavior.Instance.BoostEnemyHP();
-        Enemy_Behavior.Instance.BoostEnemyAttackDamage();
-        Enemy_Behavior.Instance.BoostEnemySpeed();
-        if (Level == 5 || Level == 10 || Level == 15 || Level == 20 || Level == 30 || Level == 35 || Level == 40) Enemy_Behavior.Instance.BoostEnemyReward();
-    }
     public void CompleteLevel() // Let's add a CompleteLevel method that will increase the completeLevels variable by one unit each time the player completes another level.
     {
         this.Level += 1;
-        Boost_Enemy();
         SaveSerial.Instance.SaveGame();
         SaveSerial.Instance.SaveLastGame();
         SceneManager.LoadScene("LevelComplete", LoadSceneMode.Single);

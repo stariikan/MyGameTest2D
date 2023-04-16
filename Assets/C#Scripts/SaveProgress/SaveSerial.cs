@@ -70,38 +70,7 @@ public class SaveSerial : MonoBehaviour
         public float playerSpeed;
         public float playerAttackDamage;
         public float playerMageDamage;
-
         public int passedLvl;
-
-        public float mushroomHP;
-        public float mushroomDamage;
-        public float mushroomSpeed;
-        public int mushroomReward;
-
-        public float flyingEyeHP;
-        public float flyingEyeDamage;
-        public float flyingEyeSpeed;
-        public int flyingEyeReward;
-
-        public float skeletonHP;
-        public float skeletonDamage;
-        public float skeletonSpeed;
-        public int skeletonReward;
-
-        public float goblinHP;
-        public float goblinDamage;
-        public float goblinSpeed;
-        public int goblinReward;
-
-        public float wizardHP;
-        public float wizardDamage;
-        public float wizardSpeed;
-        public int wizardReward;
-
-        public float martialHP;
-        public float martialDamage;
-        public float martialSpeed;
-        public int martialReward;
     }
     //notice that the three variables in the SaveData class correspond to variables from the SaveSerial class.
     //We will pass values from SaveSerial to SaveData and then serialise the latter.
@@ -139,36 +108,6 @@ public class SaveSerial : MonoBehaviour
             playerAttackDamage = Hero.Instance.playerAttackDamage;
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
-
-            mushroomHP = Enemy_Behavior.Instance.mushroomMaxHP;
-            mushroomDamage = Enemy_Behavior.Instance.mushroomAttackDamage;
-            mushroomSpeed = Enemy_Behavior.Instance.moushroomSpeed;
-            mushroomReward = Enemy_Behavior.Instance.mushroomReward;
-
-            flyingEyeHP = Enemy_Behavior.Instance.flyingEyeMaxHP;
-            flyingEyeDamage = Enemy_Behavior.Instance.flyingEyeAttackDamage;
-            flyingEyeSpeed = Enemy_Behavior.Instance.flyingEyeSpeed;
-            flyingEyeReward = Enemy_Behavior.Instance.flyingEyeReward;
-
-            skeletonHP = Enemy_Behavior.Instance.skeletonMaxHP;
-            skeletonDamage = Enemy_Behavior.Instance.skeletonAttackDamage;
-            skeletonSpeed = Enemy_Behavior.Instance.skeletonSpeed;
-            skeletonReward = Enemy_Behavior.Instance.skeletonReward;
-
-            goblinHP = Enemy_Behavior.Instance.goblinMaxHP;
-            goblinDamage = Enemy_Behavior.Instance.goblinAttackDamage;
-            goblinSpeed = Enemy_Behavior.Instance.goblinSpeed;
-            goblinReward = Enemy_Behavior.Instance.goblinReward;
-
-            wizardHP = Enemy_Behavior.Instance.wizardMaxHP;
-            wizardDamage = Enemy_Behavior.Instance.wizardAttackDamage;
-            wizardSpeed = Enemy_Behavior.Instance.wizardSpeed;
-            wizardReward = Enemy_Behavior.Instance.wizardReward;
-
-            martialHP = Enemy_Behavior.Instance.martialMaxHP;
-            martialDamage = Enemy_Behavior.Instance.martialAttackDamage;
-            martialSpeed = Enemy_Behavior.Instance.martialSpeed;
-            martialReward = Enemy_Behavior.Instance.martialReward;
         }
         
         data.playerCoin = playerCoin;
@@ -180,37 +119,6 @@ public class SaveSerial : MonoBehaviour
         data.playerMageDamage = playerMageDamage;
         
         data.passedLvl = passedLvl;
-                
-        data.mushroomHP = mushroomHP;
-        data.mushroomDamage = mushroomDamage;
-        data.mushroomSpeed = mushroomSpeed;
-        data.mushroomReward = mushroomReward;
-
-        data.flyingEyeHP = flyingEyeHP;
-        data.flyingEyeDamage = flyingEyeDamage;
-        data.flyingEyeSpeed = flyingEyeSpeed;
-        data.flyingEyeReward = flyingEyeReward;
-
-        data.skeletonHP = skeletonHP;
-        data.skeletonDamage = skeletonDamage;
-        data.skeletonSpeed = skeletonSpeed;
-        data.skeletonReward = skeletonReward;
-
-        data.goblinHP = goblinHP;
-        data.goblinDamage = goblinDamage;
-        data.goblinSpeed = goblinSpeed;
-        data.goblinReward = goblinReward;
-
-        data.wizardHP = wizardHP;
-        data.wizardDamage = wizardDamage;
-        data.wizardSpeed = wizardSpeed;
-        data.wizardReward = wizardReward;
-
-        data.martialHP = martialHP;
-        data.martialDamage = martialDamage;
-        data.martialSpeed = martialSpeed;
-        data.martialReward = martialReward;
-
 
         //data.savedBool = boolToSave;
         bf.Serialize(file, data);
@@ -238,36 +146,6 @@ public class SaveSerial : MonoBehaviour
             playerAttackDamage = Hero.Instance.playerAttackDamage;
             playerMageDamage = Hero.Instance.mageAttackDamage;
             passedLvl = LvLGeneration.Instance.Level;
-
-            mushroomHP = Enemy_Behavior.Instance.mushroomMaxHP;
-            mushroomDamage = Enemy_Behavior.Instance.mushroomAttackDamage;
-            mushroomSpeed = Enemy_Behavior.Instance.moushroomSpeed;
-            mushroomReward = Enemy_Behavior.Instance.mushroomReward;
-
-            flyingEyeHP = Enemy_Behavior.Instance.flyingEyeMaxHP;
-            flyingEyeDamage = Enemy_Behavior.Instance.flyingEyeAttackDamage;
-            flyingEyeSpeed = Enemy_Behavior.Instance.flyingEyeSpeed;
-            flyingEyeReward = Enemy_Behavior.Instance.flyingEyeReward;
-
-            skeletonHP = Enemy_Behavior.Instance.skeletonMaxHP;
-            skeletonDamage = Enemy_Behavior.Instance.skeletonAttackDamage;
-            skeletonSpeed = Enemy_Behavior.Instance.skeletonSpeed;
-            skeletonReward = Enemy_Behavior.Instance.skeletonReward;
-
-            goblinHP = Enemy_Behavior.Instance.goblinMaxHP;
-            goblinDamage = Enemy_Behavior.Instance.goblinAttackDamage;
-            goblinSpeed = Enemy_Behavior.Instance.goblinSpeed;
-            goblinReward = Enemy_Behavior.Instance.goblinReward;
-
-            wizardHP = Enemy_Behavior.Instance.wizardMaxHP;
-            wizardDamage = Enemy_Behavior.Instance.wizardAttackDamage;
-            wizardSpeed = Enemy_Behavior.Instance.wizardSpeed;
-            wizardReward = Enemy_Behavior.Instance.wizardReward;
-
-            martialHP = Enemy_Behavior.Instance.martialMaxHP;
-            martialDamage = Enemy_Behavior.Instance.martialAttackDamage;
-            martialSpeed = Enemy_Behavior.Instance.martialSpeed;
-            martialReward = Enemy_Behavior.Instance.martialReward;
         }
 
         data.playerCoin = playerCoin;
@@ -277,39 +155,7 @@ public class SaveSerial : MonoBehaviour
         data.playerSpeed = playerSpeed;
         data.playerAttackDamage = playerAttackDamage;
         data.playerMageDamage = playerMageDamage;
-
         data.passedLvl = passedLvl;
-
-        data.mushroomHP = mushroomHP;
-        data.mushroomDamage = mushroomDamage;
-        data.mushroomSpeed = mushroomSpeed;
-        data.mushroomReward = mushroomReward;
-
-        data.flyingEyeHP = flyingEyeHP;
-        data.flyingEyeDamage = flyingEyeDamage;
-        data.flyingEyeSpeed = flyingEyeSpeed;
-        data.flyingEyeReward = flyingEyeReward;
-
-        data.skeletonHP = skeletonHP;
-        data.skeletonDamage = skeletonDamage;
-        data.skeletonSpeed = skeletonSpeed;
-        data.skeletonReward = skeletonReward;
-
-        data.goblinHP = goblinHP;
-        data.goblinDamage = goblinDamage;
-        data.goblinSpeed = goblinSpeed;
-        data.goblinReward = goblinReward;
-
-        data.wizardHP = wizardHP;
-        data.wizardDamage = wizardDamage;
-        data.wizardSpeed = wizardSpeed;
-        data.wizardReward = wizardReward;
-
-        data.martialHP = martialHP;
-        data.martialDamage = martialDamage;
-        data.martialSpeed = martialSpeed;
-        data.martialReward = martialReward;
-
 
         //data.savedBool = boolToSave;
         bf.Serialize(file, data);
@@ -357,38 +203,7 @@ public class SaveSerial : MonoBehaviour
             playerSpeed = data.playerSpeed;
             playerAttackDamage = data.playerAttackDamage;
             playerMageDamage = data.playerMageDamage;
-
             passedLvl = data.passedLvl;
-
-            mushroomHP = data.mushroomHP;
-            mushroomDamage = data.mushroomDamage;
-            mushroomSpeed = data.mushroomSpeed;
-            mushroomReward = data.mushroomReward;
-
-            flyingEyeHP = data.flyingEyeHP;
-            flyingEyeDamage = data.flyingEyeDamage;
-            flyingEyeSpeed = data.flyingEyeSpeed;
-            flyingEyeReward = data.flyingEyeReward;
-
-            skeletonHP = data.skeletonHP;
-            skeletonDamage = data.skeletonDamage;
-            skeletonSpeed = data.skeletonSpeed;
-            skeletonReward = data.skeletonReward;
-
-            goblinHP = data.goblinHP;
-            goblinDamage = data.goblinDamage;
-            goblinSpeed = data.goblinSpeed;
-            goblinReward = data.goblinReward;
-
-            wizardHP = data.wizardHP;
-            wizardDamage = data.wizardDamage;
-            wizardSpeed = data.wizardSpeed;
-            wizardReward = data.wizardReward;
-
-            martialHP = data.martialHP;
-            martialDamage = data.martialDamage;
-            martialSpeed = data.martialSpeed;
-            martialReward = data.martialReward;
 
             Debug.Log("Game data loaded!"); //Put a message on the debug console stating that the download was successful.
         }
@@ -413,39 +228,8 @@ public class SaveSerial : MonoBehaviour
             playerSpeed = data.playerSpeed;
             playerAttackDamage = data.playerAttackDamage;
             playerMageDamage = data.playerMageDamage;
-
             passedLvl = data.passedLvl;
-
-            mushroomHP = data.mushroomHP;
-            mushroomDamage = data.mushroomDamage;
-            mushroomSpeed = data.mushroomSpeed;
-            mushroomReward = data.mushroomReward;
-
-            flyingEyeHP = data.flyingEyeHP;
-            flyingEyeDamage = data.flyingEyeDamage;
-            flyingEyeSpeed = data.flyingEyeSpeed;
-            flyingEyeReward = data.flyingEyeReward;
-
-            skeletonHP = data.skeletonHP;
-            skeletonDamage = data.skeletonDamage;
-            skeletonSpeed = data.skeletonSpeed;
-            skeletonReward = data.skeletonReward;
-
-            goblinHP = data.goblinHP;
-            goblinDamage = data.goblinDamage;
-            goblinSpeed = data.goblinSpeed;
-            goblinReward = data.goblinReward;
-
-            wizardHP = data.wizardHP;
-            wizardDamage = data.wizardDamage;
-            wizardSpeed = data.wizardSpeed;
-            wizardReward = data.wizardReward;
-
-            martialHP = data.martialHP;
-            martialDamage = data.martialDamage;
-            martialSpeed = data.martialSpeed;
-            martialReward = data.martialReward;
-
+            
             Debug.Log("Game data loaded!"); //Put a message on the debug console stating that the download was successful.
         }
         else
