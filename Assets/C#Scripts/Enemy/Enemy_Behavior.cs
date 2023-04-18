@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.XR;
+using static UnityEditor.PlayerSettings;
 
 public class Enemy_Behavior : MonoBehaviour
 {
@@ -65,7 +66,15 @@ public class Enemy_Behavior : MonoBehaviour
     private int level; //check what level the player is at, to connect abilities
     new string tag; // the object tag is assigned to this variable at the start
     public Vector3 lossyScale;
-    public Vector3 thisObjectPosition;
+
+    private int patrolFlip = 1;
+    public Vector3 startPosition; //start position
+    public float patrolDirectionLeft;
+    public float patrolDirectionRight;
+    public float sightDistanceLeft;
+    public float sightDistanceRight;
+    private bool playerGodMode;
+
     public Rigidbody2D rb; //Physical body
     private CapsuleCollider2D capsuleCollider;
     private Animator anim; //Variable by which the object is animated
@@ -101,10 +110,10 @@ public class Enemy_Behavior : MonoBehaviour
         capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
         tag = this.gameObject.transform.tag;
         level = LvLGeneration.Instance.Level;
-        
         currentHP = enemyMaxHP;
         currentAttackDamage = enemyAttackDamage;
         speedRecovery = enemySpeed;
+        startPosition = transform.position;
     }
     void Update()
     {
@@ -117,9 +126,12 @@ public class Enemy_Behavior : MonoBehaviour
         alarmTimer += Time.deltaTime;
         vulnerableAttackTimer += Time.deltaTime;
         flipEnemyCooldown += Time.deltaTime;
+
         if (stunCooldown > stunDuration) stuned = false;//exit from stun
         if (jumpCooldown > 1.2f) jump = false;
-        if (currentHP > 0) EnemyBehavior(); 
+        if (currentHP > 0) EnemyBehavior();
+
+        playerGodMode = Hero.Instance.godMode;
     }
     public enum States //Defining what states there are, named as in Unity Animator
     {
@@ -188,30 +200,57 @@ public class Enemy_Behavior : MonoBehaviour
     {
         directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; // calculating the direction of movement is Player position on the x-axis - Enemy position on the x-axis
         directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //calculate direction of movement is Player position on the y-axis - Enemy position on the y-axis
+
+        patrolDirectionLeft = startPosition.x - patrolDistance;
+        patrolDirectionRight = startPosition.x + patrolDistance;
+
+        sightDistanceLeft = transform.position.x - sightDistance;
+        sightDistanceRight = transform.position.x + sightDistance;
+
         bool patrol = false;
         bool follow = false;
-        Vector2 velocity = rb.velocity;
 
-        if (transform.position.y < (LowFlightPoint - Random.Range(-0.1f, 0.1f)) && isFlying)
+        Vector3 pos = transform.position; //object position
+        Vector3 theScale = transform.localScale; // needed to understand the direction
+
+        if (transform.position.y < LowFlightPoint && isFlying && !isAttack)
         {
-            float zigzagSpeed = flyAmplitude;
-            velocity.y = zigzagSpeed;
-            rb.velocity = velocity;
+            float flySpeed = 1 * flyAmplitude * Time.deltaTime; //calculating direction
+            pos.y += flySpeed; //Calculating the position along the x-axis
+            transform.position = pos; //applying the position
+            Debug.Log(transform.position);
         }
+
+        if (patrolDirectionRight < transform.position.x) patrolFlip = 2; 
+        if (patrolDirectionLeft > transform.position.x) patrolFlip = 1;
+
         if (Mathf.Abs(directionX) > sightDistance && !block && !isAttack && !stuned && !enemyTakeDamage && alarmTimer > alarmPause)
         {
-            float patrolSpeed = Mathf.Sin(Time.time * (enemySpeed * 0.25f)) * patrolDistance;
-            velocity.x = patrolSpeed;
-            rb.velocity = velocity;
-            patrol = true;
+            if (patrolDirectionLeft != transform.position.x && patrolFlip == 1)
+            {
+                float patrolSpeed = 1 * enemySpeed * Time.deltaTime; //calculating direction
+                pos.x += patrolSpeed; //Calculating the position along the x-axis
+                transform.position = pos; //applying the position
+                patrol = true;
 
-            if (patrolSpeed < 0 && transform.localScale.x > 0) Flip();
-            else if (patrolSpeed > 0 && transform.localScale.x < 0) Flip();
+                if (patrolSpeed < 0 && transform.localScale.x > 0) Flip();
+                else if (patrolSpeed > 0 && transform.localScale.x < 0) Flip();
+            }
+
+            if (patrolDirectionRight != transform.position.x && patrolFlip == 2)
+            {
+                float patrolSpeed = -1 * enemySpeed * Time.deltaTime; //calculating direction
+                pos.x += patrolSpeed; //Calculating the position along the x-axis
+                transform.position = pos; //applying the position
+                patrol = true;
+
+                if (patrolSpeed < 0 && transform.localScale.x > 0) Flip();
+                else if (patrolSpeed > 0 && transform.localScale.x < 0) Flip();
+            }
         }
-        if (Mathf.Abs(directionX) < sightDistance && Mathf.Abs(directionX) >= attackDistance && !block && !isAttack && !stuned && remainingAmmo < 1 || enemyTakeDamage && Mathf.Abs(directionX) > attackDistance && !block && !isAttack && !stuned || copy)
+        if (Mathf.Abs(directionX) < sightDistance && Mathf.Abs(directionX) >= attackDistance && !block && !isAttack && !stuned && remainingAmmo < 1 && !playerGodMode || enemyTakeDamage && Mathf.Abs(directionX) > attackDistance && !block && !isAttack && !stuned && !playerGodMode || copy && !playerGodMode)
         {
-            Vector3 pos = transform.position; //object position
-            Vector3 theScale = transform.localScale; // needed to understand the direction
+            
             transform.localScale = theScale; // needed to understand the direction
             float playerFollowSpeed = Mathf.Sign(directionX) * enemySpeed * Time.deltaTime; //calculating direction
             pos.x += playerFollowSpeed; //Calculating the position along the x-axis
@@ -222,12 +261,14 @@ public class Enemy_Behavior : MonoBehaviour
             else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
         }
         if (patrol || follow) movement = true; else movement = false;
+
+
     }
     private void MeleeAttack() //Basic method of attack with two or more animations
     {
         float playerHP = Hero.Instance.curentHP;
         
-        if (playerHP > 0 && Mathf.Abs(directionX) <= attackDistance && !stuned && !isAttack)
+        if (playerHP > 0 && Mathf.Abs(directionX) <= attackDistance && !stuned && !isAttack && !playerGodMode)
         {
             flipEnemyCooldown = 0;
             if (directionX < 0 && transform.localScale.x > 0 && flipEnemyCooldown > flipEnemyTimer) Flip();
@@ -263,7 +304,7 @@ public class Enemy_Behavior : MonoBehaviour
     public void Block() // Using a shield (Skeleton)
     {
         playerIsAttack = Hero.Instance.isAttack;
-        if (playerIsAttack == true && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2 && blockCooldown > 2)
+        if (playerIsAttack == true && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2 && blockCooldown > 2 && !playerGodMode)
         {
             blockCooldown = 0;
             enemySpeed = 0;
@@ -291,7 +332,16 @@ public class Enemy_Behavior : MonoBehaviour
     {
         countOfCopy -= 1;
     }
-
+    public void Fly() 
+    {
+        Vector3 fly = transform.position;
+        if (transform.position.y < LowFlightPoint && isFlying)
+        {
+            float flySpeed = 1 * flyAmplitude * Time.deltaTime; //calculating direction
+            fly.y += flySpeed; //Calculating the position along the x-axis
+            transform.position = fly; //applying the position
+        }
+    }
     public void Stun()
     {
         stunCooldown = 0;
@@ -488,13 +538,13 @@ public class Enemy_Behavior : MonoBehaviour
     public void MushroomAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned) JumpToPlayer();
-        if ((Mathf.Abs(directionX)) < 0.8f && magicCooldown > 10 && !stuned) MushroomSpores();
+        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned && !playerGodMode) JumpToPlayer();
+        if ((Mathf.Abs(directionX)) < 0.8f && magicCooldown > 10 && !stuned && !playerGodMode) MushroomSpores();
     }
     public void FlyingEyeAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && !stuned) 
+        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && !stuned && !playerGodMode) 
         {
             jumpCooldown = 0;
             Vector3 theScale = transform.localScale;
@@ -518,9 +568,9 @@ public class Enemy_Behavior : MonoBehaviour
     public void GoblinAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < 5f && (Mathf.Abs(directionX)) > 1f && jumpCooldown >= 2 && Mathf.Abs(directionY) < 2 && remainingAmmo < 1 && !stuned) GoblinJumpToPlayer();
-        if ((Mathf.Abs(directionX)) < 2f && (Mathf.Abs(directionX)) > 1f && jumpCooldown >= 2 && Mathf.Abs(directionY) < 2 && remainingAmmo >= 1 && !stuned) GoblinJumpFromPlayer();
-        if ((Mathf.Abs(directionX)) < 4.5 && magicCooldown > 3 && !jump && remainingAmmo >= 1 && !stuned || enemyTakeDamage == true && magicCooldown > 3 && !jump && remainingAmmo >= 1 && !stuned)
+        if ((Mathf.Abs(directionX)) < 5f && (Mathf.Abs(directionX)) > 1f && jumpCooldown >= 2 && Mathf.Abs(directionY) < 2 && remainingAmmo < 1 && !stuned && !playerGodMode) GoblinJumpToPlayer();
+        if ((Mathf.Abs(directionX)) < 2f && (Mathf.Abs(directionX)) > 1f && jumpCooldown >= 2 && Mathf.Abs(directionY) < 2 && remainingAmmo >= 1 && !stuned && !playerGodMode) GoblinJumpFromPlayer();
+        if ((Mathf.Abs(directionX)) < 4.5 && magicCooldown > 3 && !jump && remainingAmmo >= 1 && !stuned && !playerGodMode || enemyTakeDamage == true && magicCooldown > 3 && !jump && remainingAmmo >= 1 && !stuned && !playerGodMode)
         {
             Vector3 theScale = transform.localScale; // needed to understand the direction
             transform.localScale = theScale; // needed to understand the direction
@@ -540,7 +590,7 @@ public class Enemy_Behavior : MonoBehaviour
     public void EvilWizardAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if (playerHP > 0 && Mathf.Abs(directionX) < 6f && (Mathf.Abs(directionX)) > 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !stuned && level >= 1)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 6f && (Mathf.Abs(directionX)) > 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !stuned && level >= 1 && !playerGodMode)
         {
             anim.SetTrigger("attack1");
             magicSound.GetComponent<SoundOfObject>().ContinueSound();
@@ -559,7 +609,7 @@ public class Enemy_Behavior : MonoBehaviour
             }
         }
         else isAttack = false;
-        if (playerHP > 0 && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2 && !stuned)
+        if (playerHP > 0 && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2 && !stuned && !playerGodMode)
         {
             anim.SetTrigger("attack2");
             //attackSound.GetComponent<SoundOfObject>().StopSound();
@@ -583,7 +633,7 @@ public class Enemy_Behavior : MonoBehaviour
     public void MartialAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if (playerHP > 0 && Mathf.Abs(directionX) < 2.5f && Mathf.Abs(directionY) < 1.5f && timeSinceAttack > 1 && !stuned)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 2.5f && Mathf.Abs(directionY) < 1.5f && timeSinceAttack > 1 && !stuned && !playerGodMode)
         {
             MeleeAttack();
         }
@@ -592,8 +642,8 @@ public class Enemy_Behavior : MonoBehaviour
     public void SlimeAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned) JumpToPlayer();
-        if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1 && !stuned)
+        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned && !playerGodMode) JumpToPlayer();
+        if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1 && !stuned && !playerGodMode)
         {
             anim.SetTrigger("spin");
             // Reset timer
@@ -605,13 +655,13 @@ public class Enemy_Behavior : MonoBehaviour
     {
         float playerHP = Hero.Instance.curentHP;
 
-        if (playerHP > 0 && Mathf.Abs(directionX) < 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !stuned)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !stuned && !playerGodMode)
         {
             anim.SetTrigger("attack1");
             timeSinceAttack = 0.0f;
         }
         else isAttack = false;
-        if ((Mathf.Abs(directionX)) < 8f && (Mathf.Abs(directionX)) > 2 && Mathf.Abs(directionY) < 2f && !stuned || enemyTakeDamage == true && !stuned)
+        if ((Mathf.Abs(directionX)) < 8f && (Mathf.Abs(directionX)) > 2 && Mathf.Abs(directionY) < 2f && !stuned && !playerGodMode || enemyTakeDamage == true && !stuned && !playerGodMode)
         {
             SpellDrainHP();
             DeathSummonMinioins();

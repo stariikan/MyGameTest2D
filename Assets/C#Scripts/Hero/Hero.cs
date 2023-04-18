@@ -52,6 +52,7 @@ public class Hero : MonoBehaviour {
     public bool isMovingJoystick = false;
     public bool isMovingButton = false;
     public bool playerDead = false; // whether the player is dead or not, for now, to make a restart when the player dies
+    public bool godMode = false; // whether the player is dead or not, for now, to make a restart when the player dies
 
     //Timers
     private float cooldownTimer = Mathf.Infinity;
