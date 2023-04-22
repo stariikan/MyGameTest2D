@@ -107,6 +107,7 @@
     <Compile Include="Assets\C#Scripts\Enemy\BossDeathAbility\DrainHP.cs" />
     <Compile Include="Assets\C#Scripts\Hero\Hero.cs" />
     <Compile Include="Assets\C#Scripts\UI\BarsCoinsTab\coin_counter.cs" />
+    <Compile Include="Assets\C#Scripts\Hero\BodyBack.cs" />
     <Compile Include="Assets\C#Scripts\SaveProgress\SaveSerial.cs" />
     <Compile Include="Assets\C#Scripts\UI\LvL and info\Level_counter.cs" />
     <Compile Include="Assets\C#Scripts\UI\Shop\Speed.cs" />
