@@ -460,7 +460,7 @@ public class Enemy_Behavior : MonoBehaviour
         float playerHP = Hero.Instance.curentHP;
         bool playerIsBlock = Hero.Instance.block;
         if ((Mathf.Abs(directionX)) < sightDistance && (Mathf.Abs(directionX)) > attackDistance && jumpCooldown > 3 && Mathf.Abs(directionY) < 3 && !stuned && !playerGodMode && !playerIsBlock) JumpToPlayer();
-        if ((Mathf.Abs(directionX)) < attackDistance && jumpCooldown > 3 && Mathf.Abs(directionY) < 3 && aState > 1 && !playerGodMode && playerIsBlock) JumpFromPlayer();
+        if ((Mathf.Abs(directionX)) < attackDistance && jumpCooldown > 4 && Mathf.Abs(directionY) < 3 && !isAttack && !playerGodMode && playerIsBlock) JumpFromPlayer();
         if (enemyTakeDamage && jumpCooldown > 3) Roll();
     }
     private void TossingBomb() //Бросок бомбы
