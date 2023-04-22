@@ -6,7 +6,8 @@ public class MeleeWeapon : MonoBehaviour
     public float direction;//directional variable
 
     private BoxCollider2D boxCollider; //Strike collider
-
+    private float colliderTimer;
+    private bool targetIsBlock;
     public float AttackDamage;
     public string TargetName;
     public GameObject target;
@@ -19,14 +20,41 @@ public class MeleeWeapon : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>(); // pull information from the box colider component
         Instance = this;
     }
+    private void Update()
+    {
+        if (masterOfWeapon.layer == 7)
+        {
+            float attackRange = masterOfWeapon.GetComponent<Enemy_Behavior>().attackDistance * 2.1f;
+            Vector3 newSize = boxCollider.size;
+            newSize.x = attackRange;
+            boxCollider.size = newSize;
+        }
+        
+
+        colliderTimer += Time.deltaTime;
+        if (colliderTimer > 0.2f) WeaponOff();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         TargetName = collision.gameObject.name;
         target = GameObject.Find(TargetName);
         Debug.Log(target);
         if (masterOfWeapon.layer == 8 &&target.CompareTag("SpellBook")) target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
-        if (masterOfWeapon.layer == 8 && target != null && target.layer == 7) target.GetComponent<Enemy_Behavior>().TakeDamage(AttackDamage); //7 this is the EnemyLayer
-        if (masterOfWeapon.layer == 7 && target != null && target.layer == 8) target.GetComponentInParent<Hero>().GetDamage(AttackDamage); //8 this is the PlayerLayer
+        if (masterOfWeapon.layer == 8 && target != null && target.layer == 7)
+        {
+            targetIsBlock = target.GetComponent<Enemy_Behavior>().block;
+            if (targetIsBlock)
+            {
+                Hero.Instance.PlayerStun();
+            }
+            else
+            {
+                target.GetComponent<Enemy_Behavior>().TakeDamage(AttackDamage); //7 this is the EnemyLayer
+            }
+            
+        }
+        if (masterOfWeapon.layer == 7 && target != null && target.tag == "Back") target.GetComponentInParent<Hero>().GetDamage(AttackDamage*2);
+        if (masterOfWeapon.layer == 7 && target != null && target.tag == "Front") target.GetComponentInParent<Hero>().GetDamage(AttackDamage);
     }
     public void GetAttackDamageInfo(float damageInfo) //Getting a damage score from an object
     {
@@ -39,6 +67,7 @@ public class MeleeWeapon : MonoBehaviour
     public void MeleeDirection(Vector3 _direction)// selecting a flight direction 
     {
         gameObject.SetActive(true); //activate the game object
+        colliderTimer = 0;
         this.gameObject.transform.position = _direction;
         boxCollider.enabled = true; //activating the collider
     }

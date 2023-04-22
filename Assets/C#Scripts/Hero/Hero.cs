@@ -38,9 +38,12 @@ public class Hero : MonoBehaviour {
     public float m_curentSpeed;
     public float playerAttackDamage;
     public float mageAttackDamage;
+    public float stunDuration;
 
     public bool block = false;
     public bool isAttack = false;
+
+    public bool isStun = false;
     
     public bool isJumpPC = false;
     public bool isJumpMobile = false;
@@ -52,10 +55,12 @@ public class Hero : MonoBehaviour {
     public bool isMovingJoystick = false;
     public bool isMovingButton = false;
     public bool playerDead = false; // whether the player is dead or not, for now, to make a restart when the player dies
+    public bool godMode = false; // whether the player is dead or not, for now, to make a restart when the player dies
 
     //Timers
     private float cooldownTimer = Mathf.Infinity;
     private float MagicCooldownTimer = Mathf.Infinity;
+    private float stunCooldown = Mathf.Infinity;
 
     //Touchscreen buttons for movement
     public bool move_Right = false;
@@ -66,6 +71,7 @@ public class Hero : MonoBehaviour {
     public GameObject meleeAttackArea; // Physical Weapons
     public GameObject shieldArea; // The Shield
     public GameObject bodyFront; // bodyFront
+    public GameObject bodyBack; // bodyFront
     private float magicAttackCooldown = 2;//cooldown projectile launch (magic)
     public Transform firePointRight; //The position from which the shells will be fired
     public Transform firePointLeft; //The position from which the shells will be fired
@@ -160,6 +166,9 @@ public class Hero : MonoBehaviour {
         cooldownTimer += Time.deltaTime; // add 1 second to cooldownTimer
         m_JumpCooldownTime += Time.deltaTime;
         MagicCooldownTimer += Time.deltaTime; //add 1 second to MagicCooldownTimer after resetting it to zero when magicAttack is executed.
+        stunCooldown += Time.deltaTime;
+
+        if (stunCooldown > stunDuration) isStun = false;//exit from stun
 
         if (curentHP > 0)
         {
@@ -312,7 +321,7 @@ public class Hero : MonoBehaviour {
         {
             float move = Input.GetAxis("Horizontal");//We use Float because the value is 0.111..., here the input is horizontal (arrows and A D)
             float vertical = Input.GetAxis("Vertical");
-            if (move > 0f)
+            if (move > 0f && !isStun)
             {
                     Vector3 position = transform.position;
                     position.x += move * m_curentSpeed * Time.deltaTime;
@@ -320,7 +329,7 @@ public class Hero : MonoBehaviour {
                     m_facingDirection = 1;
                     isMovingPC = true;
             }
-            if (move < 0f)
+            if (move < 0f && !isStun)
             {
                     Vector3 position = transform.position;
                     position.x += move * m_curentSpeed * Time.deltaTime;
@@ -332,27 +341,27 @@ public class Hero : MonoBehaviour {
 
             //Jump
             if (vertical < 0.5f && isJumpPC) isJumpPC = false;
-            if (vertical > 0 && !isJumpPC)
+            if (vertical > 0 && !isJumpPC && !isStun)
             {
                 isJumpPC = true;
                 Jump();
             }
             //Roll
             if (vertical > -0.5f && isRollPC) isRollPC = false;
-            if (vertical < 0 && !isRollPC)
+            if (vertical < 0 && !isRollPC && !isStun)
             {
                 isRollPC = true;
                 Roll();
             }
-            if (!block && Input.GetKey(KeyCode.LeftShift)) Block();
-            if (block && !Input.GetKey(KeyCode.LeftShift)) Block();
+            if (!block && Input.GetKey(KeyCode.LeftShift) && !isStun) Block();
+            if (block && !Input.GetKey(KeyCode.LeftShift) && !isStun) Block();
         }
         //Joystick controll
         if (platform == 2 || platform == 0)
         {
             float joystickMoveX = JoystickMovement.Instance.moveX; //joystick
             float joystickMoveY = JoystickMovement.Instance.moveY; //joystick
-            if (joystickMoveX > 0f)
+            if (joystickMoveX > 0f && !isStun)
             {
                  Vector3 position = transform.position;
                  position.x += 1 * m_curentSpeed * Time.deltaTime;
@@ -360,7 +369,7 @@ public class Hero : MonoBehaviour {
                  m_facingDirection = 1;
                  isMovingJoystick = true;
             }
-            if (joystickMoveX < 0f)
+            if (joystickMoveX < 0f && !isStun)
             {
                     Vector3 position = transform.position;
                     position.x += -1 * m_curentSpeed * Time.deltaTime;
@@ -386,7 +395,7 @@ public class Hero : MonoBehaviour {
             }
         }
         //TouchScreen Button
-        if (move_Right == true && platform == 2 || move_Right == true && platform == 0)
+        if (move_Right == true && platform == 2 && !isStun || move_Right == true && platform == 0 && !isStun)
         {
                 Vector3 position = transform.position;
                 position.x += 1 * m_curentSpeed * Time.deltaTime;
@@ -394,7 +403,7 @@ public class Hero : MonoBehaviour {
                 m_facingDirection = 1;
                 isMovingButton = true;
         }
-        if (move_Left == true && platform == 2 || move_Left == true && platform == 0)
+        if (move_Left == true && platform == 2 && !isStun || move_Left == true && platform == 0 && !isStun)
         {
                 Vector3 position = transform.position;
                 position.x += -1 * m_curentSpeed * Time.deltaTime;
@@ -427,6 +436,7 @@ public class Hero : MonoBehaviour {
             GetComponent<SpriteRenderer>().flipX = true;
         }
     }
+
     public void Right()
     {
         move_Right = true;
@@ -471,6 +481,12 @@ public class Hero : MonoBehaviour {
             block = false;
         }
     }
+    public void PlayerStun()
+    {
+        stunCooldown = 0;
+        isStun = true;
+        Debug.Log("Player Stuned!");
+    }
     public void BlockAttack()
     {
         m_animator.SetTrigger("BlockAttack");
@@ -480,7 +496,7 @@ public class Hero : MonoBehaviour {
     }
     public void MeeleAtack()
     {
-        if (m_timeSinceAttack > 0.25f && !m_rolling && currentStamina > 15f) 
+        if (m_timeSinceAttack > 0.25f && !m_rolling && currentStamina > 15f && !isStun) 
         {
             isAttack = true;
             cooldownTimer = 0;
@@ -519,6 +535,7 @@ public class Hero : MonoBehaviour {
     public void CapsuleColliderOFF()
     {
         bodyFront.GetComponent<BodyFront>().ColliderOFF();
+        bodyBack.GetComponent<BodyBack>().ColliderOFF();
     }
     public void MeleeWeaponOff() // deactivate the weapon object
     {
@@ -526,7 +543,7 @@ public class Hero : MonoBehaviour {
     }
     public void MagicAttack()
     {
-        if (MagicCooldownTimer > magicAttackCooldown && currentMP >= 20)
+        if (MagicCooldownTimer > magicAttackCooldown && currentMP >= 20 && !isStun)
         {
             currentMP -= 20;
             MagicCooldownTimer = 0; // resetting the magic application kuldun so that the formula works when attacking it looks at the kuldun and if it has come, you can attack again.

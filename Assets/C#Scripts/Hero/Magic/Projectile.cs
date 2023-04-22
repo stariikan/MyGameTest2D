@@ -27,6 +27,7 @@ public class Projectile : MonoBehaviour
     {
         anim = GetComponent<Animator>(); // pull information from the animator component
         boxCollider = GetComponent<BoxCollider2D>(); // pull information from the box colider component
+        rb = GetComponent<Rigidbody2D>();
         Instance = this;
     }
 
@@ -51,6 +52,7 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         magicTargetName = collision.gameObject.name;
+        Debug.Log(magicTargetName);
         if (collision.gameObject.tag == "PlayerCharacter") return;
         hit = true; // here we indicate that a collision has occurred
         boxCollider.enabled = false; //disconnect the collider

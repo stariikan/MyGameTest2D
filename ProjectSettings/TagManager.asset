@@ -21,6 +21,8 @@ TagManager:
   - FlyingEye
   - MeleeWeapon
   - Shield
+  - Front
+  - Back
   layers:
   - Default
   - TransparentFX
