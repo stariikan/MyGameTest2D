@@ -289,7 +289,7 @@ public class Hero : MonoBehaviour {
     }
     public void Jump()
     {
-            if (currentStamina > 10 && m_JumpCooldownTime > 1f && m_grounded && !m_rolling && !block)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
+            if (currentStamina > 10 && m_JumpCooldownTime > 1f && m_grounded && !m_rolling)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
         {
             m_JumpCooldownTime = 0;
             DecreaseStamina(10);
@@ -304,7 +304,7 @@ public class Hero : MonoBehaviour {
     }
     public void Roll()
     {
-        if (currentStamina > 5 && cooldownTimer > 1f && !block && m_grounded)
+        if (currentStamina > 5 && cooldownTimer > 1f && m_grounded)
         {
             cooldownTimer = 0;
             DecreaseStamina(5);
@@ -328,7 +328,7 @@ public class Hero : MonoBehaviour {
                     Vector3 position = transform.position;
                     position.x += move * m_curentSpeed * Time.deltaTime;
                     transform.position = position;
-                    m_facingDirection = 1;
+                    if (!block) m_facingDirection = 1;
                     isMovingPC = true;
             }
             if (move < 0f && !isStun)
@@ -336,7 +336,7 @@ public class Hero : MonoBehaviour {
                     Vector3 position = transform.position;
                     position.x += move * m_curentSpeed * Time.deltaTime;
                     transform.position = position;
-                    m_facingDirection = -1;
+                    if (!block) m_facingDirection = -1;
                     isMovingPC = true;
             }
             if (move == 0f) isMovingPC = false;
@@ -368,7 +368,7 @@ public class Hero : MonoBehaviour {
                  Vector3 position = transform.position;
                  position.x += 1 * m_curentSpeed * Time.deltaTime;
                  transform.position = position;
-                 m_facingDirection = 1;
+                 if (!block) m_facingDirection = 1;
                  isMovingJoystick = true;
             }
             if (joystickMoveX < 0f && !isStun)
@@ -376,7 +376,7 @@ public class Hero : MonoBehaviour {
                     Vector3 position = transform.position;
                     position.x += -1 * m_curentSpeed * Time.deltaTime;
                     transform.position = position;
-                    m_facingDirection = -1;
+                    if (!block) m_facingDirection = -1;
                     isMovingJoystick = true;
             }
             if (joystickMoveX == 0f) isMovingJoystick = false;
@@ -402,7 +402,7 @@ public class Hero : MonoBehaviour {
                 Vector3 position = transform.position;
                 position.x += 1 * m_curentSpeed * Time.deltaTime;
                 transform.position = position;
-                m_facingDirection = 1;
+                if (!block) m_facingDirection = 1;
                 isMovingButton = true;
         }
         if (move_Left == true && platform == 2 && !isStun || move_Left == true && platform == 0 && !isStun)
@@ -410,7 +410,7 @@ public class Hero : MonoBehaviour {
                 Vector3 position = transform.position;
                 position.x += -1 * m_curentSpeed * Time.deltaTime;
                 transform.position = position;
-                m_facingDirection = -1;
+                if (!block) m_facingDirection = -1;
                 isMovingButton = true;
         }
         
@@ -429,11 +429,11 @@ public class Hero : MonoBehaviour {
         }
 
         //Flip
-        if (m_facingDirection == 1) // if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+        if (m_facingDirection == 1 && !block) // if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
         {
             GetComponent<SpriteRenderer>().flipX = false;
         }
-        else if (m_facingDirection == -1) // if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+        else if (m_facingDirection == -1 && !block) // if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
         {
             GetComponent<SpriteRenderer>().flipX = true;
         }
