@@ -7,7 +7,7 @@ public class Shield : MonoBehaviour
     public static Shield Instance { get; set; } // To collect and send data from this script
     public float direction;//directional variable
     [SerializeField] private float lifetime; // shield life time
-
+    private float lifeTimeTimer; // shield life time
     private BoxCollider2D boxCollider; //Strike collider
 
     public string TargetName;
@@ -23,8 +23,8 @@ public class Shield : MonoBehaviour
 
     private void Update()
     {
-        lifetime += Time.deltaTime; //increase the lifetime variable every second +1
-        if (lifetime > 1.5f)
+        lifeTimeTimer += Time.deltaTime;
+        if (lifeTimeTimer > lifetime)
         {
             this.gameObject.SetActive(false);// when the variable reaches 1.5, the attack collider disappears
         }
@@ -51,7 +51,7 @@ public class Shield : MonoBehaviour
     }
     public void MeleeDirection(Vector3 _direction)// selecting a flight direction 
     {
-        lifetime = 0;
+        lifeTimeTimer = 0;
         gameObject.SetActive(true); //activate the game object
         this.gameObject.transform.position = _direction;
         boxCollider.enabled = true; //activating the collider

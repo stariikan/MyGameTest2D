@@ -4676,7 +4676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 0
-  lifetime: 0
+  lifetime: 1.5
   TargetName: 
   target: {fileID: 0}
 --- !u!1 &331343094
