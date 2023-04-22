@@ -41319,7 +41319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platform: 0
   m_jumpForce: 6
-  m_rollForce: 60
+  m_rollForce: 7.5
   m_noBlood: 0
   m_slideDust: {fileID: 1038168246061390451, guid: 8b8c8cc6774fb074cb9139cc631b108e, type: 3}
   m_facingDirection: 1

@@ -312,6 +312,8 @@ public class Hero : MonoBehaviour {
             m_animator.SetTrigger("Roll");
             rollSound.GetComponent<SoundOfObject>().StopSound();
             rollSound.GetComponent<SoundOfObject>().PlaySound();
+            if (m_facingDirection == 1) m_body2d.velocity = new Vector2(m_rollForce, m_body2d.velocity.y);
+            if (m_facingDirection == -1) m_body2d.velocity = new Vector2((-1 * m_rollForce), m_body2d.velocity.y);
         }
     }
     public void PlayerMovement()
@@ -340,15 +342,15 @@ public class Hero : MonoBehaviour {
             if (move == 0f) isMovingPC = false;
 
             //Jump
-            if (vertical < 0.5f && isJumpPC) isJumpPC = false;
-            if (vertical > 0 && !isJumpPC && !isStun)
+            if (vertical < 0.2f && isJumpPC) isJumpPC = false;
+            if (vertical > 0.3f && !isJumpPC && !isStun)
             {
                 isJumpPC = true;
                 Jump();
             }
             //Roll
-            if (vertical > -0.5f && isRollPC) isRollPC = false;
-            if (vertical < 0 && !isRollPC && !isStun)
+            if (vertical > -0.2f && isRollPC) isRollPC = false;
+            if (vertical < -0.3f && !isRollPC && !isStun)
             {
                 isRollPC = true;
                 Roll();
@@ -380,15 +382,15 @@ public class Hero : MonoBehaviour {
             if (joystickMoveX == 0f) isMovingJoystick = false;
 
             //Jump
-            if (joystickMoveY < 0.5f && isJumpMobile) isJumpMobile = false;
-            if (joystickMoveY > 0 && !isJumpMobile)
+            if (joystickMoveY < 0.2f && isJumpMobile) isJumpMobile = false;
+            if (joystickMoveY > 0.3f && !isJumpMobile)
             {
                 isJumpMobile = true;
                 Jump();
             }
             //Roll
-            if (joystickMoveY > -0.5f && isRollMobile) isRollMobile = false;
-            if (joystickMoveY < 0 && !isRollMobile)
+            if (joystickMoveY > -0.2f && isRollMobile) isRollMobile = false;
+            if (joystickMoveY < - 0.3f && !isRollMobile)
             {
                 isRollMobile = true;
                 Roll();
