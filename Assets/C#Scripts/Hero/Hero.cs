@@ -106,7 +106,7 @@ public class Hero : MonoBehaviour {
         SaveSerial.Instance.LoadGame();
         maxHP = SaveSerial.Instance.playerHP;
         platform = Joystick.Instance.platform;
-        if (maxHP == 0) maxHP = 100;
+        if (maxHP == 0) maxHP = 128;
         curentHP = maxHP;
 
         playerAttackDamage = SaveSerial.Instance.playerAttackDamage;
