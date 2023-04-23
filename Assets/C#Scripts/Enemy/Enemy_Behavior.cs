@@ -53,7 +53,8 @@ public class Enemy_Behavior : MonoBehaviour
     private float magicCooldown = Mathf.Infinity; //cooldown on mage attack
     private float stunCooldown; //stun recovery
     private float blockCooldown; //сooldown block
-    private float alarmTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
+    private float alarmFollowTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
+    private float alarmPatrolTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
     private float vulnerableAttackTimer; //timer for switching from one attack state to another attack state
     private float flipEnemyCooldown; //timer for swtiching direction
     private float colliderONTimer = Mathf.Infinity;
@@ -128,7 +129,8 @@ public class Enemy_Behavior : MonoBehaviour
         magicCooldown += Time.deltaTime;
         physicCooldown += Time.deltaTime;
         stunCooldown += Time.deltaTime;
-        alarmTimer += Time.deltaTime;
+        alarmFollowTimer += Time.deltaTime;
+        alarmPatrolTimer += Time.deltaTime;
         vulnerableAttackTimer += Time.deltaTime;
         flipEnemyCooldown += Time.deltaTime;
         enemyTakenDamageTimer += Time.deltaTime;
@@ -232,8 +234,9 @@ public class Enemy_Behavior : MonoBehaviour
         if (patrolDirectionRight < transform.position.x) patrolFlip = 2;
         if (patrolDirectionLeft > transform.position.x) patrolFlip = 1;
 
-        if (Mathf.Abs(directionX) > sightDistance && !isAttack && !stuned && !isAttacked && alarmTimer > alarmPause && !inAttack)
+        if (Mathf.Abs(directionX) > sightDistance && !isAttack && !stuned && !isAttacked && alarmPatrolTimer > alarmPause && !inAttack)
         {
+            alarmFollowTimer = 0;
             if (patrolDirectionLeft != transform.position.x && patrolFlip == 1)
             {
                 float patrolSpeed = 1 * enemySpeed * Time.deltaTime; //calculating direction
@@ -256,9 +259,9 @@ public class Enemy_Behavior : MonoBehaviour
                 else if (patrolSpeed > 0 && transform.localScale.x < 0) Flip();
             }
         }
-        if (Mathf.Abs(directionX) < sightDistance && Mathf.Abs(directionX) >= attackDistance && !isAttack && !stuned && !playerGodMode && !inAttack || isAttacked && Mathf.Abs(directionX) > attackDistance && !block && !isAttack && !stuned && !playerGodMode && !inAttack || copy && !playerGodMode && !inAttack)
+        if (Mathf.Abs(directionX) < sightDistance && Mathf.Abs(directionX) >= attackDistance && !isAttack && !stuned && !playerGodMode && !inAttack && alarmFollowTimer > alarmPause || isAttacked && Mathf.Abs(directionX) > attackDistance && !block && !isAttack && !stuned && !playerGodMode && !inAttack || copy && !playerGodMode && !inAttack)
         {
-
+            alarmPatrolTimer = 0;
             transform.localScale = theScale; // needed to understand the direction
             float playerFollowSpeed = Mathf.Sign(directionX) * enemySpeed * Time.deltaTime; //calculating direction
             pos.x += playerFollowSpeed; //Calculating the position along the x-axis
