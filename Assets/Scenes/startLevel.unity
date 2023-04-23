@@ -6449,7 +6449,7 @@ MonoBehaviour:
   enemyReward: 2
   patrolDistance: 1
   sightDistance: 5
-  alarmPause: 0
+  alarmPause: 3
   attackDistance: 1.5
   flipEnemyTimer: 0
   flyAmplitude: 0
