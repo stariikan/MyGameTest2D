@@ -18,11 +18,11 @@ public class Hero : MonoBehaviour {
     private Sensor_HeroKnight   m_wallSensorL2;
     private bool                m_isWallSliding = false;
     private bool                m_grounded = false;
-    private bool                m_rolling = false;
+    public bool                 m_rolling = false;
     public int                  m_facingDirection = 1;
     private int                 m_currentAttack = 0;
     private float               m_timeSinceAttack = 0.0f;
-    private float               m_rollDuration = 8.0f / 14.0f;
+    private float               m_rollDuration = 14.0f / 14.0f;
     private float               m_rollCurrentTime = Mathf.Infinity;
     private float               m_JumpCooldownTime = Mathf.Infinity;
 
@@ -312,8 +312,8 @@ public class Hero : MonoBehaviour {
             m_animator.SetTrigger("Roll");
             rollSound.GetComponent<SoundOfObject>().StopSound();
             rollSound.GetComponent<SoundOfObject>().PlaySound();
-            if (m_facingDirection == 1) m_body2d.velocity = new Vector2(m_rollForce, m_body2d.velocity.y);
-            if (m_facingDirection == -1) m_body2d.velocity = new Vector2((-1 * m_rollForce), m_body2d.velocity.y);
+            if (m_facingDirection == 1) m_body2d.velocity = new Vector2(m_rollForce, m_body2d.velocity.y + 1.5f);
+            if (m_facingDirection == -1) m_body2d.velocity = new Vector2((-1 * m_rollForce), m_body2d.velocity.y + 1.5f);
         }
     }
     public void PlayerMovement()

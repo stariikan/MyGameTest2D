@@ -25,13 +25,11 @@ public class Enemy_Behavior : MonoBehaviour
     public float vulnerableAfterDamage; // How many seconds the enemy will be vulnerable after taking damage.
     public float jumpForce;
     public float rollForce;
-
-    //public float attackPause; // Сколько времени проходит между предыдущим действием и атакой.
-    //public float stunAttackPause; // Сколько секунд между тем, как игрок застунился и атакой скелета.
+    public float FlipPauseDefault; //пауза перед тем как враг развернётся на 180°.
+    //public float FlipPauseRoll;  //пауза перед тем как враг развернётся на 180° когда игрок перекатился врагу за спину.
 
     //Enemy states
     private bool movement = false; //mob is not chasing the player
-    private bool playerIsAttack = false; //Does the player attack?
     private bool inAttack = false; //If an object prepare to attack (need for special attack move, this bool disable EnemyMovement method if true)
     private bool isAttack = false; //If an object (enemy) is attacking
     private bool stuned = false; //state of stun
@@ -56,7 +54,6 @@ public class Enemy_Behavior : MonoBehaviour
     private float alarmFollowTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
     private float alarmPatrolTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
     private float vulnerableAttackTimer; //timer for switching from one attack state to another attack state
-    private float flipEnemyCooldown; //timer for swtiching direction
     private float colliderONTimer = Mathf.Infinity;
     private float enemyTakenDamageTimer = Mathf.Infinity;
 
@@ -70,6 +67,7 @@ public class Enemy_Behavior : MonoBehaviour
     private float e_delayToIdle = 0.0f;
     private int aState; // State of attack need for separate attack animation
     private int level; //check what level the player is at, to connect abilities
+    public int e_facingDirection = 1;
     new string tag; // the object tag is assigned to this variable at the start
     public Vector3 lossyScale;
 
@@ -132,7 +130,7 @@ public class Enemy_Behavior : MonoBehaviour
         alarmFollowTimer += Time.deltaTime;
         alarmPatrolTimer += Time.deltaTime;
         vulnerableAttackTimer += Time.deltaTime;
-        flipEnemyCooldown += Time.deltaTime;
+        flipEnemyTimer += Time.deltaTime;
         enemyTakenDamageTimer += Time.deltaTime;
         colliderONTimer += Time.deltaTime;
 
@@ -244,8 +242,8 @@ public class Enemy_Behavior : MonoBehaviour
                 transform.position = pos; //applying the position
                 patrol = true;
 
-                if (patrolSpeed < 0 && transform.localScale.x > 0) Flip();
-                else if (patrolSpeed > 0 && transform.localScale.x < 0) Flip();
+                if (patrolSpeed < 0 && transform.localScale.x > 0 && patrol) Flip();
+                else if (patrolSpeed > 0 && transform.localScale.x < 0 && patrol) Flip();
             }
 
             if (patrolDirectionRight != transform.position.x && patrolFlip == 2)
@@ -255,8 +253,8 @@ public class Enemy_Behavior : MonoBehaviour
                 transform.position = pos; //applying the position
                 patrol = true;
 
-                if (patrolSpeed < 0 && transform.localScale.x > 0) Flip();
-                else if (patrolSpeed > 0 && transform.localScale.x < 0) Flip();
+                if (patrolSpeed < 0 && transform.localScale.x > 0 && patrol) Flip();
+                else if (patrolSpeed > 0 && transform.localScale.x < 0 && patrol) Flip();
             }
         }
         if (Mathf.Abs(directionX) < sightDistance && Mathf.Abs(directionX) >= attackDistance && !isAttack && !stuned && !playerGodMode && !inAttack && alarmFollowTimer > alarmPause || isAttacked && Mathf.Abs(directionX) > attackDistance && !block && !isAttack && !stuned && !playerGodMode && !inAttack || copy && !playerGodMode && !inAttack)
@@ -268,27 +266,29 @@ public class Enemy_Behavior : MonoBehaviour
             transform.position = pos; //applying the position
             follow = true;
 
-            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+            if (playerFollowSpeed < 0 && theScale.x > 0 && follow) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+            else if (playerFollowSpeed > 0 && theScale.x < 0 && follow) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
         }
-        if (patrol || follow) movement = true; else movement = false;
-
-
+        if (patrol || follow)
+        {
+            movement = true;
+        }
+        else
+        {
+            movement = false;
+            if (Mathf.Abs(directionX) > attackDistance) flipEnemyTimer = 0;
+        }
     }
     private void MeleeAttack() //Basic method of attack with two or more animations
     {
         float playerHP = Hero.Instance.curentHP;
         Vector3 theScale = transform.localScale; // needed to understand the direction
-        float playerFollowSpeed = Mathf.Sign(directionX) * enemySpeed * Time.deltaTime; //calculating direction
+        float directionOfAttack = Mathf.Sign(directionX) * enemySpeed * Time.deltaTime; //calculating direction
 
         if (playerHP > 0 && Mathf.Abs(directionX) <= attackDistance && !stuned && !isAttack && !playerGodMode)
         {
-            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-
-            flipEnemyCooldown = 0;
-            if (directionX < 0 && transform.localScale.x > 0 && flipEnemyCooldown > flipEnemyTimer) Flip();
-            else if (directionX > 0 && transform.localScale.x < 0 && flipEnemyCooldown > flipEnemyTimer) Flip();
+            if (directionOfAttack < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+            if (directionOfAttack > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
             vulnerableAttackTimer = 0;
             isAttack = true;
             anim.SetBool("isAttack", true);
@@ -329,9 +329,15 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void Flip() //This is where we create the Flip method which, when called, reverses the direction of the sprite
     {
-        Vector3 theScale = transform.localScale; //receive the scale of the object
-        theScale.x *= -1;//this flips the image e.g. 140 changes to -140, thus completely changing the direction of the sprite (the image is mirrored)
-        transform.localScale = theScale; // scale conversion relative to the parent GameObjects object
+        bool playerRoll = Hero.Instance.m_rolling;
+        if (!playerRoll && flipEnemyTimer > FlipPauseDefault) //|| playerRoll && flipEnemyTimer > FlipPauseRoll
+        {
+            flipEnemyTimer = 0;
+            e_facingDirection *= -1;
+            Vector3 theScale = transform.localScale; //receive the scale of the object
+            theScale.x *= -1;//this flips the image e.g. 140 changes to -140, thus completely changing the direction of the sprite (the image is mirrored)
+            transform.localScale = theScale; // scale conversion relative to the parent GameObjects object
+        }
     }
     public void GetNameOfObject(GameObject gameObjectName) //Get a link to the game object, for summonses, so they can contact the master who summoned them
     {
@@ -457,6 +463,11 @@ public class Enemy_Behavior : MonoBehaviour
         directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //calculate direction of movement is Player position on the y-axis - Enemy position on the y-axis
         float playerHP = Hero.Instance.curentHP;
         if ((Mathf.Abs(directionX)) < sightDistance && (Mathf.Abs(directionX)) > attackDistance && jumpCooldown > 3 && Mathf.Abs(directionY) < 3 && !stuned && !playerGodMode) JumpToPlayer();
+        if (playerHP > 0 && Mathf.Abs(directionX) <= attackDistance && !stuned && !isAttack && !playerGodMode)
+        {
+            meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(this.gameObject.transform.position);
+            if (!copy) meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(currentAttackDamage);
+        }
     }
     private void GoblinAttack()
     {

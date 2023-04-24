@@ -12,6 +12,8 @@ public class MeleeWeapon : MonoBehaviour
     public string TargetName;
     public GameObject target;
     public GameObject masterOfWeapon;
+    private int targetDirection;
+    private int masterDirection;
 
 
     private void Awake() //The action is performed before the start of the game and 1 time
@@ -29,17 +31,20 @@ public class MeleeWeapon : MonoBehaviour
             newSize.x = attackRange;
             boxCollider.size = newSize;
         }
-        
 
         colliderTimer += Time.deltaTime;
         if (colliderTimer > 0.2f) WeaponOff();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        TargetName = collision.gameObject.name;
-        target = GameObject.Find(TargetName);
+        target = collision.gameObject;
         Debug.Log(target);
-        if (masterOfWeapon.layer == 8 &&target.CompareTag("SpellBook")) target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
+        if (masterOfWeapon.layer == 8) masterDirection = masterOfWeapon.GetComponent<Hero>().m_facingDirection;
+        if (masterOfWeapon.layer == 7) masterDirection = masterOfWeapon.GetComponent<Enemy_Behavior>().e_facingDirection;
+        if (target.layer == 8) targetDirection = target.GetComponentInParent<Hero>().m_facingDirection;
+        if (target.layer == 7) targetDirection = target.GetComponent<Enemy_Behavior>().e_facingDirection;
+
+        if (masterOfWeapon.layer == 8 && target.CompareTag("SpellBook")) target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
         if (masterOfWeapon.layer == 8 && target != null && target.layer == 7)
         {
             targetIsBlock = target.GetComponent<Enemy_Behavior>().block;
@@ -51,10 +56,15 @@ public class MeleeWeapon : MonoBehaviour
             {
                 target.GetComponent<Enemy_Behavior>().TakeDamage(AttackDamage); //7 this is the EnemyLayer
             }
-            
         }
-        if (masterOfWeapon.layer == 7 && target != null && target.tag == "Back") target.GetComponentInParent<Hero>().GetDamage(AttackDamage*2);
-        if (masterOfWeapon.layer == 7 && target != null && target.tag == "Front") target.GetComponentInParent<Hero>().GetDamage(AttackDamage);
+        if (masterOfWeapon.layer == 7 && target != null && target.tag == "Front" && masterDirection != targetDirection)
+        {
+            target.GetComponentInParent<Hero>().GetDamage(AttackDamage);
+        }
+        if (masterOfWeapon.layer == 7 && target != null && target.tag == "Back" && masterDirection == targetDirection)
+        {
+            target.GetComponentInParent<Hero>().GetDamage(AttackDamage * 2);
+        }
     }
     public void GetAttackDamageInfo(float damageInfo) //Getting a damage score from an object
     {

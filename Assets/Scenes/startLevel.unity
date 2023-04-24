@@ -197,6 +197,7 @@ MonoBehaviour:
   vulnerableAfterDamage: 3
   jumpForce: 0
   rollForce: 0
+  FlipPauseDefault: 0
   isFlying: 0
   isBlooded: 1
   enemyDead: 0
@@ -207,6 +208,7 @@ MonoBehaviour:
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
+  e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
@@ -255,7 +257,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.21637075, y: 0.0041048825}
+  m_Size: {x: 0.21637075, y: 0.002184063}
   m_EdgeRadius: 0
 --- !u!95 &2891872
 Animator:
@@ -896,6 +898,7 @@ MonoBehaviour:
   vulnerableAfterDamage: 0
   jumpForce: 0
   rollForce: 0
+  FlipPauseDefault: 0
   isFlying: 0
   isBlooded: 0
   enemyDead: 0
@@ -906,6 +909,7 @@ MonoBehaviour:
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
+  e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
@@ -5924,6 +5928,7 @@ GameObject:
   - component: {fileID: 397745815}
   - component: {fileID: 397745821}
   - component: {fileID: 397745820}
+  - component: {fileID: 397745818}
   m_Layer: 7
   m_Name: FlyingEye
   m_TagString: FlyingEye
@@ -6023,6 +6028,32 @@ Transform:
   m_Father: {fileID: 1918445911}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &397745818
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397745814}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.114969656}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.5, y: 1.5}
+    newSize: {x: 1.5, y: 1.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.14530692, y: 0.002184063}
+  m_EdgeRadius: 0
 --- !u!114 &397745819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6053,6 +6084,7 @@ MonoBehaviour:
   vulnerableAfterDamage: 0.3
   jumpForce: 10
   rollForce: 10
+  FlipPauseDefault: 0
   isFlying: 1
   isBlooded: 1
   enemyDead: 0
@@ -6063,6 +6095,7 @@ MonoBehaviour:
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
+  e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
@@ -6459,6 +6492,7 @@ MonoBehaviour:
   vulnerableAfterDamage: 0.2
   jumpForce: 10
   rollForce: 10
+  FlipPauseDefault: 0
   isFlying: 0
   isBlooded: 1
   enemyDead: 0
@@ -6469,6 +6503,7 @@ MonoBehaviour:
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
+  e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
@@ -6507,7 +6542,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.020985208, y: -0.25737995}
+  m_Offset: {x: -0.020985208, y: -0.25682265}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -6518,7 +6553,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.24607597, y: 0.0052173436}
+  m_Size: {x: 0.24607597, y: 0.0021840632}
   m_EdgeRadius: 0
 --- !u!1 &433539421
 GameObject:
@@ -6992,7 +7027,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.24532828, y: 0.009232521}
+  m_Size: {x: 0.24532828, y: 0.002184063}
   m_EdgeRadius: 0
 --- !u!114 &455363767
 MonoBehaviour:
@@ -7024,6 +7059,7 @@ MonoBehaviour:
   vulnerableAfterDamage: 1
   jumpForce: 0
   rollForce: 0
+  FlipPauseDefault: 1
   isFlying: 0
   isBlooded: 0
   enemyDead: 0
@@ -7034,6 +7070,7 @@ MonoBehaviour:
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
+  e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
@@ -7301,7 +7338,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.01859817, y: -0.24571085}
+  m_Offset: {x: -0.01859817, y: -0.24824}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7312,7 +7349,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.17684823, y: 0.0061276555}
+  m_Size: {x: 0.17684823, y: 0.002184063}
   m_EdgeRadius: 0
 --- !u!114 &487385632
 MonoBehaviour:
@@ -7344,6 +7381,7 @@ MonoBehaviour:
   vulnerableAfterDamage: 0
   jumpForce: 0
   rollForce: 0
+  FlipPauseDefault: 0
   isFlying: 0
   isBlooded: 0
   enemyDead: 0
@@ -7354,6 +7392,7 @@ MonoBehaviour:
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
+  e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
@@ -13941,6 +13980,7 @@ MonoBehaviour:
   vulnerableAfterDamage: 3
   jumpForce: 0
   rollForce: 0
+  FlipPauseDefault: 0
   isFlying: 0
   isBlooded: 0
   enemyDead: 0
@@ -13951,6 +13991,7 @@ MonoBehaviour:
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
+  e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
@@ -17010,7 +17051,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.15745544, y: 0.010179937}
+  m_Size: {x: 0.15745544, y: 0.002184063}
   m_EdgeRadius: 0
 --- !u!114 &1433946435
 MonoBehaviour:
@@ -17042,6 +17083,7 @@ MonoBehaviour:
   vulnerableAfterDamage: 3
   jumpForce: 0
   rollForce: 0
+  FlipPauseDefault: 0
   isFlying: 0
   isBlooded: 1
   enemyDead: 0
@@ -17052,6 +17094,7 @@ MonoBehaviour:
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
+  e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
@@ -17358,6 +17401,7 @@ MonoBehaviour:
   vulnerableAfterDamage: 0
   jumpForce: 0
   rollForce: 0
+  FlipPauseDefault: 0
   isFlying: 0
   isBlooded: 0
   enemyDead: 0
@@ -17368,6 +17412,7 @@ MonoBehaviour:
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
+  e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
@@ -17417,7 +17462,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.25458336, y: 0.009175658}
+  m_Size: {x: 0.25458336, y: 0.002184063}
   m_EdgeRadius: 0
 --- !u!70 &1453525428
 CapsuleCollider2D:
@@ -41322,6 +41367,7 @@ MonoBehaviour:
   m_rollForce: 7.5
   m_noBlood: 0
   m_slideDust: {fileID: 1038168246061390451, guid: 8b8c8cc6774fb074cb9139cc631b108e, type: 3}
+  m_rolling: 0
   m_facingDirection: 1
   maxHP: 0
   curentHP: 0

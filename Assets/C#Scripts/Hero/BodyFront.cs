@@ -30,11 +30,5 @@ public class BodyFront : MonoBehaviour
     {
         string targetName = collision.gameObject.name;
         GameObject target = GameObject.Find(targetName);
-        if (target != null && target.layer == 7)
-        {
-            Hero.Instance.GetDamage(1); //7 this is the Enemy layer
-            Debug.Log("trigerHit");
-            Hero.Instance.Push();
-        }
     }
 }
