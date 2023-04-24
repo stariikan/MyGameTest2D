@@ -241,7 +241,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0011630878, y: -0.21827747}
@@ -6098,7 +6098,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.049624763, y: -0.03324064}
@@ -6504,7 +6504,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.020985208, y: -0.25737995}
@@ -7007,21 +7007,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyMaxHP: 48
-  enemyAttackDamage: 10
-  enemySpeed: 2
+  enemyAttackDamage: 1
+  enemySpeed: 1
   countOfCopy: 0
   remainingAmmo: 0
   enemyReward: 2
-  patrolDistance: 1
-  sightDistance: 5
-  alarmPause: 3
+  patrolDistance: 3.5
+  sightDistance: 6
+  alarmPause: 1
   attackDistance: 1.5
-  flipEnemyTimer: 0
+  flipEnemyTimer: 5
   flyAmplitude: 0
   LowFlightPoint: 0
-  stunDuration: 5
-  vulnerableBeforeDamage: 0.3
-  vulnerableAfterDamage: 0.3
+  stunDuration: 2
+  vulnerableBeforeDamage: 0.5
+  vulnerableAfterDamage: 1
   jumpForce: 0
   rollForce: 0
   isFlying: 0
@@ -7067,7 +7067,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.056292854, y: -0.0012135904}
@@ -7298,7 +7298,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.01859817, y: -0.24571085}
@@ -16996,7 +16996,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.003477037, y: -0.2567372}
@@ -17403,7 +17403,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0028190613, y: -0.4512729}

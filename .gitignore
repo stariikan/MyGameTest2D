@@ -1,2 +1,4 @@
 $GIT_DIR/Library
 $GIT_DIR/Logs
+$GIT_DIR/Temp
+Temp/UnityLockfile
