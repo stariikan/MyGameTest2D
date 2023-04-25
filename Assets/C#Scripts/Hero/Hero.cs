@@ -24,7 +24,6 @@ public class Hero : MonoBehaviour {
     private float               m_timeSinceAttack = 0.0f;
     private float               m_rollDuration = 14.0f / 14.0f;
     private float               m_rollCurrentTime = Mathf.Infinity;
-    private float               m_JumpCooldownTime = Mathf.Infinity;
 
     //Параметры Героя
     public float maxHP;
@@ -164,7 +163,6 @@ public class Hero : MonoBehaviour {
         m_animator.SetBool("WallSlide", m_isWallSliding);
        //old
         cooldownTimer += Time.deltaTime; // add 1 second to cooldownTimer
-        m_JumpCooldownTime += Time.deltaTime;
         MagicCooldownTimer += Time.deltaTime; //add 1 second to MagicCooldownTimer after resetting it to zero when magicAttack is executed.
         stunCooldown += Time.deltaTime;
 
@@ -289,9 +287,8 @@ public class Hero : MonoBehaviour {
     }
     public void Jump()
     {
-            if (currentStamina > 10 && m_JumpCooldownTime > 1f && m_grounded && !m_rolling)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
+            if (currentStamina > 10 && m_grounded && !m_rolling)// if the Space button is pressed and released (GetKeyDown, not just GetKey) and if isGrounded = true 
         {
-            m_JumpCooldownTime = 0;
             DecreaseStamina(10);
             m_animator.SetTrigger("Jump");
             jumpSound.GetComponent<SoundOfObject>().StopSound();
@@ -304,9 +301,8 @@ public class Hero : MonoBehaviour {
     }
     public void Roll()
     {
-        if (currentStamina > 5 && cooldownTimer > 1f && m_grounded)
+        if (currentStamina > 5 && m_grounded)
         {
-            cooldownTimer = 0;
             DecreaseStamina(5);
             m_rolling = true;
             m_animator.SetTrigger("Roll");
@@ -342,15 +338,15 @@ public class Hero : MonoBehaviour {
             if (move == 0f) isMovingPC = false;
 
             //Jump
-            if (vertical < 0.2f && isJumpPC) isJumpPC = false;
-            if (vertical > 0.3f && !isJumpPC && !isStun)
+            if (vertical < 0.1f && isJumpPC) isJumpPC = false;
+            if (vertical > 0.2f && !isJumpPC && !isStun)
             {
                 isJumpPC = true;
                 Jump();
             }
             //Roll
-            if (vertical > -0.2f && isRollPC) isRollPC = false;
-            if (vertical < -0.3f && !isRollPC && !isStun)
+            if (vertical > -0.1f && isRollPC) isRollPC = false;
+            if (vertical < -0.2f && !isRollPC && !isStun)
             {
                 isRollPC = true;
                 Roll();
@@ -382,15 +378,15 @@ public class Hero : MonoBehaviour {
             if (joystickMoveX == 0f) isMovingJoystick = false;
 
             //Jump
-            if (joystickMoveY < 0.2f && isJumpMobile) isJumpMobile = false;
-            if (joystickMoveY > 0.3f && !isJumpMobile)
+            if (joystickMoveY < 0.1f && isJumpMobile) isJumpMobile = false;
+            if (joystickMoveY > 0.2f && !isJumpMobile)
             {
                 isJumpMobile = true;
                 Jump();
             }
             //Roll
-            if (joystickMoveY > -0.2f && isRollMobile) isRollMobile = false;
-            if (joystickMoveY < - 0.3f && !isRollMobile)
+            if (joystickMoveY > -0.1f && isRollMobile) isRollMobile = false;
+            if (joystickMoveY < - 0.2f && !isRollMobile)
             {
                 isRollMobile = true;
                 Roll();
