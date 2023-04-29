@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Enemy_Behavior : MonoBehaviour
 {
@@ -50,7 +51,7 @@ public class Enemy_Behavior : MonoBehaviour
     private float physicCooldown = Mathf.Infinity; //cooldown on physical attack
     private float magicCooldown = Mathf.Infinity; //cooldown on mage attack
     private float stunCooldown; //stun recovery
-    private float blockCooldown; //сooldown block
+    private float specialAttackCooldown; //сooldown special ability 
     private float alarmFollowTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
     private float alarmPatrolTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
     private float vulnerableAttackTimer; //timer for switching from one attack state to another attack state
@@ -122,7 +123,6 @@ public class Enemy_Behavior : MonoBehaviour
     void Update()
     {
         timeSinceAttack += Time.deltaTime;
-        blockCooldown += Time.deltaTime;
         jumpCooldown += Time.deltaTime;
         magicCooldown += Time.deltaTime;
         physicCooldown += Time.deltaTime;
@@ -133,6 +133,7 @@ public class Enemy_Behavior : MonoBehaviour
         flipEnemyTimer += Time.deltaTime;
         enemyTakenDamageTimer += Time.deltaTime;
         colliderONTimer += Time.deltaTime;
+        specialAttackCooldown += Time.deltaTime;
 
         if (stunCooldown > stunDuration) stuned = false;//exit from stun
         if (jumpCooldown > 1.2f) jump = false;
@@ -235,26 +236,36 @@ public class Enemy_Behavior : MonoBehaviour
         if (Mathf.Abs(directionX) > sightDistance && !isAttack && !stuned && !isAttacked && alarmPatrolTimer > alarmPause && !inAttackState)
         {
             alarmFollowTimer = 0;
+            //Debug.Log("Patrol");
+            //Debug.Log(patrolFlip);
+            //Debug.Log(patrolDirectionRight);
             if (patrolDirectionLeft != transform.position.x && patrolFlip == 1)
             {
                 float patrolSpeed = 1 * enemySpeed * Time.deltaTime; //calculating direction
                 pos.x += patrolSpeed; //Calculating the position along the x-axis
-                transform.position = pos; //applying the position
-                patrol = true;
+                if (patrolSpeed > 0 && transform.localScale.x > 0)
+                {
+                    transform.position = pos; //applying the position
+                    patrol = true;
+                }
 
-                if (patrolSpeed < 0 && transform.localScale.x > 0 && patrol) Flip();
-                else if (patrolSpeed > 0 && transform.localScale.x < 0 && patrol) Flip();
+                if (patrolSpeed < 0 && transform.localScale.x > 0) Flip();
+                else if (patrolSpeed > 0 && transform.localScale.x < 0) Flip();
             }
 
             if (patrolDirectionRight != transform.position.x && patrolFlip == 2)
             {
                 float patrolSpeed = -1 * enemySpeed * Time.deltaTime; //calculating direction
                 pos.x += patrolSpeed; //Calculating the position along the x-axis
-                transform.position = pos; //applying the position
-                patrol = true;
+                if (patrolSpeed < 0 && transform.localScale.x < 0)
+                {
+                    transform.position = pos; //applying the position
+                    patrol = true;
+                }
+                
 
-                if (patrolSpeed < 0 && transform.localScale.x > 0 && patrol) Flip();
-                else if (patrolSpeed > 0 && transform.localScale.x < 0 && patrol) Flip();
+                if (patrolSpeed < 0 && transform.localScale.x > 0) Flip();
+                else if (patrolSpeed > 0 && transform.localScale.x < 0) Flip();
             }
         }
         if (Mathf.Abs(directionX) < sightDistance && Mathf.Abs(directionX) >= attackDistance && !isAttack && !stuned && !playerGodMode && !inAttackState && alarmFollowTimer > alarmPause || isAttacked && Mathf.Abs(directionX) > attackDistance && !block && !isAttack && !stuned && !playerGodMode && !inAttackState || copy && !playerGodMode && !inAttackState)
@@ -262,12 +273,23 @@ public class Enemy_Behavior : MonoBehaviour
             alarmPatrolTimer = 0;
             transform.localScale = theScale; // needed to understand the direction
             float playerFollowSpeed = Mathf.Sign(directionX) * enemySpeed * Time.deltaTime; //calculating direction
-            pos.x += playerFollowSpeed; //Calculating the position along the x-axis
-            transform.position = pos; //applying the position
-            follow = true;
+            
+            if (playerFollowSpeed < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+            else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
 
-            if (playerFollowSpeed < 0 && theScale.x > 0 && follow) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-            else if (playerFollowSpeed > 0 && theScale.x < 0 && follow) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+            pos.x += playerFollowSpeed; //Calculating the position along the x-axis
+            
+            if (playerFollowSpeed < 0 && theScale.x < 0)
+            {
+                transform.position = pos; //applying the position
+                follow = true;
+            }
+            if (playerFollowSpeed > 0 && theScale.x > 0)
+            {
+                transform.position = pos; //applying the position
+                follow = true;
+            }
+            
         }
         if (patrol || follow)
         {
@@ -276,7 +298,8 @@ public class Enemy_Behavior : MonoBehaviour
         else
         {
             movement = false;
-            if (Mathf.Abs(directionX) > attackDistance) flipEnemyTimer = 0;
+            if (directionX < 0 && theScale.x < 0 && patrolFlip == 2) flipEnemyTimer = 0; 
+            if (directionX > 0 && theScale.x > 0 && patrolFlip == 1) flipEnemyTimer = 0;
         }
     }
     private void MeleeAttack() //Basic method of attack with two or more animations
@@ -285,7 +308,7 @@ public class Enemy_Behavior : MonoBehaviour
         Vector3 theScale = transform.localScale; // needed to understand the direction
         float directionOfAttack = Mathf.Sign(directionX) * enemySpeed * Time.deltaTime; //calculating direction
 
-        if (playerHP > 0 && Mathf.Abs(directionX) <= attackDistance && !stuned && !isAttack && !playerGodMode)
+        if (playerHP > 0 && Mathf.Abs(directionX) <= attackDistance && !stuned && !isAttack && !playerGodMode && !inAttackState)
         {
             if (directionOfAttack < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
             if (directionOfAttack > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
@@ -318,7 +341,6 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void BlockON() // Using a shield (Skeleton)
     {
-        blockCooldown = 0;
         block = true;
         anim.SetBool("Block", true);
     }
@@ -390,6 +412,21 @@ public class Enemy_Behavior : MonoBehaviour
             if (directionX < 0) rb.AddForce(new Vector2(jumpForce, 2.5f), ForceMode2D.Impulse);
         }
     }
+    public void ArcAttack() //Дуговая атака
+    {
+        inAttackState = true;
+        float duration = 3.0f;
+        float height = 2.0f;
+        Vector3 startPos = this.gameObject.transform.position;
+        Vector3 targetPos = player.transform.position;
+        if (transform.position != targetPos)
+        {
+
+        }
+        Vector3 nextPos = Vector3.Lerp(startPos, targetPos, duration);
+        nextPos.y += height * Mathf.Sin(duration * Mathf.PI);
+        transform.position = nextPos;
+    }
     public void PushFromPlayer() // rebound from a player
     {
         if (Mathf.Abs(directionX) < 1f)
@@ -449,6 +486,7 @@ public class Enemy_Behavior : MonoBehaviour
     private void SkeletonAttack()
     {
         if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack) BlockON();
+        if ((Mathf.Abs(directionX)) > sightDistance && !stuned && !playerGodMode && !isAttack) BlockOFF();
         if (isAttack) BlockOFF();     
     }
     private void MushroomAttack()
@@ -459,16 +497,12 @@ public class Enemy_Behavior : MonoBehaviour
     }
     private void FlyingEyeAttack()
     {
-        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; // calculating the direction of movement is Player position on the x-axis - Enemy position on the x-axis
-        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //calculate direction of movement is Player position on the y-axis - Enemy position on the y-axis
         float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < sightDistance && (Mathf.Abs(directionX)) > attackDistance && jumpCooldown > 3 && Mathf.Abs(directionY) < 3 && !stuned && !playerGodMode) JumpToPlayer();
-        if (playerHP > 0 && Mathf.Abs(directionX) <= attackDistance && !stuned && !isAttack && !playerGodMode)
+        if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack)
         {
-            meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(this.gameObject.transform.position);
-            if (!copy) meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(currentAttackDamage);
+            ArcAttack();
         }
-    }
+    }   
     private void GoblinAttack()
     {
         float playerHP = Hero.Instance.curentHP;
@@ -610,7 +644,6 @@ public class Enemy_Behavior : MonoBehaviour
         else return;
 
     }
-
     public void GoblinBomb() // Bomb Throw (Goblin)
     {
         if (level >= 0 && remainingAmmo >= 1)

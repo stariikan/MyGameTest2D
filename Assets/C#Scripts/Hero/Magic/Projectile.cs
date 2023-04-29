@@ -53,7 +53,7 @@ public class Projectile : MonoBehaviour
     {
         magicTargetName = collision.gameObject.name;
         Debug.Log(magicTargetName);
-        if (collision.gameObject.tag == "PlayerCharacter") return;
+        if (collision.gameObject.tag == "Front") return;
         hit = true; // here we indicate that a collision has occurred
         boxCollider.enabled = false; //disconnect the collider
         anim.SetTrigger("explode");//to play the projectile attack animation when the magicAttack trigger is executed

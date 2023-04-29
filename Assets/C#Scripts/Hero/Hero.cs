@@ -533,7 +533,6 @@ public class Hero : MonoBehaviour {
     public void CapsuleColliderOFF()
     {
         bodyFront.GetComponent<BodyFront>().ColliderOFF();
-        bodyBack.GetComponent<BodyBack>().ColliderOFF();
     }
     public void MeleeWeaponOff() // deactivate the weapon object
     {
