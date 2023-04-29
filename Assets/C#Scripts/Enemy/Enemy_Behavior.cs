@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 using static UnityEngine.GraphicsBuffer;
 
 public class Enemy_Behavior : MonoBehaviour
@@ -31,7 +32,7 @@ public class Enemy_Behavior : MonoBehaviour
 
     //Enemy states
     private bool movement = false; //mob is not chasing the player
-    private bool inAttackState = false; //If an object prepare to attack (need for special attack move, this bool disable EnemyMovement method if true)
+    public bool inAttackState = false; //If an object prepare to attack (need for special attack move, this bool disable EnemyMovement method if true)
     public bool isAttack = false; //If an object (enemy) is attacking
     private bool stuned = false; //state of stun
     private bool jump = false;
@@ -51,7 +52,7 @@ public class Enemy_Behavior : MonoBehaviour
     private float physicCooldown = Mathf.Infinity; //cooldown on physical attack
     private float magicCooldown = Mathf.Infinity; //cooldown on mage attack
     private float stunCooldown; //stun recovery
-    private float specialAttackCooldown; //сooldown special ability 
+    private float specialAttackCooldown = Mathf.Infinity; //сooldown special ability 
     private float alarmFollowTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
     private float alarmPatrolTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
     private float vulnerableAttackTimer; //timer for switching from one attack state to another attack state
@@ -236,9 +237,6 @@ public class Enemy_Behavior : MonoBehaviour
         if (Mathf.Abs(directionX) > sightDistance && !isAttack && !stuned && !isAttacked && alarmPatrolTimer > alarmPause && !inAttackState)
         {
             alarmFollowTimer = 0;
-            //Debug.Log("Patrol");
-            //Debug.Log(patrolFlip);
-            //Debug.Log(patrolDirectionRight);
             if (patrolDirectionLeft != transform.position.x && patrolFlip == 1)
             {
                 float patrolSpeed = 1 * enemySpeed * Time.deltaTime; //calculating direction
@@ -414,18 +412,37 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void ArcAttack() //Дуговая атака
     {
-        inAttackState = true;
-        float duration = 3.0f;
-        float height = 2.0f;
-        Vector3 startPos = this.gameObject.transform.position;
-        Vector3 targetPos = player.transform.position;
-        if (transform.position != targetPos)
+        if (specialAttackCooldown > 3) 
         {
+            Vector3 pos = transform.position;
+            Vector3 targetPos = player.transform.position;
+            float playerHP = Hero.Instance.curentHP;
+            float endPoint = transform.position.x - targetPos.x;
+            if (transform.position.y < LowFlightPoint + 1 && !isAttack)
+            {
+                float flySpeed = 1 * (flyAmplitude * 1.4f) * Time.deltaTime; //calculating direction
+                pos.y += flySpeed; //Calculating the position along the x-axis
+                transform.position = pos; //applying the position
+            }
+            inAttackState = true;
 
+            float arcAttackSpeed = 10.0f;
+            float directionArcAttack = targetPos.x - this.gameObject.transform.position.x;
+            if (transform.position.x != targetPos.x)
+            {
+                float arcAttackMove = directionArcAttack * arcAttackSpeed * Time.deltaTime;
+                pos.x += arcAttackMove;
+                Debug.Log(arcAttackMove);
+
+            }
+            transform.position = pos;
+            if (endPoint < 0.6f)
+            {
+                if (playerHP > 0 && (Mathf.Abs(directionX)) <= 0.6f && !stuned && !isAttack && !playerGodMode) Hero.Instance.GetDamage(enemyAttackDamage);
+                specialAttackCooldown = 0;
+                inAttackState = false;
+            }
         }
-        Vector3 nextPos = Vector3.Lerp(startPos, targetPos, duration);
-        nextPos.y += height * Mathf.Sin(duration * Mathf.PI);
-        transform.position = nextPos;
     }
     public void PushFromPlayer() // rebound from a player
     {
