@@ -295,14 +295,30 @@ public class ButtonLocalization : MonoBehaviour
             if (!localization)
             {
                 currentText = textArray[0];
-                textUI.text = currentText + " " + enemyCheat;
-                textUI.fontSize = 25;
+                if (enemyCheat == 0) textUI.text = currentText + " Random";
+                if (enemyCheat == 1) textUI.text = currentText + " EvilWizard";
+                if (enemyCheat == 2) textUI.text = currentText + " Martial";
+                if (enemyCheat == 3) textUI.text = currentText + " Mushroom";
+                if (enemyCheat == 4) textUI.text = currentText + " Skeleton";
+                if (enemyCheat == 5) textUI.text = currentText + " FlyingEye";
+                if (enemyCheat == 6) textUI.text = currentText + " Goblin";
+                if (enemyCheat == 7) textUI.text = currentText + " Slime";
+                if (enemyCheat == 8) textUI.text = currentText + " BossDeath";
+                textUI.fontSize = 20;
             }
             if (localization)
             {
                 currentText = textArray[1];
-                textUI.text = currentText + " " + enemyCheat;
-                textUI.fontSize = 20;
+                if (enemyCheat == 0) textUI.text = currentText + " Random";
+                if (enemyCheat == 1) textUI.text = currentText + " EvilWizard";
+                if (enemyCheat == 2) textUI.text = currentText + " Martial";
+                if (enemyCheat == 3) textUI.text = currentText + " Mushroom";
+                if (enemyCheat == 4) textUI.text = currentText + " Skeleton";
+                if (enemyCheat == 5) textUI.text = currentText + " FlyingEye";
+                if (enemyCheat == 6) textUI.text = currentText + " Goblin";
+                if (enemyCheat == 7) textUI.text = currentText + " Slime";
+                if (enemyCheat == 8) textUI.text = currentText + " BossDeath";
+                textUI.fontSize = 15;
             }
         }
     }

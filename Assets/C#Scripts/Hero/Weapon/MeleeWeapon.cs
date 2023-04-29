@@ -24,14 +24,6 @@ public class MeleeWeapon : MonoBehaviour
     }
     private void Update()
     {
-        if (masterOfWeapon.layer == 7)
-        {
-            float attackRange = masterOfWeapon.GetComponent<Enemy_Behavior>().attackDistance * 2.1f;
-            Vector3 newSize = boxCollider.size;
-            newSize.x = attackRange;
-            boxCollider.size = newSize;
-        }
-
         colliderTimer += Time.deltaTime;
         if (colliderTimer > 0.2f) WeaponOff();
     }

@@ -30,8 +30,8 @@ public class Enemy_Behavior : MonoBehaviour
 
     //Enemy states
     private bool movement = false; //mob is not chasing the player
-    private bool inAttack = false; //If an object prepare to attack (need for special attack move, this bool disable EnemyMovement method if true)
-    private bool isAttack = false; //If an object (enemy) is attacking
+    private bool inAttackState = false; //If an object prepare to attack (need for special attack move, this bool disable EnemyMovement method if true)
+    public bool isAttack = false; //If an object (enemy) is attacking
     private bool stuned = false; //state of stun
     private bool jump = false;
     private bool isBlock; //check whether the block is set
@@ -222,7 +222,7 @@ public class Enemy_Behavior : MonoBehaviour
         Vector3 pos = transform.position; //object position
         Vector3 theScale = transform.localScale; // needed to understand the direction
 
-        if (transform.position.y < LowFlightPoint && isFlying && !isAttack && !inAttack)
+        if (transform.position.y < LowFlightPoint && isFlying && !isAttack && !inAttackState)
         {
             float flySpeed = 1 * flyAmplitude * Time.deltaTime; //calculating direction
             pos.y += flySpeed; //Calculating the position along the x-axis
@@ -232,7 +232,7 @@ public class Enemy_Behavior : MonoBehaviour
         if (patrolDirectionRight < transform.position.x) patrolFlip = 2;
         if (patrolDirectionLeft > transform.position.x) patrolFlip = 1;
 
-        if (Mathf.Abs(directionX) > sightDistance && !isAttack && !stuned && !isAttacked && alarmPatrolTimer > alarmPause && !inAttack)
+        if (Mathf.Abs(directionX) > sightDistance && !isAttack && !stuned && !isAttacked && alarmPatrolTimer > alarmPause && !inAttackState)
         {
             alarmFollowTimer = 0;
             if (patrolDirectionLeft != transform.position.x && patrolFlip == 1)
@@ -257,7 +257,7 @@ public class Enemy_Behavior : MonoBehaviour
                 else if (patrolSpeed > 0 && transform.localScale.x < 0 && patrol) Flip();
             }
         }
-        if (Mathf.Abs(directionX) < sightDistance && Mathf.Abs(directionX) >= attackDistance && !isAttack && !stuned && !playerGodMode && !inAttack && alarmFollowTimer > alarmPause || isAttacked && Mathf.Abs(directionX) > attackDistance && !block && !isAttack && !stuned && !playerGodMode && !inAttack || copy && !playerGodMode && !inAttack)
+        if (Mathf.Abs(directionX) < sightDistance && Mathf.Abs(directionX) >= attackDistance && !isAttack && !stuned && !playerGodMode && !inAttackState && alarmFollowTimer > alarmPause || isAttacked && Mathf.Abs(directionX) > attackDistance && !block && !isAttack && !stuned && !playerGodMode && !inAttackState || copy && !playerGodMode && !inAttackState)
         {
             alarmPatrolTimer = 0;
             transform.localScale = theScale; // needed to understand the direction
@@ -303,10 +303,10 @@ public class Enemy_Behavior : MonoBehaviour
             anim.SetTrigger("attack" + currentAttack + ".2");
             aState = 2;
         }
-        if (playerHP > 0 && vulnerableAttackTimer > vulnerableAfterDamage && isAttack && !stuned && aState == 2 || playerHP > 0 && Mathf.Abs(directionX) > attackDistance)
+        if (playerHP > 0 && vulnerableAttackTimer > vulnerableAfterDamage && isAttack && !stuned && aState == 2)
         {
-            isAttack = false;
             anim.SetBool("isAttack", false);
+            isAttack = false;
         }
     }
     public void EnemyAttack()
