@@ -19,7 +19,6 @@ public class Enemy_Behavior : MonoBehaviour
     public float sightDistance; // How far away the enemy notices the player and triggers movement to the player.
     public float alarmPause; // The pause between the moment when the skeleton loses sight of the player and returns to standby mode.
     public float attackDistance; //Range of physical attack
-    public float flipEnemyTimer; //Time to turn Enemy
     public float flyAmplitude; // Body Lift Force
     public float LowFlightPoint; // the height at which the body will be lifted
     public float stunDuration; // Stun duration. How many seconds the object will be stunned.
@@ -27,7 +26,7 @@ public class Enemy_Behavior : MonoBehaviour
     public float vulnerableAfterDamage; // How many seconds the enemy will be vulnerable after taking damage.
     public float jumpForce;
     public float rollForce;
-    public float FlipPauseDefault; //пауза перед тем как враг развернётся на 180°.
+    public float flipPauseDefault; //пауза перед тем как враг развернётся на 180°.
     //public float FlipPauseRoll;  //пауза перед тем как враг развернётся на 180° когда игрок перекатился врагу за спину.
 
     //Enemy states
@@ -58,6 +57,7 @@ public class Enemy_Behavior : MonoBehaviour
     private float vulnerableAttackTimer; //timer for switching from one attack state to another attack state
     private float colliderONTimer = Mathf.Infinity;
     private float enemyTakenDamageTimer = Mathf.Infinity;
+    public float flipEnemyTimer = Mathf.Infinity; //Time to turn Enemy
 
     //Other parameters
     public float currentHP; // current Hp of the object
@@ -287,7 +287,6 @@ public class Enemy_Behavior : MonoBehaviour
                 transform.position = pos; //applying the position
                 follow = true;
             }
-            
         }
         if (patrol || follow)
         {
@@ -296,8 +295,6 @@ public class Enemy_Behavior : MonoBehaviour
         else
         {
             movement = false;
-            if (directionX < 0 && theScale.x < 0 && patrolFlip == 2) flipEnemyTimer = 0; 
-            if (directionX > 0 && theScale.x > 0 && patrolFlip == 1) flipEnemyTimer = 0;
         }
     }
     private void MeleeAttack() //Basic method of attack with two or more animations
@@ -328,6 +325,7 @@ public class Enemy_Behavior : MonoBehaviour
         {
             anim.SetBool("isAttack", false);
             isAttack = false;
+            flipEnemyTimer = 0;
         }
     }
     public void EnemyAttack()
@@ -350,7 +348,7 @@ public class Enemy_Behavior : MonoBehaviour
     public void Flip() //This is where we create the Flip method which, when called, reverses the direction of the sprite
     {
         bool playerRoll = Hero.Instance.m_rolling;
-        if (!playerRoll && flipEnemyTimer > FlipPauseDefault) //|| playerRoll && flipEnemyTimer > FlipPauseRoll
+        if (!playerRoll && flipEnemyTimer > flipPauseDefault) //|| playerRoll && flipEnemyTimer > FlipPauseRoll
         {
             flipEnemyTimer = 0;
             e_facingDirection *= -1;
@@ -392,27 +390,40 @@ public class Enemy_Behavior : MonoBehaviour
     {
         meleeAttackArea.GetComponent<MeleeWeapon>().WeaponOff();
     }
-    public void JumpToPlayer() //jump to player (Goblin)
-    {
-        if (level >= 1) //the ability is activated at level 2
-        {
-            jumpCooldown = 0;
-            if (directionX > 0) rb.AddForce(new Vector2(jumpForce, 2.5f), ForceMode2D.Impulse);
-            if (directionX < 0) rb.AddForce(new Vector2((-1 * jumpForce), 2.5f), ForceMode2D.Impulse);
-        }
-    }
-    public void JumpFromPlayer() // rebound from player (Goblin)
-    {
-        if (level >= 1) //the ability is activated at level 2
-        {
-            jumpCooldown = 0;
-            if (directionX > 0) rb.AddForce(new Vector2((-1 * jumpForce), 2.5f), ForceMode2D.Impulse);
-            if (directionX < 0) rb.AddForce(new Vector2(jumpForce, 2.5f), ForceMode2D.Impulse);
-        }
-    }
     public void ArcAttack() //Дуговая атака
     {
         if (specialAttackCooldown > 3) 
+        {
+            Vector3 pos = transform.position;
+            Vector3 targetPos = player.transform.position;
+            if (tag == "FlyingEye") targetPos = Hero.Instance.bodyBackPoint.transform.position;
+            float playerHP = Hero.Instance.curentHP;
+            float endPoint = transform.position.x - targetPos.x;
+
+            inAttackState = true;
+            
+            if (transform.position.y < LowFlightPoint)
+            {
+                float flySpeed = 1 * (flyAmplitude * 1.4f) * Time.deltaTime; //calculating direction
+                pos.y += flySpeed; //Calculating the position along the x-axis
+            }
+
+            float arcAttackSpeed = 10.0f;
+            float directionArcAttack = targetPos.x - this.gameObject.transform.position.x;
+            float arcAttackMove = Mathf.Sign(directionArcAttack) * arcAttackSpeed * Time.deltaTime;
+            pos.x += arcAttackMove;
+            transform.position = pos;
+            if (Mathf.Abs(endPoint) < 0.6f)
+            {
+                if (playerHP > 0 && (Mathf.Abs(directionX)) <= 0.6f && !stuned && !isAttack && !playerGodMode && tag == "FlyingEye") Hero.Instance.GetDamage(enemyAttackDamage);
+                specialAttackCooldown = 0;
+                inAttackState = false;
+            }
+        }
+    }
+    public void ArcDodge() //Дуговая атака
+    {
+        if (specialAttackCooldown > 3)
         {
             Vector3 pos = transform.position;
             Vector3 targetPos = player.transform.position;
@@ -421,24 +432,21 @@ public class Enemy_Behavior : MonoBehaviour
 
             inAttackState = true;
 
-            if (transform.position.y < LowFlightPoint + 1 && inAttackState)
+            if (transform.position.y < LowFlightPoint)
             {
                 float flySpeed = 1 * (flyAmplitude * 1.4f) * Time.deltaTime; //calculating direction
                 pos.y += flySpeed; //Calculating the position along the x-axis
-                transform.position = pos; //applying the position
             }
 
             float arcAttackSpeed = 10.0f;
             float directionArcAttack = targetPos.x - this.gameObject.transform.position.x;
-            float arcAttackMove = Mathf.Sign(directionArcAttack) * arcAttackSpeed * Time.deltaTime;
+            float arcAttackMove = (Mathf.Sign(directionArcAttack) * -1) * arcAttackSpeed * Time.deltaTime;
             pos.x += arcAttackMove;
             transform.position = pos;
-            Debug.Log(Mathf.Abs(endPoint));
-            if (Mathf.Abs(endPoint) < 0.6f)
+            if (Mathf.Abs(endPoint) > 4f)
             {
-                if (playerHP > 0 && (Mathf.Abs(directionX)) <= 0.6f && !stuned && !isAttack && !playerGodMode && tag == "FlyingEye") Hero.Instance.GetDamage(enemyAttackDamage);
-                specialAttackCooldown = 0;
-                inAttackState = false;
+               specialAttackCooldown = 0;
+               inAttackState = false;
             }
         }
     }
@@ -458,22 +466,6 @@ public class Enemy_Behavior : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 rb.AddForce(new Vector2(5, 1.5f), ForceMode2D.Impulse);
             }
-        }
-    }
-    public void Roll()
-    {
-        jumpCooldown = 0;
-        if (directionX > 0)
-        {
-            anim.SetTrigger("roll");
-            rb.AddForce(new Vector2(rollForce, 2.5f), ForceMode2D.Impulse);
-            Debug.Log("Roll");
-        }
-        if (directionX < 0)
-        {
-            anim.SetTrigger("roll");
-            rb.AddForce(new Vector2((-1 * rollForce), 2.5f), ForceMode2D.Impulse);
-            Debug.Log("Roll");
         }
     }
     public void Push() //Method for repelling the body
@@ -507,7 +499,7 @@ public class Enemy_Behavior : MonoBehaviour
     private void MushroomAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned && !playerGodMode) JumpToPlayer();
+        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned && !playerGodMode)
         if ((Mathf.Abs(directionX)) < 0.8f && magicCooldown > 10 && !stuned && !playerGodMode) MushroomSpores();
     }
     private void FlyingEyeAttack()
@@ -515,7 +507,6 @@ public class Enemy_Behavior : MonoBehaviour
         float playerHP = Hero.Instance.curentHP;
         if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack) 
         {
-            
             ArcAttack();
         }
     }   
@@ -523,9 +514,9 @@ public class Enemy_Behavior : MonoBehaviour
     {
         float playerHP = Hero.Instance.curentHP;
         bool playerIsBlock = Hero.Instance.block;
-        if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 3 && Mathf.Abs(directionY) < 3 && !stuned && !playerGodMode && !playerIsBlock) ArcAttack();
-        if ((Mathf.Abs(directionX)) < attackDistance && jumpCooldown > 4 && Mathf.Abs(directionY) < 3 && !isAttack && !playerGodMode && playerIsBlock) JumpFromPlayer();
-        if (enemyTakeDamage && jumpCooldown > 3) Roll();
+        if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 3 && !stuned && !playerGodMode && !playerIsBlock && !enemyTakeDamage) ArcAttack();
+        if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 1 && !isAttack && !playerGodMode && playerIsBlock && !enemyTakeDamage) ArcDodge();
+        if (enemyTakeDamage && jumpCooldown > 1 && !isAttack && !playerGodMode) ArcDodge();
     }
     private void TossingBomb() //Бросок бомбы
     {
@@ -600,7 +591,7 @@ public class Enemy_Behavior : MonoBehaviour
     private void SlimeAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned && !playerGodMode) JumpToPlayer();
+        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned && !playerGodMode)
         if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1 && !stuned && !playerGodMode)
         {
             anim.SetTrigger("spin");
@@ -681,7 +672,6 @@ public class Enemy_Behavior : MonoBehaviour
     {
         Vector3 shootingDirection = new Vector3(1, 0, 109);
         Vector3 pos = this.gameObject.transform.position;
-        Debug.Log(pos);
         if (transform.localScale.x > 0)
         {
             shootingDirection = new Vector3(1, 0, 109);
@@ -760,7 +750,6 @@ public class Enemy_Behavior : MonoBehaviour
             if (level <= 4) blockDMG = dmg * 0.5f;//if the Player is below level 5 then 50% damage blocking
             if (level >= 5) blockDMG = dmg * 0.1f;//if the Player is higher than level 4 then 90% damage blocking
             currentHP -= blockDMG;
-            Debug.Log(blockDMG);
             Enemy_Behavior.Instance.ShieldDamageSound();
             isAttacked = true;
             takedDamage = blockDMG / maxHP; //how much you need to reduce the progress bar

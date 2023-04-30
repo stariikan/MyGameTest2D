@@ -70,7 +70,7 @@ public class Hero : MonoBehaviour {
     public GameObject meleeAttackArea; // Physical Weapons
     public GameObject shieldArea; // The Shield
     public GameObject bodyFront; // bodyFront
-    public GameObject bodyBack; // bodyFront
+    public GameObject bodyBackPoint; // bodyFront
     private float magicAttackCooldown = 2;//cooldown projectile launch (magic)
     public Transform firePointRight; //The position from which the shells will be fired
     public Transform firePointLeft; //The position from which the shells will be fired

@@ -189,7 +189,6 @@ MonoBehaviour:
   sightDistance: 5
   alarmPause: 3
   attackDistance: 2
-  flipEnemyTimer: 0
   flyAmplitude: 0
   LowFlightPoint: 0
   stunDuration: 5
@@ -197,7 +196,8 @@ MonoBehaviour:
   vulnerableAfterDamage: 3
   jumpForce: 0
   rollForce: 0
-  FlipPauseDefault: 0
+  flipPauseDefault: 0
+  inAttackState: 0
   isAttack: 0
   isFlying: 0
   isBlooded: 1
@@ -206,6 +206,7 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
@@ -891,7 +892,6 @@ MonoBehaviour:
   sightDistance: 0
   alarmPause: 0
   attackDistance: 0
-  flipEnemyTimer: 0
   flyAmplitude: 0
   LowFlightPoint: 0
   stunDuration: 0
@@ -899,7 +899,8 @@ MonoBehaviour:
   vulnerableAfterDamage: 0
   jumpForce: 0
   rollForce: 0
-  FlipPauseDefault: 0
+  flipPauseDefault: 0
+  inAttackState: 0
   isAttack: 0
   isFlying: 0
   isBlooded: 0
@@ -908,6 +909,7 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
@@ -2739,7 +2741,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.008370452, y: 0.8789118}
@@ -6223,15 +6225,15 @@ MonoBehaviour:
   sightDistance: 4.9
   alarmPause: 0
   attackDistance: 1.7
-  flipEnemyTimer: 0
-  flyAmplitude: 3
-  LowFlightPoint: -1.32
+  flyAmplitude: 4
+  LowFlightPoint: 3
   stunDuration: 5
   vulnerableBeforeDamage: 0.2
   vulnerableAfterDamage: 0.3
   jumpForce: 10
   rollForce: 10
-  FlipPauseDefault: 0
+  flipPauseDefault: 0
+  inAttackState: 0
   isAttack: 0
   isFlying: 1
   isBlooded: 1
@@ -6240,6 +6242,7 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
@@ -6662,15 +6665,15 @@ MonoBehaviour:
   sightDistance: 5
   alarmPause: 3
   attackDistance: 1.5
-  flipEnemyTimer: 0
-  flyAmplitude: 0
-  LowFlightPoint: 0
+  flyAmplitude: 2
+  LowFlightPoint: 3
   stunDuration: 0.1
   vulnerableBeforeDamage: 0.2
   vulnerableAfterDamage: 0.2
   jumpForce: 10
   rollForce: 10
-  FlipPauseDefault: 0
+  flipPauseDefault: 0
+  inAttackState: 0
   isAttack: 0
   isFlying: 0
   isBlooded: 1
@@ -6679,6 +6682,7 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  flipEnemyTimer: 1.5
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
@@ -7235,7 +7239,6 @@ MonoBehaviour:
   sightDistance: 6
   alarmPause: 1
   attackDistance: 1.5
-  flipEnemyTimer: 5
   flyAmplitude: 0
   LowFlightPoint: 0
   stunDuration: 2
@@ -7243,7 +7246,8 @@ MonoBehaviour:
   vulnerableAfterDamage: 1
   jumpForce: 0
   rollForce: 0
-  FlipPauseDefault: 1
+  flipPauseDefault: 3
+  inAttackState: 0
   isAttack: 0
   isFlying: 0
   isBlooded: 0
@@ -7252,6 +7256,7 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  flipEnemyTimer: 5
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
@@ -7563,7 +7568,6 @@ MonoBehaviour:
   sightDistance: 0
   alarmPause: 0
   attackDistance: 0
-  flipEnemyTimer: 0
   flyAmplitude: 0
   LowFlightPoint: 0
   stunDuration: 0
@@ -7571,7 +7575,8 @@ MonoBehaviour:
   vulnerableAfterDamage: 0
   jumpForce: 0
   rollForce: 0
-  FlipPauseDefault: 0
+  flipPauseDefault: 0
+  inAttackState: 0
   isAttack: 0
   isFlying: 0
   isBlooded: 0
@@ -7580,6 +7585,7 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
@@ -11594,6 +11600,49 @@ RectTransform:
   m_AnchoredPosition: {x: -0.02286148, y: 0.24285746}
   m_SizeDelta: {x: 4, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &819963548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 819963549}
+  - component: {fileID: 819963550}
+  m_Layer: 8
+  m_Name: BackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &819963549
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819963548}
+  m_LocalRotation: {x: -0.008781483, y: 0.99993336, z: -0.00006582781, w: -0.007495705}
+  m_LocalPosition: {x: -1.565, y: 0.695, z: 0.013}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8413529788786197793}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0.015, y: 180.859, z: -1.006}
+--- !u!114 &819963550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819963548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f232721513b9a67469dabda36418963d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &826046344
 GameObject:
   m_ObjectHideFlags: 0
@@ -12944,7 +12993,7 @@ Transform:
   m_Children:
   - {fileID: 349874027}
   m_Father: {fileID: 8413529788786197793}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1078186870
 GameObject:
@@ -14410,7 +14459,6 @@ MonoBehaviour:
   sightDistance: 5
   alarmPause: 0
   attackDistance: 1.5
-  flipEnemyTimer: 0
   flyAmplitude: 3
   LowFlightPoint: -1.8
   stunDuration: 5
@@ -14418,7 +14466,8 @@ MonoBehaviour:
   vulnerableAfterDamage: 3
   jumpForce: 0
   rollForce: 0
-  FlipPauseDefault: 0
+  flipPauseDefault: 0
+  inAttackState: 0
   isAttack: 0
   isFlying: 0
   isBlooded: 0
@@ -14427,6 +14476,7 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 1
+  flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
@@ -16928,7 +16978,6 @@ MonoBehaviour:
   sightDistance: 0
   alarmPause: 0
   attackDistance: 0
-  flipEnemyTimer: 0
   flyAmplitude: 0
   LowFlightPoint: 0
   stunDuration: 0
@@ -16936,7 +16985,8 @@ MonoBehaviour:
   vulnerableAfterDamage: 0
   jumpForce: 0
   rollForce: 0
-  FlipPauseDefault: 0
+  flipPauseDefault: 0
+  inAttackState: 0
   isAttack: 0
   isFlying: 0
   isBlooded: 0
@@ -16945,6 +16995,7 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
@@ -17837,7 +17888,6 @@ MonoBehaviour:
   sightDistance: 5
   alarmPause: 3
   attackDistance: 1.5
-  flipEnemyTimer: 0
   flyAmplitude: 0
   LowFlightPoint: 0
   stunDuration: 5
@@ -17845,7 +17895,8 @@ MonoBehaviour:
   vulnerableAfterDamage: 3
   jumpForce: 0
   rollForce: 0
-  FlipPauseDefault: 0
+  flipPauseDefault: 0
+  inAttackState: 0
   isAttack: 0
   isFlying: 0
   isBlooded: 1
@@ -17854,6 +17905,7 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
@@ -18156,7 +18208,6 @@ MonoBehaviour:
   sightDistance: 0
   alarmPause: 0
   attackDistance: 0
-  flipEnemyTimer: 0
   flyAmplitude: 0
   LowFlightPoint: 0
   stunDuration: 0
@@ -18164,7 +18215,8 @@ MonoBehaviour:
   vulnerableAfterDamage: 0
   jumpForce: 0
   rollForce: 0
-  FlipPauseDefault: 0
+  flipPauseDefault: 0
+  inAttackState: 0
   isAttack: 0
   isFlying: 0
   isBlooded: 0
@@ -18173,6 +18225,7 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
@@ -26637,7 +26690,7 @@ GameObject:
   - component: {fileID: 1705873097}
   m_Layer: 8
   m_Name: firePointLeft
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34251,7 +34304,7 @@ Transform:
   m_Children:
   - {fileID: 325288039}
   m_Father: {fileID: 8413529788786197793}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1944608289
 GameObject:
@@ -34339,7 +34392,7 @@ Transform:
   m_Children:
   - {fileID: 180256939}
   m_Father: {fileID: 8413529788786197793}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1965926215
 GameObject:
@@ -34967,7 +35020,7 @@ GameObject:
   - component: {fileID: 2008598727}
   m_Layer: 8
   m_Name: firePointRight
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35733,7 +35786,7 @@ Transform:
   m_Children:
   - {fileID: 58280613}
   m_Father: {fileID: 8413529788786197793}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2087004739
 GameObject:
@@ -41599,7 +41652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1874556542081811823, guid: 59510a8ea2f2ab14d823bdde5d6dea49, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1874556542081811823, guid: 59510a8ea2f2ab14d823bdde5d6dea49, type: 3}
       propertyPath: m_LocalPosition.x
@@ -42012,7 +42065,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8413529788786197793}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &5359120197126657818
 CircleCollider2D:
@@ -42277,6 +42330,7 @@ Transform:
   - {fileID: 3233824455917400485}
   - {fileID: 2008598727}
   - {fileID: 1705873097}
+  - {fileID: 819963549}
   - {fileID: 5307321229031892575}
   - {fileID: 1952514494}
   - {fileID: 2086760488}
@@ -42393,7 +42447,7 @@ MonoBehaviour:
   meleeAttackArea: {fileID: 349874026}
   shieldArea: {fileID: 325288038}
   bodyFront: {fileID: 180256936}
-  bodyBack: {fileID: 0}
+  bodyBackPoint: {fileID: 819963548}
   firePointRight: {fileID: 2008598727}
   firePointLeft: {fileID: 1705873097}
   attackSound: {fileID: 1894638824}

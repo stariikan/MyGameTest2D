@@ -30,7 +30,7 @@ public class MeleeWeapon : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         target = collision.gameObject;
-        Debug.Log(target);
+        //Debug.Log(target);
         if (masterOfWeapon.layer == 8) masterDirection = masterOfWeapon.GetComponent<Hero>().m_facingDirection;
         if (masterOfWeapon.layer == 7) masterDirection = masterOfWeapon.GetComponent<Enemy_Behavior>().e_facingDirection;
         if (target.layer == 8) targetDirection = target.GetComponentInParent<Hero>().m_facingDirection;

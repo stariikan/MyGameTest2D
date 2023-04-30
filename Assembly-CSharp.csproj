@@ -68,6 +68,7 @@
     <Compile Include="Assets\C#Scripts\Door\door.cs" />
     <Compile Include="Assets\C#Scripts\UI\Shop\LvL.cs" />
     <Compile Include="Assets\C#Scripts\UI\MobileInput\Movement_buttons.cs" />
+    <Compile Include="Assets\C#Scripts\Hero\BackPoint.cs" />
     <Compile Include="Assets\C#Scripts\UI\Main menu\Buttons.cs" />
     <Compile Include="Assets\C#Scripts\UI\Main menu\Main_menu.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\DisableProgressBar.cs" />
