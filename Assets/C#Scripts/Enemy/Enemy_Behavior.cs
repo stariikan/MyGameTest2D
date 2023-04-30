@@ -418,27 +418,25 @@ public class Enemy_Behavior : MonoBehaviour
             Vector3 targetPos = player.transform.position;
             float playerHP = Hero.Instance.curentHP;
             float endPoint = transform.position.x - targetPos.x;
-            if (transform.position.y < LowFlightPoint + 1 && !isAttack)
+
+            inAttackState = true;
+
+            if (transform.position.y < LowFlightPoint + 1 && inAttackState)
             {
                 float flySpeed = 1 * (flyAmplitude * 1.4f) * Time.deltaTime; //calculating direction
                 pos.y += flySpeed; //Calculating the position along the x-axis
                 transform.position = pos; //applying the position
             }
-            inAttackState = true;
 
             float arcAttackSpeed = 10.0f;
             float directionArcAttack = targetPos.x - this.gameObject.transform.position.x;
-            if (transform.position.x != targetPos.x)
-            {
-                float arcAttackMove = directionArcAttack * arcAttackSpeed * Time.deltaTime;
-                pos.x += arcAttackMove;
-                Debug.Log(arcAttackMove);
-
-            }
+            float arcAttackMove = Mathf.Sign(directionArcAttack) * arcAttackSpeed * Time.deltaTime;
+            pos.x += arcAttackMove;
             transform.position = pos;
-            if (endPoint < 0.6f)
+            Debug.Log(Mathf.Abs(endPoint));
+            if (Mathf.Abs(endPoint) < 0.6f)
             {
-                if (playerHP > 0 && (Mathf.Abs(directionX)) <= 0.6f && !stuned && !isAttack && !playerGodMode) Hero.Instance.GetDamage(enemyAttackDamage);
+                if (playerHP > 0 && (Mathf.Abs(directionX)) <= 0.6f && !stuned && !isAttack && !playerGodMode && tag == "FlyingEye") Hero.Instance.GetDamage(enemyAttackDamage);
                 specialAttackCooldown = 0;
                 inAttackState = false;
             }
@@ -515,8 +513,9 @@ public class Enemy_Behavior : MonoBehaviour
     private void FlyingEyeAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack)
+        if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack) 
         {
+            
             ArcAttack();
         }
     }   
@@ -524,7 +523,7 @@ public class Enemy_Behavior : MonoBehaviour
     {
         float playerHP = Hero.Instance.curentHP;
         bool playerIsBlock = Hero.Instance.block;
-        if ((Mathf.Abs(directionX)) < sightDistance && (Mathf.Abs(directionX)) > attackDistance && jumpCooldown > 3 && Mathf.Abs(directionY) < 3 && !stuned && !playerGodMode && !playerIsBlock) JumpToPlayer();
+        if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 3 && Mathf.Abs(directionY) < 3 && !stuned && !playerGodMode && !playerIsBlock) ArcAttack();
         if ((Mathf.Abs(directionX)) < attackDistance && jumpCooldown > 4 && Mathf.Abs(directionY) < 3 && !isAttack && !playerGodMode && playerIsBlock) JumpFromPlayer();
         if (enemyTakeDamage && jumpCooldown > 3) Roll();
     }
@@ -626,7 +625,6 @@ public class Enemy_Behavior : MonoBehaviour
             DeathSummonMinioins();
         }
     }
-
 
     //Special ability of the enemies
     public void MushroomSpores() //creates a cloud of spore that damasks the player (Mushroom)

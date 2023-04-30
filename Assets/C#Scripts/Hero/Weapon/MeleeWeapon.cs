@@ -53,7 +53,7 @@ public class MeleeWeapon : MonoBehaviour
         {
             target.GetComponentInParent<Hero>().GetDamage(AttackDamage);
         }
-        if (masterOfWeapon.layer == 7 && target != null && target.tag == "Back" && masterDirection == targetDirection)
+        if (masterOfWeapon.layer == 7 && target != null && target.tag == "Front" && masterDirection == targetDirection)
         {
             target.GetComponentInParent<Hero>().GetDamage(AttackDamage * 2);
         }
