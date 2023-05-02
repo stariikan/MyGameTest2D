@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Net;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 using static UnityEngine.GraphicsBuffer;
@@ -9,6 +10,7 @@ public class Enemy_Behavior : MonoBehaviour
     public float enemyMaxHP = 48; // Maximum skeleton lives
     public float enemyAttackDamage = 10; // Damage from physical attack
     public float enemySpeed = 2f;//Skeleton speed
+    public float followSpeed = 2f;//Skeleton speed
     private float blockDMG;
     public int countOfCopy; // initially 0, when the call occurs become 3, as copies die 
     public int remainingAmmo = 3; // Bombs in stock
@@ -40,6 +42,7 @@ public class Enemy_Behavior : MonoBehaviour
 
     public bool isFlying; //Flying enemy or not
     public bool isBlooded; //Does the enemy have blood
+    public bool grounded; 
     public bool enemyDead = false; // Is the object dead
     public bool isAttacked = false; //If the object has sustained damage
     public bool enemyTakeDamage = false; //If enemy take damage
@@ -164,7 +167,6 @@ public class Enemy_Behavior : MonoBehaviour
             runSound.GetComponent<SoundOfObject>().StopSound();
         }
     }
-
     //Method to describe different behaviour for different enemies. The choice of behaviour depends on the object tag
     public void EnemyBehavior()
     {
@@ -205,7 +207,6 @@ public class Enemy_Behavior : MonoBehaviour
             DeathAttack();
         }
     }
-
     //General methods
     public void EnemyMovement()
     {
@@ -224,13 +225,10 @@ public class Enemy_Behavior : MonoBehaviour
         Vector3 pos = transform.position; //object position
         Vector3 theScale = transform.localScale; // needed to understand the direction
 
-        if (transform.position.y < LowFlightPoint && isFlying && !isAttack && !inAttackState)
+        if (isFlying && !isAttack && !inAttackState)
         {
-            float flySpeed = 1 * flyAmplitude * Time.deltaTime; //calculating direction
-            pos.y += flySpeed; //Calculating the position along the x-axis
-            transform.position = pos; //applying the position
+            Jump();
         }
-
         if (patrolDirectionRight < transform.position.x) patrolFlip = 2;
         if (patrolDirectionLeft > transform.position.x) patrolFlip = 1;
 
@@ -328,6 +326,16 @@ public class Enemy_Behavior : MonoBehaviour
             flipEnemyTimer = 0;
         }
     }
+    private void PlayerFollow()
+    {
+        Vector3 pos = transform.position; //object position
+        Vector3 targetPos = Hero.Instance.bodyBackPoint.transform.position;
+        float endPoint = transform.position.x - targetPos.x;
+        float playerFollowSpeed = (Mathf.Sign(endPoint) * -1) * followSpeed * Time.deltaTime; //calculating direction
+        pos.x += playerFollowSpeed; //Calculating the position along the x-axis
+        transform.position = pos; //applying the position
+        Debug.Log(Mathf.Sign(endPoint));
+    }
     public void EnemyAttack()
     {
         meleeAttackArea.transform.position = firePoint.position; //With each attack we will change projectile positions and give it a firing point position to receive the component from the projectile and send it in the direction of the player
@@ -390,6 +398,14 @@ public class Enemy_Behavior : MonoBehaviour
     {
         meleeAttackArea.GetComponent<MeleeWeapon>().WeaponOff();
     }
+    public void Jump()
+    {
+        if (grounded == true) 
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
+        
+    }
     public void ArcAttack() //Дуговая атака
     {
         if (specialAttackCooldown > 3) 
@@ -429,15 +445,12 @@ public class Enemy_Behavior : MonoBehaviour
             Vector3 targetPos = player.transform.position;
             float playerHP = Hero.Instance.curentHP;
             float endPoint = transform.position.x - targetPos.x;
-
             inAttackState = true;
-
             if (transform.position.y < LowFlightPoint)
             {
                 float flySpeed = 1 * (flyAmplitude * 1.4f) * Time.deltaTime; //calculating direction
                 pos.y += flySpeed; //Calculating the position along the x-axis
             }
-
             float arcAttackSpeed = 10.0f;
             float directionArcAttack = targetPos.x - this.gameObject.transform.position.x;
             float arcAttackMove = (Mathf.Sign(directionArcAttack) * -1) * arcAttackSpeed * Time.deltaTime;
@@ -504,10 +517,26 @@ public class Enemy_Behavior : MonoBehaviour
     }
     private void FlyingEyeAttack()
     {
-        float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack) 
+        if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack)
         {
-            ArcAttack();
+            float playerHP = Hero.Instance.curentHP;
+            Vector3 targetPos = Hero.Instance.bodyBackPoint.transform.position;
+            float endPoint = transform.position.x - targetPos.x;
+            inAttackState = true;
+            if ((Mathf.Abs(endPoint)) < 0.2f)
+            {
+                inAttackState = false;
+            }
+            else
+            {
+                inAttackState = true;
+                Jump();
+                PlayerFollow();
+            }
+        }
+        else
+        {
+            inAttackState = false;
         }
     }   
     private void GoblinAttack()
@@ -787,9 +816,22 @@ public class Enemy_Behavior : MonoBehaviour
         }
         if (tag == "Death") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            grounded = true;
+        }
+    }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            grounded = false;
+        }
+    }
     //Sound Death and damage sounds are tied to Animation (for now), damage and jump sounds are tied to the code in the methods above
-
     public void DieSound()
     {
         dieSound.GetComponent<SoundOfObject>().ContinueSound();

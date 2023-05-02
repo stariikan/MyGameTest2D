@@ -182,6 +182,7 @@ MonoBehaviour:
   enemyMaxHP: 48
   enemyAttackDamage: 10
   enemySpeed: 2
+  followSpeed: 2
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -201,6 +202,7 @@ MonoBehaviour:
   isAttack: 0
   isFlying: 0
   isBlooded: 1
+  grounded: 0
   enemyDead: 0
   isAttacked: 0
   enemyTakeDamage: 0
@@ -885,6 +887,7 @@ MonoBehaviour:
   enemyMaxHP: 48
   enemyAttackDamage: 10
   enemySpeed: 2
+  followSpeed: 2
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -904,6 +907,7 @@ MonoBehaviour:
   isAttack: 0
   isFlying: 0
   isBlooded: 0
+  grounded: 0
   enemyDead: 0
   isAttacked: 0
   enemyTakeDamage: 0
@@ -6218,25 +6222,27 @@ MonoBehaviour:
   enemyMaxHP: 48
   enemyAttackDamage: 10
   enemySpeed: 2
+  followSpeed: 5
   countOfCopy: 2
   remainingAmmo: 0
   enemyReward: 2
   patrolDistance: 1
   sightDistance: 4.9
-  alarmPause: 0
+  alarmPause: 2
   attackDistance: 1.7
   flyAmplitude: 4
   LowFlightPoint: 3
   stunDuration: 5
   vulnerableBeforeDamage: 0.2
   vulnerableAfterDamage: 0.3
-  jumpForce: 10
+  jumpForce: 6
   rollForce: 10
   flipPauseDefault: 0
   inAttackState: 0
   isAttack: 0
   isFlying: 1
   isBlooded: 1
+  grounded: 0
   enemyDead: 0
   isAttacked: 0
   enemyTakeDamage: 0
@@ -6658,6 +6664,7 @@ MonoBehaviour:
   enemyMaxHP: 48
   enemyAttackDamage: 10
   enemySpeed: 2
+  followSpeed: 2
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -6677,6 +6684,7 @@ MonoBehaviour:
   isAttack: 0
   isFlying: 0
   isBlooded: 1
+  grounded: 0
   enemyDead: 0
   isAttacked: 0
   enemyTakeDamage: 0
@@ -7232,6 +7240,7 @@ MonoBehaviour:
   enemyMaxHP: 48
   enemyAttackDamage: 1
   enemySpeed: 1
+  followSpeed: 2
   countOfCopy: 0
   remainingAmmo: 0
   enemyReward: 2
@@ -7251,6 +7260,7 @@ MonoBehaviour:
   isAttack: 0
   isFlying: 0
   isBlooded: 0
+  grounded: 0
   enemyDead: 0
   isAttacked: 0
   enemyTakeDamage: 0
@@ -7561,6 +7571,7 @@ MonoBehaviour:
   enemyMaxHP: 48
   enemyAttackDamage: 10
   enemySpeed: 2
+  followSpeed: 2
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -7580,6 +7591,7 @@ MonoBehaviour:
   isAttack: 0
   isFlying: 0
   isBlooded: 0
+  grounded: 0
   enemyDead: 0
   isAttacked: 0
   enemyTakeDamage: 0
@@ -11625,7 +11637,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 819963548}
   m_LocalRotation: {x: -0.008781483, y: 0.99993336, z: -0.00006582781, w: -0.007495705}
-  m_LocalPosition: {x: -1.565, y: 0.695, z: 0.013}
+  m_LocalPosition: {x: -0.92, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8413529788786197793}
@@ -14452,6 +14464,7 @@ MonoBehaviour:
   enemyMaxHP: 48
   enemyAttackDamage: 10
   enemySpeed: 2
+  followSpeed: 2
   countOfCopy: 0
   remainingAmmo: 0
   enemyReward: 0
@@ -14471,6 +14484,7 @@ MonoBehaviour:
   isAttack: 0
   isFlying: 0
   isBlooded: 0
+  grounded: 0
   enemyDead: 0
   isAttacked: 0
   enemyTakeDamage: 0
@@ -16971,6 +16985,7 @@ MonoBehaviour:
   enemyMaxHP: 48
   enemyAttackDamage: 10
   enemySpeed: 2
+  followSpeed: 2
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -16990,6 +17005,7 @@ MonoBehaviour:
   isAttack: 0
   isFlying: 0
   isBlooded: 0
+  grounded: 0
   enemyDead: 0
   isAttacked: 0
   enemyTakeDamage: 0
@@ -17881,6 +17897,7 @@ MonoBehaviour:
   enemyMaxHP: 48
   enemyAttackDamage: 10
   enemySpeed: 2
+  followSpeed: 2
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -17900,6 +17917,7 @@ MonoBehaviour:
   isAttack: 0
   isFlying: 0
   isBlooded: 1
+  grounded: 0
   enemyDead: 0
   isAttacked: 0
   enemyTakeDamage: 0
@@ -18201,6 +18219,7 @@ MonoBehaviour:
   enemyMaxHP: 48
   enemyAttackDamage: 10
   enemySpeed: 2
+  followSpeed: 2
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -18220,6 +18239,7 @@ MonoBehaviour:
   isAttack: 0
   isFlying: 0
   isBlooded: 0
+  grounded: 0
   enemyDead: 0
   isAttacked: 0
   enemyTakeDamage: 0

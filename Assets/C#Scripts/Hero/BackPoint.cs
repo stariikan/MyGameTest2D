@@ -1,14 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BackPoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -19,12 +15,12 @@ public class BackPoint : MonoBehaviour
         playerDirection = Hero.Instance.m_facingDirection;
         if (playerDirection == 1)
         {
-            direction.x = theHeroPosition.x - 1.565f;
+            direction.x = theHeroPosition.x - 1;
             transform.position = direction;
         }
         if (playerDirection == -1)
         {
-            direction.x = theHeroPosition.x + 1.565f;
+            direction.x = theHeroPosition.x + 1;
             transform.position = direction;
         }
     }
