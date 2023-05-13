@@ -9,8 +9,9 @@ public class Enemy_Behavior : MonoBehaviour
     //Enemy parameters
     public float enemyMaxHP = 48; // Maximum skeleton lives
     public float enemyAttackDamage = 10; // Damage from physical attack
-    public float enemySpeed = 2f;//Skeleton speed
-    public float followSpeed = 2f;//Skeleton speed
+    public float enemySpeed = 2f;//Enemy speed
+    public float followSpeed = 2f;//Enemy speed
+    public float rollForce = 7.5f;
     private float blockDMG;
     public int countOfCopy; // initially 0, when the call occurs become 3, as copies die 
     public int remainingAmmo = 3; // Bombs in stock
@@ -27,7 +28,6 @@ public class Enemy_Behavior : MonoBehaviour
     public float vulnerableBeforeDamage; // The time between the swing and the infliction of damage. How many seconds enemy will be vulnerable before attacking.
     public float vulnerableAfterDamage; // How many seconds the enemy will be vulnerable after taking damage.
     public float jumpForce;
-    public float rollForce;
     public float flipPauseDefault; //пауза перед тем как враг развернётся на 180°.
     //public float FlipPauseRoll;  //пауза перед тем как враг развернётся на 180° когда игрок перекатился врагу за спину.
 
@@ -37,6 +37,7 @@ public class Enemy_Behavior : MonoBehaviour
     public bool isAttack = false; //If an object (enemy) is attacking
     private bool stuned = false; //state of stun
     private bool jump = false;
+    public bool rolling = false;
     private bool isBlock; //check whether the block is set
 
 
@@ -50,7 +51,8 @@ public class Enemy_Behavior : MonoBehaviour
     public bool copy = false; // is this object a copy or not?
 
     //Enemy cooldowns
-    private float jumpCooldown; //cooldown on rebound and jump
+    private float jumpCooldown = Mathf.Infinity; //cooldown on rebound and jump
+    private float rollCooldown = Mathf.Infinity; //cooldown on rebound and jump
     private float physicCooldown = Mathf.Infinity; //cooldown on physical attack
     private float magicCooldown = Mathf.Infinity; //cooldown on mage attack
     private float stunCooldown; //stun recovery
@@ -128,6 +130,7 @@ public class Enemy_Behavior : MonoBehaviour
     {
         timeSinceAttack += Time.deltaTime;
         jumpCooldown += Time.deltaTime;
+        rollCooldown += Time.deltaTime;
         magicCooldown += Time.deltaTime;
         physicCooldown += Time.deltaTime;
         stunCooldown += Time.deltaTime;
@@ -141,10 +144,10 @@ public class Enemy_Behavior : MonoBehaviour
 
         if (stunCooldown > stunDuration) stuned = false;//exit from stun
         if (jumpCooldown > 1.2f) jump = false;
+        if (rollCooldown > 2f) rolling = false;
         if (colliderONTimer > 1f) capsuleCollider.enabled = true;
-        if (enemyTakenDamageTimer > 2) enemyTakeDamage = false; 
+        if (enemyTakenDamageTimer > 2) enemyTakeDamage = false;
         if (currentHP > 0) EnemyBehavior();
-
         playerGodMode = Hero.Instance.godMode;
     }
     public enum States //Defining what states there are, named as in Unity Animator
@@ -326,15 +329,18 @@ public class Enemy_Behavior : MonoBehaviour
             flipEnemyTimer = 0;
         }
     }
-    private void PlayerFollow()
+    private void PlayerFollow(Vector3 targetPos)
     {
+        float directionOfAttack = Mathf.Sign(directionX) * enemySpeed * Time.deltaTime; //calculating direction
+        Vector3 theScale = transform.localScale; // needed to understand the direction
+        if (directionOfAttack < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+        if (directionOfAttack > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
         Vector3 pos = transform.position; //object position
-        Vector3 targetPos = Hero.Instance.bodyBackPoint.transform.position;
         float endPoint = transform.position.x - targetPos.x;
         float playerFollowSpeed = (Mathf.Sign(endPoint) * -1) * followSpeed * Time.deltaTime; //calculating direction
         pos.x += playerFollowSpeed; //Calculating the position along the x-axis
         transform.position = pos; //applying the position
-        Debug.Log(Mathf.Sign(endPoint));
+        movement = true;
     }
     public void EnemyAttack()
     {
@@ -405,6 +411,27 @@ public class Enemy_Behavior : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
         
+    }
+    public void RollForward()
+    {
+        if(rolling == false && inAttackState == true)
+        {
+            rollCooldown = 0;
+            rolling = true;
+            if (e_facingDirection == 1) rb.velocity = new Vector2(rollForce, rb.velocity.y);
+            if (e_facingDirection == -1) rb.velocity = new Vector2((rollForce * -1), rb.velocity.y);
+        }
+    }
+    public void RollBackward()
+    {
+        if (rolling == false && inAttackState == true)
+        {
+            rollCooldown = 0;
+            rolling = true;
+            anim.SetTrigger("roll");
+            if (e_facingDirection == -1) rb.velocity = new Vector2(rollForce, rb.velocity.y);
+            if (e_facingDirection == 1) rb.velocity = new Vector2((rollForce * -1), rb.velocity.y);
+        }
     }
     public void ArcAttack() //Дуговая атака
     {
@@ -517,7 +544,7 @@ public class Enemy_Behavior : MonoBehaviour
     }
     private void FlyingEyeAttack()
     {
-        if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack)
+        if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack && currentHP > 0)
         {
             float playerHP = Hero.Instance.curentHP;
             Vector3 targetPos = Hero.Instance.bodyBackPoint.transform.position;
@@ -531,23 +558,113 @@ public class Enemy_Behavior : MonoBehaviour
             {
                 inAttackState = true;
                 Jump();
-                PlayerFollow();
+                PlayerFollow(Hero.Instance.bodyBackPoint.transform.position);
             }
         }
         else
         {
             inAttackState = false;
         }
-    }   
+    }
     private void GoblinAttack()
     {
         float playerHP = Hero.Instance.curentHP;
         bool playerIsBlock = Hero.Instance.block;
-        if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 3 && !stuned && !playerGodMode && !playerIsBlock && !enemyTakeDamage) ArcAttack();
-        if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 1 && !isAttack && !playerGodMode && playerIsBlock && !enemyTakeDamage) ArcDodge();
-        if (enemyTakeDamage && jumpCooldown > 1 && !isAttack && !playerGodMode) ArcDodge();
+        bool playerIsJumpPC = Hero.Instance.isJumpPC;
+        bool playerIsJumpMobile = Hero.Instance.isJumpMobile;
+        if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 3 && !stuned && !playerGodMode && !playerIsBlock && !enemyTakeDamage && currentHP > 0)
+        {
+            if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack)
+            {
+                Vector3 targetPos = Hero.Instance.bodyBackPoint.transform.position;
+                float endPoint = transform.position.x - targetPos.x;
+                inAttackState = true;
+                if ((Mathf.Abs(endPoint)) < 0.2f)
+                {
+                    inAttackState = false;
+                }
+                else
+                {
+                    inAttackState = true;
+                    RollForward();
+                    PlayerFollow(targetPos);
+                }
+            }
+            else
+            {
+                inAttackState = false;
+                rb.velocity = Vector3.zero;
+            }
+        }
+        if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 1 && !isAttack && !playerGodMode && playerIsBlock && !enemyTakeDamage && currentHP > 0)
+        {
+            if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack)
+            {
+                Vector3 targetPos = player.transform.position;
+                float endPoint = transform.position.x - targetPos.x;
+                inAttackState = true;
+                if ((Mathf.Abs(endPoint)) < 1.5f)
+                {
+                    inAttackState = false;
+                }
+                else
+                {
+                    inAttackState = true;
+                    RollBackward();
+                }
+            }
+            else
+            {
+                inAttackState = false;
+                rb.velocity = Vector3.zero;
+            }
+        }
+        if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 1 && !isAttack && !playerGodMode && (playerIsJumpMobile || playerIsJumpPC) && !enemyTakeDamage && currentHP > 0)
+        {
+            if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack)
+            {
+                Vector3 targetPos = player.transform.position;
+                float endPoint = transform.position.x - targetPos.x;
+                inAttackState = true;
+                if ((Mathf.Abs(endPoint)) < 1.5f)
+                {
+                    inAttackState = false;
+                }
+                else
+                {
+                    inAttackState = true;
+                    RollBackward();
+                }
+            }
+        }
+        if (enemyTakeDamage && jumpCooldown > 1 && !isAttack && !playerGodMode && !stuned && currentHP > 0)
+        {
+            Vector3 targetPos = Hero.Instance.bodyBackPoint.transform.position;
+            float endPoint = transform.position.x - targetPos.x;
+            int directionOfRoll = Random.Range(1, 2);
+            inAttackState = true;
+            if (directionOfRoll == 1)
+            {
+                inAttackState = true;
+                RollForward();
+                PlayerFollow(targetPos);
+                Debug.Log(directionOfRoll);
+            }
+            if (directionOfRoll == 2)
+            {
+                inAttackState = true;
+                RollBackward();
+            }
+        }
+        if ((playerIsJumpPC || playerIsJumpMobile) && (Mathf.Abs(directionX)) <= attackDistance && jumpCooldown > 1 && !isAttack && !playerGodMode && !stuned && currentHP > 0)
+        {
+            Vector3 targetPos = Hero.Instance.bodyBackPoint.transform.position;
+            float endPoint = transform.position.x - targetPos.x;
+            inAttackState = true;
+            RollBackward();
+        }
     }
-    private void TossingBomb() //Бросок бомбы
+        private void TossingBomb() //Бросок бомбы
     {
         if ((Mathf.Abs(directionX)) < 4.5 && magicCooldown > 3 && !jump && remainingAmmo >= 1 && !stuned && !playerGodMode || isAttacked == true && magicCooldown > 3 && !jump && remainingAmmo >= 1 && !stuned && !playerGodMode)
         {

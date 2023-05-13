@@ -183,6 +183,7 @@ MonoBehaviour:
   enemyAttackDamage: 10
   enemySpeed: 2
   followSpeed: 2
+  rollForce: 0
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -196,10 +197,10 @@ MonoBehaviour:
   vulnerableBeforeDamage: 2
   vulnerableAfterDamage: 3
   jumpForce: 0
-  rollForce: 0
   flipPauseDefault: 0
   inAttackState: 0
   isAttack: 0
+  rolling: 0
   isFlying: 0
   isBlooded: 1
   grounded: 0
@@ -888,6 +889,7 @@ MonoBehaviour:
   enemyAttackDamage: 10
   enemySpeed: 2
   followSpeed: 2
+  rollForce: 0
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -901,10 +903,10 @@ MonoBehaviour:
   vulnerableBeforeDamage: 0
   vulnerableAfterDamage: 0
   jumpForce: 0
-  rollForce: 0
   flipPauseDefault: 0
   inAttackState: 0
   isAttack: 0
+  rolling: 0
   isFlying: 0
   isBlooded: 0
   grounded: 0
@@ -6223,6 +6225,7 @@ MonoBehaviour:
   enemyAttackDamage: 10
   enemySpeed: 2
   followSpeed: 5
+  rollForce: 10
   countOfCopy: 2
   remainingAmmo: 0
   enemyReward: 2
@@ -6236,10 +6239,10 @@ MonoBehaviour:
   vulnerableBeforeDamage: 0.2
   vulnerableAfterDamage: 0.3
   jumpForce: 6
-  rollForce: 10
   flipPauseDefault: 0
   inAttackState: 0
   isAttack: 0
+  rolling: 0
   isFlying: 1
   isBlooded: 1
   grounded: 0
@@ -6665,6 +6668,7 @@ MonoBehaviour:
   enemyAttackDamage: 10
   enemySpeed: 2
   followSpeed: 2
+  rollForce: 5
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -6678,10 +6682,10 @@ MonoBehaviour:
   vulnerableBeforeDamage: 0.2
   vulnerableAfterDamage: 0.2
   jumpForce: 10
-  rollForce: 10
   flipPauseDefault: 0
   inAttackState: 0
   isAttack: 0
+  rolling: 0
   isFlying: 0
   isBlooded: 1
   grounded: 0
@@ -7241,6 +7245,7 @@ MonoBehaviour:
   enemyAttackDamage: 1
   enemySpeed: 1
   followSpeed: 2
+  rollForce: 0
   countOfCopy: 0
   remainingAmmo: 0
   enemyReward: 2
@@ -7254,10 +7259,10 @@ MonoBehaviour:
   vulnerableBeforeDamage: 0.5
   vulnerableAfterDamage: 1
   jumpForce: 0
-  rollForce: 0
   flipPauseDefault: 3
   inAttackState: 0
   isAttack: 0
+  rolling: 0
   isFlying: 0
   isBlooded: 0
   grounded: 0
@@ -7572,6 +7577,7 @@ MonoBehaviour:
   enemyAttackDamage: 10
   enemySpeed: 2
   followSpeed: 2
+  rollForce: 0
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -7585,10 +7591,10 @@ MonoBehaviour:
   vulnerableBeforeDamage: 0
   vulnerableAfterDamage: 0
   jumpForce: 0
-  rollForce: 0
   flipPauseDefault: 0
   inAttackState: 0
   isAttack: 0
+  rolling: 0
   isFlying: 0
   isBlooded: 0
   grounded: 0
@@ -14465,6 +14471,7 @@ MonoBehaviour:
   enemyAttackDamage: 10
   enemySpeed: 2
   followSpeed: 2
+  rollForce: 0
   countOfCopy: 0
   remainingAmmo: 0
   enemyReward: 0
@@ -14478,10 +14485,10 @@ MonoBehaviour:
   vulnerableBeforeDamage: 2
   vulnerableAfterDamage: 3
   jumpForce: 0
-  rollForce: 0
   flipPauseDefault: 0
   inAttackState: 0
   isAttack: 0
+  rolling: 0
   isFlying: 0
   isBlooded: 0
   grounded: 0
@@ -16986,6 +16993,7 @@ MonoBehaviour:
   enemyAttackDamage: 10
   enemySpeed: 2
   followSpeed: 2
+  rollForce: 0
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -16999,10 +17007,10 @@ MonoBehaviour:
   vulnerableBeforeDamage: 0
   vulnerableAfterDamage: 0
   jumpForce: 0
-  rollForce: 0
   flipPauseDefault: 0
   inAttackState: 0
   isAttack: 0
+  rolling: 0
   isFlying: 0
   isBlooded: 0
   grounded: 0
@@ -17898,6 +17906,7 @@ MonoBehaviour:
   enemyAttackDamage: 10
   enemySpeed: 2
   followSpeed: 2
+  rollForce: 0
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -17911,10 +17920,10 @@ MonoBehaviour:
   vulnerableBeforeDamage: 2
   vulnerableAfterDamage: 3
   jumpForce: 0
-  rollForce: 0
   flipPauseDefault: 0
   inAttackState: 0
   isAttack: 0
+  rolling: 0
   isFlying: 0
   isBlooded: 1
   grounded: 0
@@ -18220,6 +18229,7 @@ MonoBehaviour:
   enemyAttackDamage: 10
   enemySpeed: 2
   followSpeed: 2
+  rollForce: 0
   countOfCopy: 0
   remainingAmmo: 3
   enemyReward: 2
@@ -18233,10 +18243,10 @@ MonoBehaviour:
   vulnerableBeforeDamage: 0
   vulnerableAfterDamage: 0
   jumpForce: 0
-  rollForce: 0
   flipPauseDefault: 0
   inAttackState: 0
   isAttack: 0
+  rolling: 0
   isFlying: 0
   isBlooded: 0
   grounded: 0
