@@ -519,13 +519,11 @@ public class Hero : MonoBehaviour {
     {
         if (m_facingDirection > 0)
         {
-            meleeAttackArea.transform.position = firePointRight.position; //With each attack we will change projectile positions and give it a firing point position to receive the component from the projectile and send it in the direction of the player
             meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePointRight.position);
             MeleeWeapon.Instance.GetAttackDamageInfo(playerAttackDamage);
         }
         else if (m_facingDirection < 0)
         {
-            meleeAttackArea.transform.position = firePointLeft.position;
             meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePointLeft.position);
             MeleeWeapon.Instance.GetAttackDamageInfo(playerAttackDamage);
         }

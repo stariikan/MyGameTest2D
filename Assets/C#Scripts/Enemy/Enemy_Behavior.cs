@@ -32,13 +32,13 @@ public class Enemy_Behavior : MonoBehaviour
     //public float FlipPauseRoll;  //пауза перед тем как враг развернётся на 180° когда игрок перекатился врагу за спину.
 
     //Enemy states
-    private bool movement = false; //mob is not chasing the player
+    public bool movement = false; //mob is not chasing the player
     public bool inAttackState = false; //If an object prepare to attack (need for special attack move, this bool disable EnemyMovement method if true)
     public bool isAttack = false; //If an object (enemy) is attacking
-    private bool stuned = false; //state of stun
-    private bool jump = false;
+    public bool stuned = false; //state of stun
+    public bool jump = false;
     public bool rolling = false;
-    private bool isBlock; //check whether the block is set
+    public bool isBlock; //check whether the block is set
 
 
     public bool isFlying; //Flying enemy or not
@@ -57,8 +57,8 @@ public class Enemy_Behavior : MonoBehaviour
     private float magicCooldown = Mathf.Infinity; //cooldown on mage attack
     private float stunCooldown; //stun recovery
     private float specialAttackCooldown = Mathf.Infinity; //сooldown special ability 
-    private float alarmFollowTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
-    private float alarmPatrolTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
+    public float alarmFollowTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
+    public float alarmPatrolTimer = Mathf.Infinity; //How much time has passed since the loss of the player to the object
     private float vulnerableAttackTimer; //timer for switching from one attack state to another attack state
     private float colliderONTimer = Mathf.Infinity;
     private float enemyTakenDamageTimer = Mathf.Infinity;
@@ -78,13 +78,13 @@ public class Enemy_Behavior : MonoBehaviour
     new string tag; // the object tag is assigned to this variable at the start
     public Vector3 lossyScale;
 
-    private int patrolFlip = 1;
+    public int patrolFlip = 1;
     public Vector3 startPosition; //start position
     public float patrolDirectionLeft;
     public float patrolDirectionRight;
     public float sightDistanceLeft;
     public float sightDistanceRight;
-    private bool playerGodMode;
+    public bool playerGodMode;
 
     public Rigidbody2D rb; //Physical body
     private CapsuleCollider2D capsuleCollider;
@@ -94,7 +94,7 @@ public class Enemy_Behavior : MonoBehaviour
     public GameObject[] blood; //blood
     public GameObject player; //For identifying the player on the scene
     public GameObject meleeAttackArea; // Physical Weapons
-    public Transform firePoint; //The position from which the shells will be fired
+    public Transform firePointRight; //The position from which the shells will be fired
 
     //Variable to record the coordinate difference between player and enemy
     public float directionX;
@@ -344,8 +344,7 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void EnemyAttack()
     {
-        meleeAttackArea.transform.position = firePoint.position; //With each attack we will change projectile positions and give it a firing point position to receive the component from the projectile and send it in the direction of the player
-        meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePoint.position);
+        meleeAttackArea.GetComponent<MeleeWeapon>().MeleeDirection(firePointRight.position);
         if (!copy) meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(currentAttackDamage);
         if (copy) meleeAttackArea.GetComponent<MeleeWeapon>().GetAttackDamageInfo(2);
     }

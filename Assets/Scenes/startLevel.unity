@@ -198,9 +198,13 @@ MonoBehaviour:
   vulnerableAfterDamage: 3
   jumpForce: 0
   flipPauseDefault: 0
+  movement: 0
   inAttackState: 0
   isAttack: 0
+  stuned: 0
+  jump: 0
   rolling: 0
+  isBlock: 0
   isFlying: 0
   isBlooded: 1
   grounded: 0
@@ -209,24 +213,28 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  alarmFollowTimer: Infinity
+  alarmPatrolTimer: Infinity
   flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
   e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
+  patrolFlip: 1
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
   patrolDirectionRight: 0
   sightDistanceLeft: 0
   sightDistanceRight: 0
+  playerGodMode: 0
   rb: {fileID: 0}
   ammo: []
   blood:
   - {fileID: 1874884316}
   player: {fileID: 6323719954861377910}
   meleeAttackArea: {fileID: 1662315521}
-  firePoint: {fileID: 964033023}
+  firePointRight: {fileID: 0}
   directionX: 0
   directionY: 0
   attackSound: {fileID: 1874556541426372885}
@@ -904,9 +912,13 @@ MonoBehaviour:
   vulnerableAfterDamage: 0
   jumpForce: 0
   flipPauseDefault: 0
+  movement: 0
   inAttackState: 0
   isAttack: 0
+  stuned: 0
+  jump: 0
   rolling: 0
+  isBlock: 0
   isFlying: 0
   isBlooded: 0
   grounded: 0
@@ -915,24 +927,28 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  alarmFollowTimer: Infinity
+  alarmPatrolTimer: Infinity
   flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
   e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
+  patrolFlip: 1
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
   patrolDirectionRight: 0
   sightDistanceLeft: 0
   sightDistanceRight: 0
+  playerGodMode: 0
   rb: {fileID: 0}
   ammo: []
   blood:
   - {fileID: 1522460638}
   player: {fileID: 6323719954861377910}
   meleeAttackArea: {fileID: 1206751626}
-  firePoint: {fileID: 2017457237}
+  firePointRight: {fileID: 0}
   directionX: 0
   directionY: 0
   attackSound: {fileID: 1883140088}
@@ -1043,7 +1059,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &43376997
 Transform:
   m_ObjectHideFlags: 0
@@ -1234,7 +1250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &50919580
 Transform:
   m_ObjectHideFlags: 0
@@ -1561,7 +1577,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &59216347
 Transform:
   m_ObjectHideFlags: 0
@@ -2034,8 +2050,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 113079286}
-  m_Layer: 9
-  m_Name: EnemyAttackPoint
+  m_Layer: 0
+  m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2049,7 +2065,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113079285}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.249, y: -0.093, z: 0}
+  m_LocalPosition: {x: 0.1, y: 0, z: 0}
   m_LocalScale: {x: -0.09353127, y: 0.11500001, z: 1}
   m_Children: []
   m_Father: {fileID: 1433946431}
@@ -2434,7 +2450,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &153539905
 Transform:
   m_ObjectHideFlags: 0
@@ -5197,7 +5213,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.370454, y: 0.29324424}
+  m_Offset: {x: 0.6131222, y: 0.29324424}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5208,7 +5224,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0689546, y: 1.4174907}
+  m_Size: {x: 1.5542912, y: 1.4174907}
   m_EdgeRadius: 0
 --- !u!50 &349874029
 Rigidbody2D:
@@ -5547,7 +5563,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &356456550
 Transform:
   m_ObjectHideFlags: 0
@@ -6221,7 +6237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a1687fce89b4c42ac38dc4baa0d146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyMaxHP: 48
+  enemyMaxHP: 24
   enemyAttackDamage: 10
   enemySpeed: 2
   followSpeed: 5
@@ -6240,9 +6256,13 @@ MonoBehaviour:
   vulnerableAfterDamage: 0.3
   jumpForce: 6
   flipPauseDefault: 0
+  movement: 0
   inAttackState: 0
   isAttack: 0
+  stuned: 0
+  jump: 0
   rolling: 0
+  isBlock: 0
   isFlying: 1
   isBlooded: 1
   grounded: 0
@@ -6251,17 +6271,21 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  alarmFollowTimer: Infinity
+  alarmPatrolTimer: Infinity
   flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
   e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
+  patrolFlip: 1
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
   patrolDirectionRight: 0
   sightDistanceLeft: 0
   sightDistanceRight: 0
+  playerGodMode: 0
   rb: {fileID: 0}
   ammo:
   - {fileID: 1179914079}
@@ -6269,7 +6293,7 @@ MonoBehaviour:
   - {fileID: 1874884316}
   player: {fileID: 6323719954861377910}
   meleeAttackArea: {fileID: 679882833}
-  firePoint: {fileID: 1734179692}
+  firePointRight: {fileID: 1734179692}
   directionX: 0
   directionY: 0
   attackSound: {fileID: 2103447661}
@@ -6664,7 +6688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a1687fce89b4c42ac38dc4baa0d146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyMaxHP: 48
+  enemyMaxHP: 32
   enemyAttackDamage: 10
   enemySpeed: 2
   followSpeed: 2
@@ -6683,9 +6707,13 @@ MonoBehaviour:
   vulnerableAfterDamage: 0.2
   jumpForce: 10
   flipPauseDefault: 0
+  movement: 0
   inAttackState: 0
   isAttack: 0
+  stuned: 0
+  jump: 0
   rolling: 0
+  isBlock: 0
   isFlying: 0
   isBlooded: 1
   grounded: 0
@@ -6694,17 +6722,21 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  alarmFollowTimer: Infinity
+  alarmPatrolTimer: Infinity
   flipEnemyTimer: 1.5
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
   e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
+  patrolFlip: 1
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
   patrolDirectionRight: 0
   sightDistanceLeft: 0
   sightDistanceRight: 0
+  playerGodMode: 0
   rb: {fileID: 0}
   ammo:
   - {fileID: 826046344}
@@ -6712,7 +6744,7 @@ MonoBehaviour:
   - {fileID: 1874884316}
   player: {fileID: 6323719954861377910}
   meleeAttackArea: {fileID: 786419495}
-  firePoint: {fileID: 905907880}
+  firePointRight: {fileID: 905907880}
   directionX: 0
   directionY: 0
   attackSound: {fileID: 1532111608}
@@ -6767,7 +6799,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &433539422
 Transform:
   m_ObjectHideFlags: 0
@@ -7242,7 +7274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyMaxHP: 48
-  enemyAttackDamage: 1
+  enemyAttackDamage: 32
   enemySpeed: 1
   followSpeed: 2
   rollForce: 0
@@ -7259,10 +7291,14 @@ MonoBehaviour:
   vulnerableBeforeDamage: 0.5
   vulnerableAfterDamage: 1
   jumpForce: 0
-  flipPauseDefault: 3
+  flipPauseDefault: 0
+  movement: 0
   inAttackState: 0
   isAttack: 0
+  stuned: 0
+  jump: 0
   rolling: 0
+  isBlock: 0
   isFlying: 0
   isBlooded: 0
   grounded: 0
@@ -7271,23 +7307,27 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  alarmFollowTimer: Infinity
+  alarmPatrolTimer: Infinity
   flipEnemyTimer: 5
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
   e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
+  patrolFlip: 1
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
   patrolDirectionRight: 0
   sightDistanceLeft: 0
   sightDistanceRight: 0
+  playerGodMode: 0
   rb: {fileID: 0}
   ammo: []
   blood: []
   player: {fileID: 6323719954861377910}
   meleeAttackArea: {fileID: 1909642840}
-  firePoint: {fileID: 746619691}
+  firePointRight: {fileID: 746619691}
   directionX: 0
   directionY: 0
   attackSound: {fileID: 1874556542429371287}
@@ -7592,9 +7632,13 @@ MonoBehaviour:
   vulnerableAfterDamage: 0
   jumpForce: 0
   flipPauseDefault: 0
+  movement: 0
   inAttackState: 0
   isAttack: 0
+  stuned: 0
+  jump: 0
   rolling: 0
+  isBlock: 0
   isFlying: 0
   isBlooded: 0
   grounded: 0
@@ -7603,17 +7647,21 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  alarmFollowTimer: Infinity
+  alarmPatrolTimer: Infinity
   flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
   e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
+  patrolFlip: 1
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
   patrolDirectionRight: 0
   sightDistanceLeft: 0
   sightDistanceRight: 0
+  playerGodMode: 0
   rb: {fileID: 0}
   ammo:
   - {fileID: 1294059112}
@@ -7621,7 +7669,7 @@ MonoBehaviour:
   - {fileID: 1874884316}
   player: {fileID: 6323719954861377910}
   meleeAttackArea: {fileID: 1632393455}
-  firePoint: {fileID: 2021776922}
+  firePointRight: {fileID: 0}
   directionX: 0
   directionY: 0
   attackSound: {fileID: 1874556541388640115}
@@ -9842,7 +9890,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.27703565, y: 0.14298603}
+  m_Offset: {x: 0.18162292, y: 0.08523679}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -9853,7 +9901,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.6513118, y: 1.8412232}
+  m_Size: {x: 1.9727031, y: 1.9567218}
   m_EdgeRadius: 0
 --- !u!50 &679882836
 Rigidbody2D:
@@ -11631,7 +11679,7 @@ GameObject:
   m_Layer: 8
   m_Name: BackPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -12035,7 +12083,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905907879}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.002, y: -0.046, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -0.09353127, y: 0.11500001, z: 1}
   m_Children: []
   m_Father: {fileID: 433137802}
@@ -14150,7 +14198,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1157839980
 Transform:
   m_ObjectHideFlags: 0
@@ -14486,9 +14534,13 @@ MonoBehaviour:
   vulnerableAfterDamage: 3
   jumpForce: 0
   flipPauseDefault: 0
+  movement: 0
   inAttackState: 0
   isAttack: 0
+  stuned: 0
+  jump: 0
   rolling: 0
+  isBlock: 0
   isFlying: 0
   isBlooded: 0
   grounded: 0
@@ -14497,24 +14549,28 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 1
+  alarmFollowTimer: Infinity
+  alarmPatrolTimer: Infinity
   flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
   e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
+  patrolFlip: 1
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
   patrolDirectionRight: 0
   sightDistanceLeft: 0
   sightDistanceRight: 0
+  playerGodMode: 0
   rb: {fileID: 0}
   ammo: []
   blood:
   - {fileID: 1874884316}
   player: {fileID: 6323719954861377910}
   meleeAttackArea: {fileID: 452900227}
-  firePoint: {fileID: 1742241877}
+  firePointRight: {fileID: 0}
   directionX: 0
   directionY: 0
   attackSound: {fileID: 1173872750}
@@ -17008,9 +17064,13 @@ MonoBehaviour:
   vulnerableAfterDamage: 0
   jumpForce: 0
   flipPauseDefault: 0
+  movement: 0
   inAttackState: 0
   isAttack: 0
+  stuned: 0
+  jump: 0
   rolling: 0
+  isBlock: 0
   isFlying: 0
   isBlooded: 0
   grounded: 0
@@ -17019,24 +17079,28 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  alarmFollowTimer: Infinity
+  alarmPatrolTimer: Infinity
   flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
   e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
+  patrolFlip: 1
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
   patrolDirectionRight: 0
   sightDistanceLeft: 0
   sightDistanceRight: 0
+  playerGodMode: 0
   rb: {fileID: 0}
   ammo: []
   blood:
   - {fileID: 1522460638}
   player: {fileID: 6323719954861377910}
   meleeAttackArea: {fileID: 1737228816}
-  firePoint: {fileID: 705441319}
+  firePointRight: {fileID: 0}
   directionX: 0
   directionY: 0
   attackSound: {fileID: 1272108180}
@@ -17414,7 +17478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1417059348
 Transform:
   m_ObjectHideFlags: 0
@@ -17874,7 +17938,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.003477037, y: -0.2567372}
@@ -17902,7 +17966,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a1687fce89b4c42ac38dc4baa0d146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyMaxHP: 48
+  enemyMaxHP: 80
   enemyAttackDamage: 10
   enemySpeed: 2
   followSpeed: 2
@@ -17912,18 +17976,22 @@ MonoBehaviour:
   enemyReward: 2
   patrolDistance: 1
   sightDistance: 5
-  alarmPause: 3
+  alarmPause: 1
   attackDistance: 1.5
   flyAmplitude: 0
   LowFlightPoint: 0
   stunDuration: 5
-  vulnerableBeforeDamage: 2
-  vulnerableAfterDamage: 3
+  vulnerableBeforeDamage: 0.5
+  vulnerableAfterDamage: 2
   jumpForce: 0
   flipPauseDefault: 0
+  movement: 0
   inAttackState: 0
   isAttack: 0
+  stuned: 0
+  jump: 0
   rolling: 0
+  isBlock: 0
   isFlying: 0
   isBlooded: 1
   grounded: 0
@@ -17932,17 +18000,21 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  alarmFollowTimer: Infinity
+  alarmPatrolTimer: Infinity
   flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
   e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
+  patrolFlip: 1
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
   patrolDirectionRight: 0
   sightDistanceLeft: 0
   sightDistanceRight: 0
+  playerGodMode: 0
   rb: {fileID: 0}
   ammo:
   - {fileID: 1004281290}
@@ -17950,7 +18022,7 @@ MonoBehaviour:
   - {fileID: 1522460638}
   player: {fileID: 6323719954861377910}
   meleeAttackArea: {fileID: 2077632603}
-  firePoint: {fileID: 113079286}
+  firePointRight: {fileID: 113079286}
   directionX: 0
   directionY: 0
   attackSound: {fileID: 1874556541710776733}
@@ -17972,7 +18044,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0072313948, y: -0.0732558}
@@ -18244,9 +18316,13 @@ MonoBehaviour:
   vulnerableAfterDamage: 0
   jumpForce: 0
   flipPauseDefault: 0
+  movement: 0
   inAttackState: 0
   isAttack: 0
+  stuned: 0
+  jump: 0
   rolling: 0
+  isBlock: 0
   isFlying: 0
   isBlooded: 0
   grounded: 0
@@ -18255,17 +18331,21 @@ MonoBehaviour:
   enemyTakeDamage: 0
   block: 0
   copy: 0
+  alarmFollowTimer: Infinity
+  alarmPatrolTimer: Infinity
   flipEnemyTimer: 0
   currentHP: 0
   takedDamage: 0
   currentAttackDamage: 0
   e_facingDirection: 1
   lossyScale: {x: 0, y: 0, z: 0}
+  patrolFlip: 1
   startPosition: {x: 0, y: 0, z: 0}
   patrolDirectionLeft: 0
   patrolDirectionRight: 0
   sightDistanceLeft: 0
   sightDistanceRight: 0
+  playerGodMode: 0
   rb: {fileID: 0}
   ammo:
   - {fileID: 28677076}
@@ -18273,7 +18353,7 @@ MonoBehaviour:
   - {fileID: 1522460638}
   player: {fileID: 6323719954861377910}
   meleeAttackArea: {fileID: 1429586731}
-  firePoint: {fileID: 1269871322}
+  firePointRight: {fileID: 0}
   directionX: 0
   directionY: 0
   attackSound: {fileID: 612158248}
@@ -18588,7 +18668,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1467984742
 Transform:
   m_ObjectHideFlags: 0
@@ -18865,7 +18945,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1500827600
 Transform:
   m_ObjectHideFlags: 0
@@ -25279,7 +25359,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1621242813
 Transform:
   m_ObjectHideFlags: 0
@@ -26721,7 +26801,7 @@ GameObject:
   m_Layer: 8
   m_Name: firePointLeft
   m_TagString: Untagged
-  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -26733,7 +26813,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1705873096}
   m_LocalRotation: {x: -0.008781483, y: 0.99993336, z: -0.00006582781, w: -0.007495705}
-  m_LocalPosition: {x: -0.7, y: 0.71, z: 0}
+  m_LocalPosition: {x: -1.5, y: 0.7, z: 0.004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8413529788786197793}
@@ -27325,7 +27405,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1734179691}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.086, y: 0.022, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -0.09353, y: 0.115, z: 1}
   m_Children: []
   m_Father: {fileID: 397745817}
@@ -28096,7 +28176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1814151268
 Transform:
   m_ObjectHideFlags: 0
@@ -35051,7 +35131,7 @@ GameObject:
   m_Layer: 8
   m_Name: firePointRight
   m_TagString: Untagged
-  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -35063,7 +35143,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2008598726}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7, y: 0.71, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8413529788786197793}
@@ -35653,7 +35733,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.1248007, y: -0.34502947}
+  m_Offset: {x: 0.7105136, y: -0.34502947}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -35664,7 +35744,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9556625, y: 1.1321447}
+  m_Size: {x: 1.7842364, y: 1.1321447}
   m_EdgeRadius: 0
 --- !u!50 &2077632606
 Rigidbody2D:
