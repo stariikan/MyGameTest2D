@@ -16,7 +16,7 @@ public class enemyProgressBar : MonoBehaviour
     }
     public void UpdateEnemyProgressBar(float dmg2)
     {
-        if (hpBar.transform.localScale.x > 0.01f)
+        if (hpBar.transform.localScale.x > 0f)
         {
             hpBar.transform.localScale -= new Vector3(dmg2, 0.0f, 0.0f);
         }

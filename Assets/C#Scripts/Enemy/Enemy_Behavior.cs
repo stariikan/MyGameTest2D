@@ -35,7 +35,7 @@ public class Enemy_Behavior : MonoBehaviour
     public bool movement = false; //mob is not chasing the player
     public bool inAttackState = false; //If an object prepare to attack (need for special attack move, this bool disable EnemyMovement method if true)
     public bool isAttack = false; //If an object (enemy) is attacking
-    public bool stuned = false; //state of stun
+    public bool isStun = false; //state of stun
     public bool jump = false;
     public bool rolling = false;
     public bool isBlock; //check whether the block is set
@@ -142,12 +142,11 @@ public class Enemy_Behavior : MonoBehaviour
         colliderONTimer += Time.deltaTime;
         specialAttackCooldown += Time.deltaTime;
 
-        if (stunCooldown > stunDuration) stuned = false;//exit from stun
+        if (stunCooldown > stunDuration) isStun = false;//exit from stun
         if (jumpCooldown > 1.2f) jump = false;
         if (rollCooldown > 2f) rolling = false;
         if (colliderONTimer > 1f) capsuleCollider.enabled = true;
         if (enemyTakenDamageTimer > 2) enemyTakeDamage = false;
-        if (currentHP > 0) EnemyBehavior();
         playerGodMode = Hero.Instance.godMode;
     }
     public enum States //Defining what states there are, named as in Unity Animator
@@ -168,46 +167,6 @@ public class Enemy_Behavior : MonoBehaviour
             e_delayToIdle -= Time.deltaTime;
             if (e_delayToIdle < 0) this.gameObject.GetComponent<Animator>().SetInteger("State", 0);
             runSound.GetComponent<SoundOfObject>().StopSound();
-        }
-    }
-    //Method to describe different behaviour for different enemies. The choice of behaviour depends on the object tag
-    public void EnemyBehavior()
-    {
-        AnimState();
-        EnemyMovement();
-        MeleeAttack();
-
-        if (tag == "Skeleton")
-        {
-            SkeletonAttack();
-        }
-        if (tag == "Mushroom")
-        {
-            MushroomAttack();
-        }
-        if (tag == "FlyingEye")
-        {
-            FlyingEyeAttack();
-        }
-        if (tag == "Goblin")
-        {
-            GoblinAttack();
-        }
-        if (tag == "EvilWizard")
-        {
-            EvilWizardAttack();
-        }
-        if (tag == "Martial")
-        {
-            MartialAttack();
-        }
-        if (tag == "Slime")
-        {
-            SlimeAttack();
-        }
-        if (tag == "Death")
-        {
-            DeathAttack();
         }
     }
     //General methods
@@ -235,7 +194,7 @@ public class Enemy_Behavior : MonoBehaviour
         if (patrolDirectionRight < transform.position.x) patrolFlip = 2;
         if (patrolDirectionLeft > transform.position.x) patrolFlip = 1;
 
-        if (Mathf.Abs(directionX) > sightDistance && !isAttack && !stuned && !isAttacked && alarmPatrolTimer > alarmPause && !inAttackState)
+        if (Mathf.Abs(directionX) > sightDistance && !isAttack && !isStun && !isAttacked && alarmPatrolTimer > alarmPause && !inAttackState)
         {
             alarmFollowTimer = 0;
             if (patrolDirectionLeft != transform.position.x && patrolFlip == 1)
@@ -261,23 +220,23 @@ public class Enemy_Behavior : MonoBehaviour
                     transform.position = pos; //applying the position
                     patrol = true;
                 }
-                
+
 
                 if (patrolSpeed < 0 && transform.localScale.x > 0) Flip();
                 else if (patrolSpeed > 0 && transform.localScale.x < 0) Flip();
             }
         }
-        if (Mathf.Abs(directionX) < sightDistance && Mathf.Abs(directionX) >= attackDistance && !isAttack && !stuned && !playerGodMode && !inAttackState && alarmFollowTimer > alarmPause || isAttacked && Mathf.Abs(directionX) > attackDistance && !block && !isAttack && !stuned && !playerGodMode && !inAttackState || copy && !playerGodMode && !inAttackState)
+        if (Mathf.Abs(directionX) < sightDistance && Mathf.Abs(directionX) >= attackDistance && !isAttack && !isStun && !playerGodMode && !inAttackState && alarmFollowTimer > alarmPause || isAttacked && Mathf.Abs(directionX) > attackDistance && !block && !isAttack && !isStun && !playerGodMode && !inAttackState || copy && !playerGodMode && !inAttackState)
         {
             alarmPatrolTimer = 0;
             transform.localScale = theScale; // needed to understand the direction
             float playerFollowSpeed = Mathf.Sign(directionX) * enemySpeed * Time.deltaTime; //calculating direction
-            
+
             if (playerFollowSpeed < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
             else if (playerFollowSpeed > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
 
             pos.x += playerFollowSpeed; //Calculating the position along the x-axis
-            
+
             if (playerFollowSpeed < 0 && theScale.x < 0)
             {
                 transform.position = pos; //applying the position
@@ -298,13 +257,13 @@ public class Enemy_Behavior : MonoBehaviour
             movement = false;
         }
     }
-    private void MeleeAttack() //Basic method of attack with two or more animations
+    public void MeleeAttack() //Basic method of attack with two or more animations
     {
         float playerHP = Hero.Instance.curentHP;
         Vector3 theScale = transform.localScale; // needed to understand the direction
         float directionOfAttack = Mathf.Sign(directionX) * enemySpeed * Time.deltaTime; //calculating direction
 
-        if (playerHP > 0 && Mathf.Abs(directionX) <= attackDistance && !stuned && !isAttack && !playerGodMode && !inAttackState)
+        if (playerHP > 0 && Mathf.Abs(directionX) <= attackDistance && !isStun && !isAttack && !playerGodMode && !inAttackState)
         {
             if (directionOfAttack < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
             if (directionOfAttack > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
@@ -316,13 +275,13 @@ public class Enemy_Behavior : MonoBehaviour
             anim.SetTrigger("attack" + currentAttack + ".1");
             aState = 1;
         }
-        if (playerHP > 0 && vulnerableAttackTimer > vulnerableBeforeDamage && isAttack && !stuned && aState == 1)
+        if (playerHP > 0 && vulnerableAttackTimer > vulnerableBeforeDamage && isAttack && !isStun && aState == 1)
         {
             vulnerableAttackTimer = 0;
             anim.SetTrigger("attack" + currentAttack + ".2");
             aState = 2;
         }
-        if (playerHP > 0 && vulnerableAttackTimer > vulnerableAfterDamage && isAttack && !stuned && aState == 2)
+        if (playerHP > 0 && vulnerableAttackTimer > vulnerableAfterDamage && isAttack && !isStun && aState == 2)
         {
             anim.SetBool("isAttack", false);
             isAttack = false;
@@ -397,7 +356,7 @@ public class Enemy_Behavior : MonoBehaviour
     public void Stun()
     {
         stunCooldown = 0;
-        stuned = true;
+        isStun = true;
     }
     public void MeleeWeaponOff() // deactivate the weapon object
     {
@@ -432,6 +391,24 @@ public class Enemy_Behavior : MonoBehaviour
             if (e_facingDirection == 1) rb.velocity = new Vector2((rollForce * -1), rb.velocity.y);
         }
     }
+    public void JumpForward()
+    {
+        Vector3 targetPos = player.transform.position;
+        float endPoint = transform.position.x - targetPos.x;
+        float playerHP = Hero.Instance.curentHP;
+        Vector3 theScale = transform.localScale; // needed to understand the direction
+        float directionOfAttack = Mathf.Sign(directionX) * enemySpeed * Time.deltaTime; //calculating direction
+        if (directionOfAttack < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+        if (directionOfAttack > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+        if (rolling == false && inAttackState == true && playerHP > 0)
+        {
+            rollCooldown = 0;
+            rolling = true;
+            if (e_facingDirection == 1) rb.velocity = new Vector2(rollForce, rb.velocity.y + 2);
+            if (e_facingDirection == -1) rb.velocity = new Vector2((rollForce * -1), rb.velocity.y + 2);
+            if ((Mathf.Abs(endPoint)) < 1f) player.GetComponent<Hero>().PlayerStun();
+        }
+    }
     public void ArcAttack() //Дуговая атака
     {
         if (specialAttackCooldown > 3) 
@@ -457,7 +434,7 @@ public class Enemy_Behavior : MonoBehaviour
             transform.position = pos;
             if (Mathf.Abs(endPoint) < 0.6f)
             {
-                if (playerHP > 0 && (Mathf.Abs(directionX)) <= 0.6f && !stuned && !isAttack && !playerGodMode && tag == "FlyingEye") Hero.Instance.GetDamage(enemyAttackDamage);
+                if (playerHP > 0 && (Mathf.Abs(directionX)) <= 0.6f && !isStun && !isAttack && !playerGodMode && tag == "FlyingEye") Hero.Instance.GetDamage(enemyAttackDamage);
                 specialAttackCooldown = 0;
                 inAttackState = false;
             }
@@ -529,21 +506,46 @@ public class Enemy_Behavior : MonoBehaviour
         if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//refresh progress bar
     }
     //Attack Method of the enemies
-    private void SkeletonAttack()
+    public void SkeletonAttack()
     {
-        if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack) BlockON();
-        if ((Mathf.Abs(directionX)) > sightDistance && !stuned && !playerGodMode && !isAttack) BlockOFF();
+        if ((Mathf.Abs(directionX)) < sightDistance && !isStun && !playerGodMode && !isAttack) BlockON();
+        if ((Mathf.Abs(directionX)) > sightDistance && !isStun && !playerGodMode && !isAttack) BlockOFF();
         if (isAttack) BlockOFF();     
     }
-    private void MushroomAttack()
+    public void MushroomAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned && !playerGodMode)
-        if ((Mathf.Abs(directionX)) < 0.8f && magicCooldown > 10 && !stuned && !playerGodMode) MushroomSpores();
+        bool playerIsBlock = Hero.Instance.block;
+        bool playerIsJumpPC = Hero.Instance.isJumpPC;
+        bool playerIsJumpMobile = Hero.Instance.isJumpMobile;
+        if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 3 && !isStun && !playerGodMode && !playerIsBlock && !enemyTakeDamage && currentHP > 0)
+        {
+            if ((Mathf.Abs(directionX)) < sightDistance && !playerGodMode && !isAttack && !playerIsBlock)
+            {
+                Vector3 targetPos = Hero.Instance.bodyFront.transform.position;
+                float endPoint = transform.position.x - targetPos.x;
+                inAttackState = true;
+                if ((Mathf.Abs(endPoint)) < 0.2f)
+                {
+                    inAttackState = false;
+                }
+                else
+                {
+                    inAttackState = true;
+                    JumpForward();
+                    PlayerFollow(targetPos);
+                }
+            }
+            else
+            {
+                inAttackState = false;
+                rb.velocity = Vector3.zero;
+            }
+        }
     }
-    private void FlyingEyeAttack()
+    public void FlyingEyeAttack()
     {
-        if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack && currentHP > 0)
+        if ((Mathf.Abs(directionX)) < sightDistance && !isStun && !playerGodMode && !isAttack && currentHP > 0)
         {
             float playerHP = Hero.Instance.curentHP;
             Vector3 targetPos = Hero.Instance.bodyBackPoint.transform.position;
@@ -565,15 +567,15 @@ public class Enemy_Behavior : MonoBehaviour
             inAttackState = false;
         }
     }
-    private void GoblinAttack()
+    public void GoblinAttack()
     {
         float playerHP = Hero.Instance.curentHP;
         bool playerIsBlock = Hero.Instance.block;
         bool playerIsJumpPC = Hero.Instance.isJumpPC;
         bool playerIsJumpMobile = Hero.Instance.isJumpMobile;
-        if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 3 && !stuned && !playerGodMode && !playerIsBlock && !enemyTakeDamage && currentHP > 0)
+        if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 3 && !isStun && !playerGodMode && !playerIsBlock && !enemyTakeDamage && currentHP > 0)
         {
-            if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack)
+            if ((Mathf.Abs(directionX)) < sightDistance && !isStun && !playerGodMode && !isAttack)
             {
                 Vector3 targetPos = Hero.Instance.bodyBackPoint.transform.position;
                 float endPoint = transform.position.x - targetPos.x;
@@ -597,7 +599,7 @@ public class Enemy_Behavior : MonoBehaviour
         }
         if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 1 && !isAttack && !playerGodMode && playerIsBlock && !enemyTakeDamage && currentHP > 0)
         {
-            if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack)
+            if ((Mathf.Abs(directionX)) < sightDistance && !isStun && !playerGodMode && !isAttack)
             {
                 Vector3 targetPos = player.transform.position;
                 float endPoint = transform.position.x - targetPos.x;
@@ -620,7 +622,7 @@ public class Enemy_Behavior : MonoBehaviour
         }
         if ((Mathf.Abs(directionX)) < sightDistance && jumpCooldown > 1 && !isAttack && !playerGodMode && (playerIsJumpMobile || playerIsJumpPC) && !enemyTakeDamage && currentHP > 0)
         {
-            if ((Mathf.Abs(directionX)) < sightDistance && !stuned && !playerGodMode && !isAttack)
+            if ((Mathf.Abs(directionX)) < sightDistance && !isStun && !playerGodMode && !isAttack)
             {
                 Vector3 targetPos = player.transform.position;
                 float endPoint = transform.position.x - targetPos.x;
@@ -636,7 +638,7 @@ public class Enemy_Behavior : MonoBehaviour
                 }
             }
         }
-        if (enemyTakeDamage && jumpCooldown > 1 && !isAttack && !playerGodMode && !stuned && currentHP > 0)
+        if (enemyTakeDamage && jumpCooldown > 1 && !isAttack && !playerGodMode && !isStun && currentHP > 0)
         {
             Vector3 targetPos = Hero.Instance.bodyBackPoint.transform.position;
             float endPoint = transform.position.x - targetPos.x;
@@ -655,7 +657,7 @@ public class Enemy_Behavior : MonoBehaviour
                 RollBackward();
             }
         }
-        if ((playerIsJumpPC || playerIsJumpMobile) && (Mathf.Abs(directionX)) <= attackDistance && jumpCooldown > 1 && !isAttack && !playerGodMode && !stuned && currentHP > 0)
+        if ((playerIsJumpPC || playerIsJumpMobile) && (Mathf.Abs(directionX)) <= attackDistance && jumpCooldown > 1 && !isAttack && !playerGodMode && !isStun && currentHP > 0)
         {
             Vector3 targetPos = Hero.Instance.bodyBackPoint.transform.position;
             float endPoint = transform.position.x - targetPos.x;
@@ -665,7 +667,7 @@ public class Enemy_Behavior : MonoBehaviour
     }
         private void TossingBomb() //Бросок бомбы
     {
-        if ((Mathf.Abs(directionX)) < 4.5 && magicCooldown > 3 && !jump && remainingAmmo >= 1 && !stuned && !playerGodMode || isAttacked == true && magicCooldown > 3 && !jump && remainingAmmo >= 1 && !stuned && !playerGodMode)
+        if ((Mathf.Abs(directionX)) < 4.5 && magicCooldown > 3 && !jump && remainingAmmo >= 1 && !isStun && !playerGodMode || isAttacked == true && magicCooldown > 3 && !jump && remainingAmmo >= 1 && !isStun && !playerGodMode)
         {
             Vector3 theScale = transform.localScale; // needed to understand the direction
             transform.localScale = theScale; // needed to understand the direction
@@ -681,12 +683,12 @@ public class Enemy_Behavior : MonoBehaviour
             }
         }
     }
-    private void EvilWizardAttack()
+    public void EvilWizardAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if (playerHP > 0 && Mathf.Abs(directionX) < 6f && (Mathf.Abs(directionX)) > 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !stuned && level >= 1 && !playerGodMode)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 6f && (Mathf.Abs(directionX)) > 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !isStun && level >= 1 && !playerGodMode)
         {
-            anim.SetTrigger("attack1");
+            anim.SetTrigger("attack1.1");
             magicSound.GetComponent<SoundOfObject>().ContinueSound();
             timeSinceAttack = 0.0f;
             Vector3 theScale = transform.localScale; // needed to understand the direction
@@ -703,9 +705,9 @@ public class Enemy_Behavior : MonoBehaviour
             }
         }
         else isAttack = false;
-        if (playerHP > 0 && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2 && !stuned && !playerGodMode)
+        if (playerHP > 0 && (Mathf.Abs(directionX)) < 2f && Mathf.Abs(directionY) < 2 && !isStun && !playerGodMode)
         {
-            anim.SetTrigger("attack2");
+            anim.SetTrigger("attack2.2");
             //attackSound.GetComponent<SoundOfObject>().StopSound();
             attackSound.GetComponent<SoundOfObject>().ContinueSound();
             timeSinceAttack = 0.0f;
@@ -724,20 +726,20 @@ public class Enemy_Behavior : MonoBehaviour
             }
         }
     }
-    private void MartialAttack()
+    public void MartialAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if (playerHP > 0 && Mathf.Abs(directionX) < 2.5f && Mathf.Abs(directionY) < 1.5f && timeSinceAttack > 1 && !stuned && !playerGodMode)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 2.5f && Mathf.Abs(directionY) < 1.5f && timeSinceAttack > 1 && !isStun && !playerGodMode)
         {
             MeleeAttack();
         }
         else isAttack = false;
     }
-    private void SlimeAttack()
+    public void SlimeAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !stuned && !playerGodMode)
-        if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1 && !stuned && !playerGodMode)
+        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !isStun && !playerGodMode)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1 && !isStun && !playerGodMode)
         {
             anim.SetTrigger("spin");
             // Reset timer
@@ -745,17 +747,17 @@ public class Enemy_Behavior : MonoBehaviour
         }
         else isAttack = false;
     }
-    private void DeathAttack()
+    public void DeathAttack()
     {
         float playerHP = Hero.Instance.curentHP;
 
-        if (playerHP > 0 && Mathf.Abs(directionX) < 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !stuned && !playerGodMode)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !isStun && !playerGodMode)
         {
             anim.SetTrigger("attack1");
             timeSinceAttack = 0.0f;
         }
         else isAttack = false;
-        if ((Mathf.Abs(directionX)) < 8f && (Mathf.Abs(directionX)) > 2 && Mathf.Abs(directionY) < 2f && !stuned && !playerGodMode || isAttacked == true && !stuned && !playerGodMode)
+        if ((Mathf.Abs(directionX)) < 8f && (Mathf.Abs(directionX)) > 2 && Mathf.Abs(directionY) < 2f && !isStun && !playerGodMode || isAttacked == true && !isStun && !playerGodMode)
         {
             SpellDrainHP();
             DeathSummonMinioins();
@@ -765,7 +767,7 @@ public class Enemy_Behavior : MonoBehaviour
     //Special ability of the enemies
     public void MushroomSpores() //creates a cloud of spore that damasks the player (Mushroom)
     {
-        if (level > 0 && !stuned)
+        if (level > 0 && !isStun)
         {
             magicCooldown = 0; // reset timer
             Vector3 MoushroomScale = transform.localScale; //take the mushroom sprite rotation parameter
@@ -878,7 +880,7 @@ public class Enemy_Behavior : MonoBehaviour
         {
             if (isBlooded)
             {
-                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x - 0.3f, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Cloning an object
+                GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x - 0.1f, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Cloning an object
                 bloodSpawn.gameObject.SetActive(true);
             }
 
@@ -902,9 +904,7 @@ public class Enemy_Behavior : MonoBehaviour
         }
         if (currentHP <= 0)
         {
-            int reward = enemyReward;
-            LvLGeneration.Instance.PlusCoin(reward);//call for a method to increase points
-            rb.gravityScale = 0;
+            rb.gravityScale = 1;
             rb.velocity = Vector2.zero;
             capsuleCollider.enabled = false;
             anim.StopPlayback();
@@ -915,6 +915,7 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public virtual void Die() //Method removes this game object, called by the animator immediately after the death animation ends
     {
+        LvLGeneration.Instance.PlusCoin(enemyReward);//call for a method to increase points
         bool copy = this.gameObject.GetComponent<Enemy_Behavior>().copy;
         Destroy(this.gameObject);//destroy this game object
         if (!copy) LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
