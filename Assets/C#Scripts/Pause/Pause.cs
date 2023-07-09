@@ -138,8 +138,8 @@ public class Pause : MonoBehaviour
 
             if (platform == 1)
             {
-                GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.66f, Screen.width / 2.5f, Screen.height / 11.5f), "WASD = Movement; CTRL = Attack;");
-                GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.42f, Screen.width / 2.5f, Screen.height / 11.5f), "Alt = Magic Attack; Shift = Shield;");
+                //GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.66f, Screen.width / 2.5f, Screen.height / 11.5f), "WASD = Movement; CTRL = Attack;");
+                //GUI.Box(new Rect(Screen.width / 3.3f, Screen.height / 1.42f, Screen.width / 2.5f, Screen.height / 11.5f), "Alt = Magic Attack; Shift = Shield;");
             }
         }
         else

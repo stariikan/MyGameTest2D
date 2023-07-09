@@ -12,7 +12,7 @@ public class SoundOfObject : MonoBehaviour
     public static SoundOfObject Instance { get; set; } //to collect and send data from this script
     void Start()
     {
-        _audioSource = GetComponent<AudioSource>();
+        _audioSource = this.gameObject.GetComponent<AudioSource>();
         Instance = this;
         volume = _audioSource.volume;
     }

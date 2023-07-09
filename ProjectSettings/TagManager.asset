@@ -23,6 +23,7 @@ TagManager:
   - Shield
   - Front
   - Back
+  - Summon
   layers:
   - Default
   - TransparentFX

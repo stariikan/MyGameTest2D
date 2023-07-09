@@ -253,7 +253,7 @@ public class LvLGeneration : MonoBehaviour
             newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
             GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-            GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+            GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, position.y + 0.5f, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
             enemy.name = "Enemy" + Random.Range(1, 999);
             enemy.gameObject.SetActive(true);
 

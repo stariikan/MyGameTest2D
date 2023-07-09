@@ -33,11 +33,11 @@ public class MeleeWeapon : MonoBehaviour
         //Debug.Log(target);
         if (masterOfWeapon.layer == 8) masterDirection = masterOfWeapon.GetComponent<Hero>().m_facingDirection;
         if (masterOfWeapon.layer == 7) masterDirection = masterOfWeapon.GetComponent<Enemy_Behavior>().e_facingDirection;
-        if (target.layer == 8) targetDirection = target.GetComponentInParent<Hero>().m_facingDirection;
-        if (target.layer == 7) targetDirection = target.GetComponent<Enemy_Behavior>().e_facingDirection;
+        if (masterOfWeapon.layer == 7 && target.layer == 8) targetDirection = target.GetComponentInParent<Hero>().m_facingDirection;
+        if (masterOfWeapon.layer == 8 && target.layer == 7) targetDirection = target.GetComponent<Enemy_Behavior>().e_facingDirection;
 
         if (masterOfWeapon.layer == 8 && target.CompareTag("SpellBook")) target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
-        if (masterOfWeapon.layer == 8 && target != null && target.layer == 7)
+        if (masterOfWeapon.layer == 8 && target != null && target.layer == 7) //7 this is the EnemyLayer
         {
             targetIsBlock = target.GetComponent<Enemy_Behavior>().block;
             if (targetIsBlock)
@@ -46,7 +46,7 @@ public class MeleeWeapon : MonoBehaviour
             }
             else
             {
-                target.GetComponent<Enemy_Behavior>().TakeDamage(AttackDamage); //7 this is the EnemyLayer
+                target.GetComponent<Enemy_Behavior>().TakeDamage(AttackDamage); 
             }
         }
         if (masterOfWeapon.layer == 7 && target != null && target.tag == "Front" && masterDirection != targetDirection)

@@ -1,8 +1,7 @@
 using System.Collections;
+using System.Linq.Expressions;
 using System.Net;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.GraphicsBuffer;
 
 public class Enemy_Behavior : MonoBehaviour
 {
@@ -13,7 +12,7 @@ public class Enemy_Behavior : MonoBehaviour
     public float followSpeed = 2f;//Enemy speed
     public float rollForce = 7.5f;
     private float blockDMG;
-    public int countOfCopy; // initially 0, when the call occurs become 3, as copies die 
+    public int countOfSummon; // initially 0, when the call occurs become 3, as copies die 
     public int remainingAmmo = 3; // Bombs in stock
     public int enemyReward = 2;// reward for defeating the enemy
 
@@ -89,7 +88,7 @@ public class Enemy_Behavior : MonoBehaviour
     public Rigidbody2D rb; //Physical body
     private CapsuleCollider2D capsuleCollider;
     private Animator anim; //Variable by which the object is animated
-    private GameObject masterEnemy; //this will link to the eye wizard who calls on the other eyes
+    private GameObject masterEnemy; //this will link to the Master enemy who calls summons
     public GameObject[] ammo; // Enemy attack shells
     public GameObject[] blood; //blood
     public GameObject player; //For identifying the player on the scene
@@ -128,26 +127,32 @@ public class Enemy_Behavior : MonoBehaviour
     }
     void Update()
     {
-        timeSinceAttack += Time.deltaTime;
-        jumpCooldown += Time.deltaTime;
-        rollCooldown += Time.deltaTime;
-        magicCooldown += Time.deltaTime;
-        physicCooldown += Time.deltaTime;
-        stunCooldown += Time.deltaTime;
-        alarmFollowTimer += Time.deltaTime;
-        alarmPatrolTimer += Time.deltaTime;
-        vulnerableAttackTimer += Time.deltaTime;
-        flipEnemyTimer += Time.deltaTime;
-        enemyTakenDamageTimer += Time.deltaTime;
-        colliderONTimer += Time.deltaTime;
-        specialAttackCooldown += Time.deltaTime;
+        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; // calculating the direction of movement is Player position on the x-axis - Enemy position on the x-axis
+        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //calculate direction of movement is Player position on the y-axis - Enemy position on the y-axis
+        
+        if (Mathf.Abs(directionX) < 10f)
+        {
+            timeSinceAttack += Time.deltaTime;
+            jumpCooldown += Time.deltaTime;
+            rollCooldown += Time.deltaTime;
+            magicCooldown += Time.deltaTime;
+            physicCooldown += Time.deltaTime;
+            stunCooldown += Time.deltaTime;
+            alarmFollowTimer += Time.deltaTime;
+            alarmPatrolTimer += Time.deltaTime;
+            vulnerableAttackTimer += Time.deltaTime;
+            flipEnemyTimer += Time.deltaTime;
+            enemyTakenDamageTimer += Time.deltaTime;
+            colliderONTimer += Time.deltaTime;
+            specialAttackCooldown += Time.deltaTime;
 
-        if (stunCooldown > stunDuration) isStun = false;//exit from stun
-        if (jumpCooldown > 1.2f) jump = false;
-        if (rollCooldown > 2f) rolling = false;
-        if (colliderONTimer > 1f) capsuleCollider.enabled = true;
-        if (enemyTakenDamageTimer > 2) enemyTakeDamage = false;
-        playerGodMode = Hero.Instance.godMode;
+            if (stunCooldown > stunDuration) isStun = false;//exit from stun
+            if (jumpCooldown > 1.2f) jump = false;
+            if (rollCooldown > 2f) rolling = false;
+            if (colliderONTimer > 1f) capsuleCollider.enabled = true;
+            if (enemyTakenDamageTimer > 2) enemyTakeDamage = false;
+            playerGodMode = Hero.Instance.godMode;
+        }
     }
     public enum States //Defining what states there are, named as in Unity Animator
     {
@@ -172,9 +177,6 @@ public class Enemy_Behavior : MonoBehaviour
     //General methods
     public void EnemyMovement()
     {
-        directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; // calculating the direction of movement is Player position on the x-axis - Enemy position on the x-axis
-        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //calculate direction of movement is Player position on the y-axis - Enemy position on the y-axis
-
         patrolDirectionLeft = startPosition.x - patrolDistance;
         patrolDirectionRight = startPosition.x + patrolDistance;
 
@@ -262,11 +264,11 @@ public class Enemy_Behavior : MonoBehaviour
         float playerHP = Hero.Instance.curentHP;
         Vector3 theScale = transform.localScale; // needed to understand the direction
         float directionOfAttack = Mathf.Sign(directionX) * enemySpeed * Time.deltaTime; //calculating direction
-
+        if (directionOfAttack < 0 && theScale.x > 0 && isAttack == true) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+        else if (directionOfAttack > 0 && theScale.x < 0 && isAttack == true) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
         if (playerHP > 0 && Mathf.Abs(directionX) <= attackDistance && !isStun && !isAttack && !playerGodMode && !inAttackState)
         {
-            if (directionOfAttack < 0 && theScale.x > 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
-            if (directionOfAttack > 0 && theScale.x < 0) Flip();// if movement is greater than zero and flipRight = not true, then the Flip method must be called (sprite rotation)
+
             vulnerableAttackTimer = 0;
             isAttack = true;
             anim.SetBool("isAttack", true);
@@ -309,11 +311,15 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void BlockON() // Using a shield (Skeleton)
     {
-        block = true;
-        anim.SetBool("Block", true);
+        if (physicCooldown > 0.8f)
+        {
+            block = true;
+            anim.SetBool("Block", true);
+        }
     }
     public void BlockOFF() // Using a shield (Skeleton)
     {
+        physicCooldown = 0;
         block = false;
         anim.SetBool("Block", false);
     }
@@ -335,7 +341,7 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void CopyCounter()
     {
-        countOfCopy -= 1;
+        countOfSummon -= 1;
     }
     public void ColliderOFF()
     {
@@ -499,11 +505,14 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void LifeSteal() // Lifesteal from player
     {
-        Hero.Instance.GetDamage(enemyAttackDamage);// here we access the player's script and activate the GetDamage function from there
-        float heal = enemyAttackDamage * 0.5f; //The skeleton steals half of the damage the skeleton does to the player's xp
-        currentHP += heal;
-        float healBar = heal / (float)enemyMaxHP; // how much to increase the progress bar
-        if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//refresh progress bar
+        if (currentHP < enemyMaxHP)
+        {
+            Hero.Instance.GetDamage(enemyAttackDamage);// here we access the player's script and activate the GetDamage function from there
+            float heal = enemyAttackDamage * 0.5f; //The skeleton steals half of the damage the skeleton does to the player's xp
+            currentHP += heal;
+            float healBar = heal / (float)enemyMaxHP; // how much to increase the progress bar
+            if (currentHP > 0) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBarPlusHP(healBar);//refresh progress bar
+        }
     }
     //Attack Method of the enemies
     public void SkeletonAttack()
@@ -738,25 +747,17 @@ public class Enemy_Behavior : MonoBehaviour
     public void SlimeAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if ((Mathf.Abs(directionX)) < 4.5f && (Mathf.Abs(directionX)) > 2 && jumpCooldown >= 3 && Mathf.Abs(directionY) < 2 && !isStun && !playerGodMode)
         if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1 && !isStun && !playerGodMode)
-        {
-            anim.SetTrigger("spin");
-            // Reset timer
-            timeSinceAttack = 0.0f;
+            {
+                anim.SetTrigger("spin");
+                isAttack = true;
+                timeSinceAttack = 0.0f;// Reset timer
         }
         else isAttack = false;
     }
     public void DeathAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-
-        if (playerHP > 0 && Mathf.Abs(directionX) < 2f && Mathf.Abs(directionY) < 2f && timeSinceAttack > 2 && !isStun && !playerGodMode)
-        {
-            anim.SetTrigger("attack1");
-            timeSinceAttack = 0.0f;
-        }
-        else isAttack = false;
         if ((Mathf.Abs(directionX)) < 8f && (Mathf.Abs(directionX)) > 2 && Mathf.Abs(directionY) < 2f && !isStun && !playerGodMode || isAttacked == true && !isStun && !playerGodMode)
         {
             SpellDrainHP();
@@ -782,7 +783,7 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void SummonCopy() //creates copies of the Flying Eye
     {
-        if (level > 0 && countOfCopy < 1)
+        if (level > 0 && countOfSummon < 1)
         {
             magicCooldown = 0;
             Vector3 pos = transform.position;
@@ -792,7 +793,7 @@ public class Enemy_Behavior : MonoBehaviour
             GameObject guard2 = Instantiate(ammo[Random.Range(0, ammo.Length)], new Vector3(pos.x - 1f, pos.y, pos.z), Quaternion.identity); //Clone an object (enemy) and its coordinates)
             guard2.name = "Enemy" + Random.Range(1, 999);
             guard2.GetComponent<Enemy_Behavior>().GetNameOfObject(this.gameObject);
-            countOfCopy = 2;
+            countOfSummon = 2;
         }
         else return;
 
@@ -836,13 +837,15 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void DeathSummonMinioins() // Slimes call (Boss Death)
     {
-        if (physicCooldown >= 8)
+        if (physicCooldown >= 8 && countOfSummon < 1)
         {
             physicCooldown = 0; // reset timer
             anim.SetTrigger("cast1");
             Vector3 spellSpawnPosition = this.gameObject.transform.position; // taking position
             spellSpawnPosition.x -= 2f;
+            SummonSlime.Instance.MasterOfSummon(this.gameObject);
             SummonSlime.Instance.SummonDirection(spellSpawnPosition); //transmit coordinates for magic spawning
+            countOfSummon = 3;
         }
     }
     public void SpellDrainHP() //using magic to steal lives (Boss Death)
@@ -883,7 +886,6 @@ public class Enemy_Behavior : MonoBehaviour
                 GameObject bloodSpawn = Instantiate(blood[Random.Range(0, blood.Length)], new Vector3(this.gameObject.transform.position.x - 0.1f, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity); //Cloning an object
                 bloodSpawn.gameObject.SetActive(true);
             }
-
             currentHP -= dmg;
             isAttacked = true;
             takedDamage = (float)dmg / maxHP; //how much you need to reduce the progress bar
@@ -902,7 +904,7 @@ public class Enemy_Behavior : MonoBehaviour
             takedDamage = blockDMG / maxHP; //how much you need to reduce the progress bar
             if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
         }
-        if (currentHP <= 0)
+        if (currentHP <= 0 && enemyDead == false)
         {
             rb.gravityScale = 1;
             rb.velocity = Vector2.zero;
@@ -918,18 +920,11 @@ public class Enemy_Behavior : MonoBehaviour
         LvLGeneration.Instance.PlusCoin(enemyReward);//call for a method to increase points
         bool copy = this.gameObject.GetComponent<Enemy_Behavior>().copy;
         Destroy(this.gameObject);//destroy this game object
-        if (!copy) LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
-        if (copy && masterEnemy != null) masterEnemy.GetComponent<Enemy_Behavior>().CopyCounter();// copy destroying decreases the copy count, allowing you to call an extra copy.
-        if (tag == "Slime")
+        if (this.gameObject.tag != "Summon") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
+        if (masterEnemy != null && this.gameObject.tag == "Summon")
         {
-            GameObject[] deathObjects = GameObject.FindGameObjectsWithTag("Death");
-            foreach (GameObject obj in deathObjects)
-            {
-                if (obj.name != "BossDeath")
-                {
-                    obj.GetComponent<Enemy_Behavior>().BossDeathDamage(50);
-                }
-            }
+            masterEnemy.GetComponent<Enemy_Behavior>().CopyCounter();// copy destroying decreases the copy count, allowing you to call an extra copy.
+            masterEnemy.GetComponent<Enemy_Behavior>().BossDeathDamage(30);
         }
         if (tag == "Death") LvLGeneration.Instance.FindKey();//call a method to retrieve the keys
     }
