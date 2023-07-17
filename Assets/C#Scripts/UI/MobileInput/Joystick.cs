@@ -7,7 +7,7 @@ public class Joystick : MonoBehaviour
     public int platform; //PC = 1, AN = 2, Editor = 0
     public static Joystick Instance { get; set; }
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         Instance = this;
 
@@ -29,7 +29,7 @@ public class Joystick : MonoBehaviour
             platform = 2;
 
         }
-        else //Unbity editor
+        else //Unity editor
         {
             Debug.Log("Unity platform");
             platform = 0;

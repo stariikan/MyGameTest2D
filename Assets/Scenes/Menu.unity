@@ -807,7 +807,7 @@ GameObject:
   - component: {fileID: 112265478}
   - component: {fileID: 112265477}
   m_Layer: 5
-  m_Name: Story
+  m_Name: Editor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -825,11 +825,11 @@ RectTransform:
   m_LocalScale: {x: -0.025, y: 0.025, z: 0}
   m_Children: []
   m_Father: {fileID: 1406794180}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.3}
+  m_AnchoredPosition: {x: 0, y: -0.2}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &112265477
@@ -847,12 +847,13 @@ MonoBehaviour:
   buttonName: {fileID: 112265475}
   textUI: {fileID: 112265479}
   textArray:
-  - story
-  - "\u0438\u0441\u0442\u043E\u0440\u0438\u044F"
+  - editor
+  - "\u0440\u0435\u0434\u0430\u043A\u0442\u043E\u0440"
   joystick_settings: 0
   localization: 0
   sound: 0
   music: 0
+  enemyCheat: 0
 --- !u!114 &112265478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,7 +900,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 443748558}
         m_TargetAssemblyTypeName: UI_Transform_Position, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: OpenEditor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -942,7 +943,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Story
+  m_Text: editor
 --- !u!222 &112265480
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1308,7 +1309,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &167725907
 Animator:
   serializedVersion: 3
@@ -2086,6 +2087,7 @@ MonoBehaviour:
   localization: 0
   sound: 0
   music: 0
+  enemyCheat: 0
 --- !u!1 &274757492
 GameObject:
   m_ObjectHideFlags: 0
@@ -3531,6 +3533,7 @@ MonoBehaviour:
   localization: 0
   sound: 0
   music: 0
+  enemyCheat: 0
 --- !u!1 &441107508
 GameObject:
   m_ObjectHideFlags: 0
@@ -4935,6 +4938,7 @@ MonoBehaviour:
   localization: 0
   sound: 0
   music: 0
+  enemyCheat: 0
 --- !u!1 &638209942
 GameObject:
   m_ObjectHideFlags: 0
@@ -5610,6 +5614,7 @@ MonoBehaviour:
   localization: 0
   sound: 0
   music: 0
+  enemyCheat: 0
 --- !u!1 &796748330
 GameObject:
   m_ObjectHideFlags: 0
@@ -6751,6 +6756,7 @@ MonoBehaviour:
   localization: 0
   sound: 0
   music: 0
+  enemyCheat: 0
 --- !u!1 &944741014
 GameObject:
   m_ObjectHideFlags: 0
@@ -7555,6 +7561,7 @@ MonoBehaviour:
   localization: 0
   sound: 0
   music: 0
+  enemyCheat: 0
 --- !u!1 &1032496048
 GameObject:
   m_ObjectHideFlags: 0
@@ -7718,8 +7725,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1034797258}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.583444, y: 1.2001723, z: 0}
-  m_LocalScale: {x: -6.334869, y: 5.1522446, z: 0}
+  m_LocalPosition: {x: 0.77000004, y: 1.74, z: 0}
+  m_LocalScale: {x: -3.15, y: 2.7, z: 0}
   m_Children: []
   m_Father: {fileID: 1556922303}
   m_RootOrder: 0
@@ -9001,6 +9008,7 @@ MonoBehaviour:
   localization: 0
   sound: 0
   music: 0
+  enemyCheat: 0
 --- !u!1 &1195686786
 GameObject:
   m_ObjectHideFlags: 0
@@ -9773,8 +9781,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 112265476}
   - {fileID: 1488519271}
+  - {fileID: 112265476}
   - {fileID: 1561087611}
   - {fileID: 794643275}
   - {fileID: 1436932927}
@@ -10059,6 +10067,7 @@ MonoBehaviour:
   localization: 0
   sound: 0
   music: 0
+  enemyCheat: 0
 --- !u!1 &1442022878
 GameObject:
   m_ObjectHideFlags: 0
@@ -10388,6 +10397,7 @@ MonoBehaviour:
   localization: 0
   sound: 0
   music: 0
+  enemyCheat: 0
 --- !u!1 &1464392984
 GameObject:
   m_ObjectHideFlags: 0
@@ -10598,7 +10608,7 @@ GameObject:
   - component: {fileID: 1488519274}
   - component: {fileID: 1488519275}
   m_Layer: 5
-  m_Name: Loop
+  m_Name: Play
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10616,11 +10626,11 @@ RectTransform:
   m_LocalScale: {x: -0.025, y: 0.025, z: 0}
   m_Children: []
   m_Father: {fileID: 1406794180}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.2}
+  m_AnchoredPosition: {x: 0, y: 0.3}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1488519272
@@ -10656,7 +10666,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: loop
+  m_Text: play
 --- !u!222 &1488519273
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10736,12 +10746,13 @@ MonoBehaviour:
   buttonName: {fileID: 1488519270}
   textUI: {fileID: 1488519272}
   textArray:
-  - loop
-  - "\u043F\u0435\u0442\u043B\u044F"
+  - play
+  - "\u0438\u0433\u0440\u0430\u0442\u044C"
   joystick_settings: 0
   localization: 0
   sound: 0
   music: 0
+  enemyCheat: 0
 --- !u!1 &1491155592
 GameObject:
   m_ObjectHideFlags: 0
@@ -10845,7 +10856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1494531896
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10921,7 +10932,7 @@ Animator:
   m_GameObject: {fileID: 1494531895}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ebf39e6aa3fbe704bbeeb23d8cfd9019, type: 2}
+  m_Controller: {fileID: 9100000, guid: ad84d1bebc615424295d45b65314f666, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -11280,7 +11291,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1556922303
 Transform:
   m_ObjectHideFlags: 0
@@ -11457,6 +11468,7 @@ MonoBehaviour:
   localization: 0
   sound: 0
   music: 0
+  enemyCheat: 0
 --- !u!1 &1575027713
 GameObject:
   m_ObjectHideFlags: 0
@@ -13648,8 +13660,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964115895}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.3291297, y: -1.5, z: 0}
-  m_LocalScale: {x: 6.334869, y: 5.1522446, z: 0}
+  m_LocalPosition: {x: -0.84, y: 1.69, z: 0}
+  m_LocalScale: {x: 3.15, y: 2.57, z: 0}
   m_Children: []
   m_Father: {fileID: 1556922303}
   m_RootOrder: 2

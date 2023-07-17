@@ -74,6 +74,7 @@ public class Hero : MonoBehaviour {
     private float magicAttackCooldown = 2;//cooldown projectile launch (magic)
     public Transform firePointRight; //The position from which the shells will be fired
     public Transform firePointLeft; //The position from which the shells will be fired
+    public Transform startPosition;
 
     //Sounds
     public GameObject attackSound;
@@ -95,6 +96,12 @@ public class Hero : MonoBehaviour {
     }
     void Start ()
     {
+        GameObject startPositionObject = GameObject.Find("StartPosition");
+        if (startPositionObject != null )
+        {
+            startPosition = startPositionObject.transform;
+            this.gameObject.transform.position = startPosition.position;
+        }
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
@@ -105,7 +112,7 @@ public class Hero : MonoBehaviour {
         SaveSerial.Instance.LoadGame();
         maxHP = SaveSerial.Instance.playerHP;
         platform = Joystick.Instance.platform;
-        if (maxHP == 0) maxHP = 128;
+        if (maxHP == 0 ) maxHP = 128;
         curentHP = maxHP;
 
         playerAttackDamage = SaveSerial.Instance.playerAttackDamage;
@@ -283,6 +290,14 @@ public class Hero : MonoBehaviour {
             dieSound.GetComponent<SoundOfObject>().PlaySound();
             m_animator.SetBool("dead", true);
             m_animator.SetTrigger("Death");
+        }
+    }
+    public void HealFrom(float powerOfHeal)
+    {
+        curentHP = curentHP + powerOfHeal;
+        if (curentHP > maxHP)
+        {
+            curentHP = maxHP;
         }
     }
     public void Jump()

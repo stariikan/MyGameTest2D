@@ -48,6 +48,7 @@ public class ButtonLocalization : MonoBehaviour
         enemyCheat = SaveSerial.Instance.enemyCheat;
 
         StartButton();
+        EditorButton();
         SettingsButton();
         ExtraButton();
         ExitButton();
@@ -65,7 +66,26 @@ public class ButtonLocalization : MonoBehaviour
     //  нопки в ћеню
     private void StartButton()
     {
-        if (buttonName.name == "Start")
+        if (buttonName.name == "Play")
+        {
+            if (!localization)
+            {
+                currentText = textArray[0];
+                textUI.text = currentText;
+                textUI.fontSize = 25;
+            }
+            if (localization)
+            {
+                currentText = textArray[1];
+                textUI.text = currentText;
+                textUI.fontSize = 20;
+            }
+
+        }
+    }
+    private void EditorButton()
+    {
+        if (buttonName.name == "Editor")
         {
             if (!localization)
             {

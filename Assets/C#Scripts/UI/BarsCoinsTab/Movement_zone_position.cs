@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Movement_zone_position : MonoBehaviour
 {
-    public float xPercent = 0.12f; // X position as a percentage of screen width (0-1)
-    public float yPercent = 0.1f; // Y position as a percentage of screen height (0-1)
-    public float zPosition = 0f; // Z position in world space
+    public float xPercent; // X position as a percentage of screen width (0-1)
+    public float yPercent; // Y position as a percentage of screen height (0-1)
+    public float zPosition; // Z position in world space
 
     private void Start()
     {

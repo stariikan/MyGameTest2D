@@ -31,6 +31,10 @@ public class UI_Transform_Position : MonoBehaviour
     {
         LvLGeneration.Instance.Restart();
     }
+    public void OpenEditor()
+    {
+        SceneManager.LoadScene("Editor", LoadSceneMode.Single);
+    }
     public void Collectables()
     {
         SceneManager.LoadScene("Collectables", LoadSceneMode.Single);

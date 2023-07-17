@@ -2,19 +2,21 @@ using UnityEngine;
 
 public class CameraFolow : MonoBehaviour
 {
-    [SerializeField] private Transform _playerTransform;
+    private Transform _playerTransform;
+    public string objectNameToFind;
     [SerializeField] private float _movingSpeed;
 
-    private void Awake()
+    // Start is called before the first frame update
+    private void Start()
     {
+        GameObject obj = GameObject.Find("Hero");
+        _playerTransform = obj.transform;
         this.transform.position = new Vector3()
         {
             x = this._playerTransform.position.x,
             y = this._playerTransform.position.y
         };
     }
-    // Start is called before the first frame update
-
     // Update is called once per frame
     void FixedUpdate()
     {

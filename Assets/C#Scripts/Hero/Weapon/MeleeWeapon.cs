@@ -33,7 +33,7 @@ public class MeleeWeapon : MonoBehaviour
         //Debug.Log(target);
         if (masterOfWeapon.layer == 8) masterDirection = masterOfWeapon.GetComponent<Hero>().m_facingDirection;
         if (masterOfWeapon.layer == 7) masterDirection = masterOfWeapon.GetComponent<Enemy_Behavior>().e_facingDirection;
-        if (masterOfWeapon.layer == 7 && target.layer == 8) targetDirection = target.GetComponentInParent<Hero>().m_facingDirection;
+        if (masterOfWeapon.layer == 7 && target.layer == 8) targetDirection = Hero.Instance.m_facingDirection;
         if (masterOfWeapon.layer == 8 && target.layer == 7) targetDirection = target.GetComponent<Enemy_Behavior>().e_facingDirection;
 
         if (masterOfWeapon.layer == 8 && target.CompareTag("SpellBook")) target.GetComponent<SpellBook>().TakeDamage(AttackDamage);
@@ -51,11 +51,11 @@ public class MeleeWeapon : MonoBehaviour
         }
         if (masterOfWeapon.layer == 7 && target != null && target.tag == "Front" && masterDirection != targetDirection)
         {
-            target.GetComponentInParent<Hero>().GetDamage(AttackDamage);
+            Hero.Instance.GetDamage(AttackDamage);
         }
         if (masterOfWeapon.layer == 7 && target != null && target.tag == "Front" && masterDirection == targetDirection)
         {
-            target.GetComponentInParent<Hero>().GetDamage(AttackDamage * 2);
+            Hero.Instance.GetDamage(AttackDamage * 2);
         }
     }
     public void GetAttackDamageInfo(float damageInfo) //Getting a damage score from an object

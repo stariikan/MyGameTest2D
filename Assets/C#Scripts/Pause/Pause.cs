@@ -20,10 +20,12 @@ public class Pause : MonoBehaviour
     public bool joystick = false;
 
     private int platform;
+    private string activeSceneName;
     private void Start()
     {
         Instance = this;
-        
+        activeSceneName = SceneManager.GetActiveScene().name;
+
     }
     void Update()
     {
@@ -123,7 +125,14 @@ public class Pause : MonoBehaviour
     public void RestartGame()
     {
         SaveSerial.Instance.ResetData();
-        SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
+        if (activeSceneName == "startLevel")
+        {
+            SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
+        }
+        if (activeSceneName == "Editor")
+        {
+            SceneManager.LoadScene("Editor", LoadSceneMode.Single);
+        }
     }
     public void MainMenu()
     {

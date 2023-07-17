@@ -24,6 +24,9 @@ public class LvLGeneration : MonoBehaviour
     public int coin; // number of points
     public bool key = false;
     private int enemyCheat; // Cheat to generate enemies
+    private string activeSceneName;
+    private bool playerDead = false;
+    private bool chestOpen = false;
 
     private void Start() // In the Start method we will run the level generation at the start of the game.
     {
@@ -31,20 +34,27 @@ public class LvLGeneration : MonoBehaviour
         coin = SaveSerial.Instance.playerCoin;
         Level = SaveSerial.Instance.passedLvl;
         enemyCheat = SaveSerial.Instance.enemyCheat;
+        activeSceneName = SceneManager.GetActiveScene().name;
 
         if (Level == 0)
         {
             Level = 1;
         }
-        StartCoroutine(OnGeneratingRoutine()); // level generation process
+        if (activeSceneName == "startLevel")
+        {
+            StartCoroutine(OnGeneratingRoutine()); // level generation process
+        }
+        
     }
     private void Update()
     {
-        if (Hero.Instance.playerDead == true)
+        playerDead = Hero.Instance.playerDead;
+        if (playerDead == true)
         {
             DeadScreen();
         }
-        if (SpellBook.Instance.chestOpen == true)
+        chestOpen = SpellBook.Instance.chestOpen;
+        if (chestOpen == true)
         {
             CompleteLevel();
         }
@@ -297,7 +307,10 @@ public class LvLGeneration : MonoBehaviour
     {
         Level = 1;
         SaveSerial.Instance.ResetData();
-        SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
+        if (activeSceneName == "startLevel")
+        {
+            SceneManager.LoadScene("startLevel", LoadSceneMode.Single);
+        }
     }
     public void DeadScreen()
     {
