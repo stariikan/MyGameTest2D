@@ -15,11 +15,11 @@ C:/Games/MyProject/MyGameTest2D
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-52713
+53735
 Successfully changed project path to: C:/Games/MyProject/MyGameTest2D
 C:/Games/MyProject/MyGameTest2D
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 62.99 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 60.25 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.41f1 (7c19dc9acfda)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.41f1/Editor/Data/Resources/UnitySubsystems
@@ -35,76 +35,76 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.41f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.41f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.41f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56832
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56360
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.41f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.41f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001362 seconds.
+Registered in 0.001691 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 59.46 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 58.10 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.564 seconds
+- Completed reload, in  0.531 seconds
 Domain Reload Profiling:
-	ReloadAssembly (564ms)
-		BeginReloadAssembly (64ms)
+	ReloadAssembly (531ms)
+		BeginReloadAssembly (50ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (434ms)
-			LoadAssemblies (63ms)
+		EndReloadAssembly (417ms)
+			LoadAssemblies (49ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (142ms)
+			SetupTypeCache (130ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (28ms)
-			SetupLoadedEditorAssemblies (172ms)
+			RebuildScriptCaches (27ms)
+			SetupLoadedEditorAssemblies (171ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (4ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (60ms)
-				BeforeProcessingInitializeOnLoad (12ms)
-				ProcessInitializeOnLoadAttributes (72ms)
-				ProcessInitializeOnLoadMethodAttributes (23ms)
+				RefreshPlugins (58ms)
+				BeforeProcessingInitializeOnLoad (13ms)
+				ProcessInitializeOnLoadAttributes (70ms)
+				ProcessInitializeOnLoadMethodAttributes (25ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.002661 seconds.
+Registered in 0.002306 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 58.27 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 58.35 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.050 seconds
+- Completed reload, in  0.991 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1051ms)
-		BeginReloadAssembly (128ms)
+	ReloadAssembly (992ms)
+		BeginReloadAssembly (120ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (4ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (18ms)
-		EndReloadAssembly (868ms)
-			LoadAssemblies (87ms)
+		EndReloadAssembly (819ms)
+			LoadAssemblies (81ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (280ms)
+			SetupTypeCache (258ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (44ms)
-			SetupLoadedEditorAssemblies (359ms)
+			RebuildScriptCaches (47ms)
+			SetupLoadedEditorAssemblies (338ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (4ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (58ms)
-				BeforeProcessingInitializeOnLoad (75ms)
-				ProcessInitializeOnLoadAttributes (199ms)
-				ProcessInitializeOnLoadMethodAttributes (19ms)
+				BeforeProcessingInitializeOnLoad (74ms)
+				ProcessInitializeOnLoadAttributes (182ms)
+				ProcessInitializeOnLoadMethodAttributes (16ms)
 				AfterProcessingInitializeOnLoad (4ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
@@ -112,15 +112,15 @@ Domain Reload Profiling:
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 0.63 ms, found 3 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 1.04 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2346 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 103.7 MB.
 System memory in use after: 103.9 MB.
 
 Unloading 26 unused Assets to reduce memory usage. Loaded Objects now: 2788.
-Total: 3.494300 ms (FindLiveObjects: 0.252100 ms CreateObjectMapping: 0.089300 ms MarkObjects: 3.072700 ms  DeleteObjects: 0.078600 ms)
+Total: 4.055300 ms (FindLiveObjects: 0.313300 ms CreateObjectMapping: 0.112600 ms MarkObjects: 3.528700 ms  DeleteObjects: 0.099100 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
@@ -134,710 +134,62 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_11.prefab
-  artifactKey: Guid(48cba5a99340c3243a3186e170329f4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_11.prefab using Guid(48cba5a99340c3243a3186e170329f4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c823b899fb8bc33350855b6f60db7d34') in 0.106051 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000236 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_58.prefab
-  artifactKey: Guid(880c063decbafb44393a5eafaf1775cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_58.prefab using Guid(880c063decbafb44393a5eafaf1775cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed502b9d999c948aa9c6e797b33b98db') in 0.020709 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000210 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_28.prefab
-  artifactKey: Guid(7b0b6478af5fa254e99a66811438a17f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_28.prefab using Guid(7b0b6478af5fa254e99a66811438a17f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2897816bd253ba0ffb0638148dac3c21') in 0.019005 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000255 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_41.prefab
-  artifactKey: Guid(f55f825d979b9cc4685b50ea08abc697) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_41.prefab using Guid(f55f825d979b9cc4685b50ea08abc697) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0fb00986cd104ba3c38fdc443a697585') in 0.015782 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000289 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_61.prefab
-  artifactKey: Guid(f98870b3ab3747d4caaeedcb40080c9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_61.prefab using Guid(f98870b3ab3747d4caaeedcb40080c9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7be44231d6095ce7884671f4d038e7e') in 0.017631 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000257 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_29.prefab
-  artifactKey: Guid(c66cb739fefe62c4d801c8569f3a5046) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_29.prefab using Guid(c66cb739fefe62c4d801c8569f3a5046) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bfaaa80c7499612deb50827fa1ad44de') in 0.016476 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000331 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_17.prefab
-  artifactKey: Guid(163662037e8d7654594d8488b755a71c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_17.prefab using Guid(163662037e8d7654594d8488b755a71c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '77379c789235d983c4d9aa660026bcc4') in 0.017807 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000348 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_54.prefab
-  artifactKey: Guid(2f536ff1230e2464f97f675430f0e0f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_54.prefab using Guid(2f536ff1230e2464f97f675430f0e0f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fbf18c8fd74fb1652ae7bd6d2e91b884') in 0.017747 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000253 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_6.prefab
-  artifactKey: Guid(49534a871cf4874428acb8d27cb96db2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_6.prefab using Guid(49534a871cf4874428acb8d27cb96db2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '863fd691aa2fef761ce2cca48a13bc7c') in 0.016844 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000220 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_63.prefab
-  artifactKey: Guid(5df0dd75284f3c64883062c3f5f305a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_63.prefab using Guid(5df0dd75284f3c64883062c3f5f305a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71aff72e6737ae0cb2482f697d0593be') in 0.018397 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000247 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_38.prefab
-  artifactKey: Guid(cbf0a2666c8bdd643b35d846298efe75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_38.prefab using Guid(cbf0a2666c8bdd643b35d846298efe75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '66c1d55e6802b1743c0b0708fc56e337') in 0.017195 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000192 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_23.prefab
-  artifactKey: Guid(04615b4e44b14ef45a775a31a65cc30c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_23.prefab using Guid(04615b4e44b14ef45a775a31a65cc30c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7bb526f40f17770e8059c04437218164') in 0.018123 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000203 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_19.prefab
-  artifactKey: Guid(960a76a8767ac3d4ebb79259e49c344b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_19.prefab using Guid(960a76a8767ac3d4ebb79259e49c344b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '697fd00d82762f5858935cea58e5677e') in 0.016483 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000236 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_15.prefab
-  artifactKey: Guid(a6ef1343939cc4044a7e4340b1a2afbc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_15.prefab using Guid(a6ef1343939cc4044a7e4340b1a2afbc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8f9fee05e485512949a526a673c02c7') in 0.015286 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000218 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_26.prefab
-  artifactKey: Guid(b55aecbdd5e3e734f900264233658de5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_26.prefab using Guid(b55aecbdd5e3e734f900264233658de5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5a7424127d7894bc6759cbfc2eb699eb') in 0.016307 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000203 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_62.prefab
-  artifactKey: Guid(b49f4ad945952f24686ed36094c8ce4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_62.prefab using Guid(b49f4ad945952f24686ed36094c8ce4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4be32fb425d9212a0b2339f67e2f0d7b') in 0.016659 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000175 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_35.prefab
-  artifactKey: Guid(666fe9d83b465f645bac5d89d8d60ef1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_35.prefab using Guid(666fe9d83b465f645bac5d89d8d60ef1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '796fa60a254389e495a9ef5438e4313e') in 0.016654 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000263 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_5.prefab
-  artifactKey: Guid(7d3c5a0dcac0bb845aac145de1b7e852) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_5.prefab using Guid(7d3c5a0dcac0bb845aac145de1b7e852) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aadd8f2803342ffe08a5a5b45fdae6c5') in 0.016585 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000212 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_13.prefab
-  artifactKey: Guid(286fb4cc4f7ce4e4297b2fac1ac966c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_13.prefab using Guid(286fb4cc4f7ce4e4297b2fac1ac966c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5e3b85845d6970888c012c4466c1ec8d') in 0.016632 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000203 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_59.prefab
-  artifactKey: Guid(4a78471e3d315ee4b8ac76513be3750f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_59.prefab using Guid(4a78471e3d315ee4b8ac76513be3750f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4f940dbe565efd709a3780336cde5111') in 0.017874 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000205 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_39.prefab
-  artifactKey: Guid(68b3a7bc26c25b649b7fb6f032b0783e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_39.prefab using Guid(68b3a7bc26c25b649b7fb6f032b0783e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bd225b59328d33c80297685eecd3a4fb') in 0.017567 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000160 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_20.prefab
-  artifactKey: Guid(4176f9d60a65b4f4c9180ef6638a50da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_20.prefab using Guid(4176f9d60a65b4f4c9180ef6638a50da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d1de38fd35aeffeb4a02c4feeeeffce') in 0.016796 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000165 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_25.prefab
-  artifactKey: Guid(b9fa376aa37a24d48ad7edc8f8b25a45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_25.prefab using Guid(b9fa376aa37a24d48ad7edc8f8b25a45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'af352d42f9047cb9856b64ec562041fa') in 0.017236 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000225 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_18.prefab
-  artifactKey: Guid(e342ad3c114d8734c908b428d3802756) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_18.prefab using Guid(e342ad3c114d8734c908b428d3802756) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '23da68bce69f0ffe6e666e50e342d0e3') in 0.016593 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000177 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_12.prefab
-  artifactKey: Guid(10e3c44db362f4e4f99c7db755db439c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_12.prefab using Guid(10e3c44db362f4e4f99c7db755db439c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9010f73f4dd748b1fc04440a0a8b4777') in 0.016330 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000231 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_30.prefab
-  artifactKey: Guid(93e46a7fc0e374441bd4a2ca7fa8b92f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_30.prefab using Guid(93e46a7fc0e374441bd4a2ca7fa8b92f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '879115b695d479f1a3fb07da64c3b6d6') in 0.017257 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000210 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_3.prefab
-  artifactKey: Guid(8c984b36a9844854fae181f0f73f47ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_3.prefab using Guid(8c984b36a9844854fae181f0f73f47ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dae89c7c4dbf1792720aa506ab1acf74') in 0.016056 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000212 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_37.prefab
-  artifactKey: Guid(ffa7dfb6d66d13c4f87d0fb37afae3ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_37.prefab using Guid(ffa7dfb6d66d13c4f87d0fb37afae3ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '97330a2209c5f39034dd1a850c5d907b') in 0.017386 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000212 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_9.prefab
-  artifactKey: Guid(464a67ce8e6f57743b263f2fd0664b2e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_9.prefab using Guid(464a67ce8e6f57743b263f2fd0664b2e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8e9685657aac7f0f18aa0ba97789dbf4') in 0.015589 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000209 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_50.prefab
-  artifactKey: Guid(bfb5a700b112d7e409cf0c747caa4728) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_50.prefab using Guid(bfb5a700b112d7e409cf0c747caa4728) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '81ef862ee995889249b623b5c7371a0f') in 0.017658 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000241 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_47.prefab
-  artifactKey: Guid(854ba03277ae9b64ab719bc470ee16b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_47.prefab using Guid(854ba03277ae9b64ab719bc470ee16b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3befe719ca2c40302efb6a7f8f6e4311') in 0.016523 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000189 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_56.prefab
-  artifactKey: Guid(0cad827496798a44dbceb7dda1d420b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_56.prefab using Guid(0cad827496798a44dbceb7dda1d420b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2775f8dc78ebde770fcdbe9e5747254') in 0.017206 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000261 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_24.prefab
-  artifactKey: Guid(9a4f7d562efc7d243a7dfe01032c1379) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_24.prefab using Guid(9a4f7d562efc7d243a7dfe01032c1379) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '672df3e8b6541b6357c88cee8930bbbe') in 0.017916 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000209 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_49.prefab
-  artifactKey: Guid(506390c39aacd4b42885e44f3d8d2651) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_49.prefab using Guid(506390c39aacd4b42885e44f3d8d2651) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45d5481a9de43eaad3a73389e39ffa23') in 0.016753 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000231 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_48.prefab
-  artifactKey: Guid(b6f0c61393382014fafaeff5ca8e95e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_48.prefab using Guid(b6f0c61393382014fafaeff5ca8e95e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a2cf34c6eeb2a3f46d6af2e2e1fcb671') in 0.017352 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000218 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_60.prefab
-  artifactKey: Guid(22e1040171ca89448897adbe397316fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_60.prefab using Guid(22e1040171ca89448897adbe397316fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fb07a3f7f023d93821d4aac7326d12e7') in 0.016768 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000185 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_21.prefab
-  artifactKey: Guid(0d2d2b00092b61c4b9db4cde8ba33b61) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_21.prefab using Guid(0d2d2b00092b61c4b9db4cde8ba33b61) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2b964cf5105b66ac49f3fea9de5d03e0') in 0.016696 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000188 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_55.prefab
-  artifactKey: Guid(17170a207c3799e468bd60b4448edfaf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_55.prefab using Guid(17170a207c3799e468bd60b4448edfaf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '449c69abb09afd1bf7b32efc89e5adc1') in 0.018287 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000213 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_8.prefab
-  artifactKey: Guid(ab3504396120fb54981875a41bfae6e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_8.prefab using Guid(ab3504396120fb54981875a41bfae6e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad92ad49d909e822a29580300e0cbc93') in 0.016495 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000231 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_36.prefab
-  artifactKey: Guid(5d4cf7462b326a149927801e8ff171e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_36.prefab using Guid(5d4cf7462b326a149927801e8ff171e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c6c37848ae083c22ba0a1a2630d2616') in 0.018651 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000290 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_45.prefab
-  artifactKey: Guid(9b25a87a3ec687a499c0d90fac5b7deb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_45.prefab using Guid(9b25a87a3ec687a499c0d90fac5b7deb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e00acebd19adba38180447a868117b03') in 0.019515 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000206 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_27.prefab
-  artifactKey: Guid(e76882b4b0f05494d817b6dcf127f4d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_27.prefab using Guid(e76882b4b0f05494d817b6dcf127f4d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '922c15d3a53b877914ab34afde35223d') in 0.016961 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000189 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_4.prefab
-  artifactKey: Guid(2f545f4a5038a1041ae4070ade9992a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_4.prefab using Guid(2f545f4a5038a1041ae4070ade9992a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'af29375e13dd7e922845b18e3b826a8f') in 0.019549 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000192 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_57.prefab
-  artifactKey: Guid(6d8bbb02a87beda4892c1c7d1e3c31e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_57.prefab using Guid(6d8bbb02a87beda4892c1c7d1e3c31e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0b3fd4db12f6719fa3d795b9b0237716') in 0.016262 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000211 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_40.prefab
-  artifactKey: Guid(1364e831b28796d44ad7556f057e9b2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_40.prefab using Guid(1364e831b28796d44ad7556f057e9b2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '843dda510429e3e9199c86656a8dabac') in 0.016980 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000162 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_52.prefab
-  artifactKey: Guid(05253074caec6874381daed2bda6a3e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_52.prefab using Guid(05253074caec6874381daed2bda6a3e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '48a3f3b3c65be7590046303b522b583c') in 0.016251 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000195 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_46.prefab
-  artifactKey: Guid(86e49a34d71d2a64d816a56d3c001dc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_46.prefab using Guid(86e49a34d71d2a64d816a56d3c001dc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae62bac59ba24d19974cf54e13ad49b6') in 0.017328 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000190 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_31.prefab
-  artifactKey: Guid(bcfe2649d8b129d4d907cec2b51c1868) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_31.prefab using Guid(bcfe2649d8b129d4d907cec2b51c1868) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '68c119febae34e5c143e830ce59d6c37') in 0.016710 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000191 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_1.prefab
-  artifactKey: Guid(d054ba0bb76840c41ac144b471a6c269) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_1.prefab using Guid(d054ba0bb76840c41ac144b471a6c269) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '447cb527763a0838003067f45ec04286') in 0.017256 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000220 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_16.prefab
-  artifactKey: Guid(0d66db4e1c15b0e46a099d613418e2da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_16.prefab using Guid(0d66db4e1c15b0e46a099d613418e2da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c4753d86daf25025812b67729b59c1d') in 0.014845 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000238 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_22.prefab
-  artifactKey: Guid(e11964de4f0d16844ab762f029e52b25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_22.prefab using Guid(e11964de4f0d16844ab762f029e52b25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd54a18125b0d47d997602eac427c569e') in 0.015457 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000229 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_33.prefab
-  artifactKey: Guid(872f3dd6b07f5e849a141569398e1e2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_33.prefab using Guid(872f3dd6b07f5e849a141569398e1e2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7d7af032e5e94b6b241b49b5922b9eb3') in 0.016901 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000197 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_44.prefab
-  artifactKey: Guid(db68147794ae15e4381e25ac197a6302) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_44.prefab using Guid(db68147794ae15e4381e25ac197a6302) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '265d101580959b115d80f150760647e4') in 0.017718 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000172 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_42.prefab
-  artifactKey: Guid(4891b7eca4347a04c86e1603b466b2e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_42.prefab using Guid(4891b7eca4347a04c86e1603b466b2e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce58215d423629d65671448db6b45a75') in 0.016480 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000176 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_51.prefab
-  artifactKey: Guid(e6e2e3e8141fdb444852cbe828b22f71) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_51.prefab using Guid(e6e2e3e8141fdb444852cbe828b22f71) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '978c23c962658652e149727eb760941c') in 0.016131 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000208 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_32.prefab
-  artifactKey: Guid(e0f1e65187047cb41a4d91c32e8b7ca8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_32.prefab using Guid(e0f1e65187047cb41a4d91c32e8b7ca8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '147f50f459a06ec0fa60b233bf131e52') in 0.015330 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000208 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_34.prefab
-  artifactKey: Guid(243a46ce53746814fbd01d41d072ed0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_34.prefab using Guid(243a46ce53746814fbd01d41d072ed0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45dd599e2e434304e54d2ac3b673c011') in 0.017091 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000238 seconds.
-  path: Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_10.prefab
-  artifactKey: Guid(33977d6ac385f6b4ab71263f908d6dc1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/LvLEvnirement/Ground/Village/TX Tileset Ground_10.prefab using Guid(33977d6ac385f6b4ab71263f908d6dc1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bd1cad208917ad9556a31bee2b81b6d3') in 0.016682 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 38.467318 seconds.
-  path: Assets/Pref/Camera/Main Camera.prefab
-  artifactKey: Guid(ad07b3d86d169484fb931edc075013e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/Camera/Main Camera.prefab using Guid(ad07b3d86d169484fb931edc075013e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27ddd2469e83e0c9ae351f8acb6f74ad') in 0.067037 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 1.414337 seconds.
-  path: Assets/Pref/Enemy/BossDeath.prefab
-  artifactKey: Guid(5d7f1de64ffca1d408e4079cc4c39ab8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/Enemy/BossDeath.prefab using Guid(5d7f1de64ffca1d408e4079cc4c39ab8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Tried select unknown importer for id '-2' '00000000000000000000000000000000'
-0x00007ff63767f11c (Unity) StackWalker::GetCurrentCallstack
-0x00007ff637686719 (Unity) StackWalker::ShowCallstack
-0x00007ff63841cdac (Unity) GetStacktrace
-0x00007ff638e8b897 (Unity) DebugStringToFile
-0x00007ff638e8b5b2 (Unity) AssertImplementation
-0x00007ff6384a0621 (Unity) AssetDatabase::LookupAssetImporter
-0x00007ff6384a6a78 (Unity) PreviewImporter::GenerateAssetData
-0x00007ff63854a4a3 (Unity) ImportToObjects
-0x00007ff638549478 (Unity) ImportAsset
-0x00007ff6384e2288 (Unity) AssetImportWorker::Import
-0x00007ff638507a5c (Unity) <lambda_6c894734dbee50c93f7912c8ad287316>::operator()
-0x00007ff6385977c2 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)>,asio::io_context::basic_executor_type<std::allocator<void>,0> >::do_complete
-0x00007ff638583662 (Unity) asio::detail::win_iocp_io_context::do_one
-0x00007ff638585574 (Unity) asio::detail::win_iocp_io_context::run
-0x00007ff638595aff (Unity) IOService::Run
-0x00007ff6385317cb (Unity) RunAssetImportWorkerClientV2
-0x00007ff638531820 (Unity) RunAssetImporterV2
-0x00007ff637fa59c8 (Unity) Application::InitializeProject
-0x00007ff638427132 (Unity) WinMain
-0x00007ff639af3dfe (Unity) __scrt_common_main_seh
-0x00007ff8215d26ad (KERNEL32) BaseThreadInitThunk
-0x00007ff822f0aa68 (ntdll) RtlUserThreadStart
-
- -> (artifact id: '8af5500dd3589d95e62a45211d8c10eb') in 0.268144 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000214 seconds.
-  path: Assets/Pref/Enemy/EvilWizard.prefab
-  artifactKey: Guid(0fb0a0af2276a694fa1954ca685c59e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/Enemy/EvilWizard.prefab using Guid(0fb0a0af2276a694fa1954ca685c59e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Tried select unknown importer for id '-2' '00000000000000000000000000000000'
-0x00007ff63767f11c (Unity) StackWalker::GetCurrentCallstack
-0x00007ff637686719 (Unity) StackWalker::ShowCallstack
-0x00007ff63841cdac (Unity) GetStacktrace
-0x00007ff638e8b897 (Unity) DebugStringToFile
-0x00007ff638e8b5b2 (Unity) AssertImplementation
-0x00007ff6384a0621 (Unity) AssetDatabase::LookupAssetImporter
-0x00007ff6384a6a78 (Unity) PreviewImporter::GenerateAssetData
-0x00007ff63854a4a3 (Unity) ImportToObjects
-0x00007ff638549478 (Unity) ImportAsset
-0x00007ff6384e2288 (Unity) AssetImportWorker::Import
-0x00007ff638507a5c (Unity) <lambda_6c894734dbee50c93f7912c8ad287316>::operator()
-0x00007ff6385977c2 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)>,asio::io_context::basic_executor_type<std::allocator<void>,0> >::do_complete
-0x00007ff638583662 (Unity) asio::detail::win_iocp_io_context::do_one
-0x00007ff638585574 (Unity) asio::detail::win_iocp_io_context::run
-0x00007ff638595aff (Unity) IOService::Run
-0x00007ff6385317cb (Unity) RunAssetImportWorkerClientV2
-0x00007ff638531820 (Unity) RunAssetImporterV2
-0x00007ff637fa59c8 (Unity) Application::InitializeProject
-0x00007ff638427132 (Unity) WinMain
-0x00007ff639af3dfe (Unity) __scrt_common_main_seh
-0x00007ff8215d26ad (KERNEL32) BaseThreadInitThunk
-0x00007ff822f0aa68 (ntdll) RtlUserThreadStart
-
- -> (artifact id: '520b12e2fb199ef3474070ad9700462a') in 0.089467 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000286 seconds.
-  path: Assets/Pref/Enemy/Skeleton.prefab
-  artifactKey: Guid(ee6aefa84e56f3a49879d0404c92a7cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/Enemy/Skeleton.prefab using Guid(ee6aefa84e56f3a49879d0404c92a7cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Tried select unknown importer for id '-2' '00000000000000000000000000000000'
-0x00007ff63767f11c (Unity) StackWalker::GetCurrentCallstack
-0x00007ff637686719 (Unity) StackWalker::ShowCallstack
-0x00007ff63841cdac (Unity) GetStacktrace
-0x00007ff638e8b897 (Unity) DebugStringToFile
-0x00007ff638e8b5b2 (Unity) AssertImplementation
-0x00007ff6384a0621 (Unity) AssetDatabase::LookupAssetImporter
-0x00007ff6384a6a78 (Unity) PreviewImporter::GenerateAssetData
-0x00007ff63854a4a3 (Unity) ImportToObjects
-0x00007ff638549478 (Unity) ImportAsset
-0x00007ff6384e2288 (Unity) AssetImportWorker::Import
-0x00007ff638507a5c (Unity) <lambda_6c894734dbee50c93f7912c8ad287316>::operator()
-0x00007ff6385977c2 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)>,asio::io_context::basic_executor_type<std::allocator<void>,0> >::do_complete
-0x00007ff638583662 (Unity) asio::detail::win_iocp_io_context::do_one
-0x00007ff638585574 (Unity) asio::detail::win_iocp_io_context::run
-0x00007ff638595aff (Unity) IOService::Run
-0x00007ff6385317cb (Unity) RunAssetImportWorkerClientV2
-0x00007ff638531820 (Unity) RunAssetImporterV2
-0x00007ff637fa59c8 (Unity) Application::InitializeProject
-0x00007ff638427132 (Unity) WinMain
-0x00007ff639af3dfe (Unity) __scrt_common_main_seh
-0x00007ff8215d26ad (KERNEL32) BaseThreadInitThunk
-0x00007ff822f0aa68 (ntdll) RtlUserThreadStart
-
- -> (artifact id: '7b17c62dc04bc2bf4c173894fd8a4561') in 0.114834 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000267 seconds.
-  path: Assets/Pref/Enemy/FlyingEye.prefab
-  artifactKey: Guid(5a6688290a4dfa74d82ebf12dd471a1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/Enemy/FlyingEye.prefab using Guid(5a6688290a4dfa74d82ebf12dd471a1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Tried select unknown importer for id '-2' '00000000000000000000000000000000'
-0x00007ff63767f11c (Unity) StackWalker::GetCurrentCallstack
-0x00007ff637686719 (Unity) StackWalker::ShowCallstack
-0x00007ff63841cdac (Unity) GetStacktrace
-0x00007ff638e8b897 (Unity) DebugStringToFile
-0x00007ff638e8b5b2 (Unity) AssertImplementation
-0x00007ff6384a0621 (Unity) AssetDatabase::LookupAssetImporter
-0x00007ff6384a6a78 (Unity) PreviewImporter::GenerateAssetData
-0x00007ff63854a4a3 (Unity) ImportToObjects
-0x00007ff638549478 (Unity) ImportAsset
-0x00007ff6384e2288 (Unity) AssetImportWorker::Import
-0x00007ff638507a5c (Unity) <lambda_6c894734dbee50c93f7912c8ad287316>::operator()
-0x00007ff6385977c2 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)>,asio::io_context::basic_executor_type<std::allocator<void>,0> >::do_complete
-0x00007ff638583662 (Unity) asio::detail::win_iocp_io_context::do_one
-0x00007ff638585574 (Unity) asio::detail::win_iocp_io_context::run
-0x00007ff638595aff (Unity) IOService::Run
-0x00007ff6385317cb (Unity) RunAssetImportWorkerClientV2
-0x00007ff638531820 (Unity) RunAssetImporterV2
-0x00007ff637fa59c8 (Unity) Application::InitializeProject
-0x00007ff638427132 (Unity) WinMain
-0x00007ff639af3dfe (Unity) __scrt_common_main_seh
-0x00007ff8215d26ad (KERNEL32) BaseThreadInitThunk
-0x00007ff822f0aa68 (ntdll) RtlUserThreadStart
-
- -> (artifact id: '1599aa70a4676bdc8b71146f34a53e52') in 0.088270 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000259 seconds.
-  path: Assets/Pref/Hero/Hero.prefab
-  artifactKey: Guid(8c12ea895bcc83d4289c01fceb5fceb0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/Hero/Hero.prefab using Guid(8c12ea895bcc83d4289c01fceb5fceb0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Tried select unknown importer for id '-2' '00000000000000000000000000000000'
-0x00007ff63767f11c (Unity) StackWalker::GetCurrentCallstack
-0x00007ff637686719 (Unity) StackWalker::ShowCallstack
-0x00007ff63841cdac (Unity) GetStacktrace
-0x00007ff638e8b897 (Unity) DebugStringToFile
-0x00007ff638e8b5b2 (Unity) AssertImplementation
-0x00007ff6384a0621 (Unity) AssetDatabase::LookupAssetImporter
-0x00007ff6384a6a78 (Unity) PreviewImporter::GenerateAssetData
-0x00007ff63854a4a3 (Unity) ImportToObjects
-0x00007ff638549478 (Unity) ImportAsset
-0x00007ff6384e2288 (Unity) AssetImportWorker::Import
-0x00007ff638507a5c (Unity) <lambda_6c894734dbee50c93f7912c8ad287316>::operator()
-0x00007ff6385977c2 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)>,asio::io_context::basic_executor_type<std::allocator<void>,0> >::do_complete
-0x00007ff638583662 (Unity) asio::detail::win_iocp_io_context::do_one
-0x00007ff638585574 (Unity) asio::detail::win_iocp_io_context::run
-0x00007ff638595aff (Unity) IOService::Run
-0x00007ff6385317cb (Unity) RunAssetImportWorkerClientV2
-0x00007ff638531820 (Unity) RunAssetImporterV2
-0x00007ff637fa59c8 (Unity) Application::InitializeProject
-0x00007ff638427132 (Unity) WinMain
-0x00007ff639af3dfe (Unity) __scrt_common_main_seh
-0x00007ff8215d26ad (KERNEL32) BaseThreadInitThunk
-0x00007ff822f0aa68 (ntdll) RtlUserThreadStart
-
- -> (artifact id: 'c8a5520cfc4e8c0b45fe971dcead3545') in 0.125398 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000321 seconds.
-  path: Assets/Pref/Enemy/Martial.prefab
-  artifactKey: Guid(19c413a3dcf196f4491f5296820aa916) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/Enemy/Martial.prefab using Guid(19c413a3dcf196f4491f5296820aa916) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Tried select unknown importer for id '-2' '00000000000000000000000000000000'
-0x00007ff63767f11c (Unity) StackWalker::GetCurrentCallstack
-0x00007ff637686719 (Unity) StackWalker::ShowCallstack
-0x00007ff63841cdac (Unity) GetStacktrace
-0x00007ff638e8b897 (Unity) DebugStringToFile
-0x00007ff638e8b5b2 (Unity) AssertImplementation
-0x00007ff6384a0621 (Unity) AssetDatabase::LookupAssetImporter
-0x00007ff6384a6a78 (Unity) PreviewImporter::GenerateAssetData
-0x00007ff63854a4a3 (Unity) ImportToObjects
-0x00007ff638549478 (Unity) ImportAsset
-0x00007ff6384e2288 (Unity) AssetImportWorker::Import
-0x00007ff638507a5c (Unity) <lambda_6c894734dbee50c93f7912c8ad287316>::operator()
-0x00007ff6385977c2 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)>,asio::io_context::basic_executor_type<std::allocator<void>,0> >::do_complete
-0x00007ff638583662 (Unity) asio::detail::win_iocp_io_context::do_one
-0x00007ff638585574 (Unity) asio::detail::win_iocp_io_context::run
-0x00007ff638595aff (Unity) IOService::Run
-0x00007ff6385317cb (Unity) RunAssetImportWorkerClientV2
-0x00007ff638531820 (Unity) RunAssetImporterV2
-0x00007ff637fa59c8 (Unity) Application::InitializeProject
-0x00007ff638427132 (Unity) WinMain
-0x00007ff639af3dfe (Unity) __scrt_common_main_seh
-0x00007ff8215d26ad (KERNEL32) BaseThreadInitThunk
-0x00007ff822f0aa68 (ntdll) RtlUserThreadStart
-
- -> (artifact id: 'b5c8cb8c05b7ce58df6aeb0570bda5c2') in 0.114792 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000296 seconds.
-  path: Assets/Pref/Enemy/Slime.prefab
-  artifactKey: Guid(8b86e8b520570334bb1c737558795f06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/Enemy/Slime.prefab using Guid(8b86e8b520570334bb1c737558795f06) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Tried select unknown importer for id '-2' '00000000000000000000000000000000'
-0x00007ff63767f11c (Unity) StackWalker::GetCurrentCallstack
-0x00007ff637686719 (Unity) StackWalker::ShowCallstack
-0x00007ff63841cdac (Unity) GetStacktrace
-0x00007ff638e8b897 (Unity) DebugStringToFile
-0x00007ff638e8b5b2 (Unity) AssertImplementation
-0x00007ff6384a0621 (Unity) AssetDatabase::LookupAssetImporter
-0x00007ff6384a6a78 (Unity) PreviewImporter::GenerateAssetData
-0x00007ff63854a4a3 (Unity) ImportToObjects
-0x00007ff638549478 (Unity) ImportAsset
-0x00007ff6384e2288 (Unity) AssetImportWorker::Import
-0x00007ff638507a5c (Unity) <lambda_6c894734dbee50c93f7912c8ad287316>::operator()
-0x00007ff6385977c2 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)>,asio::io_context::basic_executor_type<std::allocator<void>,0> >::do_complete
-0x00007ff638583662 (Unity) asio::detail::win_iocp_io_context::do_one
-0x00007ff638585574 (Unity) asio::detail::win_iocp_io_context::run
-0x00007ff638595aff (Unity) IOService::Run
-0x00007ff6385317cb (Unity) RunAssetImportWorkerClientV2
-0x00007ff638531820 (Unity) RunAssetImporterV2
-0x00007ff637fa59c8 (Unity) Application::InitializeProject
-0x00007ff638427132 (Unity) WinMain
-0x00007ff639af3dfe (Unity) __scrt_common_main_seh
-0x00007ff8215d26ad (KERNEL32) BaseThreadInitThunk
-0x00007ff822f0aa68 (ntdll) RtlUserThreadStart
-
- -> (artifact id: '6c2cb1d3d9b7079bc66783078cf4247b') in 0.216070 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000309 seconds.
-  path: Assets/Pref/Enemy/Mushroom.prefab
-  artifactKey: Guid(ba5de4393680c5649b8f79efee0e685b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/Enemy/Mushroom.prefab using Guid(ba5de4393680c5649b8f79efee0e685b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Tried select unknown importer for id '-2' '00000000000000000000000000000000'
-0x00007ff63767f11c (Unity) StackWalker::GetCurrentCallstack
-0x00007ff637686719 (Unity) StackWalker::ShowCallstack
-0x00007ff63841cdac (Unity) GetStacktrace
-0x00007ff638e8b897 (Unity) DebugStringToFile
-0x00007ff638e8b5b2 (Unity) AssertImplementation
-0x00007ff6384a0621 (Unity) AssetDatabase::LookupAssetImporter
-0x00007ff6384a6a78 (Unity) PreviewImporter::GenerateAssetData
-0x00007ff63854a4a3 (Unity) ImportToObjects
-0x00007ff638549478 (Unity) ImportAsset
-0x00007ff6384e2288 (Unity) AssetImportWorker::Import
-0x00007ff638507a5c (Unity) <lambda_6c894734dbee50c93f7912c8ad287316>::operator()
-0x00007ff6385977c2 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)>,asio::io_context::basic_executor_type<std::allocator<void>,0> >::do_complete
-0x00007ff638583662 (Unity) asio::detail::win_iocp_io_context::do_one
-0x00007ff638585574 (Unity) asio::detail::win_iocp_io_context::run
-0x00007ff638595aff (Unity) IOService::Run
-0x00007ff6385317cb (Unity) RunAssetImportWorkerClientV2
-0x00007ff638531820 (Unity) RunAssetImporterV2
-0x00007ff637fa59c8 (Unity) Application::InitializeProject
-0x00007ff638427132 (Unity) WinMain
-0x00007ff639af3dfe (Unity) __scrt_common_main_seh
-0x00007ff8215d26ad (KERNEL32) BaseThreadInitThunk
-0x00007ff822f0aa68 (ntdll) RtlUserThreadStart
-
- -> (artifact id: '096befdb5ae3d88e1437607be975afd3') in 0.105642 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000271 seconds.
-  path: Assets/Pref/Enemy/Goblin.prefab
-  artifactKey: Guid(ee4c6822d4cbc9b4ba1136296f9985a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/Enemy/Goblin.prefab using Guid(ee4c6822d4cbc9b4ba1136296f9985a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Tried select unknown importer for id '-2' '00000000000000000000000000000000'
-0x00007ff63767f11c (Unity) StackWalker::GetCurrentCallstack
-0x00007ff637686719 (Unity) StackWalker::ShowCallstack
-0x00007ff63841cdac (Unity) GetStacktrace
-0x00007ff638e8b897 (Unity) DebugStringToFile
-0x00007ff638e8b5b2 (Unity) AssertImplementation
-0x00007ff6384a0621 (Unity) AssetDatabase::LookupAssetImporter
-0x00007ff6384a6a78 (Unity) PreviewImporter::GenerateAssetData
-0x00007ff63854a4a3 (Unity) ImportToObjects
-0x00007ff638549478 (Unity) ImportAsset
-0x00007ff6384e2288 (Unity) AssetImportWorker::Import
-0x00007ff638507a5c (Unity) <lambda_6c894734dbee50c93f7912c8ad287316>::operator()
-0x00007ff6385977c2 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)>,asio::io_context::basic_executor_type<std::allocator<void>,0> >::do_complete
-0x00007ff638583662 (Unity) asio::detail::win_iocp_io_context::do_one
-0x00007ff638585574 (Unity) asio::detail::win_iocp_io_context::run
-0x00007ff638595aff (Unity) IOService::Run
-0x00007ff6385317cb (Unity) RunAssetImportWorkerClientV2
-0x00007ff638531820 (Unity) RunAssetImporterV2
-0x00007ff637fa59c8 (Unity) Application::InitializeProject
-0x00007ff638427132 (Unity) WinMain
-0x00007ff639af3dfe (Unity) __scrt_common_main_seh
-0x00007ff8215d26ad (KERNEL32) BaseThreadInitThunk
-0x00007ff822f0aa68 (ntdll) RtlUserThreadStart
-
- -> (artifact id: 'f4c82130bf518bfe8107bb6534f29ac7') in 0.106918 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000300 seconds.
-  path: Assets/Pref/Hero/StartPosition.prefab
-  artifactKey: Guid(2e77559f5dfa95c4fbb2d9d17b2d6818) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/Hero/StartPosition.prefab using Guid(2e77559f5dfa95c4fbb2d9d17b2d6818) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c4a54d1a78471a72113c05c7ff3bc80b') in 0.013408 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 568.991435 seconds.
-  path: Assets/Pref/Projectile/FlyingEyeCopy.prefab
-  artifactKey: Guid(5f72d438bd929784fa2b0e5246916e73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Pref/Projectile/FlyingEyeCopy.prefab using Guid(5f72d438bd929784fa2b0e5246916e73) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Tried select unknown importer for id '-2' '00000000000000000000000000000000'
-0x00007ff63767f11c (Unity) StackWalker::GetCurrentCallstack
-0x00007ff637686719 (Unity) StackWalker::ShowCallstack
-0x00007ff63841cdac (Unity) GetStacktrace
-0x00007ff638e8b897 (Unity) DebugStringToFile
-0x00007ff638e8b5b2 (Unity) AssertImplementation
-0x00007ff6384a0621 (Unity) AssetDatabase::LookupAssetImporter
-0x00007ff6384a6a78 (Unity) PreviewImporter::GenerateAssetData
-0x00007ff63854a4a3 (Unity) ImportToObjects
-0x00007ff638549478 (Unity) ImportAsset
-0x00007ff6384e2288 (Unity) AssetImportWorker::Import
-0x00007ff638507a5c (Unity) <lambda_6c894734dbee50c93f7912c8ad287316>::operator()
-0x00007ff6385977c2 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)>,asio::io_context::basic_executor_type<std::allocator<void>,0> >::do_complete
-0x00007ff638583662 (Unity) asio::detail::win_iocp_io_context::do_one
-0x00007ff638585574 (Unity) asio::detail::win_iocp_io_context::run
-0x00007ff638595aff (Unity) IOService::Run
-0x00007ff6385317cb (Unity) RunAssetImportWorkerClientV2
-0x00007ff638531820 (Unity) RunAssetImporterV2
-0x00007ff637fa59c8 (Unity) Application::InitializeProject
-0x00007ff638427132 (Unity) WinMain
-0x00007ff639af3dfe (Unity) __scrt_common_main_seh
-0x00007ff8215d26ad (KERNEL32) BaseThreadInitThunk
-0x00007ff822f0aa68 (ntdll) RtlUserThreadStart
-
- -> (artifact id: 'd79016121bbcbad0cf2fbc9d23871f89') in 0.059387 seconds 
+  path: Assets/C#Scripts/Blood/Blood.cs
+  artifactKey: Guid(344e70f4364655c40afef4a944e9f483) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/C#Scripts/Blood/Blood.cs using Guid(344e70f4364655c40afef4a944e9f483) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2269c09534f9c443ce97d8ecfdf3308b') in 0.056846 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 125.902513 seconds.
+  path: Assets/C#Scripts/Enemy/BossDeathAbility/Death_Behavior.cs
+  artifactKey: Guid(c035cf6c7f09cf749b3d09b3e2806b3a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/C#Scripts/Enemy/BossDeathAbility/Death_Behavior.cs using Guid(c035cf6c7f09cf749b3d09b3e2806b3a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '24760a6e8cff9069f14cc0c64f301b3c') in 0.011908 seconds 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002201 seconds.
+Registered in 0.002433 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.62 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.69 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  8.294 seconds
+- Completed reload, in  0.857 seconds
 Domain Reload Profiling:
-	ReloadAssembly (8294ms)
-		BeginReloadAssembly (3278ms)
+	ReloadAssembly (858ms)
+		BeginReloadAssembly (100ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (6ms)
+			DisableScriptedObjects (5ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (36ms)
-		EndReloadAssembly (4964ms)
-			LoadAssemblies (6457ms)
+			CreateAndSetChildDomain (31ms)
+		EndReloadAssembly (703ms)
+			LoadAssemblies (77ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (536ms)
+			SetupTypeCache (239ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (38ms)
-			SetupLoadedEditorAssemblies (1006ms)
+			RebuildScriptCaches (37ms)
+			SetupLoadedEditorAssemblies (270ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (5ms)
+				InitializePlatformSupportModulesInManaged (4ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (70ms)
-				ProcessInitializeOnLoadAttributes (215ms)
-				ProcessInitializeOnLoadMethodAttributes (711ms)
-				AfterProcessingInitializeOnLoad (3ms)
+				BeforeProcessingInitializeOnLoad (73ms)
+				ProcessInitializeOnLoadAttributes (174ms)
+				ProcessInitializeOnLoadMethodAttributes (14ms)
+				AfterProcessingInitializeOnLoad (4ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (2ms)
 Platform modules already initialized, skipping
 Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Refreshing native plugins compatible for Editor in 0.61 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.63 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2337 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 107.3 MB.
-System memory in use after: 107.6 MB.
+System memory in use before: 102.9 MB.
+System memory in use after: 103.1 MB.
 
-Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 2803.
-Total: 3.128400 ms (FindLiveObjects: 0.261600 ms CreateObjectMapping: 0.099300 ms MarkObjects: 2.739300 ms  DeleteObjects: 0.026800 ms)
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 2792.
+Total: 3.393000 ms (FindLiveObjects: 0.215400 ms CreateObjectMapping: 0.073100 ms MarkObjects: 3.075900 ms  DeleteObjects: 0.027400 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
