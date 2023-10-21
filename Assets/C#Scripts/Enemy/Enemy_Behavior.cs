@@ -153,6 +153,20 @@ public class Enemy_Behavior : MonoBehaviour
             if (enemyTakenDamageTimer > 2) enemyTakeDamage = false;
             playerGodMode = Hero.Instance.godMode;
         }
+        if (currentHP > 0 && (Mathf.Abs(directionX) < 10f))
+        {
+            AnimState();
+            EnemyMovement();
+            if (tag != "EvilWizard" && tag != "Slime") MeleeAttack();
+            if (tag == "Skeleton") SkeletonAttack();
+            if (tag == "EvilWizard") EvilWizardAttack();
+            if (tag == "Mushroom") MushroomAttack();
+            if (tag == "Slime") SlimeAttack();
+            if (tag == "Martial") MartialAttack();
+            if (tag == "Goblin") GoblinAttack();
+            if (tag == "FlyingEye") FlyingEyeAttack();
+            if (tag == "Death") DeathAttack();
+        }
     }
     public enum States //Defining what states there are, named as in Unity Animator
     {
@@ -747,7 +761,7 @@ public class Enemy_Behavior : MonoBehaviour
     public void SlimeAttack()
     {
         float playerHP = Hero.Instance.curentHP;
-        if (playerHP > 0 && Mathf.Abs(directionX) < 1.1f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1 && !isStun && !playerGodMode)
+        if (playerHP > 0 && Mathf.Abs(directionX) < 1f && Mathf.Abs(directionY) < 1f && timeSinceAttack > 1 && !isStun && !playerGodMode)
             {
                 anim.SetTrigger("spin");
                 isAttack = true;

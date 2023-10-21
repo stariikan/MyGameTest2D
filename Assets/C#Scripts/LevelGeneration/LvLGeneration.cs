@@ -18,6 +18,7 @@ public class LvLGeneration : MonoBehaviour
     public GameObject[] bossForGeneration;
     public GameObject[] chestForGeneration;
     public GameObject[] powerUpForGeneration;
+    public GameObject[] itemForGeneration;
     public static LvLGeneration Instance { get; set; } // To collect and send data from this script
 
     public int Level = 1; // Let's add a numeric variable completeLevels, which will be used to specify the number of levels completed.
@@ -90,6 +91,14 @@ public class LvLGeneration : MonoBehaviour
                 GameObject enemy = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
                 enemy.name = "Enemy" + Random.Range(1, 999);
                 enemy.gameObject.SetActive(true);
+
+                int itemRandom = Random.Range(1, 20);
+                if (itemRandom == 5)
+                {
+                    GameObject item = Instantiate(itemForGeneration[Random.Range(0, itemForGeneration.Length)], new Vector3(position.x + 1, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+                    item.name = "Item" + Random.Range(1, 999);
+                    item.gameObject.SetActive(true);
+                }
 
                 yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
             }
@@ -253,7 +262,7 @@ public class LvLGeneration : MonoBehaviour
             }
         }
 
-        if (Level == 10 || Level == 20 || Level == 30 || Level == 40) //Боссы
+        if (Level == 10) //Боссы
         {
             position.x += 9.8f; // position by X so that it is always slightly further than the last one
             position.y = 2; // Y position, random
@@ -269,8 +278,84 @@ public class LvLGeneration : MonoBehaviour
 
             yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
         }
+        if (Level == 20) //Боссы
+        {
+            position.x += 9.8f; // position by X so that it is always slightly further than the last one
+            position.y = 2; // Y position, random
+            position.z = 110;
+            GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // create a new object
+            newMidBlock.name = "Middle block" + Random.Range(1, 999);
+            newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
+            GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
-            GameObject newEndBlock = Instantiate(endBlock[Random.Range(0, endBlock.Length)], new Vector3(position.x + 9.8f, position.y, 110), Quaternion.identity);
+            GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, position.y + 0.5f, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.gameObject.SetActive(true);
+
+            GameObject enemyWithBoss = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x + 1, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.gameObject.SetActive(true);
+
+            yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
+        }
+        if (Level == 30 || Level == 40) //Боссы
+        {
+            position.x += 9.8f; // position by X so that it is always slightly further than the last one
+            position.y = 2; // Y position, random
+            position.z = 110;
+            GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // create a new object
+            newMidBlock.name = "Middle block" + Random.Range(1, 999);
+            newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
+            GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
+
+            GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, position.y + 0.5f, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.gameObject.SetActive(true);
+
+            GameObject enemyWithBoss1 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x + 1, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.gameObject.SetActive(true);
+
+            GameObject enemyWithBoss2 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x + 2, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.gameObject.SetActive(true);
+
+            yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
+        }
+        if (Level == 40) //Боссы
+        {
+            position.x += 9.8f; // position by X so that it is always slightly further than the last one
+            position.y = 2; // Y position, random
+            position.z = 110;
+            GameObject newMidBlock = Instantiate(midBlock[Random.Range(0, midBlock.Length)], new Vector3(position.x, position.y, 110), Quaternion.identity); // create a new object
+            newMidBlock.name = "Middle block" + Random.Range(1, 999);
+            newMidBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created block
+            GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
+
+            GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, position.y + 0.5f, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.gameObject.SetActive(true);
+
+            GameObject enemyWithBoss1 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x + 1, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.gameObject.SetActive(true);
+
+            GameObject enemyWithBoss2 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x + 2, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.gameObject.SetActive(true);
+
+            GameObject enemyWithBoss3 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x - 1, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.gameObject.SetActive(true);
+
+            GameObject enemyWithBoss4 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x - 2, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
+            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.gameObject.SetActive(true);
+
+            yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
+        }
+
+        GameObject newEndBlock = Instantiate(endBlock[Random.Range(0, endBlock.Length)], new Vector3(position.x + 9.8f, position.y, 110), Quaternion.identity);
         newEndBlock.layer = LayerMask.NameToLayer("Ground");//Adding the Earth layer to the created blockу
         newEndBlock.name = "End block";// create a new object
         GameObject newBorderEnd = Instantiate(endBorder[Random.Range(0, endBorder.Length)], new Vector3(position.x + 9.8f, position.y, 105), Quaternion.identity);
