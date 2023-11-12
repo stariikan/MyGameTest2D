@@ -74,6 +74,7 @@
     <Compile Include="Assets\C#Scripts\Items\Item_trap.cs" />
     <Compile Include="Assets\C#Scripts\UI\Main menu\Buttons.cs" />
     <Compile Include="Assets\C#Scripts\UI\Main menu\Main_menu.cs" />
+    <Compile Include="Assets\C#Scripts\UI\Main menu\MainMenuEnemyAnimation.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\DisableProgressBar.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\FlyingEye\FlyingEye_Behavior.cs" />
     <Compile Include="Assets\C#Scripts\Enemy\Moushroom\Moushroom_Behavior.cs" />

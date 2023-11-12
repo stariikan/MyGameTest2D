@@ -111,7 +111,6 @@ public class Enemy_Behavior : MonoBehaviour
     public GameObject rollSound;
 
     public static Enemy_Behavior Instance { get; set; } //Для сбора и отправки данных из этого скрипта
-
     private void Start()
     {
         Instance = this;
@@ -128,10 +127,10 @@ public class Enemy_Behavior : MonoBehaviour
     void Update()
     {
         directionX = player.transform.position.x - this.gameObject.transform.localPosition.x; // calculating the direction of movement is Player position on the x-axis - Enemy position on the x-axis
-        directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //calculate direction of movement is Player position on the y-axis - Enemy position on the y-axis
-        
+        //directionY = player.transform.position.y - this.gameObject.transform.localPosition.y; //calculate direction of movement is Player position on the y-axis - Enemy position on the y-axis
         if (Mathf.Abs(directionX) < 10f)
         {
+
             timeSinceAttack += Time.deltaTime;
             jumpCooldown += Time.deltaTime;
             rollCooldown += Time.deltaTime;
@@ -903,8 +902,9 @@ public class Enemy_Behavior : MonoBehaviour
             currentHP -= dmg;
             isAttacked = true;
             takedDamage = (float)dmg / maxHP; //how much you need to reduce the progress bar
+            if (takedDamage > 1) takedDamage = 1;
             anim.SetTrigger("damage");// animation of getting a demage
-            Enemy_Behavior.Instance.TakeDamageSound();
+            this.gameObject.GetComponent<Enemy_Behavior>().TakeDamageSound();
             if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar
         }
         if (currentHP > 0 && isBlock)
@@ -913,7 +913,7 @@ public class Enemy_Behavior : MonoBehaviour
             if (level <= 4) blockDMG = dmg * 0.5f;//if the Player is below level 5 then 50% damage blocking
             if (level >= 5) blockDMG = dmg * 0.1f;//if the Player is higher than level 4 then 90% damage blocking
             currentHP -= blockDMG;
-            Enemy_Behavior.Instance.ShieldDamageSound();
+            this.gameObject.GetComponent<Enemy_Behavior>().ShieldDamageSound();
             isAttacked = true;
             takedDamage = blockDMG / maxHP; //how much you need to reduce the progress bar
             if (this.gameObject != null) this.gameObject.GetComponentInChildren<enemyProgressBar>().UpdateEnemyProgressBar(takedDamage);//refresh progress bar

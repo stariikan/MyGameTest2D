@@ -89,7 +89,7 @@ public class LvLGeneration : MonoBehaviour
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
                 GameObject enemy = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.name = "Enemy" + (i + 1);
                 enemy.gameObject.SetActive(true);
 
                 int itemRandom = Random.Range(1, 20);
@@ -117,7 +117,7 @@ public class LvLGeneration : MonoBehaviour
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
                 GameObject enemy = Instantiate(enemyForGeneration[0], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.name = "Enemy" + (i + 1);
                 enemy.gameObject.SetActive(true);
 
                 yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
@@ -137,7 +137,7 @@ public class LvLGeneration : MonoBehaviour
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
                 GameObject enemy = Instantiate(enemyForGeneration[1], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.name = "Enemy" + (i + 1);
                 enemy.gameObject.SetActive(true);
 
                 yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
@@ -157,7 +157,7 @@ public class LvLGeneration : MonoBehaviour
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
                 GameObject enemy = Instantiate(enemyForGeneration[2], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.name = "Enemy" + (i + 1);
                 enemy.gameObject.SetActive(true);
 
                 yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
@@ -177,7 +177,7 @@ public class LvLGeneration : MonoBehaviour
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
                 GameObject enemy = Instantiate(enemyForGeneration[3], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.name = "Enemy" + (i + 1);
                 enemy.gameObject.SetActive(true);
 
                 yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
@@ -197,7 +197,7 @@ public class LvLGeneration : MonoBehaviour
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
                 GameObject enemy = Instantiate(enemyForGeneration[4], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.name = "Enemy" + (i + 1);
                 enemy.gameObject.SetActive(true);
 
                 yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
@@ -217,7 +217,7 @@ public class LvLGeneration : MonoBehaviour
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
                 GameObject enemy = Instantiate(enemyForGeneration[5], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.name = "Enemy" + (i + 1);
                 enemy.gameObject.SetActive(true);
 
                 yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
@@ -236,7 +236,7 @@ public class LvLGeneration : MonoBehaviour
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
                 GameObject enemy = Instantiate(enemyForGeneration[6], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.name = "Enemy" + (i + 1);
                 enemy.gameObject.SetActive(true);
 
                 yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
@@ -255,7 +255,7 @@ public class LvLGeneration : MonoBehaviour
                 GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
                 GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-                enemy.name = "Enemy" + Random.Range(1, 999);
+                enemy.name = "Enemy" + (i + 1);
                 enemy.gameObject.SetActive(true);
 
                 yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
@@ -273,7 +273,7 @@ public class LvLGeneration : MonoBehaviour
             GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
             GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, position.y + 0.5f, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.name = "Enemy" + 10;
             enemy.gameObject.SetActive(true);
 
             yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
@@ -289,16 +289,16 @@ public class LvLGeneration : MonoBehaviour
             GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
             GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, position.y + 0.5f, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.name = "Enemy" + 20;
             enemy.gameObject.SetActive(true);
 
             GameObject enemyWithBoss = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x + 1, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.name = "Enemy" + 21;
             enemy.gameObject.SetActive(true);
 
             yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
         }
-        if (Level == 30 || Level == 40) //Боссы
+        if (Level == 30) //Боссы
         {
             position.x += 9.8f; // position by X so that it is always slightly further than the last one
             position.y = 2; // Y position, random
@@ -309,15 +309,15 @@ public class LvLGeneration : MonoBehaviour
             GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
             GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, position.y + 0.5f, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.name = "Enemy" + 30;
             enemy.gameObject.SetActive(true);
 
             GameObject enemyWithBoss1 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x + 1, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.name = "Enemy" + 31;
             enemy.gameObject.SetActive(true);
 
             GameObject enemyWithBoss2 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x + 2, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.name = "Enemy" + 32;
             enemy.gameObject.SetActive(true);
 
             yield return new WaitForEndOfFrame(); // waiting for blocks to be installed
@@ -333,23 +333,23 @@ public class LvLGeneration : MonoBehaviour
             GameObject newBorderMid = Instantiate(borderMid[Random.Range(0, borderMid.Length)], new Vector3(position.x, position.y, 105), Quaternion.identity);
 
             GameObject enemy = Instantiate(bossForGeneration[Random.Range(0, bossForGeneration.Length)], new Vector3(position.x, position.y + 0.5f, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.name = "Enemy" + 40;
             enemy.gameObject.SetActive(true);
 
             GameObject enemyWithBoss1 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x + 1, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.name = "Enemy" + 41;
             enemy.gameObject.SetActive(true);
 
             GameObject enemyWithBoss2 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x + 2, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.name = "Enemy" + 42;
             enemy.gameObject.SetActive(true);
 
             GameObject enemyWithBoss3 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x - 1, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.name = "Enemy" + 43;
             enemy.gameObject.SetActive(true);
 
             GameObject enemyWithBoss4 = Instantiate(enemyForGeneration[Random.Range(0, enemyForGeneration.Length)], new Vector3(position.x - 2, -1, position.z - 1), Quaternion.identity); //Clone an object (enemy) and its coordinates)
-            enemy.name = "Enemy" + Random.Range(1, 999);
+            enemy.name = "Enemy" + 44;
             enemy.gameObject.SetActive(true);
 
             yield return new WaitForEndOfFrame(); // waiting for blocks to be installed

@@ -7659,6 +7659,7 @@ GameObject:
   - component: {fileID: 1034797260}
   - component: {fileID: 1034797259}
   - component: {fileID: 1034797261}
+  - component: {fileID: 1034797262}
   m_Layer: 7
   m_Name: Goblin
   m_TagString: Enemy
@@ -7743,13 +7744,25 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 1fb497da7f1c21442be6cedaf9626ccd, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1034797262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034797258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e3958f7fad9514c98f346481cfb81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1042927397
 GameObject:
   m_ObjectHideFlags: 0
@@ -13575,6 +13588,7 @@ GameObject:
   - component: {fileID: 1964115898}
   - component: {fileID: 1964115897}
   - component: {fileID: 1964115896}
+  - component: {fileID: 1964115899}
   m_Layer: 7
   m_Name: Skeleton
   m_TagString: Skeleton
@@ -13594,7 +13608,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 8b7bfc524d011ab499dbe498135723c0, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -13666,6 +13680,18 @@ Transform:
   m_Father: {fileID: 1556922303}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1964115899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964115895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e3958f7fad9514c98f346481cfb81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2035203267
 GameObject:
   m_ObjectHideFlags: 0

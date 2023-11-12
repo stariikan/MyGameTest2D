@@ -22,11 +22,6 @@ public class MeleeWeapon : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>(); // pull information from the box colider component
         Instance = this;
     }
-    private void Update()
-    {
-        colliderTimer += Time.deltaTime;
-        if (colliderTimer > 0.2f) WeaponOff();
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         target = collision.gameObject;

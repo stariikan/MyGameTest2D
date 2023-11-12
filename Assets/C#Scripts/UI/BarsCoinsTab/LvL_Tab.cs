@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LvL_Tab : MonoBehaviour
 {
-    public float xPercent = 0.59f; // X position as a percentage of screen width (0-1)
-    public float yPercent = 0.51f; // Y position as a percentage of screen height (0-1)
-    public float zPosition = 0f; // Z position in world space
+    public float xPercent; // X position as a percentage of screen width (0-1)
+    public float yPercent; // Y position as a percentage of screen height (0-1)
+    public float zPosition; // Z position in world space
 
     private void Start()
     {

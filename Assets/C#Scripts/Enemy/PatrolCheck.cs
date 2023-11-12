@@ -17,6 +17,10 @@ public class PatrolCheck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //VisualFormForDebug();
+    }
+    private void VisualFormForDebug()
+    {
         Vector3 pos = transform.position;
         Vector3 theScale = transform.localScale;
         if (objectName == "PatrolLeft")

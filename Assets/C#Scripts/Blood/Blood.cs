@@ -9,7 +9,7 @@ public class Blood : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cooldown += Time.deltaTime;
+        //cooldown += Time.deltaTime;
         //if(cooldown > 50) Destroy(this.gameObject);//destroy this game object
     }
 }
